@@ -4,6 +4,14 @@
 
 @import "base/meyer-reset-mod.css.scss";
 
+/***** VARS *****/
+
+$namespace: "know";
+
+/***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
+
+/*****/
+
 /***** ADDITIONAL RESET (add to meyer thing eventually) *****/
 a {
 	text-decoration: none;
