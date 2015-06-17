@@ -2,12 +2,8 @@
 	<strong> <%= @user.name %> </strong>
 	<span> <%= @user.email %> </span>
 	<span> <%= link_to "edit", edit_user_registration_path %> </span>
-	<div>
+	<br>
 	<strong> events: </strong>
-	<% @user.events.each do |event| %>
-      	<div>
-      		<%= link_to event.name, event %>
-		</div>
-    <% end %>
-    </div>
+	<br>
+	<%= render 'events/feed' %>
 </div>

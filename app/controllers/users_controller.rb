@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 	before_action :set_user, only: [:show]
 
 	def show
+		@events = @user.events
 	end
 
 	private
