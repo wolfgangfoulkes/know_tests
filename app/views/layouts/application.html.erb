@@ -18,13 +18,14 @@
 	</div>
 <% else %>
 	<div class="top-nav-item"> 
-		<%= link_to "login", new_user_session_path, method: :delete %>
+		<%= link_to "login", new_user_session_path %>
 	</div>
 	<div class="top-nav-item"> 
-		<%= link_to "signup", new_user_registration_path, method: :delete %>
+		<%= link_to "signup", new_user_registration_path %>
 	</div>
 <% end %>
 </div>
+
 <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
