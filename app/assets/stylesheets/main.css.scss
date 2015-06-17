@@ -42,7 +42,7 @@ a {
 	margin: 0 1em;
 }
 /***** TEMP *****/
-form {
+.#{$namespace} form {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -52,11 +52,11 @@ form {
 	border: 1px solid black;
 }
 
-form div {
+.#{$namespace} form div {
 	margin: 0 0;
 }
 
-form.event-new {
+.#{$namespace} form.event-new {
 	
 }
 /*****/
