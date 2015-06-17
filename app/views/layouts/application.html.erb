@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="top-nav"> 
+<div class="top-nav row"> 
 <% if user_signed_in? %>
 	<div class="top-nav-item"> 
 		<%= link_to current_user.name, current_user %>
@@ -27,9 +27,9 @@
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 
-
-
+<!-- <div class="page"> -->
 <%= yield %>
+<!-- </div> -->
 
 </body>
 </html>

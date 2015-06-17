@@ -23,6 +23,17 @@ a {
 	flex-direction: column;
 }
 
+/***** APP LAYOUT *****/
+.top-nav.row {
+	justify-content: flex-end;
+	align-items: center;
+	height: 3em;
+	background-color: rgba(100, 0, 0, 0.1);
+}
+.top-nav.row .top-nav-item {
+	margin: 0 1em;
+}
+/***** TEMP *****/
 form {
 	display: inline-flex;
 	flex-direction: column;
@@ -40,3 +51,4 @@ form div {
 form.event-new {
 	
 }
+/*****/
