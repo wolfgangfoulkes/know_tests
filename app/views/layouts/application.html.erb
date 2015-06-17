@@ -11,7 +11,7 @@
 <div class="top-nav"> 
 <% if user_signed_in? %>
 	<div class="top-nav-item"> 
-		<%= link_to current_user.email, "#"%>
+		<%= link_to current_user.name, "#"%>
 	</div>
 	<div class="top-nav-item"> 
 		<%= link_to "logout", destroy_user_session_path, method: :delete %>
