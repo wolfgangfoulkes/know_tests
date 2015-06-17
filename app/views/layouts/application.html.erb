@@ -8,8 +8,21 @@
 </head>
 <body>
 
+<div class="top-nav"> 
+<% if user_signed_in? %>
+	<div class="top-nav-item"> 
+		<%= link_to current_user.email, "#"%>
+	</div>
+	<div class="top-nav-item"> 
+		<%= link_to "logout", destroy_user_session_path, method: :delete %>
+	</div>
+<% else %>
+<% end %>
+</div>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
+
+
 
 <%= yield %>
 
