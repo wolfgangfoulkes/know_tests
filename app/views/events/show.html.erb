@@ -1,19 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="event-show">
+<% user = User.find(@event.user_id) %>
+	<div class="show-field">
+	  <strong>Name:</strong>
+	  <%= @event.name %>
+	</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+	<div class="show-field">
+	  <strong>Description:</strong>
+	  <%= @event.description %>
+	</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+	<div class="show-field">
+	  <strong>User:</strong>
+	  <%= link_to user.name, user %>
+	</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @event.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', User.find(@event.user_id) %>
+	<div class="options">
+		<%= link_to 'Edit', edit_event_path(@event) %> |
+		<%= link_to 'Back', user %>
+	</div>
+</div>
