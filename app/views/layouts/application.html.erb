@@ -6,7 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class=<%= "know-" + "#{controller.controller_name}" + "-" + "#{controller.action_name}" %>>
 
 <div class="top-nav row"> 
 <% if user_signed_in? %>
@@ -26,6 +26,7 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
+
 
 <!-- <div class="page"> -->
 <%= yield %>
