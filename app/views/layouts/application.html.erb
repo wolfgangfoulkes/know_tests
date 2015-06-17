@@ -17,10 +17,20 @@
 		<%= link_to "logout", destroy_user_session_path, method: :delete %>
 	</div>
 <% else %>
+	<div class="top-nav-item"> 
+		<%= link_to "login", new_user_session_path, method: :delete %>
+	</div>
+	<div class="top-nav-item"> 
+		<%= link_to "signup", new_user_registration_path, method: :delete %>
+	</div>
 <% end %>
 </div>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
 
 
 
