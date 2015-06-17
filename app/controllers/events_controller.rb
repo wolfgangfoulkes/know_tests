@@ -9,10 +9,12 @@ class EventsController < ApplicationController
   end
 
   def new
+    @user = current_user
     @event = Event.new
   end
 
   def edit
+    @user = User.find(@event.user_id)
   end
 
   def create

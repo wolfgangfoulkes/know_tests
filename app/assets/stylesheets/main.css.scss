@@ -22,3 +22,21 @@ a {
 	display: flex;
 	flex-direction: column;
 }
+
+form {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-sizing: border-box;
+	margin: 1rem;
+	padding: 1rem;
+	border: 1px solid black;
+}
+
+form div {
+	margin: 0 0;
+}
+
+form.event-new {
+	
+}
