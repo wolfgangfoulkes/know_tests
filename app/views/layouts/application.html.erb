@@ -6,6 +6,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body class="know <%= "#{controller.controller_name}-#{controller.action_name}" %>">
 
 <div class="top-nav row"> 
@@ -28,9 +29,10 @@
 <% end %>
 
 
-<!-- <div class="page"> -->
+<div class="page">
 <%= yield %>
-<!-- </div> -->
+</div>
 
 </body>
+
 </html>

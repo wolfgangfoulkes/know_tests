@@ -22,32 +22,45 @@ a {
 /***** GLOBAL *****/
 
 .row {
-	display: flex;
+	display: inline-flex;
 	flex-direction: row;
 }
 
 .col {
-	display: flex;
+	display: inline-flex;
 	flex-direction: column;
+}
+
+.#{$namespace} .options.row {
+	justify-content: space-between;
+}
+
+.#{$namespace} .options.row a {
+	/*margin: 0 1rem;*/
 }
 
 /***** APP LAYOUT *****/
 .top-nav.row {
 	justify-content: flex-end;
 	align-items: center;
+	width: 100vw;
 	height: 3em;
 	background-color: rgba(100, 0, 0, 0.1);
 }
 .top-nav.row .top-nav-item {
 	margin: 0 1em;
 }
+
+.#{$namespace} .page {
+	margin-left: 1rem;
+}
+
 /***** TEMP *****/
 .#{$namespace} form {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
 	box-sizing: border-box;
-	margin: 1rem;
 	padding: 1rem;
 	border: 1px solid black;
 }

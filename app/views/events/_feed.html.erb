@@ -2,10 +2,9 @@
   <% @events.each do |event| %>
     <% user = User.find(event.user_id) %>
     <div class="event-info">
-      <span class="info-field"><%= event.name %></span>
+      <strong class="info-field"><%= link_to event.name, event %></strong>
       <span class="info-field"><%= link_to user.name, user %></span>
-      <span class="options">
-        <%= link_to 'Show', event %>
+      <span class="options row">
         <% if current_user.id == event.user_id %>
         <%= link_to 'Edit', edit_event_path(event) %>
         <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
