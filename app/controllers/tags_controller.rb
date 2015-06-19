@@ -1,34 +1,11 @@
 class TagsController < ApplicationController
-  before_action :set_tag, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @tags = Tag.all
-  end
+  before_action :set_tag, only: [:show, :destroy]
 
   def show
   end
 
-  def new
-    @tag = Tag.new
-  end
-
-  def edit
-  end
-
   def create
     @tag = Tag.new(tag_params)
-    respond_to do |format|
-      if @tag.save
-        format.html { redirect_to tags_url, notice: 'Tag was successfully created.' }
-        format.json { render :show, status: :created, location: @tag }
-      else
-        format.html { render :new }
-        format.json { render json: @tag.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
     respond_to do |format|
       if @tag.save
         format.html { redirect_to tags_url, notice: 'Tag was successfully created.' }

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update]
-  resources :tags
+  resources :tags, :only => [:show, :create, :destroy]
   
   get 'static_pages/home'
   root 'static_pages#home'
