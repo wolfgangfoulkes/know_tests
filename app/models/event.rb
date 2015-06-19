@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
-	has_many :tags, through: :taggings, foreign_key: :tag_id, dependent: :destroy
+	has_many :tags, through: :taggings
 
 	validates :user_id, presence: true
 
