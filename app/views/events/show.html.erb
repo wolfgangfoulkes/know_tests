@@ -10,6 +10,12 @@
 	  <%= @event.description %>
 	</div>
 
+	<div class="tags-field"> 
+        <% @event.tags.each do |tag| %>
+          <%= link_to tag.name, tag, class: "tag-name" %>
+        <% end %>
+    </div>
+
 	<div class="show-field">
 	  <strong>User:</strong>
 	  <%= link_to user.name, user %>

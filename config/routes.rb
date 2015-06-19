@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  
+
   devise_for :users, :controllers => { registrations: 'registrations' }
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update]
+  resources :tags
   
   get 'static_pages/home'
   root 'static_pages#home'
