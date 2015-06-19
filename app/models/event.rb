@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
 	validates :user_id, presence: true
 
 	after_destroy :remove_orphaned_tags
+	after_save :remove_orphaned_tags
 
 	def tag_list=(names)
 		# could also use .delete("char")
