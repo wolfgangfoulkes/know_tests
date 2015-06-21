@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
 	has_many :tags, through: :taggings
 
 	validates :user_id, presence: true
+	#by default the date validator checks for a valid date
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
