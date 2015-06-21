@@ -8,6 +8,9 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
 
+	scope :name_starts_with, -> (name) { where("name like ?", "#{name}%") }
+	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
+
 	def tag_list=(names)
 		# could also use .delete("char")
 		self.tags = names.gsub(/\s+/, "").downcase.split(",").uniq.map do |name| 
@@ -28,4 +31,6 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
+
+
 end
