@@ -11,7 +11,7 @@ class TagsController < ApplicationController
         format.html { redirect_to tags_url, notice: 'Tag was successfully created.' }
         format.json { render :show, status: :created, location: @tag }
       else
-        format.html { render :new }
+        format.html { redirect_to tags_url }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
       end
     end
