@@ -4,9 +4,14 @@ class Event < ActiveRecord::Base
 	has_many :tags, through: :taggings
 
 	validates :user_id, presence: true
+	validates :starts_at, presence: true
+	validates :ends_at, presence: true
 
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
+
+	scope :name_starts_with, -> (name) { where("name like ?", "#{name}%") }
+	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
 
 	def tag_list=(names)
 		# could also use .delete("char")
@@ -28,4 +33,6 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
+
+
 end
