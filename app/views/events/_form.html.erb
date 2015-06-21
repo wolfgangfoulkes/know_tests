@@ -20,6 +20,14 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
+    <%= f.label :starts_at %><br>
+    <%= f.datetime_field :starts_at %>
+  </div>
+  <div class="field">
+    <%= f.label :ends_at %><br>
+    <%= f.datetime_field :ends_at %>
+  </div>
+  <div class="field">
     <%= f.label :tag_list %><br>
     <%= f.text_field :tag_list %>
   </div>

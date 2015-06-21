@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
 	has_many :tags, through: :taggings
 
 	validates :user_id, presence: true
+	validates :starts_at, presence: true
+	validates :ends_at, presence: true
 
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags

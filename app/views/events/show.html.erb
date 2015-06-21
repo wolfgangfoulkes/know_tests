@@ -10,6 +10,10 @@
 	  <%= @event.description %>
 	</div>
 
+	<div class="show-field">
+	  <strong>From:</strong> <%= @event.starts_at %> <strong>To:</strong> <%= @event.ends_at %>
+	</div>
+
 	<div class="tags-field"> 
         <% @event.tags.each do |tag| %>
           <%= link_to tag.name, tag, class: "tag-name" %>
