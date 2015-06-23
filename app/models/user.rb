@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
 	has_many :events, dependent: :destroy
-	has_many :active_relationships, as: :follower, class_name: 'Relationship'
+	has_many :active_relationships, as: :follower, class_name: 'Relationship', dependent: :destroy
 	# source: allows us to name this differently from "has_many :followeds", source_type allows polymorphic relationships
 	has_many :followed_events, through: :active_relationships, source: :followed, source_type: 'Event'
 	has_many :followed_users, through: :active_relationships, source: :followed, source_type: 'User'
+
+
 
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
