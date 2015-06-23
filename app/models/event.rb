@@ -1,20 +1,31 @@
 class Event < ActiveRecord::Base
+	#----- relationships
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
+	#-----
 
+	#----- validations -----
 	validates :user_id, presence: true
-	#by default the date validator checks for a valid date
+	# by default the date validator checks for a valid date
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
+	#-----
 
-	after_destroy :remove_orphaned_tags
-	after_save :remove_orphaned_tags
-
+	#----- scopes -----
 	scope :name_starts_with, -> (name) { where("name like ?", "#{name}%") }
 	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
+	#-----
 
+	#----- callbacks -----
+	after_destroy :remove_orphaned_tags
+	after_save :remove_orphaned_tags
+	#-----
+
+	#----- METHODS -----
+	
+	#--- tags 
 	def tag_list=(names)
 		# could also use .delete("char")
 		self.tags = names.gsub(/\s+/, "").downcase.split(",").uniq.map do |name| 
@@ -35,6 +46,9 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
+	#---
+
+	#-----
 
 
 end
