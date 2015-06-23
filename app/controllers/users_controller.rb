@@ -1,16 +1,24 @@
 class UsersController < ApplicationController
-	before_action :set_user, only: [:show]
+	before_action :set_user, only: [:show, :follow, :unfollow]
 
 	def show
 		@events = @user.events
 	end
 
-	def follow(thing)
-		active_relationships.create(followed_id: thing.id, followed_type: thing.class.name)
+	def follow
+		current_user.follow(@user)
+		respond_to do |format|
+  			format.html { redirect_to @user }
+  			format.js
+		end
 	end
 
-	def following?(thing)
-		active_relationships.where("followed_id = :thing_id AND followed_type = :thing_type", thing.id, thing.class.name).blank?
+	def unfollow
+		current_user.unfollow(@user)
+		respond_to do |format|
+  			format.html { redirect_to @user }
+  			format.js
+		end
 	end
 
 	private
