@@ -22,8 +22,5 @@ module Auth
 
     # add custom validators path
     config.autoload_paths += %W["#{config.root}/app/validators/"]
-
-    #for Ajax
-    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end

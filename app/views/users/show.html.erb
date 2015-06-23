@@ -5,8 +5,6 @@
 		<%= link_to "edit", edit_user_registration_path %> 
 	</span>
 	<br>
-	<%= render 'follow_form' if user_signed_in? %>
-	<br>
 	<strong> events: </strong>
 	<br>
 	<%= render 'events/feed' %>
