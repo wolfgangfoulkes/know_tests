@@ -1,5 +1,3 @@
-<%= form_for(current_user.active_relationships.build, remote: true) do |f| %>
-  <div><%= hidden_field_tag :followed_id, @user.id %></div>
-  <div><%= hidden_field_tag :followed_type, @user.class.name %></div>
-  <%= f.submit "Follow" %>
+<%= form_for @user, remote: true, url: {action: "follow"} do |f| %>
+  	<%= f.submit "Follow" %>
 <% end %>

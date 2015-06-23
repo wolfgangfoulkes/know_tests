@@ -22,19 +22,8 @@ class User < ActiveRecord::Base
 		active_relationships.create(followed_id: thing.id, followed_type: thing.class.name)
 	end
 
-	def follow(id, type)
-		active_relationships.create(followed_id: id, followed_type: type)
-	end
-
 	def unfollow(thing)
 		relationship = active_relationships.where("followed_id = :thing_id AND followed_type = :thing_type", thing_id: thing.id, thing_type: thing.class.name)
-		if !relationship.blank?
-			relationship.take.destroy
-		end
-	end
-
-	def unfollow(id, type)
-		relationship = active_relationships.where("followed_id = :thing_id AND followed_type = :thing_type", thing_id: id, thing_type: type)
 		if !relationship.blank?
 			relationship.take.destroy
 		end

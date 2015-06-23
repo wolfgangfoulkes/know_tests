@@ -2,18 +2,15 @@ Rails.application.routes.draw do
   
 
   devise_for :users, :controllers => { registrations: 'registrations' }
-
-  # member means users/<id>/<following or followers>
-  # can now access this through following_user_path(1)
-  resources :users, :only => [:show] #do
-  #  member do
-  #    get :following, :followers
-  #  end
-  #end
+  resources :users, :only => [:show] do
+    member do
+      patch 'follow'
+      patch 'unfollow'
+    end
+  end
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update]
   resources :tags, :only => [:show, :create, :destroy]
-  resources :relationships, :only => [:create, :destroy]
   
   get 'static_pages/home'
   get '/schedule', to: 'static_pages#schedule'
