@@ -3,12 +3,18 @@ class SocializationsController < ApplicationController
 
   def follow
     current_user.follow!(@socializable)
-    render json: { follow: true }
+    respond_to do |format|
+    	format.html { redirect_to schedule_path }
+    	format.js
+    end
   end
 
   def unfollow
     current_user.unfollow!(@socializable)
-    render json: { follow: false }
+    respond_to do |format|
+    	format.html { redirect_to schedule_path }
+    	format.js
+    end
   end
 
 private
