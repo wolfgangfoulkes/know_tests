@@ -21,7 +21,6 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   username: wolfgag
-  password: harmonykorine
 
 development:
   adapter: postgresql
@@ -30,7 +29,6 @@ development:
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   username: wolfgag
-  password: harmonykorine
 
 production:
   adapter: postgresql
@@ -39,4 +37,3 @@ production:
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   username: wolfgag
-  password: harmonykorine
