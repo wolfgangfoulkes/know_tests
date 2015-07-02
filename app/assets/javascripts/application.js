@@ -14,3 +14,13 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).on("page:change", function()
+{
+	$('a')
+	.on("ajax:complete", function(e, data, status, xhr)
+	{
+		//console.log("complete!");
+		//$(this).attr({"data-response": status });
+	});
+});

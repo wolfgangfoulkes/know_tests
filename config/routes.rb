@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
   resources :users, :only => [:show]
 
-  resources :events, :only => [:show, :create, :destroy, :edit, :update]
+  resources :events, :only => [:show, :create, :destroy, :edit, :update] do
+    post 'follow', to: 'socializations#follow'
+    post 'unfollow', to: 'socializations#unfollow'
+  end
+  
   resources :tags, :only => [:show, :create, :destroy]
   
   get 'static_pages/home'
