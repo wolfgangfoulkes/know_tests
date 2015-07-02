@@ -11,7 +11,10 @@
 
 <div class="top-nav row"> 
 <% if user_signed_in? %>
-	<div class="top-nav-item"> 
+	<div class="top-nav-item">
+		<%= link_to 'Home', root_path %>
+	</div>
+	<div class="top-nav-item">
 		<%= link_to current_user.name, current_user %>
 	</div>
 	<div class="top-nav-item"> 

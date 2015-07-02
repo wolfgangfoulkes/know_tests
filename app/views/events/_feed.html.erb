@@ -6,8 +6,12 @@
       <span class="info-field"><%= link_to user.name, user %></span>
       <span class="options row">
         <% if current_user.id == event.user_id %>
-        <%= link_to 'Edit', edit_event_path(event) %>
-        <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Edit', edit_event_path(event) %>
+          <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% elsif current_user.follows?(event) %>
+          <%= link_to 'Unfollow', event_unfollow_path(event), method: :post %>
+        <% else %>
+          <%= link_to 'Follow', event_follow_path(event), method: :post %>
         <% end %>
       </span>
       <div class="tags-field"> 
