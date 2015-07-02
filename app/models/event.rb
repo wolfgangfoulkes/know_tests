@@ -3,8 +3,6 @@ class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
-	has_many :passive_relationships, as: :followed, class_name: 'Relationship', dependent: :destroy
-	has_many :followers, through: :passive_relationships, source: :follower, source_type: 'User'
 	#-----
 
 	#----- validations -----
