@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
 
 	validates :name, presence: true
 	validates :name, uniqueness: true, if: -> { self.name.present? }
+
+	#----- socialization -----
+	acts_as_follower
+	#-----
 end

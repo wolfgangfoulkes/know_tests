@@ -7,6 +7,6 @@ class StaticPagesController < ApplicationController
 
   def schedule
   	@user = current_user
-  	@events = @user.events
+  	@events = @user.followees(Event)
   end
 end

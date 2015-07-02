@@ -18,6 +18,10 @@ class Event < ActiveRecord::Base
 	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
 	#-----
 
+	#----- socialization -----
+	acts_as_followable
+	#-----
+
 	#----- callbacks -----
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
