@@ -1,11 +1,14 @@
-<div class="user-show">
-	<span class="show-field"> <%= @user.name %> </span>
-	<span class="show-field"> <%= @user.email %> </span>
-	<span class="options"> 
+<section>
+	<span class="field h1"> <%= @user.name %> </span>
+	<span class="field h2"> <%= @user.email %> </span>
+	<span class="options h3"> 
 		<%= link_to "edit", edit_user_registration_path %> 
 	</span>
+</section>
+<section>
+	
 	<br>
-	<strong> events: </strong>
+	<span class="h1"> events: </span>
 	<br>
 	<%= render 'events/feed' %>
-</div>
+</section>

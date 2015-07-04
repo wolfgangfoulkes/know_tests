@@ -1,5 +1,6 @@
-<div class="event-show">
+
 <% user = User.find(@event.user_id) %>
+<section>
 	<div class="show-field">
 	  <strong>Name:</strong>
 	  <%= @event.name %>
@@ -14,7 +15,7 @@
 	  <strong>From:</strong> <%= @event.starts_at %> <strong>To:</strong> <%= @event.ends_at %>
 	</div>
 
-	<div class="tags-field"> 
+	<div class="tags"> 
         <% @event.tags.each do |tag| %>
           <%= link_to tag.name, tag, class: "tag-name" %>
         <% end %>
@@ -24,9 +25,11 @@
 	  <strong>User:</strong>
 	  <%= link_to user.name, user %>
 	</div>
+</section>
+<section>
 
-	<div class="options">
+	<div class="options h1">
 		<%= link_to 'Edit', edit_event_path(@event) %> |
 		<%= link_to 'Back', user %>
 	</div>
-</div>
+</section>

@@ -17,6 +17,10 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+.#{$namespace} {
+	box-sizing: border-box;
+}
 /*****/
 
 /***** GLOBAL *****/
@@ -31,14 +35,6 @@ a {
 	flex-direction: column;
 }
 
-.#{$namespace} .options.row {
-	justify-content: space-between;
-}
-
-.#{$namespace} .options.row a {
-	/*margin: 0 1rem;*/
-}
-
 /***** APP LAYOUT *****/
 .top-nav.row {
 	justify-content: flex-end;
@@ -51,25 +47,117 @@ a {
 	margin: 0 1em;
 }
 
+.#{$namespace} {
+	font-size: 1.5rem;
+	font-style: normal;
+	font-weight: normal;
+}
+
+.#{$namespace} .h1 {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.#{$namespace} .h2 {
+	font-size: .8em;
+	font-weight: normal;
+}
+
+.#{$namespace} .h3 {
+	font-size: .7em;
+}
+
+.#{$namespace} .h4 {
+	font-size: .6em;
+}
+
 .#{$namespace} .page {
 	margin-left: 1rem;
 }
 
-/***** TEMP *****/
-.#{$namespace} form {
+.#{$namespace} .page section {
+	margin-top: 3rem;
+}
+
+/***** FEED *****/
+.#{$namespace} .feed.col {
+	justify-content: space-between;
+	border-top: 1px solid black;
+}
+.#{$namespace} .feed-item.row {
+	padding: 1em 0;
+	border-bottom: 1px solid black;
+	align-items: center;
+}
+
+.#{$namespace} .feed-item .field {
+	padding: 0 1rem;
+}
+
+.#{$namespace} .feed-item .field.tags {
+	margin: 0 auto;
+	word-spacing: 1em;
+}
+
+.#{$namespace} .feed-item .options {
+	margin-left: auto;
+}
+
+.#{$namespace} .feed-item .options * {
+	padding: 0 1rem;
+}
+/*****/
+
+
+/***** FORM *****/
+.#{$namespace} form.new_event {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
-	box-sizing: border-box;
-	padding: 1rem;
+	width: 40vw;
+	padding: 1rem 1.5rem;
 	border: 1px solid black;
+
 }
 
-.#{$namespace} form div {
+.#{$namespace} form.new_event .field {
+	flex-grow: 1;
+	margin: .5rem 0;
+	font-size: 1em;
+
+}
+
+.#{$namespace} form.new_event input {
+	/***** overrides *****/
+	padding: 0 0;
 	margin: 0 0;
+	box-sizing: border-box;
+	width: 100%;
+	font-size: 1em;
+	/*****/
 }
 
-.#{$namespace} form.event-new {
-	
+.#{$namespace} form.new_event .actions {
+	flex-grow: 1;
+	margin: 1rem 0;
+}
+
+.#{$namespace} form.new_event .actions input {
+	/***** overrides *****/
+	background: none;
+	border: none;
+	height: 100%;
+	/*****/
+
+	background-color: rgba(100, 0, 0, 0.1);
+	padding: .5rem 0;
 }
 /*****/
+/***** TEMP *****/
+.#{$namespace} .event.feed {
+	width: 80vw;
+}
+
+.#{$namespace} .tags {
+	color: rgba(100, 0, 0, 0.3);
+}
