@@ -11,24 +11,29 @@ class StaticPagesController < ApplicationController
   end
 
   def event_test
-  	@event = 
-  	{
-  		'summary' => 'New Event Title',
-  		'description' => 'The description',
-  		'location' => 'Location',
- 		 'start' => Event.first.starts_at,
- 		 'end' => Event.first.ends_at ,
-  		'attendees' => [ 	{ "email" => 'bob@example.com' },
-  							{ "email" =>'sally@example.com' } ] 
-  	}
-  	client = Google::APIClient.new
-	client.authorization.access_token = current_user.token
-	service = client.discovered_api('calendar', 'v3')
-	@set_event = client.execute(
-						:api_method => service.events.insert,
-                        :parameters => {'calendarId' => current_user.email, 'sendNotifications' => true},
-                        :body => JSON.dump(@event),
-                        :headers => {'Content-Type' => 'application/json'}
-                        )
+    	@event = 
+    	{
+        'summary' => 'Test Event',
+      	'description' => 'Testing Event Adding',
+      	'location' => 'Somewhere in Nevada',
+     		'start' => {
+          'dateTime' => '2015-05-28T09:00:00-07:00',
+          'timeZone' => 'America/Los_Angeles',
+        },
+        'end' => {
+          'dateTime' => '2015-05-28T17:00:00-07:00',
+          'timeZone' => 'America/Los_Angeles',
+        }
+    	}
+      client = Google::APIClient.new
+      client.authorization.access_token = current_user.token
+  	  service = client.discovered_api('calendar', 'v3')
+      @set_event = client.execute!(
+  		:api_method => service.events.insert,
+      :parameters => {'calendarId' => 'primary', 'sendNotifications' => true},
+      :body => JSON.dump(@event),
+      :headers => {'Content-Type' => 'application/json'}
+      )
+      @event = @set_event.data
   end
 end

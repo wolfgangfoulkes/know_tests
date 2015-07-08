@@ -52,4 +52,7 @@ gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+# dates
+gem 'chronic'
+
 
