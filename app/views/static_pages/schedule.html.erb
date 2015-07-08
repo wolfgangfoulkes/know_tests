@@ -1,1 +1,9 @@
-<%= render 'events/feed' %>
+<section>
+	<% if user_signed_in? && current_user.provider != "google_oauth2" %>
+		<%= link_to 'Connect Calendar!', user_omniauth_authorize_path(:google_oauth2) %>
+	<% end %>
+</section>
+
+<section>
+	<%= render 'events/feed' %>
+</section>

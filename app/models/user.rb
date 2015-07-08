@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
             user.provider = auth.provider
             user.uid = auth.uid
             user.token = auth.credentials.token
-            user.save 
+            user.save
             user
         else 
             redirect_to new_user_registration_path, notice: "Google Error!"
