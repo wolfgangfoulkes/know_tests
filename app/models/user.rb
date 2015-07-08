@@ -15,13 +15,16 @@ class User < ActiveRecord::Base
 	acts_as_follower
 	#-----
 
-	def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-        data = access_token.info
+	# pass an access object returned by google, 
+	# if a user has the email associated with the access object
+	# set provider, uid, and token for that user from the object
+	def self.find_for_google_oauth2(auth, signed_in_resource=nil)
+        data = auth.info
         user = User.find_by(email: data.email)
         if user
-            user.provider = access_token.provider
-            user.uid = access_token.uid
-            user.token = access_token.credentials.token
+            user.provider = auth.provider
+            user.uid = auth.uid
+            user.token = auth.credentials.token
             user.save 
             user
         else 
