@@ -42,6 +42,10 @@ class EventsController < ApplicationController
     end
   end
 
+  def refresh_follow
+    render partial: "follow_button"
+  end
+
   private
     def set_event
       @event = Event.find(params[:id])

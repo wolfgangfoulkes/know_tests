@@ -1,0 +1,7 @@
+<div class="follow-button">
+  <% if current_user.follows?(event) %>
+    <%= link_to 'Unfollow', event_unfollow_path(event), method: :post, remote: true %>
+  <% else %>
+    <%= link_to 'Follow', event_follow_path(event), method: :post, remote: true %>
+  <% end %>
+</div>

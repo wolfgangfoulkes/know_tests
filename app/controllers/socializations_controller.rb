@@ -4,7 +4,6 @@ class SocializationsController < ApplicationController
   def follow
     current_user.follow!(@socializable)
     respond_to do |format|
-    	format.html { redirect_to schedule_path }
     	format.js
     end
   end
@@ -12,7 +11,6 @@ class SocializationsController < ApplicationController
   def unfollow
     current_user.unfollow!(@socializable)
     respond_to do |format|
-    	format.html { redirect_to schedule_path }
     	format.js
     end
   end

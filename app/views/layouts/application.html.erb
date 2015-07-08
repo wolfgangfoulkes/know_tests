@@ -12,10 +12,13 @@
 <div class="top-nav row"> 
 <% if user_signed_in? %>
 	<div class="top-nav-item">
-		<%= link_to 'Home', root_path %>
+		<%= link_to 'home', root_path %>
 	</div>
 	<div class="top-nav-item">
 		<%= link_to current_user.name, current_user %>
+	</div>
+	<div class="top-nav-item">
+		<%= link_to 'schedule', schedule_path %>
 	</div>
 	<div class="top-nav-item"> 
 		<%= link_to "logout", destroy_user_session_path, method: :delete %>
