@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 # Use postgresql because heroku and maybe good idea
@@ -39,12 +38,18 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# handle authentication
 gem 'devise'
 
+# social media functionality (e.g. follow, like)
 gem 'socialization'
+
+# environmental variables
+gem 'figaro'
 
 # google
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+
 
