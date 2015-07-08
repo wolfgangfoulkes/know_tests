@@ -29,6 +29,9 @@
 <section>
 
 	<div class="options h1">
+		<% if user_signed_in? && current_user.provider == "google_oauth2" %>
+			<%= link_to 'Add', event_add_to_calendar_path(@event) %> |
+		<% end %>
 		<%= link_to 'Edit', edit_event_path(@event) %> |
 		<%= link_to 'Back', user %>
 	</div>

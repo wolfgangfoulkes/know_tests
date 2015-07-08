@@ -46,6 +46,35 @@ class EventsController < ApplicationController
     render partial: "follow_button"
   end
 
+  def add_to_calendar
+    @event = Event.find(params[:event_id])
+    @data = 
+    {
+        'summary' => @event.name,
+        'description' => @event.description,
+        'location' => 'Somewhere in Nevada',
+        'start' => {
+          'dateTime' => @event.starts_at.to_s(:iso8601),
+          'timeZone' => 'America/Los_Angeles',
+        },
+        'end' => {
+          'dateTime' => @event.ends_at.to_s(:iso8601),
+          'timeZone' => 'America/Los_Angeles',
+        }
+    }
+
+    client = Google::APIClient.new
+    client.authorization.access_token = current_user.token
+    service = client.discovered_api('calendar', 'v3')
+    result = client.execute!(
+      :api_method => service.events.insert,
+      :parameters => {'calendarId' => 'primary', 'sendNotifications' => true},
+      :body_object => @data,
+      :headers => {'Content-Type' => 'application/json'}
+      )
+    @data = result.data
+  end
+
   private
     def set_event
       @event = Event.find(params[:id])

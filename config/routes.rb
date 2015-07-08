@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :events, :only => [:show, :create, :destroy, :edit, :update] do
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+    get 'add_to_calendar'
   end
   
   resources :tags, :only => [:show, :create, :destroy]
