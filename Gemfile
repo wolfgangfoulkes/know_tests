@@ -39,7 +39,12 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# handle authentication
 gem 'devise'
 
+# social media functionality (e.g. follow, like)
 gem 'socialization'
+
+# environmental variables
+gem 'figaro'
 
