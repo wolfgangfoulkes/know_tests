@@ -51,6 +51,7 @@ gem 'figaro'
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'json'
 
 # dates
 gem 'chronic'
