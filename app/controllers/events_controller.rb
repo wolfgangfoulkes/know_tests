@@ -64,7 +64,8 @@ class EventsController < ApplicationController
     }
 
     client = Google::APIClient.new
-    client.authorization.access_token = current_user.token
+    token = Token.find_by email: current_user.email
+    token.fresh_token
     service = client.discovered_api('calendar', 'v3')
     result = client.execute!(
       :api_method => service.events.insert,
