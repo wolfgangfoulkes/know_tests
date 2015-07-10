@@ -47,18 +47,18 @@ class EventsController < ApplicationController
   end
 
   def add_to_calendar
-    @event = Event.find(params[:event_id])
+    @event = Event.find(params[:id])
     @data = 
     {
         'summary' => @event.name,
         'description' => @event.description,
         'location' => 'Somewhere in Nevada',
         'start' => {
-          'dateTime' => @event.starts_at.to_s(:iso8601),
+          'dateTime' => @event.start.to_s(:iso8601),
           'timeZone' => 'America/Los_Angeles',
         },
         'end' => {
-          'dateTime' => @event.ends_at.to_s(:iso8601),
+          'dateTime' => @event.end.to_s(:iso8601),
           'timeZone' => 'America/Los_Angeles',
         }
     }
@@ -76,13 +76,20 @@ class EventsController < ApplicationController
     @data = result.data
   end
 
+  def calendar
+    @events = current_user.followees(Event)
+    respond_to do |format|
+      format.json
+    end
+  end
+
   private
     def set_event
       @event = Event.find(params[:id])
     end
 
     def event_params
-      params.require(:event).permit(:name, :starts_at, :ends_at, :description, :user_id, :tag_list)
+      params.require(:event).permit(:name, :start, :end, :description, :user_id, :tag_list)
     end
 
     

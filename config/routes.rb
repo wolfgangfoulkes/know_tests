@@ -5,18 +5,24 @@ Rails.application.routes.draw do
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update] do
+    collection do #events/
+      get 'calendar'
+    end
+    member do #event/:id/ with :id passed in params[:id]
+      get 'add_to_calendar'
+    end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
-    get 'add_to_calendar'
   end
   
   resources :tags, :only => [:show, :create, :destroy]
   
-  get 'static_pages/home'
   get '/schedule', to: 'static_pages#schedule'
+  get '/calendar', to: 'static_pages#calendar'
   root 'static_pages#home'
 
   get 'event_test', to: 'static_pages#event_test'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

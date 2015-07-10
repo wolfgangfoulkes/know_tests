@@ -56,4 +56,7 @@ gem 'json'
 # dates
 gem 'chronic'
 
+# calendar
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 

@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require moment
+//= require fullcalendar
 //= require_tree .
 
 $(document).on("page:change", function()
@@ -23,4 +25,9 @@ $(document).on("page:change", function()
 		//console.log("complete!");
 		//$(this).attr({"data-response": status });
 	});
+
+	$('#calendar').fullCalendar({
+		events: '/events/calendar.json',
+        aspectRatio: 2 //height determined from width, width from css
+    })
 });
