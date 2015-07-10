@@ -4,6 +4,7 @@ require 'json'
 
   validates :email, presence: true
   validates :email, uniqueness: true, if: -> { self.email.present? }
+  validates :refresh_token, presence: true
  
   def to_params
     {'refresh_token' => refresh_token,
@@ -23,13 +24,13 @@ require 'json'
   end
  
   def refresh!
-    #compute Time.now BEFORE making request!
+    now = Time.now
     response = request_token_from_google
     data = JSON.parse(response.body)
     update_attributes(
     access_token: data['access_token'],
-    expires_at: Time.now + (data['expires_in'].to_i).seconds)
-
+    expires_at: now + (data['expires_in'].to_i).seconds
+    )
   end
  
   def expired?

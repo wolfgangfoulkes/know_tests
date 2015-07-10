@@ -27,8 +27,7 @@ class StaticPagesController < ApplicationController
     	}
       client = Google::APIClient.new
       token = Token.find_by email: current_user.email
-      token.fresh_token
-      client.authorization.access_token = token.access_token
+      client.authorization.access_token = token.fresh_token
   	  service = client.discovered_api('calendar', 'v3')
       @set_event = client.execute!(
   		:api_method => service.events.insert,
