@@ -23,11 +23,13 @@ require 'json'
   end
  
   def refresh!
+    #compute Time.now BEFORE making request!
     response = request_token_from_google
     data = JSON.parse(response.body)
     update_attributes(
     access_token: data['access_token'],
     expires_at: Time.now + (data['expires_in'].to_i).seconds)
+
   end
  
   def expired?
