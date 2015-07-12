@@ -1,5 +1,5 @@
 <section>
-	<% if user_signed_in? && !(Token.find_by email: current_user.email) %>
+	<% if user_signed_in? && !(Token.exists? email: current_user.email) %>
 		<%= link_to 'Connect Calendar!', user_omniauth_authorize_path(:google_oauth2) %>
 	<% end %>
 </section>

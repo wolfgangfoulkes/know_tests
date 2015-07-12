@@ -11,8 +11,6 @@ class StaticPagesController < ApplicationController
   end
 
   def calendar
-    @user = current_user
-    @events = @user.followees(Event)
   end
 
   def event_test

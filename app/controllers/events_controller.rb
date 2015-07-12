@@ -77,7 +77,7 @@ class EventsController < ApplicationController
   end
 
   def calendar
-    @events = current_user.followees(Event)
+    @events = current_user.followees(Event) + current_user.events
     respond_to do |format|
       format.json
     end
