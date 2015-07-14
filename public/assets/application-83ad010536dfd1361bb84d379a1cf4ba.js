@@ -25453,15 +25453,6 @@ fcViews.agendaDay = {
 
 return fc; // export for Node/CommonJS
 });
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-;
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -25480,17 +25471,18 @@ return fc; // export for Node/CommonJS
 
 
 
+KNOW = 
+{
+	page: ""
+};
 
 $(document).on("page:change", function()
 {
-	$('a')
-	.on("ajax:complete", function(e, data, status, xhr)
-	{
-		//console.log("complete!");
-		//$(this).attr({"data-response": status });
-	});
+	KNOW.page = $("body").attr("class");
+
 
 	$('#calendar').fullCalendar({
-        // put your options and callbacks here
+		events: '/events/calendar.json',
+        aspectRatio: 2 //height determined from width, width from css
     })
 });

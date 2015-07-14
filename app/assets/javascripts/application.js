@@ -25,12 +25,6 @@ $(document).on("page:change", function()
 {
 	KNOW.page = $("body").attr("class");
 
-	$('a')
-	.on("ajax:complete", function(e, data, status, xhr)
-	{
-		//console.log("complete!");
-		//$(this).attr({"data-response": status });
-	});
 
 	$('#calendar').fullCalendar({
 		events: '/events/calendar.json',

@@ -4,7 +4,8 @@
   <title>Auth</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 
-  	(controller_name if javascript_exists?(controller_name)),
+  	(controller.controller_name if javascript_exists?(controller.controller_name)),
+  	("#{controller.controller_name}-#{controller.action_name}" if javascript_exists?("#{controller.controller_name}-#{controller.action_name}")),
   	'data-turbolinks-track' => true 
   %>
   <%= csrf_meta_tags %>
