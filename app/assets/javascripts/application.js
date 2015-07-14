@@ -15,10 +15,16 @@
 //= require turbolinks
 //= require moment
 //= require fullcalendar
-//= require_tree .
+
+KNOW = 
+{
+	page: ""
+};
 
 $(document).on("page:change", function()
 {
+	KNOW.page = $("body").attr("class");
+
 	$('a')
 	.on("ajax:complete", function(e, data, status, xhr)
 	{
