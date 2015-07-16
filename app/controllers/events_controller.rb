@@ -1,6 +1,10 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @events = Event.filter(params.slice(:name_contains, :time_contains))
+  end
+
   def show
   end
 
@@ -54,11 +58,11 @@ class EventsController < ApplicationController
         'description' => @event.description,
         'location' => 'Somewhere in Nevada',
         'start' => {
-          'dateTime' => @event.start.to_s(:iso8601),
+          'dateTime' => @event.starts_at.to_s(:iso8601),
           'timeZone' => 'America/Los_Angeles',
         },
         'end' => {
-          'dateTime' => @event.end.to_s(:iso8601),
+          'dateTime' => @event.ends_at.to_s(:iso8601),
           'timeZone' => 'America/Los_Angeles',
         }
     }
@@ -89,7 +93,7 @@ class EventsController < ApplicationController
     end
 
     def event_params
-      params.require(:event).permit(:name, :start, :end, :description, :user_id, :tag_list)
+      params.require(:event).permit(:name, :starts_at, :ends_at, :description, :user_id, :tag_list)
     end
 
     
