@@ -1,0 +1,10 @@
+/* line 1, /Users/wolfgag/code/KNOW/know_4/devise/app/assets/stylesheets/calendar/calendar.css.scss */
+#calendar {
+  margin: 0 auto;
+  width: 90vw;
+}
+
+/* line 6, /Users/wolfgag/code/KNOW/know_4/devise/app/assets/stylesheets/calendar/calendar.css.scss */
+.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.know-cue {
+  background-color: red !important;
+}
