@@ -80,13 +80,6 @@ class EventsController < ApplicationController
     @data = result.data
   end
 
-  def calendar
-    @events = current_user.followees(Event) + current_user.events
-    respond_to do |format|
-      format.json
-    end
-  end
-
   private
     def set_event
       @event = Event.find(params[:id])
