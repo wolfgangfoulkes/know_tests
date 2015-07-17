@@ -45,9 +45,8 @@ $(document).on("page:change", function()
 {
 	KNOW.page = $("body").attr("class");
 
-
 	$('#calendar').fullCalendar({
-		events: '/events/calendar.json',
+		events: '/schedule/list.json',
 		eventDataTransform: transformData,
         aspectRatio: 2 //height determined from width, width from css
     })

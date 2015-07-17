@@ -6,7 +6,6 @@ Rails.application.routes.draw do
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update, :index] do
     collection do #events/
-      get 'calendar'
     end
     member do #event/:id/ with :id passed in params[:id]
       get 'add_to_calendar'
@@ -16,9 +15,10 @@ Rails.application.routes.draw do
   end
   
   resources :tags, :only => [:show, :create, :destroy]
+
+  get 'schedule/:action', controller: 'schedule'
+  get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
   
-  get '/schedule', to: 'static_pages#schedule'
-  get '/calendar', to: 'static_pages#calendar'
   root 'static_pages#home'
 
   get 'event_test', to: 'static_pages#event_test'
