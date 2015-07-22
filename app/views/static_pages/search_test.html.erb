@@ -1,5 +1,5 @@
 <section>
-	<%= form_tag 'events/filtered', remote: true do %>
+	<%= form_tag url_for(controller: 'events', action: 'filtered'), remote: true do %>
 		<%= text_field_tag :search, params[:search], placeholder: 'SEARCH!' %>
 		<%= submit_tag 'SUBMIT!' %>
 	<% end %>

@@ -152,13 +152,38 @@ a {
 }
 /*****/
 /***** TEMP *****/
-.#{$namespace} .event.feed {
+.#{$namespace} .events.feed {
 	width: 80vw;
+}
+
+.#{$namespace} .events.search.row {
+	height: 1.5em;
+	width: 30vw;
+}
+
+.#{$namespace} .events.search.row input
+{
+	font-size: .8em;
+}
+
+.#{$namespace} .events.search.row input[type="text"]
+{
+	flex-grow: 3;
+	border-width: 0 1px;
+}
+
+.#{$namespace} .events.search.row input[type="submit"]
+{
+	flex-grow: 1;
+	border: none;
+	cursor: pointer;
 }
 
 .#{$namespace} .tags {
 	color: rgba(100, 0, 0, 0.3);
 }
+
+
 
 /***** dependent files *****/
 @import "schedule/schedule.css.scss";

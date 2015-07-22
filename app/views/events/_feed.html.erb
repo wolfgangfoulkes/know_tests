@@ -1,10 +1,10 @@
-<div class="event feed col">
+<div class="events feed col">
   <% @events.each do |event| %>
     <% user = User.find(event.user_id) %>
     <div class="feed-item row">
       <span class="field h1"><%= link_to event.name, event %></span>
       <span class="field h2"><%= link_to user.name, user %></span>
-      <div class="field tags h4"> 
+      <div class="field tags h4">
         <%= event.tag_list %>
       </div>
       <span class="options row h3">
