@@ -15,12 +15,13 @@ class Event < ActiveRecord::Base
 	#-----
 
 	#----- scopes -----
-	scope :name_starts_with, -> (name) { where("lower(name) like ?", "#{name.downcase}%") }
-	scope :name_contains, -> (name) { where("lower(name) like ?", "%#{name.downcase}%") }
+	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
+	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
-	scope :time_contains, -> (time) { where("starts_at <= :time AND ends_at >= :time", { time: time }) }
-	scope :search, -> (query) { name_contains(query) | description_contains(query)}
+	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
+	# order determines final order
+	scope :search, -> (q) { name_starts_with(q) | name_contains(q) }
 	#-----
 
 	#----- socialization -----
@@ -58,6 +59,14 @@ class Event < ActiveRecord::Base
 	  end
 	end
 	#---
+
+	def self.filter_combine(ps)
+		results = []
+		ps.each do |p|
+			results = results | filter([p])
+		end
+		results
+	end
 
 	#-----
 

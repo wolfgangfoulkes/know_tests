@@ -2,11 +2,11 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.filter(params.slice(:name_contains, :time_contains))
+    @events = Event.filter(params.slice(:name_starts_with, :name_contains))
   end
 
   def filtered
-    @events = Event.filter(params.slice(:search, :name_contains))
+    @events = Event.filter(params.slice(:search))
     respond_to do |format|
       format.js { render 'shared/search_complete.js.erb' }
     end
