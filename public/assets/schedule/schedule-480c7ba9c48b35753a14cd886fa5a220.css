@@ -1,0 +1,16 @@
+/* line 1, /Users/wolfgag/code/KNOW/know_4/devise/app/assets/stylesheets/schedule/schedule.css.scss */
+body[class*="schedule-"] .nav.row {
+  /* attribute selector, works like wildcard */
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 10%;
+  height: 2rem;
+  font-size: 2rem;
+  color: rgba(100, 0, 0, 0.6);
+}
+
+/* line 12, /Users/wolfgag/code/KNOW/know_4/devise/app/assets/stylesheets/schedule/schedule.css.scss */
+body[class*="schedule-"] .nav-item {
+  margin: 0 1rem;
+}

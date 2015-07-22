@@ -5,6 +5,9 @@ class StaticPagesController < ApplicationController
   	@event = @user.events.build
   end
 
+  def search_test
+  end
+
   def event_test
     	@event = 
     	{

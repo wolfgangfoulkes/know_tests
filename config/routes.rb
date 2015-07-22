@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   get 'event_test', to: 'static_pages#event_test'
+  get 'search_test', to: 'static_pages#search_test'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

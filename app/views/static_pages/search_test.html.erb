@@ -1,0 +1,8 @@
+<section>
+	<div class="ui-widget">
+		<%= form_tag do %>
+			<%= text_field_tag :keywords, params[:keywords], placeholder: 'SEARCH!' %>
+			<%= submit_tag 'SUBMIT!', class: 'submit' %>
+		<% end %>
+	</div>
+</section>

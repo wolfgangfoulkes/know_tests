@@ -25,10 +25,18 @@ class Event < ActiveRecord::Base
 	acts_as_followable
 	#-----
 
+	#----- solr -----
+	searchable do
+		text :name, :description
+	end
+	#-----
+
 	#----- callbacks -----
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
 	#-----
+
+
 
 	#----- METHODS -----
 	

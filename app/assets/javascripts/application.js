@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require moment
+//= require jquery-ui
 //= require fullcalendar
 
 KNOW = 
