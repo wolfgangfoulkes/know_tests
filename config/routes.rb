@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
 
+  get 'queries/return'
+
   devise_for :users, :controllers => { registrations: 'registrations', :omniauth_callbacks => "omniauth_callbacks" }
   resources :users, :only => [:show]
 
@@ -23,6 +25,8 @@ Rails.application.routes.draw do
 
   get 'event_test', to: 'static_pages#event_test'
   get 'search_test', to: 'static_pages#search_test'
+
+  match '/queries/result', to: 'queries#result', as: 'result', via: [:get, :post]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

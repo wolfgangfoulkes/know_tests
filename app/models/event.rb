@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
 
 	#----- solr -----
 	searchable do
-		text :name, :description
+		text :name
 	end
 	#-----
 
