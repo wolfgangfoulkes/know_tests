@@ -1,20 +1,22 @@
 Rails.application.routes.draw do
   
 
-  get 'queries/return'
-
   devise_for :users, :controllers => { registrations: 'registrations', :omniauth_callbacks => "omniauth_callbacks" }
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update, :index] do
     collection do #events/
+      post 'filtered'
     end
     member do #event/:id/ with :id passed in params[:id]
       get 'add_to_calendar'
     end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+
   end
+
+  #post ':controller(/filtered)', action: 'filtered'
   
   resources :tags, :only => [:show, :create, :destroy]
 
@@ -25,8 +27,6 @@ Rails.application.routes.draw do
 
   get 'event_test', to: 'static_pages#event_test'
   get 'search_test', to: 'static_pages#search_test'
-
-  match '/queries/result', to: 'queries#result', as: 'result', via: [:get, :post]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

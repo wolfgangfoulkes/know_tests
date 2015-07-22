@@ -60,9 +60,3 @@ gem 'chronic'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
-#search
-gem 'sunspot_rails'
-###remove for deployment
-gem 'sunspot_solr'
-gem 'jquery-ui-rails'
-

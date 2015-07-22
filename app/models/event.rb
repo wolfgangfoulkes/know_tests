@@ -15,20 +15,16 @@ class Event < ActiveRecord::Base
 	#-----
 
 	#----- scopes -----
-	scope :name_starts_with, -> (name) { where("name like ?", "#{name}%") }
-	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
+	scope :name_starts_with, -> (name) { where("lower(name) like ?", "#{name.downcase}%") }
+	scope :name_contains, -> (name) { where("lower(name) like ?", "%#{name.downcase}%") }
+	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
 	scope :time_contains, -> (time) { where("starts_at <= :time AND ends_at >= :time", { time: time }) }
+	scope :search, -> (query) { name_contains(query) | description_contains(query)}
 	#-----
 
 	#----- socialization -----
 	acts_as_followable
-	#-----
-
-	#----- solr -----
-	searchable do
-		text :name
-	end
 	#-----
 
 	#----- callbacks -----
