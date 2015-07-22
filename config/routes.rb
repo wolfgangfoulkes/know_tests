@@ -6,13 +6,17 @@ Rails.application.routes.draw do
 
   resources :events, :only => [:show, :create, :destroy, :edit, :update, :index] do
     collection do #events/
+      post 'filtered'
     end
     member do #event/:id/ with :id passed in params[:id]
       get 'add_to_calendar'
     end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+
   end
+
+  #post ':controller(/filtered)', action: 'filtered'
   
   resources :tags, :only => [:show, :create, :destroy]
 
@@ -22,6 +26,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   get 'event_test', to: 'static_pages#event_test'
+  get 'search_test', to: 'static_pages#search_test'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

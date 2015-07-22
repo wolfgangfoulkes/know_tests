@@ -5,6 +5,13 @@ class EventsController < ApplicationController
     @events = Event.filter(params.slice(:name_contains, :time_contains))
   end
 
+  def filtered
+    @events = Event.filter(params.slice(:search, :name_contains))
+    respond_to do |format|
+      format.js { render 'shared/search_complete.js.erb' }
+    end
+  end
+
   def show
   end
 
