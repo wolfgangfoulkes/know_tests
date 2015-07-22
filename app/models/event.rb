@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 	validates :ends_at, date: { after: :starts_at } 
 	#-----
 
-	#----- scopes -----
+	#----- scopes ----- 
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
 	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
@@ -22,6 +22,10 @@ class Event < ActiveRecord::Base
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
 	# order determines final order
 	scope :search, -> (q) { name_starts_with(q) | name_contains(q) }
+
+	def self.default_scope
+		order("starts_at ASC")
+	end
 	#-----
 
 	#----- socialization -----
