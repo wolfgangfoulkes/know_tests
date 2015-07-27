@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
 
   devise_for :users, :controllers => { registrations: 'registrations', :omniauth_callbacks => "omniauth_callbacks" }
   resources :users, :only => [:show]
@@ -25,8 +24,15 @@ Rails.application.routes.draw do
   
   root 'static_pages#home'
 
+  #----- TEMPORARY
   get 'event_test', to: 'static_pages#event_test'
   get 'search_test', to: 'static_pages#search_test'
+
+  #----- error handling
+  get '/404', to: 'errors#not_found'
+  get '/500', to: 'errors#internal_server'
+  #- make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
+  get "*any", via: :all, to: "errors#not_found"
 
 
   # The priority is based upon order of creation: first created -> highest priority.
