@@ -1,0 +1,2 @@
+var result = ".<%= j params[:controller].to_s %>.feed";
+$(result).replaceWith("<%= j render partial: 'feed' %>");

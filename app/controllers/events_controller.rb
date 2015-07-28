@@ -1,11 +1,27 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @events = Event.filter(params.slice(:name_starts_with, :name_contains))
+  end
+
+  def filtered
+    @events = Event.filter(params.slice(:search))
+    respond_to do |format|
+      format.js { render 'shared/search_complete.js.erb' }
+    end
+  end
+
   def show
   end
 
   def edit
     @user = User.find(@event.user_id)
+  end
+
+  def new
+    @user = current_user
+    @event = Event.new
   end
 
   def create
@@ -15,7 +31,7 @@ class EventsController < ApplicationController
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
-        format.html { redirect_to root_url, notice: @event.errors.full_messages.join(", ") }
+        format.html { redirect_to new_event_path, notice: @event.errors.full_messages.join(", ") }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -40,6 +56,40 @@ class EventsController < ApplicationController
       format.html { redirect_to root_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def refresh_follow
+    render partial: "follow_button"
+  end
+
+  def add_to_calendar
+    @event = Event.find(params[:id])
+    @data = 
+    {
+        'summary' => @event.name,
+        'description' => @event.description,
+        'location' => 'Somewhere in Nevada',
+        'start' => {
+          'dateTime' => @event.starts_at.to_s(:iso8601),
+          'timeZone' => 'America/Los_Angeles',
+        },
+        'end' => {
+          'dateTime' => @event.ends_at.to_s(:iso8601),
+          'timeZone' => 'America/Los_Angeles',
+        }
+    }
+
+    client = Google::APIClient.new
+    token = Token.find_by email: current_user.email
+    client.authorization.access_token = token.fresh_token
+    service = client.discovered_api('calendar', 'v3')
+    result = client.execute!(
+      :api_method => service.events.insert,
+      :parameters => {'calendarId' => 'primary', 'sendNotifications' => true},
+      :body_object => @data,
+      :headers => {'Content-Type' => 'application/json'}
+      )
+    @data = result.data
   end
 
   private

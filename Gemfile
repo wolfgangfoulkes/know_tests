@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 # Use postgresql because heroku and maybe good idea
@@ -47,4 +46,17 @@ gem 'socialization'
 
 # environmental variables
 gem 'figaro'
+
+# google
+gem 'google-api-client', :require => 'google/api_client'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'json'
+
+# dates
+gem 'chronic'
+
+# calendar
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 

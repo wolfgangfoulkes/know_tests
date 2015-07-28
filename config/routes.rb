@@ -1,19 +1,39 @@
 Rails.application.routes.draw do
-  
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
+  devise_for :users, :controllers => { registrations: 'registrations', :omniauth_callbacks => "omniauth_callbacks" }
   resources :users, :only => [:show]
 
-  resources :events, :only => [:show, :create, :destroy, :edit, :update] do
+  resources :events, :only => [:show, :new, :create, :destroy, :edit, :update, :index] do
+    collection do #events/
+      post 'filtered'
+    end
+    member do #event/:id/ with :id passed in params[:id]
+      get 'add_to_calendar'
+    end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+
   end
+
+  #post ':controller(/filtered)', action: 'filtered'
   
   resources :tags, :only => [:show, :create, :destroy]
+
+  get 'schedule/:action', controller: 'schedule'
+  get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
   
-  get 'static_pages/home'
-  get '/schedule', to: 'static_pages#schedule'
   root 'static_pages#home'
+
+  #----- TEMPORARY
+  get 'event_test', to: 'static_pages#event_test'
+  get 'search_test', to: 'static_pages#search_test'
+
+  #----- error handling
+  get '/404', to: 'errors#not_found'
+  get '/500', to: 'errors#internal_server'
+  #- make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
+  get "*any", via: :all, to: "errors#not_found"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+	include Filterable
 	#----- relationships
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
@@ -7,15 +8,25 @@ class Event < ActiveRecord::Base
 
 	#----- validations -----
 	validates :user_id, presence: true
+	validates :name, presence: true
 	# by default the date validator checks for a valid date
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
 	#-----
 
-	#----- scopes -----
-	scope :name_starts_with, -> (name) { where("name like ?", "#{name}%") }
-	scope :name_contains, -> (name) { where("name like ?", "%#{name}%") }
+	#----- scopes ----- 
+	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
+	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
+	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
+
+	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
+	# order determines final order
+	scope :search, -> (q) { name_starts_with(q) | name_contains(q) }
+
+	def self.default_scope
+		order("starts_at ASC")
+	end
 	#-----
 
 	#----- socialization -----
@@ -26,6 +37,8 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
 	#-----
+
+
 
 	#----- METHODS -----
 	
@@ -51,6 +64,14 @@ class Event < ActiveRecord::Base
 	  end
 	end
 	#---
+
+	def self.filter_combine(ps)
+		results = []
+		ps.each do |p|
+			results = results | filter([p])
+		end
+		results
+	end
 
 	#-----
 

@@ -25,5 +25,8 @@ module Auth
 
     #this for js
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+    #use app routes for error handling
+    config.exceptions_app = self.routes
   end
 end

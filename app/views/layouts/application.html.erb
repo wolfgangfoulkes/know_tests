@@ -3,7 +3,11 @@
 <head>
   <title>Auth</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 
+  	(controller.controller_name if javascript_exists?(controller.controller_name)),
+  	("#{controller.controller_name}-#{controller.action_name}" if javascript_exists?("#{controller.controller_name}-#{controller.action_name}")),
+  	'data-turbolinks-track' => true 
+  %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -12,8 +16,15 @@
 <div class="top-nav row"> 
 <% if user_signed_in? %>
 	<div class="top-nav-item">
-		<%= link_to 'Home', root_path %>
+		<%= link_to 'new', new_event_path %>
 	</div>
+	<div class="top-nav-item">
+		<%= link_to 'home', root_path %>
+	</div>
+	<div class="top-nav-item">
+		<%= link_to 'schedule', schedule_path %>
+	</div>
+	|
 	<div class="top-nav-item">
 		<%= link_to current_user.name, current_user %>
 	</div>

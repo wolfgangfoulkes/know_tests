@@ -1,10 +1,8 @@
-<div class="event-edit">
-	<% user = User.find(@event.user_id) %>
-	<br>
+<section>
 	<%= render 'form' %>
 	<br>
 	<span class="options">
-	<%= link_to 'Show', @event %> |
-	<%= link_to 'Back', user %>
+		<%= link_to 'Show', @event %> |
+		<%= link_to 'Back', @event.user %>
 	</span>
-</div>
+</section>

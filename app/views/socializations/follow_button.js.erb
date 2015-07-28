@@ -1,0 +1,6 @@
+$('a[data-id="<%= j socializable.id.to_s %>"]').on("ajax:success", 
+	function(e, data, status, xhr) 
+	{
+		$(this).replaceWith("<%= j render partial: 'socializations/follow_button', locals: {socializable: socializable} %>");
+	}
+);
