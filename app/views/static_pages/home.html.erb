@@ -1,8 +1,4 @@
 <section>
-<%= render 'events/form' %>
-</section>
-
-<section>
 <%= form_tag url_for(controller: 'events', action: 'filtered'), remote: true, class: 'events search row' do %>
 	<%= text_field_tag :search, params[:search], placeholder: 'search' %>
 	<%= submit_tag '>>' %>

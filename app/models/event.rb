@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
 
 	#----- validations -----
 	validates :user_id, presence: true
+	validates :name, presence: true
 	# by default the date validator checks for a valid date
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
