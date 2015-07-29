@@ -24,10 +24,6 @@ Rails.application.routes.draw do
   
   root 'static_pages#home'
 
-  #----- TEMPORARY
-  get 'event_test', to: 'static_pages#event_test'
-  get 'search_test', to: 'static_pages#search_test'
-
   #----- error handling
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'
