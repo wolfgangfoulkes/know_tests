@@ -1,7 +1,7 @@
 <div class="events feed col">
   <% @events.each do |event| %>
     <% user = User.find(event.user_id) %>
-    <div class="feed-item row">
+    <div class="feed-item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
       <span class="field h1"><%= link_to event.name, event %></span>
       <span class="field h2"><%= link_to user.name, user %></span>
       <div class="field tags h4">

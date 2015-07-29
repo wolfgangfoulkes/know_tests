@@ -111,6 +111,10 @@ a {
 	align-items: center;
 }
 
+.#{$namespace} .feed-item.row.past {
+	color: rgba(100, 0, 0, 0.1);
+}
+
 .#{$namespace} .feed-item .field {
 	padding: 0 1rem;
 }
@@ -173,12 +177,6 @@ a {
 	background-color: rgba(100, 0, 0, 0.1);
 	padding: .5rem 0;
 }
-/*****/
-/***** ICONS *****/
-/*.#{$namespace} .icon {
-	height: 4rem;
-	width: 4rem;
-}*/
 /*****/
 
 /***** TEMP *****/
