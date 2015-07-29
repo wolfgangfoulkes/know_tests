@@ -29,9 +29,9 @@
 <section>
 
 	<div class="options h1">
-		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
+<!-- 		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
 			<%= link_to 'Add', add_to_calendar_event_path(@event) %> |
-		<% end %>
+		<% end %> -->
 		<%= link_to 'Edit', edit_event_path(@event) %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
 		<%= link_to 'Back', user %>
