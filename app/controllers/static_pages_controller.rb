@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
   	@user = current_user
-  	@events = Event.all
+  	@events = Event.where("starts_at >= ?", DateTime.now)
   end
 
   def search_test

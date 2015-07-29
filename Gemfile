@@ -60,3 +60,6 @@ gem 'chronic'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
+# svg
+gem 'inline_svg'
+
