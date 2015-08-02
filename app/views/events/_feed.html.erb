@@ -2,12 +2,12 @@
   <% @events.each do |event| %>
     <% user = User.find(event.user_id) %>
     <div class="feed-item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
-      <span class="field h1"><%= link_to event.name, event %></span>
-      <span class="field h2"><%= link_to user.name, user %></span>
-      <div class="field tags h4">
+      <span class="field h2"><%= link_to event.name, event %></span>
+      <span class="field h4"><%= link_to user.name, user %></span>
+      <span class="field tags h5">
         <%= event.tag_list %>
-      </div>
-      <span class="options row h3">
+      </span>
+      <span class="options row h4">
         <% if current_user.id == event.user_id %>
         <% else %>
           <%= render partial: "socializations/follow_button", locals: {socializable: event} %>

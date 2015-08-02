@@ -7,7 +7,17 @@
 /***** VARS *****/
 $namespace: "know";
 
+/*** LAYOUT
+*/
 $margins-h: 5vw;
+/***/
+
+/*** FONT
+*/
+$font-base: 1.6rem; /*18px;*/
+/***/
+
+/*****/
 
 /***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
 
@@ -20,6 +30,8 @@ a {
 
 .#{$namespace} {
 	box-sizing: border-box;
+	font-style: normal;
+	font-weight: normal;
 }
 /*****/
 
@@ -69,28 +81,34 @@ a {
 }
 
 .#{$namespace} {
-	font-size: 1.5rem;
-	font-style: normal;
-	font-weight: normal;
+	font-size: $font-base;
 }
 
-.#{$namespace} .h1 {
-	font-size: 1em;
-	font-weight: bold;
+.#{$namespace} 
+{
+	.h1 {
+		font-size: 1 * $font-base;
+		font-weight: bold;
+	}
+	.h2 {
+		font-size: .9 * $font-base;
+		font-weight: bold;
+	}
+
+	.h3 {
+		font-size: .8 * $font-base;
+	}
+
+	.h4 {
+		font-size: .7 * $font-base;
+	}
+
+	.h5 {
+		font-size: .6 * $font-base;
+	}
 }
 
-.#{$namespace} .h2 {
-	font-size: .8em;
-	font-weight: normal;
-}
 
-.#{$namespace} .h3 {
-	font-size: .7em;
-}
-
-.#{$namespace} .h4 {
-	font-size: .6em;
-}
 
 .#{$namespace} .page {
 	margin: 0 $margins-h;
@@ -98,9 +116,11 @@ a {
 
 .#{$namespace} .page section {
 	margin-top: 3rem;
+	width: 100%;
 }
 
-/***** FEED *****/
+/***** FEED 
+*/
 .#{$namespace} .feed.col {
 	justify-content: space-between;
 	border-top: 1px solid black;
@@ -139,7 +159,6 @@ a {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 40vw;
 	padding: 1rem 1.5rem;
 	border: 1px solid black;
 
@@ -209,6 +228,11 @@ a {
 
 .#{$namespace} .tags {
 	color: rgba(100, 0, 0, 0.3);
+}
+
+.page section {
+	display: flex;
+	flex-direction: column;
 }
 
 
