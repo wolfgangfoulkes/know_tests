@@ -1,18 +1,24 @@
 
 <% user = User.find(@event.user_id) %>
 <section>
-	<div class="show-field">
-	  <strong>Name:</strong>
-	  <%= @event.name %>
+	<!--
+	<%= image_tag "default.png", class: "thumbnail"%>
+	-->
+	<div class="field">
+	  <span class="h2"> Name: </span>
+	  <span class="h3"> <%= @event.name %> </span>
 	</div>
 
-	<div class="show-field">
-	  <strong>Description:</strong>
-	  <%= @event.description %>
+	<div class="field">
+	  <span class="h2"> Description: </span>
+	  <span class="h3"> <%= @event.description %> </span>
 	</div>
 
-	<div class="show-field">
-	  <strong>From:</strong> <%= @event.starts_at %> <strong>To:</strong> <%= @event.ends_at %>
+	<div class="field">
+	  <span class="h2">From:</span> 
+	  <span class="h3"> <%= @event.starts_at %> </span>
+	  <span class="h2">To:</span> 
+	  <span class="h3"> <%= @event.ends_at %> </span>
 	</div>
 
 	<div class="tags"> 
@@ -21,17 +27,17 @@
         <% end %>
     </div>
 
-	<div class="show-field">
-	  <strong>User:</strong>
-	  <%= link_to user.name, user %>
+	<div class="field">
+	  <span class="h2">User:</span>
+	  <span class="h3"> <%= link_to user.name, user %> </span>
 	</div>
 </section>
-<section>
 
-	<div class="options h1">
-		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
+<section>
+	<div class="options h2">
+<!-- 		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
 			<%= link_to 'Add', add_to_calendar_event_path(@event) %> |
-		<% end %>
+		<% end %> -->
 		<%= link_to 'Edit', edit_event_path(@event) %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
 		<%= link_to 'Back', user %>

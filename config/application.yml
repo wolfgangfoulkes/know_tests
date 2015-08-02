@@ -13,3 +13,4 @@
 # google api
 GOOGLE_CLIENT_ID: "426254089222-0crk7da7j9dmvihac9h3vorav4cis42d.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET: "Qs39YJtbJZzS2DfErIu3ysMe"
+USE_GOOGLE: 0

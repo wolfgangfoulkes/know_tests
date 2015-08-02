@@ -7,7 +7,21 @@
 /***** VARS *****/
 $namespace: "know";
 
+<<<<<<< HEAD
 $margins-h: 5vw;
+=======
+/*** LAYOUT
+*/
+$margins-h: 5vw;
+/***/
+
+/*** FONT
+*/
+$font-base: 1.6rem; /*18px;*/
+/***/
+
+/*****/
+>>>>>>> working
 
 /***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
 
@@ -20,6 +34,8 @@ a {
 
 .#{$namespace} {
 	box-sizing: border-box;
+	font-style: normal;
+	font-weight: normal;
 }
 /*****/
 
@@ -35,6 +51,22 @@ a {
 	flex-direction: column;
 }
 
+/***** OBJECTS *****/
+.svg-link {
+	position: relative;
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+	a {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+}
+
 /***** APP LAYOUT *****/
 .top-nav.row {
 	justify-content: flex-end;
@@ -47,29 +79,40 @@ a {
 	margin: 0 1em;
 }
 
+.top-nav.row .top-nav-item.svg-link {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
 .#{$namespace} {
-	font-size: 1.5rem;
-	font-style: normal;
-	font-weight: normal;
+	font-size: $font-base;
 }
 
-.#{$namespace} .h1 {
-	font-size: 1em;
-	font-weight: bold;
+.#{$namespace} 
+{
+	.h1 {
+		font-size: 1 * $font-base;
+		font-weight: bold;
+	}
+	.h2 {
+		font-size: .9 * $font-base;
+		font-weight: bold;
+	}
+
+	.h3 {
+		font-size: .8 * $font-base;
+	}
+
+	.h4 {
+		font-size: .7 * $font-base;
+	}
+
+	.h5 {
+		font-size: .6 * $font-base;
+	}
 }
 
-.#{$namespace} .h2 {
-	font-size: .8em;
-	font-weight: normal;
-}
 
-.#{$namespace} .h3 {
-	font-size: .7em;
-}
-
-.#{$namespace} .h4 {
-	font-size: .6em;
-}
 
 .#{$namespace} .page {
 	margin: 0 $margins-h;
@@ -77,9 +120,11 @@ a {
 
 .#{$namespace} .page section {
 	margin-top: 3rem;
+	width: 100%;
 }
 
-/***** FEED *****/
+/***** FEED 
+*/
 .#{$namespace} .feed.col {
 	justify-content: space-between;
 	border-top: 1px solid black;
@@ -88,6 +133,10 @@ a {
 	padding: 1em 0;
 	border-bottom: 1px solid black;
 	align-items: center;
+}
+
+.#{$namespace} .feed-item.row.past {
+	color: rgba(100, 0, 0, 0.1);
 }
 
 .#{$namespace} .feed-item .field {
@@ -114,7 +163,6 @@ a {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 40vw;
 	padding: 1rem 1.5rem;
 	border: 1px solid black;
 
@@ -153,12 +201,6 @@ a {
 	padding: .5rem 0;
 }
 /*****/
-/***** ICONS *****/
-/*.#{$namespace} .icon {
-	height: 4rem;
-	width: 4rem;
-}*/
-/*****/
 
 /***** TEMP *****/
 .#{$namespace} .events.feed {
@@ -190,6 +232,11 @@ a {
 
 .#{$namespace} .tags {
 	color: rgba(100, 0, 0, 0.3);
+}
+
+.page section {
+	display: flex;
+	flex-direction: column;
 }
 
 

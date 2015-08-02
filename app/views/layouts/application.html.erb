@@ -15,18 +15,21 @@
 
 <div class="top-nav row"> 
 <% if user_signed_in? %>
-	<div class="top-nav-item">
-		<%= link_to 'new', new_event_path, class: 'h2' %>
+	<div class="top-nav-item svg-link">
+		<%= link_to '', new_event_path %>
+		<%= inline_svg 'svg/icons/plus.svg' %>
 	</div>
-	<div class="top-nav-item">
-		<%= link_to 'home', root_path, class: 'h2' %>
+	<div class="top-nav-item svg-link">
+		<%= link_to '', root_path %>
+		<%= inline_svg 'svg/icons/home.svg' %>
 	</div>
-	<div class="top-nav-item">
-		<%= link_to 'schedule', schedule_path, class: 'h2' %>
+	<div class="top-nav-item svg-link">
+		<%= link_to '', schedule_path %>
+		<%= inline_svg 'svg/icons/calendar.svg' %>
 	</div>
-	|
-	<div class="top-nav-item">
-		<%= link_to current_user.name, current_user, class: 'h2' %>
+	<div class="top-nav-item svg-link">
+		<%= link_to '', current_user %>
+		<%= inline_svg 'svg/icons/user.svg' %>
 	</div>
 	<div class="top-nav-item"> 
 		<%= link_to "logout", destroy_user_session_path, method: :delete, 
