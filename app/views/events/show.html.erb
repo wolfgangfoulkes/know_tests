@@ -1,9 +1,6 @@
 
 <% user = User.find(@event.user_id) %>
 <section>
-	<!--
-	<%= image_tag "default.png", class: "thumbnail"%>
-	-->
 	<div class="field">
 	  <span class="h2"> Name: </span>
 	  <span class="h3"> <%= @event.name %> </span>
@@ -35,9 +32,6 @@
 
 <section>
 	<div class="options h2">
-<!-- 		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
-			<%= link_to 'Add', add_to_calendar_event_path(@event) %> |
-		<% end %> -->
 		<%= link_to 'Edit', edit_event_path(@event) %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
 		<%= link_to 'Back', user %>
