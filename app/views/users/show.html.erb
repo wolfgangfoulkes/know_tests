@@ -1,10 +1,16 @@
+<% if @user == current_user %>
+	<div id="bar-b" class="nav-bar row h2">
+		<%= link_to "edit", edit_user_registration_path, class: "item" %>	
+	</div>
+<% end %>
+
 <section>
 	<span class="field h1"> <%= @user.name %> </span>
 	<span class="field h2"> <%= @user.email %> </span>
-	<span class="options h3"> 
-		<%= link_to "edit", edit_user_registration_path %> 
-	</span>
 </section>
+
+<div class="vmn"> </div>
+
 <section>
 	
 	<br>

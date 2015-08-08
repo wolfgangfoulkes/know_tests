@@ -1,45 +1,39 @@
-
-<% user = User.find(@event.user_id) %>
+<div id="bar-b" class="nav-bar row h2">
+	<% if @event.user == current_user %>
+		<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
+		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "item" %> 
+	<% else %>
+		<div class="item">
+			<%= render partial: "socializations/follow_button", locals: {socializable: @event} %>
+		</div>
+	<% end %>
+</div>
+	
 <section>
-	<!--
-	<%= image_tag "default.png", class: "thumbnail"%>
-	-->
+	<%= image_tag "landscape.png", class: "img-main"%>
+
 	<div class="field">
-	  <span class="h2"> Name: </span>
-	  <span class="h3"> <%= @event.name %> </span>
+	  <span class="h1"> <%= @event.name %> </span>
+	  <span class="h4"> 
+	  	<%= link_to @event.user.name, @event.user %> 
+	  </span>
 	</div>
 
 	<div class="field">
-	  <span class="h2"> Description: </span>
+	  <span class="h3"> <%= @event.starts_at.to_formatted_s(:short) %> </span>
+	  <span class="h2"> - </span> 
+	  <span class="h3"> <%= @event.ends_at.to_formatted_s(:short) %> </span>
+	</div>
+
+	<div class="field">
 	  <span class="h3"> <%= @event.description %> </span>
 	</div>
 
-	<div class="field">
-	  <span class="h2">From:</span> 
-	  <span class="h3"> <%= @event.starts_at %> </span>
-	  <span class="h2">To:</span> 
-	  <span class="h3"> <%= @event.ends_at %> </span>
-	</div>
+	
 
 	<div class="tags"> 
         <% @event.tags.each do |tag| %>
           <%= link_to tag.name, tag, class: "tag-name" %>
         <% end %>
     </div>
-
-	<div class="field">
-	  <span class="h2">User:</span>
-	  <span class="h3"> <%= link_to user.name, user %> </span>
-	</div>
-</section>
-
-<section>
-	<div class="options h2">
-<!-- 		<% if user_signed_in? && (Token.exists? email: current_user.email) %>
-			<%= link_to 'Add', add_to_calendar_event_path(@event) %> |
-		<% end %> -->
-		<%= link_to 'Edit', edit_event_path(@event) %> |
-		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
-		<%= link_to 'Back', user %>
-	</div>
 </section>
