@@ -35,5 +35,5 @@
     <%= f.submit %>
   </div>
 
-  <%= f.hidden_field :user_id, :value => @user.id %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
