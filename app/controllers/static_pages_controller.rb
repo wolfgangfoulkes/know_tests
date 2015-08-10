@@ -1,6 +1,5 @@
 class StaticPagesController < ApplicationController
   def home
-  	@user = current_user
   	@events = Event.where("starts_at >= ?", DateTime.now)
   end
 
