@@ -1,6 +1,6 @@
 class AuthorCommentsController < ApplicationController
+	load_and_authorize_resource only: [:create, :destroy]
 	def create
-		@author_comment = AuthorComment.new(author_comment_params)
 		respond_to do |format|
 			if @author_comment.save
 				format.html { redirect_to @author_comment.event }
@@ -11,7 +11,6 @@ class AuthorCommentsController < ApplicationController
 	end
 
 	def destroy
-		@author_comment = AuthorComment.find(params[:id])
 		@author_comment.destroy
 		respond_to do |format|
 			format.html { redirect_to root_url }
