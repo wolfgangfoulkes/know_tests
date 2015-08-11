@@ -13,7 +13,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    @author_comments = @event.author_comments
+    @author_comments = @event.author_comments.all 
+    #.all is a new hash, rather than a reference, which increments with below
     @author_comment = @event.author_comments.build
   end
 

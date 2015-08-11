@@ -1,17 +1,20 @@
 class AuthorCommentsController < ApplicationController
 	def create
 		@author_comment = AuthorComment.new(author_comment_params)
-		if @author_comment.save
-			redirect_to @author_comment.event
-		else
-			render 'static_pages/home'
+		respond_to do |format|
+			if @author_comment.save
+				format.html { redirect_to @author_comment.event }
+			else
+				format.html { redirect_to root_url }
+			end
 		end
 	end
 
 	def destroy
+		@author_comment = AuthorComment.find(params[:id])
 		@author_comment.destroy
 		respond_to do |format|
-			format.html {redirect_to root_url}
+			format.html { redirect_to root_url }
 		end
 	end
 

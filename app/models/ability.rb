@@ -5,6 +5,7 @@ class Ability
     can :read, :all
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
+    can [:create, :destroy], AuthorComment, :event => { :user_id => user.id }
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
