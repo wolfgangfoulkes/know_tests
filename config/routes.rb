@@ -11,9 +11,14 @@ Rails.application.routes.draw do
     end
 
     resources :comments, :only => [:create, :destroy], module: :events
+    resources :questions, :only => [:create, :destroy]
 
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+  end
+
+  resources :questions, :only => [:show] do
+    resources :comments, :only => [:create, :destroy], module: :questions
   end
 
   #post ':controller(/filtered)', action: 'filtered'

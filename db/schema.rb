@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811114415) do
+ActiveRecord::Schema.define(version: 20150811155829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,16 @@ ActiveRecord::Schema.define(version: 20150811114415) do
 
   add_index "mentions", ["mentionable_id", "mentionable_type"], name: "fk_mentionables", using: :btree
   add_index "mentions", ["mentioner_id", "mentioner_type"], name: "fk_mentions", using: :btree
+
+  create_table "questions", force: true do |t|
+    t.integer  "event_id"
+    t.string   "subject"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["event_id"], name: "index_questions_on_event_id", using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "event_id"
