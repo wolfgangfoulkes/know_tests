@@ -49,5 +49,7 @@
 <div class="vmn"> </div>
 
 <section>
-	<%= render partial: 'comments/form', locals: {commentable: @event} %>
+	<%= render partial: 'comments/form', locals: 
+		{commentable: @event, comment: @event.comments.build }
+	%>
 </section>

@@ -4,8 +4,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  commentable: one (Event)
+  subject: "we've changed location"
+  content: "after the sobering events of the last afternoon, there is a pressing necessity for overhaul in the geography of this get-together."
+  created_at: 2010-01-01 0:0:0 -5
+
+two:
+  commentable: one (Event)
+  subject: "alteration in room-order"
+  content: "we've chosen to reconfigure the architecture of the structure we've used. the line dance may be reconceived as a square or cube."
+  created_at: 2010-01-01 0:0:0 -5

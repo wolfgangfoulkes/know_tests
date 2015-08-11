@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 			if @comment.save
 				format.html { redirect_to @commentable }
 			else
-				format.html { redirect_to @commentable }
+				format.html { redirect_to @commentable, notice: @comment.errors.full_messages.join(", ") }
 			end
 		end
 	end

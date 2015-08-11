@@ -4,4 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!
+
+  # modify to set yr own custom error
+  rescue_from CanCan::AccessDenied do |exception|
+	redirect_to access_error_url
+  end
 end
