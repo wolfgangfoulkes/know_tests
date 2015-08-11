@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     end
     member do #event/:id/ with :id passed in params[:id]
     end
+
+    resources :comments, :only => [:create, :destroy], module: :events
+
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
   end

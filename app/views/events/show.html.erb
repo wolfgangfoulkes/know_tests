@@ -42,12 +42,12 @@
 
 <section>
 	<div class="col">
-		<%= render 'author_comments/list' %>
+		<%= render partial: 'comments/list', locals: {commentable: @event} %>
 	</div>
 </section>
 
 <div class="vmn"> </div>
 
 <section>
-	<%= render 'author_comments/form' %>
+	<%= render partial: 'comments/form', locals: {commentable: @event} %>
 </section>
