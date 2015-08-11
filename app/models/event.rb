@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
 	include Filterable
 	#----- relationships
 	belongs_to :user
+	has_many :author_comments, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	#-----

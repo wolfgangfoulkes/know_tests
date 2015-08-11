@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810062615) do
+ActiveRecord::Schema.define(version: 20150811044845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "author_comments", force: true do |t|
+    t.integer  "event_id"
+    t.string   "subject"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "author_comments", ["event_id"], name: "index_author_comments_on_event_id", using: :btree
 
   create_table "events", force: true do |t|
     t.string   "name"

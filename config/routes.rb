@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
-
   end
+
+  resources :author_comments, :only => [:create, :destroy]
 
   #post ':controller(/filtered)', action: 'filtered'
   
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   get 'schedule/:action', controller: 'schedule'
   get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
   
+  get '/updates', to: 'static_pages#updates', as: 'updates'
   root 'static_pages#home'
 
   #----- error handling

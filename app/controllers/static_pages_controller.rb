@@ -3,6 +3,9 @@ class StaticPagesController < ApplicationController
   	@events = Event.where("starts_at >= ?", DateTime.now)
   end
 
+  def updates
+  end
+
   def search_test
     @user = current_user
     @events = Event.all
