@@ -1,5 +1,5 @@
 <div id="bar-b" class="nav-bar row h2">
-	<% if @event.user == current_user %>
+	<% if can? :edit, @event %>
 		<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "item" %> 
 	<% else %>
@@ -10,11 +10,8 @@
 </div>
 	
 <section>
-<<<<<<< HEAD
-=======
 	<%= image_tag "landscape.png", class: "img-main"%>
 
->>>>>>> working
 	<div class="field">
 	  <span class="h1"> <%= @event.name %> </span>
 	  <span class="h4"> 
@@ -32,27 +29,9 @@
 	  <span class="h3"> <%= @event.description %> </span>
 	</div>
 
+	<br>
 	
-
 	<div class="tags"> 
-        <% @event.tags.each do |tag| %>
-          <%= link_to tag.name, tag, class: "tag-name" %>
-        <% end %>
+        <%= @event.tag_list %>
     </div>
-<<<<<<< HEAD
-
-	<div class="field">
-	  <span class="h2">User:</span>
-	  <span class="h3"> <%= link_to user.name, user %> </span>
-	</div>
-</section>
-
-<section>
-	<div class="options h2">
-		<%= link_to 'Edit', edit_event_path(@event) %> |
-		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
-		<%= link_to 'Back', user %>
-	</div>
-=======
->>>>>>> working
 </section>
