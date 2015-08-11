@@ -42,7 +42,7 @@
 
 <section>
 	<div class="col">
-		<%= render partial: 'comments/list', locals: {commentable: @event} %>
+		<%= render partial: 'comments/list', locals: {comments: @event.comments} %>
 	</div>
 </section>
 

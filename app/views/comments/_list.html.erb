@@ -1,6 +1,6 @@
-<% commentable.comments.each do |comment| %>
+<% comments.each do |comment| %>
 	<div class="row">
-	  <div class="item h4"> 
+	  <div class="item h4">
 	    <%= comment.subject %>
 	  </div>
 	  <div class="item h5"> 
@@ -8,7 +8,7 @@
 	  </div>
 	  <div class="item h4">
 	  	<% if can? :destroy, comment %>
-		  	<%= link_to 'Destroy', url_for([commentable, comment]), method: :delete, data: { confirm: 'Are you sure?' }, class: "item h4" %>
+		  	<%= link_to 'Destroy', url_for([comment.commentable, comment]), method: :delete, data: { confirm: 'Are you sure?' }, class: "item h4" %>
 	  	<% end %>
 	  </div>
 	</div>
