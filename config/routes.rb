@@ -4,13 +4,15 @@ Rails.application.routes.draw do
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :new, :create, :destroy, :edit, :update, :index] do
+
     collection do #events/
       post 'filtered'
     end
+
     member do #event/:id/ with :id passed in params[:id]
     end
 
-    resources :comments, :only => [:create, :destroy], module: :events
+    resources :comments, :only => [:show, :create, :destroy], module: :events
     resources :questions, :only => [:create, :destroy]
 
     post 'follow', to: 'socializations#follow'
@@ -18,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, :only => [:show] do
-    resources :comments, :only => [:create, :destroy], module: :questions
+    resources :comments, :only => [:show, :create, :destroy], module: :questions
   end
 
   #post ':controller(/filtered)', action: 'filtered'
