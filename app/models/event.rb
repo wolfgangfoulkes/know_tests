@@ -23,6 +23,7 @@ class Event < ActiveRecord::Base
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
+
 	# order determines final order
 	scope :search, -> (q) { name_starts_with(q) | name_contains(q) }
 

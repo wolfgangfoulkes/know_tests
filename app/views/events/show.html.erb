@@ -28,13 +28,9 @@
 	<div class="field">
 	  <span class="h3"> <%= @event.description %> </span>
 	</div>
-
-	
-
+	<br>
 	<div class="tags"> 
-        <% @event.tags.each do |tag| %>
-          <%= link_to tag.name, tag, class: "tag-name" %>
-        <% end %>
+        <%= @event.tag_list %>
     </div>
 </section>
 
