@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
 	def create
 		#@comment.user = current_user
 		respond_to do |format|
@@ -15,6 +16,9 @@ class CommentsController < ApplicationController
 		respond_to do |format|
 			format.html { redirect_to @comment.commentable }
 		end
+	end
+
+	def show
 	end
 
 	private

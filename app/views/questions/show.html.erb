@@ -1,0 +1,22 @@
+<section>
+	<div class="h3"> 
+		<%= @question.subject %> 
+	</div>
+	<div class="h4"> 
+		<%= @question.content %> 
+	</div>
+</section>
+<section>
+</section>
+
+<section>
+	<%= render partial: "comments/list", 
+		locals: { comments: @question.comments }
+	%>
+</section>
+
+<section> 
+	<%= render partial: "comments/form", 
+		locals: { commentable: @question, comment: @question.comments.build }
+	%>
+</section>

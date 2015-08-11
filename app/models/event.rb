@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
 	#----- relationships
 	belongs_to :user
 	has_many :comments, as: :commentable, dependent: :destroy
-
+	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	#-----
