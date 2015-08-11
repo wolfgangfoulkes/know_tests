@@ -1,7 +1,6 @@
-<section>
-	<div class="row nav"> 
-		<%= link_to 'list', '/schedule/list', class: 'nav-item' %> |
-		<%= link_to 'calendar', '/schedule/calendar', class: 'nav-item' %>
-	</div>
-</section>
+<div id="bar-b" class="nav-bar row h2">
+	<%= link_to 'list', '/schedule/list', class: 'item' %> |
+	<%= link_to 'calendar', '/schedule/calendar', class: 'item' %>
+</div>
+
 <%= yield %>

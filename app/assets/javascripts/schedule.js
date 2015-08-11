@@ -26,6 +26,8 @@ $(document).on("page:change", function()
 	$('#calendar').fullCalendar({
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,
-	        aspectRatio: 2 //height determined from width, width from css
+			height: 'auto'
+	        //aspectRatio: 1.35 //height determined from width, width from css
+
 	});
 });

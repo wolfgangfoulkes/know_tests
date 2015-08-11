@@ -13,25 +13,31 @@
 
 <body class="know <%= "#{controller.controller_name}-#{controller.action_name}" %>">
 
-<div class="top-nav row"> 
+<div id="bar-t" class="nav-bar row"> 
 <% if user_signed_in? %>
-	<div class="top-nav-item svg-link">
-		<%= link_to '', new_event_path %>
-		<%= inline_svg 'svg/icons/plus.svg' %>
-	</div>
-	<div class="top-nav-item svg-link">
-		<%= link_to '', root_path %>
-		<%= inline_svg 'svg/icons/home.svg' %>
-	</div>
-	<div class="top-nav-item svg-link">
-		<%= link_to '', schedule_path %>
+	<a 	href="<%= new_event_path %>"
+		class="item svg-link" >
+		<%= inline_svg 'svg/icons/plus.svg', 
+			class: "svg-plus" 
+		%>
+	</a>
+	<a 	href="<%= root_path %>"
+		class="item svg-link" >
+		<%= inline_svg 'svg/icons/home.svg',
+			class: "svg-home" 
+				%>
+	</a>
+	<a 	href="<%= schedule_path %>"
+		class="item svg-link" >
 		<%= inline_svg 'svg/icons/calendar.svg' %>
-	</div>
-	<div class="top-nav-item svg-link">
-		<%= link_to '', current_user %>
-		<%= inline_svg 'svg/icons/user.svg' %>
-	</div>
-	<div class="top-nav-item"> 
+	</a>
+	<a 	href="<%= user_path(current_user.id) %>"
+		class="item svg-link" >
+		<%= inline_svg 'svg/icons/user.svg',
+			class: "svg-user"
+		%>
+	</a>
+	<div class="item"> 
 		<%= link_to "logout", destroy_user_session_path, method: :delete, 
 		class: 'h2' %>
 	</div>
@@ -46,9 +52,9 @@
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 
-
 <div class="page">
-<%= yield %>
+	<div class="vmn"> </div>
+	<%= yield %>
 </div>
 
 </body>

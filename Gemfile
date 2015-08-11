@@ -40,6 +40,7 @@ gem 'spring',        group: :development
 
 # handle authentication
 gem 'devise'
+gem 'cancancan'
 
 # social media functionality (e.g. follow, like)
 gem 'socialization'

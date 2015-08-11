@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       post 'filtered'
     end
     member do #event/:id/ with :id passed in params[:id]
-      get 'add_to_calendar'
     end
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
