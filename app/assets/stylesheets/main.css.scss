@@ -4,6 +4,37 @@
 
 @import "base/meyer-reset-mod.css.scss";
 
+/***** FUNCTIONS *****/
+@function a_bl($fg, $bg, $a) {
+	@return rgb(
+	$a * red($fg) 	+ 	(1-$a) * red($bg),
+	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
+	$a * green($fg) + 	(1-$a) * green($bg)
+	);
+}
+
+@function rgba2rgb($c, $a) {
+	@return a_bl($c, rgb(255, 255, 255), $a);
+}
+
+@function w_bl($c, $a) {
+	@return rgba2rgb($c, $a);
+}
+
+@function color($k)
+{
+	@if $k == salvr
+	{
+		@return w_bl(rgb(100, 0, 0), 0.1);
+	}
+	@else 
+	{
+		@return #FFFFFF;
+	}
+}
+/*****/
+
+
 /***** VARS *****/
 $namespace: "know";
 
