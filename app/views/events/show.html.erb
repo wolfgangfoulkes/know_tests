@@ -50,8 +50,9 @@
 
 <section>
 	<div class="h2"> Questions </div>
-	<%= render partial: 'questions/list', locals: 
-	{ questions: @event.questions } %>
+	<div class="comment-list col" data-refresh="questions">
+		<%= render @event.questions %>
+	</div>
 
 	<%= render partial: 'questions/form', locals: 
 	{ question: @event.questions.build } %>

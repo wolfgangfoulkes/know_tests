@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to @event }
+      format.js   { render 'shared/refresh_list.js.erb', locals: {target: "questions", collection: @event.questions} }
     end
   end
 

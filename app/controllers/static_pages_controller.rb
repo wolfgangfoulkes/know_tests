@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   end
 
   def updates
-    @updates = Comment.commentable_in(current_user.followees(Event)) + Question.event_in(current_user.followees(Event) | current_user.events)
+    @updates = Comment.where(commentable: current_user.followees(Event)) + Question.where(event: (current_user.followees(Event) | current_user.events))
   end
 
   def search_test

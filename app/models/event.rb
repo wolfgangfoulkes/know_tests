@@ -41,8 +41,6 @@ class Event < ActiveRecord::Base
 	after_save :remove_orphaned_tags
 	#-----
 
-
-
 	#----- METHODS -----
 	
 	#--- tags 
