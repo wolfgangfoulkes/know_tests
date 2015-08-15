@@ -1,0 +1,11 @@
+<div class="item">
+  <%= link_to comment.subject, [comment.commentable, comment], class: "subject h4" %>
+  <div class="content h5"> 
+    <%= comment.content %>
+  </div>
+  <div class="options h4">
+  	<% if can? :destroy, comment %>
+	  	<%= link_to 'Destroy', [comment.commentable, comment], method: :delete, data: { confirm: 'Are you sure?' }, class: "item h4" %>
+  	<% end %>
+  </div>
+</div>

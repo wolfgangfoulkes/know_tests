@@ -1,0 +1,15 @@
+<div class="comment-list col">
+	<% questions.each do |question| %>
+		<div class="item">
+		  <%= link_to question.subject, question, class: "subject h4" %>
+		  <div class="content h5"> 
+		    <%= question.content %>
+		  </div>
+		  <div class="options h4">
+		  	<% if can? :destroy, question %>
+			  	<%= link_to 'Destroy', [question.event, question], method: :delete, data: { confirm: 'Are you sure?' }, class: "item h4" %>
+		  	<% end %>
+		  </div>
+		</div>
+	<% end %>
+</div>

@@ -5,7 +5,7 @@ class Ability
     can :read, :all
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
-    can [:create, :destroy], Question
+    can [:read, :create, :destroy], Question
     can [:create, :destroy], Comment do |c|
         (c.commentable_type == "Question") ||
         ((c.commentable_type == "Event") && (c.commentable.user_id == user.id))

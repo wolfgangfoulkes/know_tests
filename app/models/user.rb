@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 	acts_as_follower
 	#-----
 
+	def updates
+		self.followees(Event).find_each.comments + self.self.followees(Event).find_each.questions
+	end
+
 	# pass an access object returned by google, 
 	# if a user has the email associated with the access object
 	# set provider, uid, and token for that user from the object

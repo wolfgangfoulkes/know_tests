@@ -4,4 +4,6 @@ class Question < ActiveRecord::Base
 	validates :content, presence: true, length: { maximum: 240 }
 	
 	has_many :comments, as: :commentable, dependent: :destroy
+
+	scope :event_in, -> (q) { where(event: q) }
 end

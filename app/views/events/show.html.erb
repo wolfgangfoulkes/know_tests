@@ -37,7 +37,22 @@
 <div class="vmn"> </div>
 
 <section>
-	<%= render partial: 'comments/list', locals: {comments: @event.comments} %>
+	<div class="h2"> Updates </div>
+	<%= render partial: 'comments/list', locals: 
+	{ comments: @event.comments } %>
 
-	<%= render partial: 'comments/form', locals: {commentable: @event, comment: @event.comments.build} %>
+	<%= render partial: 'comments/form', 
+	locals: { comment: @event.comments.build } 
+	%>
+</section>
+
+<div class="vmn"> </div>
+
+<section>
+	<div class="h2"> Questions </div>
+	<%= render partial: 'questions/list', locals: 
+	{ questions: @event.questions } %>
+
+	<%= render partial: 'questions/form', locals: 
+	{ question: @event.questions.build } %>
 </section>

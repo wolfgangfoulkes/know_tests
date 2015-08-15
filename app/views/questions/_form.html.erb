@@ -1,13 +1,15 @@
-<%= form_for [@event, @event.questions.build] do |f| %>
-  <div class="field">
-    <%= f.label :subject %><br>
-    <%= f.text_field :subject %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% if can? :create, question %>
+  <%= form_for [question.event, question] do |f| %>
+    <div class="field">
+      <%= f.label :subject %><br>
+      <%= f.text_field :subject %>
+    </div>
+    <div class="field">
+      <%= f.label :content %><br>
+      <%= f.text_area :content %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
 <% end %>
