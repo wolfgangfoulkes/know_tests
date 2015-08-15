@@ -1,4 +1,5 @@
 class Comment < ActiveRecord::Base
+	include Updates
 	belongs_to :commentable, polymorphic: true
 	validates :subject, presence: true, length: { maximum: 60 }
 	validates :content, presence: true, length: { maximum: 240 }

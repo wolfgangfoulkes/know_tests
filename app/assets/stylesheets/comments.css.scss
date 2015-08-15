@@ -2,10 +2,17 @@
 	position: relative;
 	align-items: center;
 	.item {
-		
 		box-sizing: border-box;
 		line-height: $font-base/2;
 		text-align: center;
+
+		&[data-updated=true] {
+
+		}
+		&[data-updated=false] {
+			color: rgba(100, 0, 0, 0.3);
+		}
+
 		.subject {
 			
 		}

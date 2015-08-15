@@ -1,11 +1,15 @@
 class Event < ActiveRecord::Base
 	include Filterable
+	include Updates
 	#----- relationships
 	belongs_to :user
-	has_many :comments, as: :commentable, dependent: :destroy
+	has_many :comments, as: :commentable, dependent: :destroy 
 	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
+	#--- socialization
+	acts_as_followable
+	#---
 	#-----
 
 	#----- validations -----
@@ -32,9 +36,7 @@ class Event < ActiveRecord::Base
 	end
 	#-----
 
-	#----- socialization -----
-	acts_as_followable
-	#-----
+
 
 	#----- callbacks -----
 	after_destroy :remove_orphaned_tags
@@ -75,6 +77,4 @@ class Event < ActiveRecord::Base
 	end
 
 	#-----
-
-
 end

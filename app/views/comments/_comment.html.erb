@@ -1,6 +1,6 @@
-<div class="item">
+<div class="item" data-updated="<%= comment.updated?(current_user) %>">
   <%= link_to comment.subject, [comment.commentable, comment], class: "subject h4" %>
-  <div class="content h5"> 
+  <div class="content h5">
     <%= comment.content %>
   </div>
   <div class="options h4">
