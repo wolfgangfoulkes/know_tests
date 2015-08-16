@@ -2,9 +2,9 @@ module Updates
   extend ActiveSupport::Concern
 
   included do
-  	scope :created_after, -> (q) {where("created_at > ?", q)}
-	 scope :updated_after, -> (q) {where("updated_at > ?", q)}
-	 scope :mod_after, -> (q) { created_after(q) | updated_after(q) }
+    scope :created_after, -> (q) {where("created_at > ?", q)}
+  	scope :updated_after, -> (q) {where("updated_at > ?", q)}
+  	scope :mod_after, -> (q) { created_after(q) | updated_after(q) }
   end
 
   def updated?(user)

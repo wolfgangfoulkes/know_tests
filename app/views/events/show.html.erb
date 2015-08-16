@@ -38,9 +38,10 @@
 
 <section>
 	<div class="h2"> Updates </div>
-	<%= render partial: 'comments/list', locals: 
-	{ comments: @event.comments } %>
-
+	<div class="comment-list col" 
+		data-refresh="comments">
+		<%= render @event.comments %>
+	</div>
 	<%= render partial: 'comments/form', 
 	locals: { comment: @event.comments.build } 
 	%>
@@ -50,7 +51,8 @@
 
 <section>
 	<div class="h2"> Questions </div>
-	<div class="comment-list col" data-refresh="questions">
+	<div class="comment-list col" 
+		data-refresh="questions">
 		<%= render @event.questions %>
 	</div>
 
