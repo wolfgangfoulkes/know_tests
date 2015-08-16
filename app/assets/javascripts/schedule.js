@@ -23,6 +23,7 @@ var transformData = function(event_)
 
 $(document).on("page:change", function()
 {
+	var data = $('#calendar').data();
 	$('#calendar').fullCalendar({
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,

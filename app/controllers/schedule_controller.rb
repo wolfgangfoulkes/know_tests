@@ -9,6 +9,7 @@ class ScheduleController < ApplicationController
 	end
 
 	def calendar
+		@date = Event.first.created_at
 		respond_to do |format|
 			format.html
 		end
