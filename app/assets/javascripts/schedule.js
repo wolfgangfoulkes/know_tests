@@ -21,6 +21,7 @@ var transformData = function(event_)
 	return _event;
 }
 
+
 $(document).on("page:change", function()
 {
 	var data = $('#calendar').data();
@@ -29,6 +30,10 @@ $(document).on("page:change", function()
 			eventDataTransform: transformData,
 			height: 'auto'
 	        //aspectRatio: 1.35 //height determined from width, width from css
-
 	});
+
+	if (data["date"])
+	{
+		$('#calendar').fullCalendar("gotoDate", moment( new Date(data["date"]) ) );
+	}
 });

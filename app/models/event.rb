@@ -36,8 +36,6 @@ class Event < ActiveRecord::Base
 	end
 	#-----
 
-
-
 	#----- callbacks -----
 	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
@@ -77,4 +75,5 @@ class Event < ActiveRecord::Base
 	end
 
 	#-----
+
 end
