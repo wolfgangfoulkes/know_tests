@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   	@events = Event.where("starts_at >= ?", DateTime.now)
   end
 
-  def updates
+  def activities
     @activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
     #@updates = 
     #Comment.where(commentable: current_user.followees(Event)) |

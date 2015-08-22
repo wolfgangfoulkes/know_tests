@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get '/calendar', to: redirect('schedule/calendar'), as: 'calendar'
   get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
   
-  get '/updates', to: 'static_pages#updates', as: 'updates'
+  get '/activities', to: 'static_pages#activities', as: 'activities'
   root 'static_pages#home'
 
   #----- error handling
