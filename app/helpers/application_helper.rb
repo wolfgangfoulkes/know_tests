@@ -1,4 +1,54 @@
 module ApplicationHelper
+	# ----- CLASS METHODS -----
+	# --- can be referenced in controller via ApplicationHelper.method
+	# --- can't reference other helper methods that aren't class-methods
+	# --- consider move to specific 'universal' helper
+	def self.isa?(o_, class_)
+		o_.class.name == class_
+	end
+
+	def self.timestamps?(o_)
+		!(defined?(o_.created_at).nil? || defined?(o_.created_at).nil?)
+	end
+
+	def self.fresh_after?(o_, dt_)
+		(o_.created_at.to_f >= dt_.to_f) ||
+		(o_.updated_at.to_f >= dt_.to_f)
+	end
+
+	def self.fresh_for_user?(o_, user_)
+		return false unless ( timestamps?(o_) && isa?(user_, "User") )
+		# in the future avoid above unless we expect different behavior for each scenario
+		# like if we sometimes give it a var that returns false, so we can test that too
+		# or we don't want to throw an exception but it's hard to avoid the cause
+		# otherwise, it's like overriding "+" to avoid passing incompatible objects
+
+		fresh_after?(o_, user_.last_sign_in_at)
+	end
+	# ----------
+
+	# ----- HELPER METHODS -----
+	# - can be referenced in view, and in model, with 'include' 
+	# - non-class methods will be overriden by helpers with alphabetically later names
+	
+	# --- from class methods
+	def isa?(o_, class_)
+		ApplicationHelper.isa?(o_, class_)
+	end
+
+	def timestamps?(o_)
+		ApplicationHelper.timestamps?(o_)
+	end
+
+	def fresh_after?(o_, dt_)
+		ApplicationHelper.fresh_after?(o_, dt_)
+	end
+
+	def fresh_for_user?(o_, user_)
+		ApplicationHelper.fresh_for_user?(o_, user_)
+	end
+	# -----
+	
 	def asset_exists?(subdirectory, filename)
 	  File.exists?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
 	end
@@ -20,4 +70,5 @@ module ApplicationHelper
 	    truth || asset_exists?('stylesheets', "#{stylesheet}.css#{extension}")
 	  end
 	end
+
 end

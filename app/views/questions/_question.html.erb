@@ -1,4 +1,4 @@
-<div class="item">
+<div class="item" data-fresh="<%= fresh?(question) %>">
   <%= link_to question.subject, question, class: "subject h4" %>
   <div class="content h5"> 
     <%= question.content %>

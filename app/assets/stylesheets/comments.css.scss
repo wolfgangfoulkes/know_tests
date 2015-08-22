@@ -6,10 +6,10 @@
 		line-height: $font-base/2;
 		text-align: center;
 
-		&[data-updated=true] {
+		&[data-fresh=true] {
 
 		}
-		&[data-updated=false] {
+		&[data-fresh=false] {
 			color: rgba(100, 0, 0, 0.3);
 		}
 

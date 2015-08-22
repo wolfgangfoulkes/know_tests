@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
 	include Filterable
-	include Updates
 	include PublicActivity::Common
 	#----- relationships -----
 	belongs_to :user
@@ -12,8 +11,8 @@ class Event < ActiveRecord::Base
 
 	#--- socialization
 	acts_as_followable
-	#---
 	#-----
+	#--------
 
 	#----- validations -----
 	validates :user_id, presence: true
@@ -22,7 +21,7 @@ class Event < ActiveRecord::Base
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
-	#-----
+	#--------
 
 	#----- scopes ----- 
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
@@ -37,15 +36,16 @@ class Event < ActiveRecord::Base
 	def self.default_scope
 		order("starts_at ASC")
 	end
-	#-----
+	#--------
 
 	#----- callbacks -----
 	after_save :remove_orphaned_tags
 	after_save(on: :update) do
-		self.create_activity key: 'event.update', owner: self
+		# called twice
+		# do with 'notify_users checkbox'
 	end
 	after_destroy :remove_orphaned_tags
-	#-----
+	#--------
 
 	#----- METHODS -----
 	
@@ -70,7 +70,8 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
-	#---
+	#-----
+	#--- filters
 
 	def self.filter_combine(ps)
 		results = []
@@ -79,7 +80,7 @@ class Event < ActiveRecord::Base
 		end
 		results
 	end
-
 	#-----
+	#--------
 
 end

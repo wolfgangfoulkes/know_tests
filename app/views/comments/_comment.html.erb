@@ -1,4 +1,4 @@
-<div class="item" data-updated="<%= comment.updated?(current_user) %>">
+<div class="item" data-fresh="<%= fresh?(comment) %>">
   <%= link_to comment.subject, [comment.commentable, comment], class: "subject h4" %>
   <div class="content h5">
     <%= comment.content %>

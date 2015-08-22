@@ -1,6 +1,5 @@
 class Question < ActiveRecord::Base
 	include Filterable
-	include Updates
 	include PublicActivity::Common
 	belongs_to :event
 	validates :subject, presence: true, length: { maximum: 60 }
@@ -10,6 +9,10 @@ class Question < ActiveRecord::Base
 
 	#----- callbacks
 	after_save do
+		activity_for_save
+	end
+
+	def activity_for_save
 		event.create_activity key: 'event.update_question', owner: event
 	end
 end
