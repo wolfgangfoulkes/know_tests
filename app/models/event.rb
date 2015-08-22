@@ -1,12 +1,15 @@
 class Event < ActiveRecord::Base
 	include Filterable
 	include Updates
-	#----- relationships
+	include PublicActivity::Common
+	#----- relationships -----
 	belongs_to :user
 	has_many :comments, as: :commentable, dependent: :destroy 
 	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
+	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
+
 	#--- socialization
 	acts_as_followable
 	#---
@@ -37,8 +40,11 @@ class Event < ActiveRecord::Base
 	#-----
 
 	#----- callbacks -----
-	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
+	after_save(on: :update) do
+		self.create_activity key: 'event.update', owner: self
+	end
+	after_destroy :remove_orphaned_tags
 	#-----
 
 	#----- METHODS -----

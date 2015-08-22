@@ -64,3 +64,5 @@ gem 'fullcalendar-rails'
 # svg
 gem 'inline_svg'
 
+# track activities
+gem 'public_activity', '~> 1.4.2'
