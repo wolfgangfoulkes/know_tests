@@ -27,7 +27,3 @@ four:
   subject: "here comes another one"
   content: "when will it ever end?"
   created_at: 2015-08-06 0:0:0 -5
-
-<% Comment.find_each do |comment| %>
-<% comment.activity_for_save %>
-<% end %>
