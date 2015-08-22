@@ -10,6 +10,6 @@ class Comment < ActiveRecord::Base
 	end
 
 	def activity_for_save
-		commentable.create_activity key: 'commentable.update_comment', owner: commentable
+		create_activity key: 'comment', trackable: self, owner: self.commentable 
 	end
 end

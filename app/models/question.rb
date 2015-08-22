@@ -13,6 +13,6 @@ class Question < ActiveRecord::Base
 	end
 
 	def activity_for_save
-		event.create_activity key: 'event.update_question', owner: event
+		create_activity key: 'question', trackable: self, owner: event
 	end
 end
