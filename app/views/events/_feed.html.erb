@@ -1,18 +1,4 @@
 <div class="events feed col">
-  <% @events.each do |event| %>
-    <div class="feed-item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
-      <span class="field h2"><%= link_to event.name, event %></span>
-      <span class="field h4"><%= link_to event.user.name, event.user %></span>
-      <span class="field tags h5">
-        <%= event.tag_list %>
-      </span>
-      <span class="options row h4">
-        <% if current_user.id == event.user_id %>
-        <% else %>
-          <%= render partial: "socializations/follow_button", locals: {socializable: event} %>
-        <% end %>
-      </span>
-    </div>
-  <% end %>
+    <%= render @events %>
 </div>
 
