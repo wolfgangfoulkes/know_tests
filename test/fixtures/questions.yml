@@ -8,22 +8,22 @@ one:
   event: one
   subject: "why we've changed location?"
   content: "why?"
-  created_at: 2010-01-01 0:0:0 -5
+  created_at: <%= DateTime.now.advance(:days => -1) %>
 
 two:
   event: one
   subject: "why alteration in room-order?"
   content: "why?"
-  created_at: 2015-08-05 0:0:0 -5
+  created_at: <%= DateTime.now.advance(:days => -1) %>
 
 three:
   event: three
   subject: "why another one?"
   content: "why?"
-  created_at: 2010-01-01 0:0:0 -5
+  created_at: <%= DateTime.now.advance(:minutes => -2) %>
 
 four:
   event: three
   subject: "why more?"
   content: "why?"
-  created_at: 2015-08-06 0:0:0 -5
+  created_at: <%= DateTime.now.advance(:minutes => -1) %>
