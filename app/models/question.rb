@@ -7,6 +7,8 @@ class Question < ActiveRecord::Base
 	
 	has_many :comments, as: :commentable, dependent: :destroy
 
+	scope :deef, -> { order("updated_at DESC", "created_at DESC") }
+
 	#----- callbacks
 	after_save do
 		activity_for_save

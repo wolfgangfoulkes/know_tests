@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   # helper methods can be accessed in the view
   helper_method :fresh?
+  helper_method :fresh!
 
   # modify to set yr own custom error
   rescue_from CanCan::AccessDenied do |exception|
@@ -17,5 +18,9 @@ class ApplicationController < ActionController::Base
 
   def fresh?(o_)
   	ApplicationHelper.fresh_for_user?(o_, current_user)
+  end
+
+  def fresh!(collection_)
+    collection_.find_all {|i| i if fresh?(i)}
   end
 end

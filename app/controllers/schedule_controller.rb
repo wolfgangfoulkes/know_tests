@@ -19,7 +19,7 @@ class ScheduleController < ApplicationController
 	private
 		def setup
 			@user = current_user
-			@events = @user.followees(Event) + @user.events
+			@events = @user.followees(Event) | @user.events
 		end
 
 		def set_date

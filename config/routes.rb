@@ -34,11 +34,11 @@ Rails.application.routes.draw do
   get '/activities', to: 'static_pages#activities', as: 'activities'
   root 'static_pages#home'
 
-  #----- error handling
+  # ----- error handling
   get '/access_error', to: 'errors#access'
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'
-  #- make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
+  # - make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
   get "*any", via: :all, to: "errors#not_found"
 
 

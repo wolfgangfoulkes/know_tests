@@ -187,6 +187,7 @@ a {
 
 .#{$namespace} .page {
 	margin: $nav-bar-h $margins-rl;
+	margin-bottom: $nav-bar-h*2;
 }
 
 .#{$namespace} .page section {
@@ -313,6 +314,7 @@ section {
 
 /***** dependent files *****/
 @import "comments.css.scss";
+@import "activities.css.scss";
 @import "schedule/schedule.css.scss";
 @import "schedule/calendar.css.scss";
 /*****/

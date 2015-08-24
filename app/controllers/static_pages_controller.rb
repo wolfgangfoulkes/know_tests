@@ -4,10 +4,8 @@ class StaticPagesController < ApplicationController
   end
 
   def activities
-    @activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
-    #@updates = 
-    #Comment.where(commentable: current_user.followees(Event)) |
-    #Question.where(event: (current_user.followees(Event) | current_user.events))
+    activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
+    @events = Event.find(activities.order("created_at ASC").map{ |i| i.owner_id } )
   end
 
   def search_test

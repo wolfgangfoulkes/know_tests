@@ -25,6 +25,13 @@ module ApplicationHelper
 
 		fresh_after?(o_, user_.last_sign_in_at)
 	end
+
+	# array of objects to relation
+	def self.to_ar(a_)
+		a_.take(1).class.where(id: a_)
+	end
+
+
 	# ----------
 
 	# ----- HELPER METHODS -----

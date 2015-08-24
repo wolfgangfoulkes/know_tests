@@ -1,0 +1,8 @@
+/* line 1, /Users/wolfgag/code/KNOW/know_4/devise/app/assets/stylesheets/schedule/calendar.css.scss */
+#calendar {
+  font-size: 16px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 60rem;
+  min-width: 50vh;
+}

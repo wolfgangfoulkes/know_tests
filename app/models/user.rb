@@ -31,4 +31,5 @@ class User < ActiveRecord::Base
             redirect_to new_user_registration_path, notice: "Google Error!"
         end
     end
+    
 end
