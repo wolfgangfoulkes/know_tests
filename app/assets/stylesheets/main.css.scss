@@ -34,6 +34,32 @@
 }
 /*****/
 
+$bp1: 320px;
+$bp2: 480px;
+$bp3: 800px;
+$bp4: 1024px;
+@mixin d-w($i_) {
+	@if $i_ < 1 {
+		@media only screen and (max-width: $bp1 - 1) 
+		{ @content; }
+	}
+	@else if $i_ == 1 {
+		@media only screen and (min-width: $bp1) and (max-width: $bp2) 
+		{ @content; }
+	}
+	@else if $i_ == 2 {
+		@media only screen and (min-width: $bp2 + 1) and (max-width: $bp3) 
+		{ @content; }
+	}
+	@else if $i_ == 3 {
+		@media only screen and (min-width: $bp3 + 1) and (max-width: $bp4) 
+		{ @content; }
+	}
+	@else if $i_ > 3 {
+		@media only screen and (min-width: $bp4 + 1) 
+		{ @content; }
+	}
+}
 
 /***** VARS *****/
 $namespace: "know";
@@ -107,7 +133,6 @@ a {
 }
 
 
-
 .img-main {
 	position: absolute;
 	z-index: -1;
@@ -127,12 +152,11 @@ a {
 	z-index: 1000;
 }
 .nav-bar.row .item {
-	margin: 0 1em;
-}
-
-.nav-bar.row .item.svg-link {
-	width: 2.5rem;
-	height: 2.5rem;
+	margin: 0 36px;
+	&.svg-link {
+		width: 40px;
+		height: 40px;
+	}
 }
 
 #bar-t {
@@ -157,31 +181,30 @@ a {
 	font-size: $font-base;
 }
 
-.#{$namespace} 
-{
-	.h1 {
-		/* change to f1, etc. */
-		font-size: $font-1;
-		font-weight: bold;
-	}
 
-	.h2 {
-		font-size: $font-2;
-		font-weight: bold;
-	}
-
-	.h3 {
-		font-size: $font-3;
-	}
-
-	.h4 {
-		font-size: $font-4;
-	}
-
-	.h5 {
-		font-size: $font-5;
-	}
+.h1 {
+	/* change to f1, etc. */
+	font-size: $font-1;
+	font-weight: bold;
 }
+
+.h2 {
+	font-size: $font-2;
+	font-weight: bold;
+}
+
+.h3 {
+	font-size: $font-3;
+}
+
+.h4 {
+	font-size: $font-4;
+}
+
+.h5 {
+	font-size: $font-5;
+}
+
 
 
 
