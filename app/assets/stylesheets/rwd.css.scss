@@ -1,0 +1,85 @@
+/***** FUNCTIONS *****/
+
+/* util
+***/
+
+/*
+sass->percentage($px_, $ctx_)
+find % for proportion of $px_ / $ctx_
+*/
+
+/*
+usage:
+find em, for proportion of $px_ / $ctx_
+*/
+@function calc-em($px_, $ctx_) {
+  @return ($px_ / $ctx_) * 1em;
+}
+/***
+*/
+
+/*****/
+
+/***** VARS *****/
+
+/* Devices
+***/
+/*
+	phones:
+		w: 320-480;
+		h: 480-760;
+	tablets:
+		w: 761-800;
+		h: 800-1024;
+	handheld:
+		320-480
+		480-800;
+		801-1024;
+	all
+		<=319
+		320-480
+		481-800
+		801-1024
+		>= 1025
+*/
+$bp1: 320px;
+$bp2: 480px;
+$bp3: 800px;
+$bp4: 1024px;
+@mixin dw($i_) {
+	@if $i_ < 1 {
+		@media only screen and (max-width: $bp1 - 1) 
+		{ @content; }
+	}
+	@else if $i_ == 1 {
+		@media only screen and (min-width: $bp1) and (max-width: $bp2) 
+		{ @content; }
+	}
+	@else if $i_ == 2 {
+		@media only screen and (min-width: $bp2 + 1) and (max-width: $bp3) 
+		{ @content; }
+	}
+	@else if $i_ == 3 {
+		@media only screen and (min-width: $bp3 + 1) and (max-width: $bp4) 
+		{ @content; }
+	}
+	@else if $i_ > 3 {
+		@media only screen and (min-width: $bp4 + 1) 
+		{ @content; }
+	}
+}
+
+/***
+*/
+
+/* Layout 
+***/
+/***
+*/
+
+/* Fonts 
+***/
+/***
+*/
+
+/*****/
