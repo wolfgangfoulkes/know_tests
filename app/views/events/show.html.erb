@@ -1,12 +1,8 @@
 <div id="bar-b" class="nav-bar row h2">
-<<<<<<< HEAD
-	<% if can? :edit, @event %>
-=======
 	<%= link_to "Calendar",
     url_for(:controller => 'schedule', :action => 'calendar', :date => @event.starts_at),
     class: "item" %> |
 	<% if (can? :edit, @event) && (can? :destroy, @event) %>
->>>>>>> working2
 		<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "item" %> 
 	<% else %>
@@ -35,16 +31,9 @@
 	<div class="field">
 	  <span class="h3"> <%= @event.description %> </span>
 	</div>
-<<<<<<< HEAD
 
 	<br>
 	
-	<div class="tags"> 
-        <%= @event.tag_list %>
-    </div>
-</section>
-=======
-	<br>
 	<div class="tags"> 
         <%= @event.tag_list %>
     </div>
