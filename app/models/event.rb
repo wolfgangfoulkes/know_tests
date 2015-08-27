@@ -1,10 +1,18 @@
 class Event < ActiveRecord::Base
 	include Filterable
-	#----- relationships
+	include PublicActivity::Common
+	#----- relationships -----
+	#--- socialization
+	acts_as_followable
+	#-----
+
 	belongs_to :user
+	has_many :comments, as: :commentable, dependent: :destroy 
+	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
-	#-----
+	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
+	#--------
 
 	#----- validations -----
 	validates :user_id, presence: true
@@ -13,32 +21,38 @@ class Event < ActiveRecord::Base
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
-	#-----
+	#--------
 
 	#----- scopes ----- 
+	# to chain them, I must return an active_record object, and right now
+	# that is easiest with "where"
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
 	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
+
 	# order determines final order
-	scope :search, -> (q) { name_starts_with(q) | name_contains(q) }
+	scope :search, -> (q) { where(id: name_starts_with(q) | name_contains(q)) }
 
-	def self.default_scope
-		order("starts_at ASC")
-	end
-	#-----
+	# works with array or relation
+	scope :activity_in, -> (q) {
+		where(id: q.order("updated_at DESC").map(&:owner_id))
+	}
 
-	#----- socialization -----
-	acts_as_followable
-	#-----
+	scope :freshest, -> {
+		where(id: all.map{ |i| i.activities.order("updated_at DESC").map(&:owner).last })
+	}
+	#--------
 
 	#----- callbacks -----
-	after_destroy :remove_orphaned_tags
 	after_save :remove_orphaned_tags
-	#-----
-
-
+	after_save(on: :update) do
+		# called twice
+		# do with 'notify_users checkbox'
+	end
+	after_destroy :remove_orphaned_tags
+	#--------
 
 	#----- METHODS -----
 	
@@ -63,7 +77,8 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
-	#---
+	#-----
+	#--- filters
 
 	def self.filter_combine(ps)
 		results = []
@@ -72,8 +87,7 @@ class Event < ActiveRecord::Base
 		end
 		results
 	end
-
 	#-----
-
+	#--------
 
 end

@@ -3,6 +3,11 @@ class StaticPagesController < ApplicationController
   	@events = Event.where("starts_at >= ?", DateTime.now)
   end
 
+  def activities
+    activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
+    @events = Event.find(activities.order("created_at ASC").map{ |i| i.owner_id } )
+  end
+
   def search_test
     @user = current_user
     @events = Event.all

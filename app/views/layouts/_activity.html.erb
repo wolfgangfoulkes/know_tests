@@ -1,0 +1,4 @@
+<div class="item h3" data-fresh="<%= fresh?(activity) %>">
+	<%= activity.created_at.to_formatted_s(:short) %> - 
+	<%= link_to activity.trackable.subject, activity.owner %>
+</div>

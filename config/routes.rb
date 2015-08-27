@@ -4,14 +4,23 @@ Rails.application.routes.draw do
   resources :users, :only => [:show]
 
   resources :events, :only => [:show, :new, :create, :destroy, :edit, :update, :index] do
+
     collection do #events/
       post 'filtered'
     end
+
     member do #event/:id/ with :id passed in params[:id]
     end
+
+    resources :comments, :only => [:show, :create, :destroy], module: :events
+    resources :questions, :only => [:create, :destroy]
+
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+  end
 
+  resources :questions, :only => [:show] do
+    resources :comments, :only => [:show, :create, :destroy], module: :questions
   end
 
   #post ':controller(/filtered)', action: 'filtered'
@@ -19,14 +28,17 @@ Rails.application.routes.draw do
   resources :tags, :only => [:show, :create, :destroy]
 
   get 'schedule/:action', controller: 'schedule'
+  get '/calendar', to: redirect('schedule/calendar'), as: 'calendar'
   get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
   
+  get '/activities', to: 'static_pages#activities', as: 'activities'
   root 'static_pages#home'
 
-  #----- error handling
+  # ----- error handling
+  get '/access_error', to: 'errors#access'
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'
-  #- make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
+  # - make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
   get "*any", via: :all, to: "errors#not_found"
 
 

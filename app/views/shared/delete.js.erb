@@ -1,0 +1,6 @@
+$("*[data-delete=<%= j target %>]").on("ajax:success", 
+	function(e, data, status, xhr) 
+	{
+		$(this).remove();
+	}
+);

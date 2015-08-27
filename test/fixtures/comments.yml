@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  commentable: three (Event)
+  subject: "this is immoral!"
+  content: "sfj iotdn jk nowij fpoer kifnejk rjnpitn rpngjkwef nke"
+  created_at: <%= DateTime.now.advance(:days => -1) %>
+
+two:
+  commentable: three (Event)
+  subject: "this is offensive!"
+  content: "soijtrs siorktjng soigj trsioj orthjgsjn sorigj"
+  created_at: <%= DateTime.now.advance(:days => -1) %>
+
+three:
+  commentable: one (Event)
+  subject: "we've changed location"
+  content: "after the sobering events of the last afternoon, there is a pressing necessity for overhaul in the geography of this get-together."
+  created_at: <%= DateTime.now.advance(:minutes => -2) %>
+
+four:
+  commentable: one (Event)
+  subject: "alteration in room-order"
+  content: "we've chosen to reconfigure the architecture of the structure we've used. the line dance may be reconceived as a square or cube."
+  created_at: <%= DateTime.now.advance(:minutes => -1) %>

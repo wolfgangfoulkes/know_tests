@@ -1,5 +1,6 @@
 <%= render layout: 'schedule' do %>
 	<section>
-		<div id="calendar"> </div>
+		<%= content_tag 'div', id: 'calendar', data: { date: @date.to_s } do %>
+		<% end %>
 	</section>
 <% end %>

@@ -1,5 +1,12 @@
 <div id="bar-b" class="nav-bar row h2">
+<<<<<<< HEAD
 	<% if can? :edit, @event %>
+=======
+	<%= link_to "Calendar",
+    url_for(:controller => 'schedule', :action => 'calendar', :date => @event.starts_at),
+    class: "item" %> |
+	<% if (can? :edit, @event) && (can? :destroy, @event) %>
+>>>>>>> working2
 		<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
 		<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "item" %> 
 	<% else %>
@@ -28,6 +35,7 @@
 	<div class="field">
 	  <span class="h3"> <%= @event.description %> </span>
 	</div>
+<<<<<<< HEAD
 
 	<br>
 	
@@ -35,3 +43,36 @@
         <%= @event.tag_list %>
     </div>
 </section>
+=======
+	<br>
+	<div class="tags"> 
+        <%= @event.tag_list %>
+    </div>
+</section>
+
+<div class="vmn"> </div>
+
+<section>
+	<div class="h2"> Updates </div>
+	<div class="comment-list col" 
+		data-refresh="comments">
+		<%= render @event.comments %>
+	</div>
+	<%= render partial: 'comments/form', 
+	locals: { comment: @event.comments.build } 
+	%>
+</section>
+
+<div class="vmn"> </div>
+
+<section>
+	<div class="h2"> Questions </div>
+	<div class="comment-list col" 
+		data-refresh="questions">
+		<%= render @event.questions %>
+	</div>
+
+	<%= render partial: 'questions/form', locals: 
+	{ question: @event.questions.build } %>
+</section>
+>>>>>>> working2

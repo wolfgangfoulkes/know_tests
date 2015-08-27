@@ -1,0 +1,11 @@
+<div class="item" data-fresh="<%= fresh?(question) %>">
+  <%= link_to question.subject, question, class: "subject h4" %>
+  <div class="content h5"> 
+    <%= question.content %>
+  </div>
+  <div class="options h4">
+  	<% if can? :destroy, question %>
+	  	<%= link_to 'Destroy', [question.event, question], method: :delete, remote: true, class: "item h4" %>
+  	<% end %>
+  </div>
+</div>

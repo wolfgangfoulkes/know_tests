@@ -5,6 +5,15 @@ class Ability
     can :read, :all
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
+    can [:create, :destroy], Question do |c|
+        true
+    end
+    can [:create, :destroy], Comment do |c|
+        (c.commentable_type == "Question") ||
+        ((c.commentable_type == "Event") && (c.commentable.user_id == user.id))
+    end
+    
+    
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

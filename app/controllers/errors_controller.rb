@@ -1,4 +1,7 @@
 class ErrorsController < ApplicationController
+  def access_error
+  end
+  
   def not_found
   	render status: 404
   	rescue ActionController::UnknownFormat

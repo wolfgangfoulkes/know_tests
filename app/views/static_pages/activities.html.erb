@@ -1,0 +1,15 @@
+<section>
+	<div class="events feed col">
+  		<% @events.each do |event| %>
+    		  <div class="feed-item row" data-drop-toggle="<%= event.id %>">
+    				<span class="field h2"><%= link_to event.name, event %></span>
+        		<span class="field h4"><%= link_to event.user.name, event.user %></span>
+        		<span class="field h3"><%= event.activities.count %> </span>
+    			</div>
+    			<div class="list activities col" 
+          data-drop-target="<%= event.id %>">
+  				  <%= render_activities(event.activities, layout: :activity) %>
+          </div>
+  		<% end %>
+  </div>
+</section>

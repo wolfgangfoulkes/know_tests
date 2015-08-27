@@ -20,8 +20,9 @@ module Auth
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # add custom validators path
+    # ----- custom paths
     config.autoload_paths += %W["#{config.root}/app/validators/"]
+    config.autoload_paths += %W["#{config.root}/app/models/comment/"]
 
     #this for js
     config.action_view.embed_authenticity_token_in_remote_forms = true
