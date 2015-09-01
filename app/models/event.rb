@@ -41,7 +41,7 @@ class Event < ActiveRecord::Base
 	}
 
 	scope :freshest, -> {
-		where(id: all.map{ |i| i.activities.order("updated_at DESC").map(&:owner).last })
+		#joins(:activities).order("activities.updated_at DESC").pluck("activities.owner_id"))
 	}
 	#--------
 
@@ -55,7 +55,8 @@ class Event < ActiveRecord::Base
 	#--------
 
 	#----- METHODS -----
-	
+
+
 	#--- tags 
 	def tag_list=(names)
 		# could also use .delete("char")

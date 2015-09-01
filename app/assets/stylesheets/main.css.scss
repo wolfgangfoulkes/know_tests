@@ -5,6 +5,7 @@
 @import "base/meyer-reset-mod.css.scss";
 
 /***** FUNCTIONS *****/
+
 @function a_bl($fg, $bg, $a) {
 	@return rgb(
 	$a * red($fg) 	+ 	(1-$a) * red($bg),
@@ -33,30 +34,28 @@
 	}
 }
 /*****/
-
-$bp1: 320px;
-$bp2: 480px;
-$bp3: 800px;
-$bp4: 1024px;
-@mixin d-w($i_) {
-	@if $i_ < 1 {
-		@media only screen and (max-width: $bp1 - 1) 
+@function nth_if($map_, $i_)
+{
+	$max: length($map_);
+	@if ($i_ > $max) {
+		@return nth($map_, $max);
+	}
+	@if ($i_ < 1) {
+		@return nth($map_, 1);
+	}
+	@return nth($map_, $i_);
+}
+@mixin mq($min_, $max_) {
+	@if $min_ == 0 {
+		@media only screen and (max-width: "#{$max_}")
 		{ @content; }
 	}
-	@else if $i_ == 1 {
-		@media only screen and (min-width: $bp1) and (max-width: $bp2) 
+	@else if $max_ == 0 {
+		@media only screen and (min-width: "#{$min_}")
 		{ @content; }
 	}
-	@else if $i_ == 2 {
-		@media only screen and (min-width: $bp2 + 1) and (max-width: $bp3) 
-		{ @content; }
-	}
-	@else if $i_ == 3 {
-		@media only screen and (min-width: $bp3 + 1) and (max-width: $bp4) 
-		{ @content; }
-	}
-	@else if $i_ > 3 {
-		@media only screen and (min-width: $bp4 + 1) 
+	@else {
+		@media only screen and (min-width: "#{$min_}") and (max-width: "#{$max_}")
 		{ @content; }
 	}
 }
@@ -70,14 +69,27 @@ $margins-rl: 3rem;
 $nav-bar-h: 6rem;
 /***/
 
+/*** BREAKPOINTS
+*/
+$bps: 
+(
+	"320px", 
+	"480px",
+	"800px",
+	"1024px"
+);
+/***/
+
 /*** FONT
 */
 $font-base: 36px; /*18px;*/
-$font-1: 1 * $font-base;
-$font-2: .8 * $font-base;
-$font-3: .7 * $font-base;
-$font-4: .5 * $font-base;
-$font-5: .4 * $font-base;
+$fonts: (
+	1 * $font-base,
+	.8 * $font-base,
+	.7 * $font-base,
+	.5 * $font-base,
+	.4 * $font-base
+);
 /***/
 
 /*****/
@@ -150,12 +162,12 @@ a {
 	height: $nav-bar-h;
 	background-color: rgba(100, 0, 0, 0.1);
 	z-index: 1000;
-}
-.nav-bar.row .item {
-	margin: 0 36px;
-	&.svg-link {
-		width: 40px;
-		height: 40px;
+	.item {
+		margin: 0 36px;
+		&.svg-link {
+			width: 40px;
+			height: 40px;
+		}
 	}
 }
 
@@ -178,31 +190,31 @@ a {
 }
 
 .#{$namespace} {
-	font-size: $font-base;
+	font-size: nth($fonts, 1);
 }
 
 
 .h1 {
 	/* change to f1, etc. */
-	font-size: $font-1;
+	font-size: nth($fonts, 1);
 	font-weight: bold;
 }
 
 .h2 {
-	font-size: $font-2;
+	font-size: nth($fonts, 2);
 	font-weight: bold;
 }
 
 .h3 {
-	font-size: $font-3;
+	font-size: nth($fonts, 3);
 }
 
 .h4 {
-	font-size: $font-4;
+	font-size: nth($fonts, 4);
 }
 
 .h5 {
-	font-size: $font-5;
+	font-size: nth($fonts, 5);
 }
 
 
@@ -333,6 +345,7 @@ section {
 	flex-direction: column;
 	position: relative;
 }
+
 
 
 /***** dependent files *****/
