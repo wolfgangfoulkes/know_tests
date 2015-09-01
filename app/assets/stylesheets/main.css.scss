@@ -258,14 +258,22 @@ a {
 		}
 
 		>.field {
-			flex-basis: 200px;
+			flex-basis: 180px;
 		}
 
-		>.field.tags {
+		>.tags {
 			word-spacing: 1em;
+			text-align: center;
+		}
+
+		>.br {
+			flex-basis: 0;
+			flex-grow: 1;
 		}
 
 		>.options {
+			display: inline-flex;
+			justify-content: flex-end;
 		}
 	}
 }

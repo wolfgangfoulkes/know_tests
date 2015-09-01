@@ -4,13 +4,15 @@
     <%= link_to event.user.name, event.user, 
     class: "field h4" %>
 
+    <div class="br"> </div>
 
-    <span class="field tags h5 ml mr">
+    <span class="field tags h5">
       <%= event.tag_list %>
     </span>
 
+    <div class="br"> </div>
 
-    <span class="options row h4">
+    <span class="field options row h4">
       <% if current_user.id != event.user_id %>
       <% else %>
         <%= render partial: "socializations/follow_button", locals: {socializable: event} %>
