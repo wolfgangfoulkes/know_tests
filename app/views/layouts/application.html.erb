@@ -15,6 +15,7 @@
 
 <div id="bar-t" class="nav-bar row">
 <% if user_signed_in? %>
+	<div class="br"> </div>
 	<a 	href="<%= new_event_path %>"
 		class="item svg-link" >
 		<%= inline_svg 'svg/icons/plus.svg', 
