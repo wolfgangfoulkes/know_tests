@@ -258,7 +258,8 @@ a {
 		}
 
 		>.field {
-			flex-basis: 180px;
+			flex-basis: 0;
+			flex-grow: 1;
 		}
 
 		>.tags {
@@ -268,7 +269,7 @@ a {
 
 		>.br {
 			flex-basis: 0;
-			flex-grow: 1;
+			flex-grow: 0.5;
 		}
 
 		>.options {
