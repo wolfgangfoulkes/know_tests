@@ -119,6 +119,13 @@ a {
 .row {
 	display: inline-flex;
 	flex-direction: row;
+	>.ml {
+		margin-left: auto;
+	}
+
+	>.mr {
+		margin-right: auto;
+	}
 }
 
 .col {
@@ -237,36 +244,32 @@ a {
 
 /***** FEED 
 */
-.#{$namespace} .feed.col {
+.events.feed.col {
 	justify-content: space-between;
 	border-top: 1px solid black;
-}
-.#{$namespace} .feed-item.row {
-	padding: 1em 0;
-	border-bottom: 1px solid black;
-	align-items: center;
+
+	>.item.row {
+		justify-content: space-between;
+		align-items: center;
+		padding: nth($fonts, 1) 1rem;
+		border-bottom: 1px solid black;
+		&.past {
+			color: rgba(100, 0, 0, 0.1);
+		}
+
+		>.field {
+			flex-basis: 200px;
+		}
+
+		>.field.tags {
+			word-spacing: 1em;
+		}
+
+		>.options {
+		}
+	}
 }
 
-.#{$namespace} .feed-item.row.past {
-	color: rgba(100, 0, 0, 0.1);
-}
-
-.#{$namespace} .feed-item .field {
-	padding: 0 1rem;
-}
-
-.#{$namespace} .feed-item .field.tags {
-	margin: 0 auto;
-	word-spacing: 1em;
-}
-
-.#{$namespace} .feed-item .options {
-	margin-left: auto;
-}
-
-.#{$namespace} .feed-item .options * {
-	padding: 0 1rem;
-}
 /*****/
 
 
@@ -315,34 +318,30 @@ a {
 /*****/
 
 /***** TEMP *****/
-.#{$namespace} .events.feed {
-	width: 100%;
-}
-
-.#{$namespace} .events.search.row {
+.events.search.row {
 	width: 100%;
 	height: 1.5em;
 }
 
-.#{$namespace} .events.search.row input
+.events.search.row input
 {
 	font-size: .8em;
 }
 
-.#{$namespace} .events.search.row input[type="text"]
+.events.search.row input[type="text"]
 {
 	flex-grow: 1;
 	border-width: 0 1px;
 }
 
-.#{$namespace} .events.search.row input[type="submit"]
+.events.search.row input[type="submit"]
 {
 	width: 8rem;
 	border: none;
 	cursor: pointer;
 }
 
-.#{$namespace} .tags {
+.tags {
 	color: rgba(100, 0, 0, 0.3);
 }
 
@@ -353,8 +352,8 @@ section {
 }
 
 
-
 /***** dependent files *****/
+@import "lists.css.scss";
 @import "comments.css.scss";
 @import "activities.css.scss";
 @import "schedule/schedule.css.scss";

@@ -1,320 +1,47 @@
-// Place all the styles related to the StaticPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-@import "base/meyer-reset-mod.css.scss";
-
-/***** FUNCTIONS *****/
-@function a_bl($fg, $bg, $a) {
-	@return rgb(
-	$a * red($fg) 	+ 	(1-$a) * red($bg),
-	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
-	$a * green($fg) + 	(1-$a) * green($bg)
-	);
-}
-
-@function rgba2rgb($c, $a) {
-	@return a_bl($c, rgb(255, 255, 255), $a);
-}
-
-@function w_bl($c, $a) {
-	@return rgba2rgb($c, $a);
-}
-
-@function color($k)
-{
-	@if $k == salvr
-	{
-		@return w_bl(rgb(100, 0, 0), 0.1);
-	}
-	@else 
-	{
-		@return #FFFFFF;
-	}
-}
-/*****/
-
-
-/***** VARS *****/
-$namespace: "know";
-
-/*** LAYOUT
-*/
-$margins-rl: 3rem;
-$nav-bar-h: 6rem;
-/***/
-
-/*** FONT
-*/
-$font-base: 36px; /*18px;*/
-$font-1: 1 * $font-base;
-$font-2: .8 * $font-base;
-$font-3: .7 * $font-base;
-$font-4: .5 * $font-base;
-$font-5: .4 * $font-base;
-/***/
-
-/*****/
-
-/***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
-
-
-/***** ADDITIONAL RESET (add to meyer thing eventually) *****/
-a {
-	text-decoration: none;
-	color: inherit;
-}
-
-.#{$namespace} {
-	box-sizing: border-box;
-	font-style: normal;
-	font-weight: normal;
-}
-/*****/
-
-/***** GLOBAL *****/
-
-.vmn {
-	height: 3rem;
-}
-
-.row {
-	display: inline-flex;
-	flex-direction: row;
-}
-
-.col {
-	display: inline-flex;
-	flex-direction: column;
-}
-
-/***** OBJECTS *****/
-.svg-link {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	svg {
-		width: 100%;
-		height: 100%;
-		
-		&.svg-plus {
-			width: 85%;
-		}
-		&.svg-user {
-			width: 98%;
-		}
-	}
-}
-
-
-
-.img-main {
-	position: absolute;
-	z-index: -1;
-	right: 0;
-	top: 0;
-	width: 300px;
-	height: 300px;
-	object-fit: cover;
-	/*-webkit-clip-path: circle(20px at center);*/
-}
-
-/***** APP LAYOUT *****/
-.nav-bar.row {
-	align-items: center;
-	height: $nav-bar-h;
-	background-color: rgba(100, 0, 0, 0.1);
-	z-index: 1000;
-}
-.nav-bar.row .item {
-	margin: 0 1em;
-}
-
-.nav-bar.row .item.svg-link {
-	width: 2.5rem;
-	height: 2.5rem;
-}
-
-#bar-t {
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	background-color: rgba(100, 0, 0, 0.1);
-	justify-content: flex-end;
-}
-
-#bar-b {
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(100, 0, 0, 0.1);
-	justify-content: space-around;
-}
-
-.#{$namespace} {
-	font-size: $font-base;
-}
-
-.#{$namespace} 
-{
-	.h1 {
-		/* change to f1, etc. */
-		font-size: $font-1;
-		font-weight: bold;
-	}
-
-	.h2 {
-		font-size: $font-2;
-		font-weight: bold;
-	}
-
-	.h3 {
-		font-size: $font-3;
-	}
-
-	.h4 {
-		font-size: $font-4;
-	}
-
-	.h5 {
-		font-size: $font-5;
-	}
-}
-
-
-
-.#{$namespace} .page {
-	margin: $nav-bar-h $margins-rl;
-	margin-bottom: $nav-bar-h*2;
-}
-
-.#{$namespace} .page section {
-	width: 100%;
-}
-
-/***** FEED 
-*/
-.#{$namespace} .feed.col {
-	justify-content: space-between;
-	border-top: 1px solid black;
-}
-.#{$namespace} .feed-item.row {
-	padding: 1em 0;
-	border-bottom: 1px solid black;
-	align-items: center;
-}
-
-.#{$namespace} .feed-item.row.past {
-	color: rgba(100, 0, 0, 0.1);
-}
-
-.#{$namespace} .feed-item .field {
-	padding: 0 1rem;
-}
-
-.#{$namespace} .feed-item .field.tags {
-	margin: 0 auto;
-	word-spacing: 1em;
-}
-
-.#{$namespace} .feed-item .options {
-	margin-left: auto;
-}
-
-.#{$namespace} .feed-item .options * {
-	padding: 0 1rem;
-}
-/*****/
-
-
-/***** FORM *****/
-.#{$namespace} form.new_event {
-	display: inline-flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: 1rem 1.5rem;
-	border: 1px solid black;
-
-}
-
-.#{$namespace} form.new_event .field {
-	flex-grow: 1;
-	margin: .5rem 0;
-	font-size: 1em;
-
-}
-
-.#{$namespace} form.new_event input {
-	/***** overrides *****/
-	padding: 0 0;
-	margin: 0 0;
-	box-sizing: border-box;
-	width: 100%;
-	font-size: 1em;
-	/*****/
-}
-
-.#{$namespace} form.new_event .actions {
-	flex-grow: 1;
-	margin: 1rem 0;
-}
-
-.#{$namespace} form.new_event .actions input {
-	/***** overrides *****/
-	background: none;
-	border: none;
-	height: 100%;
-	/*****/
-
-	background-color: rgba(100, 0, 0, 0.1);
-	padding: .5rem 0;
-}
-/*****/
-
-/***** TEMP *****/
-.#{$namespace} .events.feed {
-	width: 100%;
-}
-
-.#{$namespace} .events.search.row {
-	width: 100%;
-	height: 1.5em;
-}
-
-.#{$namespace} .events.search.row input
-{
-	font-size: .8em;
-}
-
-.#{$namespace} .events.search.row input[type="text"]
-{
-	flex-grow: 1;
-	border-width: 0 1px;
-}
-
-.#{$namespace} .events.search.row input[type="submit"]
-{
-	width: 8rem;
-	border: none;
-	cursor: pointer;
-}
-
-.#{$namespace} .tags {
-	color: rgba(100, 0, 0, 0.3);
-}
-
-section {
-	display: flex;
-	flex-direction: column;
+.comment-list.col {
 	position: relative;
+	align-items: center;
+	.item {
+		box-sizing: border-box;
+		line-height: $font-base/2;
+		text-align: center;
+
+		&[data-fresh=true] {
+
+		}
+		&[data-fresh=false] {
+			color: rgba(100, 0, 0, 0.3);
+		}
+
+		.subject {
+			
+		}
+		.content {
+
+			opacity: 0.4;
+		}
+		.options {
+		}
+	}
+	>::before, &::after {
+		display: block;
+		content: "";
+		width: 0;
+		border-left: 1px solid black;
+		margin: 8px auto;
+		height: $font-base;
+	}
 }
 
+.activities.list.col
+{
+	.item 
+	{
+		&[data-fresh=true] {
 
-/***** dependent files *****/
-@import "comments.css.scss";
-@import "activities.css.scss";
-@import "schedule/schedule.css.scss";
-@import "schedule/calendar.css.scss";
-/*****/
+		}
+		&[data-fresh=false] {
+			color: rgba(100, 0, 0, 0.3);
+		}
+	}
+}
