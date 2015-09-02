@@ -1,0 +1,44 @@
+body {
+	&[data-controller="static_pages"] {
+		&[data-action="home"] {
+			.svg-home {
+				fill: rgba(100, 0, 0, 0.5);
+			}
+		}
+		
+		&[data-action="activities"] {
+			.svg-alert {
+				fill: rgba(100, 0, 0, 0.5);
+			}
+		}
+	}
+	&[data-controller="users"] {
+		&[data-action="show"] {
+			.svg-user {
+				fill: rgba(100, 0, 0, 0.5);
+			}
+		}
+	}
+	&[data-controller="events"] {
+		&[data-action="new"] {
+			.svg-plus {
+				fill: rgba(100, 0, 0, 0.5);
+			}
+		}
+	}
+	&[data-controller="schedule"] {
+		.svg-calendar {
+			fill: rgba(100, 0, 0, 0.5);
+		}
+	}
+}
+
+.events .item[data-drop="toggle"] {
+	&[data-state="true"] {
+	}
+}
+.events .activities[data-drop="target"] {
+	&[data-state="false"] {
+		display: none;
+	}
+}
