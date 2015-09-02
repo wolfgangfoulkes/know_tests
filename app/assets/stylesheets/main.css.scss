@@ -92,6 +92,11 @@ $fonts: (
 );
 /***/
 
+/*** ICONS
+*/
+$nav-icon-size: 40px;
+/***/
+
 /*****/
 
 /***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
@@ -206,7 +211,7 @@ a {
 		*/
 		@include mq(0, nth($bps, 2))
 		{
-			width: 20px + 18px + 18px;
+			width: 30px + 18px + 18px;
 			height: 30px;
 		}
 		@include mq(nth($bps, 2), 0)
