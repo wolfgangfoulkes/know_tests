@@ -41,8 +41,19 @@ class Event < ActiveRecord::Base
 	}
 
 	scope :freshest, -> {
-		#joins(:activities).order("activities.updated_at DESC").pluck("activities.owner_id"))
+		includes(:activities).order("activities.updated_at DESC")
+		#joins(:activities).order("activities.updated_at DESC")
 	}
+
+	scope :all_activities, -> (q) {
+		q.order("owner_id DESC", "updated_at DESC")
+	}
+
+	# NOTE TO WOLFGANG: if you come back here, 
+	# learn find_each do
+	# see how it returns
+
+
 	#--------
 
 	#----- callbacks -----
