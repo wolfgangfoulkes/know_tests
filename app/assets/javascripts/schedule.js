@@ -1,5 +1,44 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
+/*
+	- should query CALENDAR size rather than window size
+	then you could set css breakpoints for widths
+	and resize the calendar more dynamically
+	
+	- height should be fixed
+
+	- you don't really need the dynamic view-switching,
+	if the option is week. instead, change the default view
+	it might only become necessary with device rotation, 
+	which you might query elseways
+	or just make all mobile sizes default to day
+*/
+
+var getFCView = function(width)
+{
+	if (width > 800)
+	{
+		return "basicWeek"
+	}
+	else
+	{
+		return "basicDay"
+	}
+}
+
+var setFCView = function(view) 
+{
+	$('#calendar').fullCalendar('changeView', view);
+}
+
+var setFCViewSettings = function(view, element) 
+{
+}
+
+var onWindowResize = function()
+{
+	var width = $(window).width();
+	var view = getFCView(width);
+	setFCView(view);
+}
 
 var transformData = function(event_)
 {
@@ -21,19 +60,56 @@ var transformData = function(event_)
 	return _event;
 }
 
+//$(window).resize(onWindowResize);
 
 $(document).on("page:change", function()
 {
+	console.log($('#calendar').height());
 	var data = $('#calendar').data();
 	$('#calendar').fullCalendar({
+			viewRender: setFCViewSettings,
+
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,
-			height: 'auto'
+			height: $('#calendar').height(),
+			defaultView: 'basicWeek',
+
+			header: 
+			{
+				left: "basicDay, basicWeek, month",
+				center: "title",
+				right: "prev, next, today"
+			},
+			views: 
+			{
+				month: 
+				{
+
+				},
+				week: 
+				{
+
+				},
+				day: 
+				{
+
+				}
+			}
 	        //aspectRatio: 1.35 //height determined from width, width from css
 	});
+
+
 
 	if (data["date"])
 	{
 		$('#calendar').fullCalendar("gotoDate", moment( new Date(data["date"]) ) );
+		setFCView("basicDay");
 	}
+	else {
+		//onWindowResize();
+		var width = $(window).width();
+		var view = getFCView(width);
+		setFCView(view);
+	}
+
 });

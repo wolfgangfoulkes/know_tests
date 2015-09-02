@@ -67,6 +67,15 @@ class Event < ActiveRecord::Base
 
 	#----- METHODS -----
 
+	#--- activities
+	def fresh_for(user)
+		self.activities.where("updated_at > ?", user.last_sign_in_at).order("updated_at DESC")
+	end
+
+	def fresh_for?(user)
+		self.activities.where("updated_at > ?", user.last_sign_in_at).any?
+	end
+	#-----
 
 	#--- tags 
 	def tag_list=(names)

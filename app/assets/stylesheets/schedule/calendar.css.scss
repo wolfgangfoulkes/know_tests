@@ -1,7 +1,18 @@
 #calendar {
-	font-size: 16px;
+	font-size: nth($fonts, 4);
 	margin: 0 auto;
-	width: 100%;
-	max-width: 60rem;
-	min-width: 50vh;
+	max-width: 960px;
+	height: 600px;
+	@include mq(0, nth($bps, 3)) {
+		margin: 0 0;
+		position: absolute;
+		left: -1 * $margins-rl;
+		right: -1 * $margins-rl;
+	}
+	@include mq(nth($bps, 3) + 1, nth($bps, 4)) {
+		width: 740px;
+	}
+	@include mq(nth($bps, 4) + 1, 0) {
+		width: 960px;
+	}
 }
