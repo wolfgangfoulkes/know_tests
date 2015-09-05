@@ -1,6 +1,7 @@
 <div id="bar-b" class="nav-bar row h2">
 	<%= link_to "Calendar",
-    url_for(:controller => 'schedule', :action => 'calendar', :date => @event.starts_at),
+    url_for(:controller => 'schedule', :action => 'calendar', 
+    	:date => @event.starts_at),
     class: "item" %> |
 	<% if (can? :edit, @event) && (can? :destroy, @event) %>
 		<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
