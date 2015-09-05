@@ -37,7 +37,12 @@ var $firstOfSels = function(sels_)
 	}
 	return $();
 }
-
+/*
+	future, you'd do this more accurately with an arbitrary helper method
+	like current_link("url with *"), then checks against request object 
+	using arbitrary Regexp pattern
+	then you'd use it to set data-current.
+*/
 var setLinkFromCUrl = function(sel_)
 {
 	var c_url = $("body").attr("data-url");
