@@ -4,11 +4,16 @@ class Comment < ActiveRecord::Base
 	validates :subject, presence: true, length: { maximum: 60 }
 	validates :content, presence: true, length: { maximum: 240 }
 
+	has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
+
 	scope :deef, -> { order("updated_at DESC", "created_at DESC") }
 
 	#----- callbacks
 	after_save do
 		activity_for_save
+	end
+
+	before_destroy do
 	end
 
 	def activity_for_save
