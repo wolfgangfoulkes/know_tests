@@ -3,37 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "base/meyer-reset-mod.css.scss";
+@import "base/utilities.css.scss";
 
-/***** FUNCTIONS *****/
-
-@function a_bl($fg, $bg, $a) {
-	@return rgb(
-	$a * red($fg) 	+ 	(1-$a) * red($bg),
-	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
-	$a * green($fg) + 	(1-$a) * green($bg)
-	);
-}
-
-@function rgba2rgb($c, $a) {
-	@return a_bl($c, rgb(255, 255, 255), $a);
-}
-
-@function w_bl($c, $a) {
-	@return rgba2rgb($c, $a);
-}
-
-@function color($k)
-{
-	@if $k == salvr
-	{
-		@return w_bl(rgb(100, 0, 0), 0.1);
-	}
-	@else 
-	{
-		@return #FFFFFF;
-	}
-}
-/*****/
 @function nth_if($map_, $i_)
 {
 	$max: length($map_);
@@ -45,6 +16,7 @@
 	}
 	@return nth($map_, $i_);
 }
+
 @mixin mq($min_, $max_) {
 	@if $min_ == 0 {
 		@media only screen and (max-width: "#{$max_}")
@@ -69,17 +41,6 @@ $margins-rl: 48px;
 $nav-bar-h: 96px;
 /***/
 
-/*** BREAKPOINTS
-*/
-$bps: 
-(
-	320px, 
-	480px,
-	800px,
-	1024px
-);
-/***/
-
 /*** FONT
 */
 $font-base: 36px; /*18px;*/
@@ -91,6 +52,70 @@ $fonts: (
 	.4 * $font-base
 );
 /***/
+
+
+/*** BREAKPOINTS
+*/
+$bps: 
+(
+	320px, 
+	480px,
+	800px,
+	1024px
+);
+@function _bps($i_) {
+	@return nth($bps, $i_);
+}
+/***/
+
+/*** SIZES
+*/
+$sizes_b: 
+(
+	20px,
+	26px,
+	30px,
+	36px
+);
+@function _sizes_b($i_) {
+	@return nth($sizes_b, $i_);
+}
+
+$sizes_r: (
+	1,
+	.8,
+	.7,
+	.5,
+	.4
+);
+@function _sizes_r($i_) {
+	@return nth($sizes_r, $i_);
+}
+
+@function size_at($i_, $bp_) {
+	@return _sizes_r($i_) * _sizes_b($bp_);
+}
+/***/
+
+@mixin sizes($i_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: size_at($i_, 1);
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: size_at($i_, 2);
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: size_at($i_, 3);
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: size_at($i_, 4);
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: size_at($i_, 4);
+	}
+}
 
 /*** ICONS
 */
@@ -194,29 +219,31 @@ a {
 	background-color: rgba(100, 0, 0, 0.1);
 	justify-content: space-around;
 	.br {
-		margin: 0 auto;
-		/*	
 		flex-basis: 0;
-		flex-grow: 9;
-		*/
-		@include mq(0, nth($bps, 2))
+		flex-grow: 1;
+		@include mq(0, _bps(2))
 		{
 			display: none;
 		}
 	}
 
 	.item {
-		/*
-		flex-grow: 1;
-		*/
-		@include mq(0, nth($bps, 2))
+		@include mq(0, _bps(2))
 		{
-			width: 30px + 18px + 18px;
+			flex-basis: 30px;
+			margin: 0 18px;
 			height: 30px;
 		}
-		@include mq(nth($bps, 2), 0)
+		@include mq(_bps(2), _bps(3))
 		{
-			width: 40px + 36px + 36px;
+			flex-basis: 36px;
+			margin: 0 22px;
+			height: 36px;
+		}
+		@include mq(_bps(3), 0)
+		{
+			flex-basis: 40px;
+			margin: 0 36px;
 			height: 40px;
 		}
 	}
@@ -238,25 +265,31 @@ a {
 
 .h1 {
 	/* change to f1, etc. */
-	font-size: nth($fonts, 1);
+	font-size: size_at(1, 4);
 	font-weight: bold;
-}
 
+	@include sizes(1, "font-size");
+}
 .h2 {
-	font-size: nth($fonts, 2);
+	font-size: size_at(2, 4);
 	font-weight: bold;
-}
 
+	@include sizes(2, "font-size");
+}
 .h3 {
-	font-size: nth($fonts, 3);
-}
+	font-size: size_at(3, 4);
 
+	@include sizes(3, "font-size");
+}
 .h4 {
-	font-size: nth($fonts, 4);
-}
+	font-size: size_at(4, 4);
 
+	@include sizes(4, "font-size");
+}
 .h5 {
-	font-size: nth($fonts, 5);
+	font-size: size_at(5, 4);
+
+	@include sizes(5, "font-size");
 }
 
 .#{$namespace} .page {
