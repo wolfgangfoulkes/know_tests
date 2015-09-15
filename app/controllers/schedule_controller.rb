@@ -25,13 +25,13 @@ class ScheduleController < ApplicationController
 		def set_date
 			date = params[:date]
 			if validDT?(date)
-				@date = date
+				@date = date.to_s
 			else
 				@date = false
 			end
 		end
 
 		def validDT?(dt_)
-			(( DateTime.parse(params[:date] ) rescue ArgumentError) != ArgumentError)
+			(( DateTime.parse(params[:date]) rescue ArgumentError) != ArgumentError)
 		end
 end

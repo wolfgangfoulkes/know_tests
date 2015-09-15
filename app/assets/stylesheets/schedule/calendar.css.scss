@@ -1,5 +1,6 @@
 #calendar {
-	font-size: nth($fonts, 4);
+	@include sizes(4, "font-size");
+
 	margin: 0 auto;
 	max-width: 960px;
 	height: 600px;
@@ -14,5 +15,34 @@
 	}
 	@include mq(nth($bps, 4) + 1, 0) {
 		width: 960px;
+	}
+
+	.fc-day-header {
+		padding: .5em 0 !important;
+		
+		&.fc-sun, &.fc-mon {
+		}
+	}
+
+
+
+	.fc-center {
+		font-size: 3em !important;
+		color: rgba(100, 0, 0, 0.1) !important;
+		line-height: 0 !important;
+	}
+
+	.fc-button {
+		background: none !important;
+
+		border: 1px solid rgba(100, 0, 0, 0.1) !important;
+
+		&.fc-state-disabled {
+			border: 1px solid rgba(0, 0, 0, 0) !important;
+			background-color: rgba(0, 0, 0, 0.1) !important;
+		}
+		&.fc-state-active {
+			background-color: rgba(100, 0, 0, 0.1) !important;
+		}
 	}
 }
