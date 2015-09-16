@@ -35,12 +35,6 @@
 /***** VARS *****/
 $namespace: "know";
 
-/*** LAYOUT
-*/
-$margins-rl: 48px;
-$nav-bar-h: 96px;
-/***/
-
 /*** FONT
 */
 $font-base: 36px; /*18px;*/
@@ -117,6 +111,12 @@ $sizes_r: (
 	}
 }
 
+/*** LAYOUT
+*/
+$margins-rl: 48px;
+$nav-bar-h: 96px;
+/***/
+
 /*** ICONS
 */
 $nav-icon-size: 40px;
@@ -141,21 +141,14 @@ a {
 /*****/
 
 /***** GLOBAL *****/
-
 .vmn {
-	height: 3rem;
+	height: 48px;
+	/* margins r-l */
 }
 
 .row {
 	display: inline-flex;
 	flex-direction: row;
-	>.ml {
-		margin-left: auto;
-	}
-
-	>.mr {
-		margin-right: auto;
-	}
 }
 
 .col {
@@ -233,18 +226,21 @@ a {
 			flex-basis: 30px;
 			margin: 0 18px;
 			height: 30px;
+			/* RATIO: 0.6 or 1.666... */
 		}
 		@include mq(_bps(2), _bps(3))
 		{
 			flex-basis: 36px;
 			margin: 0 22px;
 			height: 36px;
+			/* RATIO: 0.6111... or 1.6363... */
 		}
 		@include mq(_bps(3), 0)
 		{
 			flex-basis: 40px;
 			margin: 0 36px;
 			height: 40px;
+			/* RATIO: 0.9 or 1.111... */
 		}
 	}
 }
@@ -292,12 +288,12 @@ a {
 	@include sizes(5, "font-size");
 }
 
-.#{$namespace} .page {
+.page {
 	margin: $nav-bar-h $margins-rl;
 	margin-bottom: $nav-bar-h*2;
 }
 
-.#{$namespace} .page section {
+.page section {
 	width: 100%;
 }
 
@@ -381,6 +377,8 @@ section {
 	flex-direction: column;
 	position: relative;
 }
+
+
 
 
 /***** dependent files *****/
