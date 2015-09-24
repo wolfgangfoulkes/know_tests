@@ -1,5 +1,5 @@
 $("*[data-refresh=<%= j target %>]").on("ajax:success", 
-	function(e, data, status, xhr) 
+	function(e, data, status, xhr)
 	{
 		$(this).empty().append("<%= j render collection %>");
 	}

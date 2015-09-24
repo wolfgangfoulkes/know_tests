@@ -55,10 +55,9 @@
 
 <section>
 	<div class="h2"> Questions </div>
-	<div class="comment-list col" 
-		data-refresh="questions">
+	<%= content_tag :div, class: ["comment-list", "col"], data: {refresh: "questions"} do -%>
 		<%= render @event.questions %>
-	</div>
+	<% end -%>
 
 	<%= render partial: 'questions/form', locals: 
 	{ question: @event.questions.build } %>

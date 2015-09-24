@@ -36,17 +36,21 @@ class Event < ActiveRecord::Base
 	scope :search, -> (q) { where(id: name_starts_with(q) | name_contains(q)) }
 
 	# works with array or relation
+	# does not retain activities order
 	scope :activity_in, -> (q) {
-		where(id: q.order("updated_at DESC").map(&:owner_id))
+		where(id: q.select(:owner_id))
 	}
 
 	scope :freshest, -> {
-		includes(:activities).order("activities.updated_at DESC")
+		all
+		#following don't work
+		#includes(:activities).order("activities.updated_at DESC")
 		#joins(:activities).order("activities.updated_at DESC")
 	}
 
-	scope :all_activities, -> (q) {
-		q.order("owner_id DESC", "updated_at DESC")
+	scope :activities, -> {
+		PublicActivity::Activity.where(owner_type: 'Event', owner_id: all)
+		#  										  faster -> owner_id: select(:id))
 	}
 
 	# NOTE TO WOLFGANG: if you come back here, 
