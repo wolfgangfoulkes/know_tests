@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
-# Use postgresql because heroku and maybe good idea
+# Use postgresql, removed for errors
 gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -66,3 +66,6 @@ gem 'inline_svg'
 
 # track activities
 gem 'public_activity', '~> 1.4.2'
+
+# prefix css
+gem 'autoprefixer-rails'
