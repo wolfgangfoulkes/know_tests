@@ -19,7 +19,7 @@ class ScheduleController < ApplicationController
 	private
 		def setup
 			@user = current_user
-			@events = @user.followees(Event) | @user.events
+			@events = Event.where(id: (@user.followees(Event) | @user.events)).order("starts_at DESC")
 		end
 
 		def set_date
@@ -31,6 +31,7 @@ class ScheduleController < ApplicationController
 			end
 		end
 
+		# move the following to somewhere public to the app
 		def validDT?(dt_)
 			(( DateTime.parse(params[:date]) rescue ArgumentError) != ArgumentError)
 		end
