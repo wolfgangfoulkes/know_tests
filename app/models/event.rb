@@ -36,13 +36,28 @@ class Event < ActiveRecord::Base
 	scope :search, -> (q) { where(id: name_starts_with(q) | name_contains(q)) }
 
 	# works with array or relation
+	# does not retain activities order
 	scope :activity_in, -> (q) {
-		where(id: q.order("updated_at DESC").map(&:owner_id))
+		where(id: q.select(:owner_id))
 	}
 
 	scope :freshest, -> {
-		where(id: all.map{ |i| i.activities.order("updated_at DESC").map(&:owner).last })
+		all
+		#following don't work
+		#includes(:activities).order("activities.updated_at DESC")
+		#joins(:activities).order("activities.updated_at DESC")
 	}
+
+	scope :activities, -> {
+		PublicActivity::Activity.where(owner_type: 'Event', owner_id: all)
+		#  										  faster -> owner_id: select(:id))
+	}
+
+	# NOTE TO WOLFGANG: if you come back here, 
+	# learn find_each do
+	# see how it returns
+
+
 	#--------
 
 	#----- callbacks -----
@@ -55,7 +70,17 @@ class Event < ActiveRecord::Base
 	#--------
 
 	#----- METHODS -----
-	
+
+	#--- activities
+	def fresh_for(user)
+		self.activities.where("updated_at > ?", user.last_sign_in_at).order("updated_at DESC")
+	end
+
+	def fresh_for?(user)
+		self.activities.where("updated_at > ?", user.last_sign_in_at).any?
+	end
+	#-----
+
 	#--- tags 
 	def tag_list=(names)
 		# could also use .delete("char")

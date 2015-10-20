@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
 
   def activities
     activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
-    @events = Event.find(activities.order("created_at ASC").map{ |i| i.owner_id } )
+    @events = Event.where(id: activities.order("created_at DESC").pluck("owner_id") )
   end
 
   def search_test

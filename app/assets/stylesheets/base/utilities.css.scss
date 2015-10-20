@@ -1,0 +1,47 @@
+$gm: 1.61803398875;
+
+
+/***** FUNCTIONS *****/
+
+/*** size
+*/
+@function pow($ls_, $rs_) {
+	$_r: 1.0;
+	@for $i from 0 to $rs_ {
+		$_r: $_r * $ls_;
+	}
+	@return $_r;
+}
+
+@function scale($base_, $coeff_, $i_) {
+	$coeff: pow($coeff_, $i_);
+	@return $base_ * $coeff;
+}
+
+@function sig_figs($base_, $n_) {
+	$coeff: pow(10, $n_);
+	@return round($base_ * $coeff)/$coeff;
+}
+/***/
+
+/*** color
+*/
+@function a_bl($fg, $bg, $a) {
+	@return rgb(
+	$a * red($fg) 	+ 	(1-$a) * red($bg),
+	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
+	$a * green($fg) + 	(1-$a) * green($bg)
+	);
+}
+
+@function rgba2rgb($c, $a) {
+	@return a_bl($c, rgb(255, 255, 255), $a);
+}
+
+@function w_bl($c, $a) {
+	@return rgba2rgb($c, $a);
+}
+/***/
+
+
+/*****/

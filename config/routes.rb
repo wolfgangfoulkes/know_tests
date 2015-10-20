@@ -28,8 +28,15 @@ Rails.application.routes.draw do
   resources :tags, :only => [:show, :create, :destroy]
 
   get 'schedule/:action', controller: 'schedule'
-  get '/calendar', to: redirect('schedule/calendar'), as: 'calendar'
-  get '/schedule', to: redirect('schedule/list'), as: 'schedule' #as: schedule defines schedule_path to refer to this action
+  # schedule_*_path
+  get 'schedule/list'
+  get 'schedule/calendar'
+  # schedule_path
+  get 'schedule/list', as: 'schedule' 
+  get 'schedule/calendar', as: 'calendar'
+  # redirects
+  get '/calendar', to: redirect('schedule/calendar')
+  get '/schedule', to: redirect('schedule/list') 
   
   get '/activities', to: 'static_pages#activities', as: 'activities'
   root 'static_pages#home'

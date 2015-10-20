@@ -18,12 +18,41 @@
 
 KNOW = 
 {
-	page: ""
 };
 
+// var initPageAttr()
+// {
 
+// }
+
+var $firstOfSels = function(sels_)
+{
+	for (key in sels_)
+	{
+		var $sel = $(sels_[key]);
+		if ($sel.length > 0)
+		{ 
+			return $sel; 
+		}
+	}
+	return $();
+}
+/*
+	future, you'd do this more accurately with an arbitrary helper method
+	like current_link("url with *"), then checks against request object 
+	using arbitrary Regexp pattern
+	then you'd use it to set data-current.
+*/
+var setLinkFromCUrl = function(sel_)
+{
+	var c_url = $("body").attr("data-url");
+	var sel = sel_ + "[href='" + c_url + "']";
+	// api.jquery.com/category/selectors/
+	// gonna wanna clip off the query
+	$(sel).attr("data-current", true);
+}
 
 $(document).on("page:change", function()
 {
-	KNOW.page = $("body").attr("class");
+	setLinkFromCUrl(".nav-bar > a");
 });

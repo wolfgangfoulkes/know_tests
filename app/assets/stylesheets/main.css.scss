@@ -3,55 +3,123 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "base/meyer-reset-mod.css.scss";
+@import "base/utilities.css.scss";
 
-/***** FUNCTIONS *****/
-@function a_bl($fg, $bg, $a) {
-	@return rgb(
-	$a * red($fg) 	+ 	(1-$a) * red($bg),
-	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
-	$a * green($fg) + 	(1-$a) * green($bg)
-	);
-}
-
-@function rgba2rgb($c, $a) {
-	@return a_bl($c, rgb(255, 255, 255), $a);
-}
-
-@function w_bl($c, $a) {
-	@return rgba2rgb($c, $a);
-}
-
-@function color($k)
+@function nth_if($map_, $i_)
 {
-	@if $k == salvr
-	{
-		@return w_bl(rgb(100, 0, 0), 0.1);
+	$max: length($map_);
+	@if ($i_ > $max) {
+		@return nth($map_, $max);
 	}
-	@else 
-	{
-		@return #FFFFFF;
+	@if ($i_ < 1) {
+		@return nth($map_, 1);
+	}
+	@return nth($map_, $i_);
+}
+
+@mixin mq($min_, $max_) {
+	@if $min_ == 0 {
+		@media only screen and (max-width: "#{$max_}")
+		{ @content; }
+	}
+	@else if $max_ == 0 {
+		@media only screen and (min-width: "#{$min_}")
+		{ @content; }
+	}
+	@else {
+		@media only screen and (min-width: "#{$min_}") and (max-width: "#{$max_}")
+		{ @content; }
 	}
 }
-/*****/
-
 
 /***** VARS *****/
 $namespace: "know";
 
-/*** LAYOUT
-*/
-$margins-rl: 3rem;
-$nav-bar-h: 6rem;
-/***/
-
 /*** FONT
 */
 $font-base: 36px; /*18px;*/
-$font-1: 1 * $font-base;
-$font-2: .8 * $font-base;
-$font-3: .7 * $font-base;
-$font-4: .5 * $font-base;
-$font-5: .4 * $font-base;
+$fonts: (
+	1 * $font-base,
+	.8 * $font-base,
+	.7 * $font-base,
+	.5 * $font-base,
+	.4 * $font-base
+);
+/***/
+
+
+/*** BREAKPOINTS
+*/
+$bps: 
+(
+	320px, 
+	480px,
+	800px,
+	1024px
+);
+@function _bps($i_) {
+	@return nth($bps, $i_);
+}
+/***/
+
+/*** SIZES
+*/
+$sizes_b: 
+(
+	20px,
+	26px,
+	30px,
+	36px
+);
+@function _sizes_b($i_) {
+	@return nth($sizes_b, $i_);
+}
+
+$sizes_r: (
+	1,
+	.8,
+	.7,
+	.5,
+	.4
+);
+@function _sizes_r($i_) {
+	@return nth($sizes_r, $i_);
+}
+
+@function size_at($i_, $bp_) {
+	@return _sizes_r($i_) * _sizes_b($bp_);
+}
+/***/
+
+@mixin sizes($i_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: size_at($i_, 1);
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: size_at($i_, 2);
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: size_at($i_, 3);
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: size_at($i_, 4);
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: size_at($i_, 4);
+	}
+}
+
+/*** LAYOUT
+*/
+$margins-rl: 48px;
+$nav-bar-h: 96px;
+/***/
+
+/*** ICONS
+*/
+$nav-icon-size: 40px;
 /***/
 
 /*****/
@@ -73,9 +141,9 @@ a {
 /*****/
 
 /***** GLOBAL *****/
-
 .vmn {
-	height: 3rem;
+	height: 48px;
+	/* margins r-l */
 }
 
 .row {
@@ -94,18 +162,15 @@ a {
 	justify-content: center;
 	align-items: center;
 	svg {
-		width: 100%;
 		height: 100%;
-		
 		&.svg-plus {
-			width: 85%;
+			height: 85%;
 		}
 		&.svg-user {
-			width: 98%;
+			height: 98%;
 		}
 	}
 }
-
 
 
 .img-main {
@@ -124,24 +189,60 @@ a {
 	align-items: center;
 	height: $nav-bar-h;
 	background-color: rgba(100, 0, 0, 0.1);
-	z-index: 1000;
-}
-.nav-bar.row .item {
-	margin: 0 1em;
 }
 
-.nav-bar.row .item.svg-link {
-	width: 2.5rem;
-	height: 2.5rem;
-}
+/* 
+	rather than the following, could 
+	use a parent 'section' item
+	with 
+	space-between
+	and either
+	flex-grow: <relative size for space and margins>;
+	or
+	margin-left: auto
+	with item margins
 
+	the latter might be preferable for maintaining margins
+*/
 #bar-t {
 	position: fixed;
 	left: 0;
 	right: 0;
 	top: 0;
 	background-color: rgba(100, 0, 0, 0.1);
-	justify-content: flex-end;
+	justify-content: space-around;
+	.br {
+		flex-basis: 0;
+		flex-grow: 1;
+		@include mq(0, _bps(2))
+		{
+			display: none;
+		}
+	}
+
+	.item {
+		@include mq(0, _bps(2))
+		{
+			flex-basis: 30px;
+			margin: 0 18px;
+			height: 30px;
+			/* RATIO: 0.6 or 1.666... */
+		}
+		@include mq(_bps(2), _bps(3))
+		{
+			flex-basis: 36px;
+			margin: 0 22px;
+			height: 36px;
+			/* RATIO: 0.6111... or 1.6363... */
+		}
+		@include mq(_bps(3), 0)
+		{
+			flex-basis: 40px;
+			margin: 0 36px;
+			height: 40px;
+			/* RATIO: 0.9 or 1.111... */
+		}
+	}
 }
 
 #bar-b {
@@ -154,79 +255,49 @@ a {
 }
 
 .#{$namespace} {
-	font-size: $font-base;
-}
-
-.#{$namespace} 
-{
-	.h1 {
-		/* change to f1, etc. */
-		font-size: $font-1;
-		font-weight: bold;
-	}
-
-	.h2 {
-		font-size: $font-2;
-		font-weight: bold;
-	}
-
-	.h3 {
-		font-size: $font-3;
-	}
-
-	.h4 {
-		font-size: $font-4;
-	}
-
-	.h5 {
-		font-size: $font-5;
-	}
+	font-size: nth($fonts, 1);
 }
 
 
+.h1 {
+	/* change to f1, etc. */
+	font-size: size_at(1, 4);
+	font-weight: bold;
 
-.#{$namespace} .page {
+	@include sizes(1, "font-size");
+}
+.h2 {
+	font-size: size_at(2, 4);
+	font-weight: bold;
+
+	@include sizes(2, "font-size");
+}
+.h3 {
+	font-size: size_at(3, 4);
+
+	@include sizes(3, "font-size");
+}
+.h4 {
+	font-size: size_at(4, 4);
+
+	@include sizes(4, "font-size");
+}
+.h5 {
+	font-size: size_at(5, 4);
+
+	@include sizes(5, "font-size");
+}
+
+.page {
 	margin: $nav-bar-h $margins-rl;
 	margin-bottom: $nav-bar-h*2;
 }
 
-.#{$namespace} .page section {
+.page section {
 	width: 100%;
 }
 
-/***** FEED 
-*/
-.#{$namespace} .feed.col {
-	justify-content: space-between;
-	border-top: 1px solid black;
-}
-.#{$namespace} .feed-item.row {
-	padding: 1em 0;
-	border-bottom: 1px solid black;
-	align-items: center;
-}
 
-.#{$namespace} .feed-item.row.past {
-	color: rgba(100, 0, 0, 0.1);
-}
-
-.#{$namespace} .feed-item .field {
-	padding: 0 1rem;
-}
-
-.#{$namespace} .feed-item .field.tags {
-	margin: 0 auto;
-	word-spacing: 1em;
-}
-
-.#{$namespace} .feed-item .options {
-	margin-left: auto;
-}
-
-.#{$namespace} .feed-item .options * {
-	padding: 0 1rem;
-}
-/*****/
 
 
 /***** FORM *****/
@@ -274,34 +345,30 @@ a {
 /*****/
 
 /***** TEMP *****/
-.#{$namespace} .events.feed {
-	width: 100%;
-}
-
-.#{$namespace} .events.search.row {
+.events.search.row {
 	width: 100%;
 	height: 1.5em;
 }
 
-.#{$namespace} .events.search.row input
+.events.search.row input
 {
 	font-size: .8em;
 }
 
-.#{$namespace} .events.search.row input[type="text"]
+.events.search.row input[type="text"]
 {
 	flex-grow: 1;
 	border-width: 0 1px;
 }
 
-.#{$namespace} .events.search.row input[type="submit"]
+.events.search.row input[type="submit"]
 {
 	width: 8rem;
 	border: none;
 	cursor: pointer;
 }
 
-.#{$namespace} .tags {
+.tags {
 	color: rgba(100, 0, 0, 0.3);
 }
 
@@ -312,9 +379,11 @@ section {
 }
 
 
+
+
 /***** dependent files *****/
+@import "lists.css.scss";
 @import "comments.css.scss";
-@import "activities.css.scss";
-@import "schedule/schedule.css.scss";
-@import "schedule/calendar.css.scss";
+@import "dynamic.css.scss";
+@import "calendar.css.scss";
 /*****/

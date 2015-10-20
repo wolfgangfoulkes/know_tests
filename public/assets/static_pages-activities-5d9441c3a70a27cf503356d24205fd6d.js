@@ -1,0 +1,1 @@
+var parseBool=function(a){switch(a.toLowerCase().trim()){case"true":case"yes":case"1":return!0;case"false":case"no":case"0":case null:return!1;default:return Boolean(a)}};$(document).on("page:change",function(){$("*[data-drop='toggle']").on("click",function(a){var t=$(this).data("id"),e=$("*[data-id="+t+"]"),o=e.attr("data-state");e.attr("data-state",!parseBool(o))})});

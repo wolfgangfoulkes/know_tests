@@ -6,15 +6,23 @@
   <%= javascript_include_tag 'application', 
   	(controller.controller_name if javascript_exists?(controller.controller_name)),
   	("#{controller.controller_name}-#{controller.action_name}" if javascript_exists?("#{controller.controller_name}-#{controller.action_name}")),
-  	'data-turbolinks-track' => true 
+  	'data-turbolinks-track' => true
   %>
   <%= csrf_meta_tags %>
 </head>
 
-<body class="know <%= "#{controller.controller_name}-#{controller.action_name}" %>">
+<body class="know"
+	data-controller=
+	<%= "#{controller.controller_name}" %>
+	data-action=
+	<%= "#{controller.action_name}" %>
+	data-url= 
+	<%= "#{request.fullpath}" %>
+> 
 
-<div id="bar-t" class="nav-bar row"> 
+<div id="bar-t" class="nav-bar row">
 <% if user_signed_in? %>
+	<div class="br"> </div>
 	<a 	href="<%= new_event_path %>"
 		class="item svg-link" >
 		<%= inline_svg 'svg/icons/plus.svg', 
@@ -25,15 +33,19 @@
 		class="item svg-link" >
 		<%= inline_svg 'svg/icons/home.svg',
 			class: "svg-home" 
-				%>
+		%>
 	</a>
 	<a 	href="<%= schedule_path %>"
 		class="item svg-link" >
-		<%= inline_svg 'svg/icons/calendar.svg' %>
+		<%= inline_svg 'svg/icons/calendar.svg',
+			class: "svg-calendar"
+		%>
 	</a>
 	<a 	href="<%= activities_path %>"
 		class="item svg-link" >
-		<%= inline_svg 'svg/icons/alert.svg' %>
+		<%= inline_svg 'svg/icons/alert.svg',
+			class: "svg-alert"
+		%>
 	</a>
 	<a 	href="<%= user_path(current_user.id) %>"
 		class="item svg-link" >

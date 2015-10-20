@@ -1,13 +1,24 @@
-<div class="feed-item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
-    <span class="field h2"><%= link_to event.name, event %></span>
-    <span class="field h4"><%= link_to event.user.name, event.user %></span>
-    <span class="field tags h5">
+<div class="item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
+    <div class= "field f-l row h2">
+      <%= link_to event.name, event %>
+    </div>
+    <div class="field f-l row h4">
+      <%= link_to event.user.name, event.user %> 
+    </div>
+
+    <div class="br"> </div>
+
+    <span class="field f-c row tags h5">
       <%= event.tag_list %>
     </span>
-    <span class="options row h4">
-      <% if current_user.id == event.user_id %>
-      <% else %>
+
+    <div class="br"> </div>
+
+    <span class="field f-r row options h4">
+      <% if current_user.id != event.user_id %>
         <%= render partial: "socializations/follow_button", locals: {socializable: event} %>
+      <% else %>
       <% end %>
     </span>
+
 </div>
