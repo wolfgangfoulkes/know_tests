@@ -214,6 +214,7 @@ a {
 	.br {
 		flex-basis: 0;
 		flex-grow: 1;
+
 		@include mq(0, _bps(2))
 		{
 			display: none;
@@ -224,7 +225,7 @@ a {
 		@include mq(0, _bps(2))
 		{
 			flex-basis: 30px;
-			margin: 0 18px;
+			margin: 0 0;
 			height: 30px;
 			/* RATIO: 0.6 or 1.666... */
 		}

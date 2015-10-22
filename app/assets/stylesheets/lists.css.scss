@@ -1,16 +1,12 @@
 /***** EVENTS 
 */
 
-/*
-	here, space-between and the -fl -fr properties 
-	are redundant.
-*/
 .events.feed.col {
 	justify-content: space-between;
 	border-top: 1px solid black;
 
 	>.item.row {
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
 
 		padding: 36px 16px;
@@ -20,37 +16,28 @@
 			color: rgba(100, 0, 0, 0.1);
 		}
 
-		>.field {
-			flex-basis: 0;
-			flex-grow: 1;
-			flex-shrink: 0;
+		> * {
+			margin: 0 16px;
+			height: 96px;
 
-			&.f-l {
-				justify-content: flex-start;
-			}
-
-			&.f-c {
+			&.col {
 				justify-content: center;
+				box-sizing: border-box;
+				padding: 16px 0;
+
+				> .br {
+					flex-basis: 0;
+					flex-grow: 1;
+				}
 			}
 
-			&.f-r {
-				justify-content: flex-end;
-			}
-
-			&.tags {
-				word-spacing: 1em;
-			}
-			&.options {
-
+			&.image-temp {
+				background-color: red;
+				border-radius: 50%;
+				width: 96px;
+				flex-shrink: 0;
 			}
 		}
-
-
-		>.br {
-			flex-basis: 0;
-			flex-grow: 0.5;
-		}
-
 	}
 }
 
