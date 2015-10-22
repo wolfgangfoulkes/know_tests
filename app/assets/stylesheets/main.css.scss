@@ -35,24 +35,12 @@
 /***** VARS *****/
 $namespace: "know";
 
-/*** FONT
-*/
-$font-base: 36px; /*18px;*/
-$fonts: (
-	1 * $font-base,
-	.8 * $font-base,
-	.7 * $font-base,
-	.5 * $font-base,
-	.4 * $font-base
-);
-/***/
-
 
 /*** BREAKPOINTS
 */
 $bps: 
 (
-	320px, 
+	340px, 
 	480px,
 	800px,
 	1024px
@@ -66,10 +54,10 @@ $bps:
 */
 $sizes_b: 
 (
-	20px,
-	26px,
 	30px,
-	36px
+	32px,
+	36px,
+	40px
 );
 @function _sizes_b($i_) {
 	@return nth($sizes_b, $i_);
@@ -77,10 +65,10 @@ $sizes_b:
 
 $sizes_r: (
 	1,
-	.8,
-	.7,
-	.5,
-	.4
+	.756,
+	.571,
+	.465,
+	.378
 );
 @function _sizes_r($i_) {
 	@return nth($sizes_r, $i_);
@@ -111,6 +99,11 @@ $sizes_r: (
 	}
 }
 
+/*** COLORS
+*/
+$salmender: w_bl(rgb(100, 0, 0), 0.1);
+/***/
+
 /*** LAYOUT
 */
 $margins-rl: 48px;
@@ -126,19 +119,15 @@ $nav-icon-size: 40px;
 
 /***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
 
-
-/***** ADDITIONAL RESET (add to meyer thing eventually) *****/
-a {
-	text-decoration: none;
-	color: inherit;
-}
-
+/***** STUFF I DON'T WANNA FUCK UP *****/
 .#{$namespace} {
+	/* this was here before, don't wanna fuck it up */
 	box-sizing: border-box;
-	font-style: normal;
-	font-weight: normal;
 }
-/*****/
+
+section {
+	width: 100%;
+}
 
 /***** GLOBAL *****/
 .vmn {
@@ -156,6 +145,8 @@ a {
 	flex-direction: column;
 }
 
+
+
 /***** OBJECTS *****/
 .svg-link {
 	display: inline-flex;
@@ -172,23 +163,12 @@ a {
 	}
 }
 
-
-.img-main {
-	position: absolute;
-	z-index: -1;
-	right: 0;
-	top: 0;
-	width: 300px;
-	height: 300px;
-	object-fit: cover;
-	/*-webkit-clip-path: circle(20px at center);*/
-}
-
 /***** APP LAYOUT *****/
 .nav-bar.row {
 	align-items: center;
 	height: $nav-bar-h;
-	background-color: rgba(100, 0, 0, 0.1);
+	background-color: rgb2rgba($salmender, 0.95);
+	z-index: 1000;
 }
 
 /* 
@@ -209,8 +189,8 @@ a {
 	left: 0;
 	right: 0;
 	top: 0;
-	background-color: rgba(100, 0, 0, 0.1);
 	justify-content: space-around;
+
 	.br {
 		flex-basis: 0;
 		flex-grow: 1;
@@ -251,12 +231,15 @@ a {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(100, 0, 0, 0.1);
 	justify-content: space-around;
+
+	> * {
+	}
 }
 
+/***** HEADERS *****/
 .#{$namespace} {
-	font-size: nth($fonts, 1);
+	font-size: 36px;
 }
 
 
@@ -277,6 +260,7 @@ a {
 	font-size: size_at(3, 4);
 
 	@include sizes(3, "font-size");
+
 }
 .h4 {
 	font-size: size_at(4, 4);
@@ -288,21 +272,23 @@ a {
 
 	@include sizes(5, "font-size");
 }
+/*****/
 
 .page {
-	margin: $nav-bar-h $margins-rl;
-	margin-bottom: $nav-bar-h*2;
+	width: 100vw;
+	box-sizing: border-box;
+	padding: $nav-bar-h $margins-rl;
+	padding-bottom: $nav-bar-h*2;
+	max-width: 960px;
+	margin: 0 auto;
+
+	@include mq(0, _bps(2)) {
+		padding: $nav-bar-h $margins-rl*0.25;
+	}
 }
-
-.page section {
-	width: 100%;
-}
-
-
-
 
 /***** FORM *****/
-.#{$namespace} form.new_event {
+form.new_event {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -311,14 +297,14 @@ a {
 
 }
 
-.#{$namespace} form.new_event .field {
+form.new_event .field {
 	flex-grow: 1;
 	margin: .5rem 0;
 	font-size: 1em;
 
 }
 
-.#{$namespace} form.new_event input {
+form.new_event input {
 	/***** overrides *****/
 	padding: 0 0;
 	margin: 0 0;
@@ -328,12 +314,12 @@ a {
 	/*****/
 }
 
-.#{$namespace} form.new_event .actions {
+form.new_event .actions {
 	flex-grow: 1;
 	margin: 1rem 0;
 }
 
-.#{$namespace} form.new_event .actions input {
+form.new_event .actions input {
 	/***** overrides *****/
 	background: none;
 	border: none;
@@ -345,38 +331,8 @@ a {
 }
 /*****/
 
-/***** TEMP *****/
-.events.search.row {
-	width: 100%;
-	height: 1.5em;
-}
-
-.events.search.row input
-{
-	font-size: .8em;
-}
-
-.events.search.row input[type="text"]
-{
-	flex-grow: 1;
-	border-width: 0 1px;
-}
-
-.events.search.row input[type="submit"]
-{
-	width: 8rem;
-	border: none;
-	cursor: pointer;
-}
-
 .tags {
 	color: rgba(100, 0, 0, 0.3);
-}
-
-section {
-	display: flex;
-	flex-direction: column;
-	position: relative;
 }
 
 
@@ -384,6 +340,7 @@ section {
 
 /***** dependent files *****/
 @import "lists.css.scss";
+@import "show.css.scss";
 @import "comments.css.scss";
 @import "dynamic.css.scss";
 @import "calendar.css.scss";
