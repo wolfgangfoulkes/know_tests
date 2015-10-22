@@ -26,10 +26,13 @@ class Event < ActiveRecord::Base
 	#----- scopes ----- 
 	# to chain them, I must return an active_record object, and right now
 	# that is easiest with "where"
+	scope :deef, -> { order("starts_at ASC") }
+
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
 	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
+	scope :starts_after, -> (q) { where("starts_at >= ?", q ) }
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
 
 	# order determines final order

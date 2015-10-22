@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
     collection do #events/
       post 'filtered'
+      post 'search'
     end
 
     member do #event/:id/ with :id passed in params[:id]
