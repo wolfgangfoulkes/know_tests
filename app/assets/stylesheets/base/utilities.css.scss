@@ -35,11 +35,21 @@ $gm: 1.61803398875;
 }
 
 @function rgba2rgb($c, $a) {
-	@return a_bl($c, rgb(255, 255, 255), $a);
+	@return a_bl($c, rgb(255.0, 255.0, 255.0), $a);
 }
 
 @function w_bl($c, $a) {
 	@return rgba2rgb($c, $a);
+}
+
+@function rgb2rgba($c, $a) {
+	$w: 255.0 * (1.0-$a);
+	@return rgba(
+		( red($c) - $w  ) / $a,
+		( blue($c) - $w ) / $a,
+		( green($c) - $w) / $a,
+		$a
+	);
 }
 /***/
 

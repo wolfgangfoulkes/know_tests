@@ -1,34 +1,30 @@
-<section>
-	<div class="events feed col">
-  		<% @events.each do |event| %>
-    		  <div class="item row"
-          data-drop="toggle"
-          data-id="<%= event.id %>"
-          data-state="false">
-            
-            <div class="field row f-l"> 
-      				<%= link_to event.name, event, 
-              class: "h2" %>
-            </div>
 
-            <div class="field row f-l"> 
-          		<%= link_to event.user.name, event.user,
-              class: "h4" %>
-            </div>
+<div class="events feed col">
+		<% @events.each do |event| %>
+  		  <div class="item row"
+        data-drop="toggle"
+        data-id="<%= event.id %>"
+        data-state="false">
 
-            <div class="br"></div>
-
-        		<span class="h3 field row f-r ">
+          <div class="image-temp"> </div>
+          <div class="col">
+            <span class="h5"> <%= event.starts_at %> </span>
+            <div class="br"> </div>
+            <%= link_to event.name, event, 
+            class: "h2" %> 
+            <span class="h4">
               <%= event.activities.count %> |
               <%= event.fresh_for(current_user).count %> 
             </span>
-    			</div>
-    			<div class="list activities col"
-          data-drop="target"
-          data-id="<%= event.id %>"
-          data-state="false">
-  				  <%= render_activities(event.activities, layout: :activity) %>
+            <div class="br"> </div>
           </div>
-  		<% end %>
-  </div>
-</section>
+
+  			</div>
+  			<div class="list activities col"
+        data-drop="target"
+        data-id="<%= event.id %>"
+        data-state="false">
+				  <%= render_activities(event.activities, layout: :activity) %>
+        </div>
+		<% end %>
+</div>

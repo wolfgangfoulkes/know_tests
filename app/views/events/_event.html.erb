@@ -1,24 +1,18 @@
 <div class="item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
-    <div class= "field f-l row h2">
-      <%= link_to event.name, event %>
+    <div class="image-temp"> </div>
+    <div class= "col">
+      <div class="date h5"> <%= event.starts_at %> </div>
+
+      <div class="br"> </div>
+
+      <%= link_to event.name, event, class: "title h2" %>
+      <span class="tags h4"> 
+        <% event.tags.first(10).each do |tag| %> 
+          <%= "#{tag.name}" %>
+        <% end %>
+      </span>
+
+      <div class="br"> </div>
+      
     </div>
-    <div class="field f-l row h4">
-      <%= link_to event.user.name, event.user %> 
-    </div>
-
-    <div class="br"> </div>
-
-    <span class="field f-c row tags h5">
-      <%= event.tag_list %>
-    </span>
-
-    <div class="br"> </div>
-
-    <span class="field f-r row options h4">
-      <% if current_user.id != event.user_id %>
-        <%= render partial: "socializations/follow_button", locals: {socializable: event} %>
-      <% else %>
-      <% end %>
-    </span>
-
 </div>

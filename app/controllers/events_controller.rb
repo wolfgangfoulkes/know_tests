@@ -2,13 +2,13 @@ class EventsController < ApplicationController
   load_and_authorize_resource only: [:show, :edit, :update, :new, :create, :destroy]
 
   def index
-    @events = Event.filter(params.slice(:name_starts_with, :name_contains))
+    @events = Event.filter(filtering_params)
   end
 
-  def filtered
-    @events = Event.filter(params.slice(:search))
+  def search
+    events = Event.where(id: params[:items].split(",")).search(params[:search]).deef
     respond_to do |format|
-      format.js { render 'shared/search_complete.js.erb' }
+      format.js { render 'shared/search_complete.js.erb', locals: {items: events} }
     end
   end
 
@@ -64,5 +64,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :starts_at, :ends_at, :description, :user_id, :tag_list)
     end
 
-    
+    def filtering_params
+      params.permit(:starts_after, :order, :search, :name_starts_with, :name_contains)
+    end
 end

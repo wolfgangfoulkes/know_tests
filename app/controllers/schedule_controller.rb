@@ -19,7 +19,7 @@ class ScheduleController < ApplicationController
 	private
 		def setup
 			@user = current_user
-			@events = Event.where(id: (@user.followees(Event) | @user.events)).order("starts_at DESC")
+			@events = Event.where(id: (@user.followees(Event) | @user.events)).deef
 		end
 
 		def set_date
