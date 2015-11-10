@@ -5,9 +5,8 @@
 	    	:date => @event.starts_at
     	),
     class: "item" %> |
-<% if (can? :edit, @event) && (can? :destroy, @event) %>
-	<%= link_to 'Edit', edit_event_path(@event), class: "item" %> |
-	<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "item" %> 
+<% if (can? :edit, @event) %>
+	<%= link_to 'Edit', edit_event_path(@event), class: "item" %>
 <% else %>
 	<div class="item">
 		<%= render partial: "socializations/follow_button", locals: {socializable: @event} %>
@@ -55,9 +54,11 @@
 		data-refresh="comments">
 		<%= render @event.comments %>
 	</div>
-	<%= render partial: 'comments/form', 
-	locals: { comment: @event.comments.build } 
-	%>
+	<% if (can? :edit, @event) %>
+		<%= render partial: 'comments/form', 
+		locals: { comment: @event.comments.build } 
+		%>
+	<% end %>
 </section>
 
 <div class="vmn"> </div>
