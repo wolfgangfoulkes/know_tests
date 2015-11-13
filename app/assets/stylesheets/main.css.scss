@@ -155,42 +155,6 @@ $sizes_r: (
 }
 /* ----- */
 
-/* ----- MISC ----- */
-/* 
-*	- used only in nav currently, could be reused
-*/
-.svg-link {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	svg {
-		height: 100%;
-		&.svg-plus {
-			height: 85%;
-		}
-		&.svg-user {
-			height: 98%;
-		}
-	}
-}
-
-.tags {
-	color: rgba(100, 0, 0, 0.3);
-}
-/* ----- */
-
-
-/* --- STUFF I DON'T WANNA FUCK UP --- */
-$namespace: "know";
-
-.#{$namespace} {
-	font-size: 36px;
-}
-section {
-	width: 100%;
-}
-/* --- */
-
 
 
 /***** dependent files *****/

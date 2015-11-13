@@ -1,6 +1,4 @@
-/*
---- FEED
-*/
+/* --- FEED --- */
 .events.feed.col > .item.row > .image-temp {
 	/*object-fit: cover;*/
 	background-color: red;
@@ -90,9 +88,7 @@
 }
 /* --- */
 
-/*
---- SEARCH BAR 
-*/
+/* --- SEARCH BAR --- */
 .events.search.row {
 	width: 100%;
 /*	font-size: 36px;*/
@@ -101,7 +97,7 @@
 
 .events.search.row input
 {
-	font-size: 1em;
+	font-size: inherit;
 }
 
 .events.search.row input[type="text"]
