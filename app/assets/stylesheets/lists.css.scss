@@ -106,17 +106,12 @@
 	font-family: 'PT Sans', sans-serif;
 	position: relative;
 	align-items: center;
+
 	.item {
-		box-sizing: border-box;
-		line-height: 36px / 2;
 		text-align: center;
 
-		&[data-fresh=true] {
-
-		}
-		&[data-fresh=false] {
-			color: rgba(100, 0, 0, 0.3);
-		}
+		box-sizing: border-box;
+		line-height: 18px;
 
 		.subject {
 			
@@ -127,13 +122,26 @@
 		.options {
 		}
 	}
+
 	>::before, &::after {
 		display: block;
 		content: "";
 		width: 0;
 		border-left: 1px solid black;
+		
 		margin: 8px auto;
 		height: 36px;
+	}
+}
+
+.comment-list.col {
+	.item {
+		&[data-fresh=true] {
+
+		}
+		&[data-fresh=false] {
+			color: rgba(100, 0, 0, 0.3);
+		}
 	}
 }
 /*****/

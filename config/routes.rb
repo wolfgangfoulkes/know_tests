@@ -28,25 +28,35 @@ Rails.application.routes.draw do
   
   resources :tags, :only => [:show, :create, :destroy]
 
-  get 'schedule/:action', controller: 'schedule'
-  # schedule_*_path
+  # ----- schedule
+
+  # only json
   get 'schedule/list'
+
+  # schedule_calendar_path
   get 'schedule/calendar'
   # schedule_path
-  get 'schedule/list', as: 'schedule' 
-  get 'schedule/calendar', as: 'calendar'
-  # redirects
-  get '/calendar', to: redirect('schedule/calendar')
-  get '/schedule', to: redirect('schedule/list') 
-  
+  get 'schedule/calendar', as: 'schedule'
+  # redirect for url
+  get '/schedule', to: redirect('schedule/calendar') 
+  # -------- #
+
+  # ----- static_pages
+  # these could easily be replaced with a url query 
+  get '/feed', to: 'static_pages#feed', as: 'feed'
+  get '/saved', to: 'static_pages#saved', as: 'saved'
+
   get '/activities', to: 'static_pages#activities', as: 'activities'
-  root 'static_pages#home'
+  
+  root 'static_pages#feed'
+  # -----
 
   # ----- error handling
   get '/access_error', to: 'errors#access'
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'
-  # - make sure this is the last route, http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
+  # - make sure this is the last route, 
+  # a-la http://jerodsanto.net/2014/06/a-step-by-step-guide-to-bulletproof-404s-on-rails/
   get "*any", via: :all, to: "errors#not_found"
 
 

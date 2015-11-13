@@ -237,7 +237,11 @@ section {
 	}
 }
 
-/***** HEADERS *****/
+.tags {
+	color: rgba(100, 0, 0, 0.3);
+}
+
+/***** FONTS *****/
 .#{$namespace} {
 	font-size: 36px;
 }
@@ -330,10 +334,6 @@ form.new_event .actions input {
 	padding: .5rem 0;
 }
 /*****/
-
-.tags {
-	color: rgba(100, 0, 0, 0.3);
-}
 
 /***** dependent files *****/
 @import "lists.css.scss";

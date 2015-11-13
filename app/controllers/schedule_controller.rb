@@ -4,7 +4,6 @@ class ScheduleController < ApplicationController
 
 	def list
 		respond_to do |format|
-			format.html
 			format.json
 		end
 	end
