@@ -57,6 +57,7 @@ $sizes_r: (
 	.465,
 	.378
 );
+
 @function _sizes_r($i_) {
 	@return nth($sizes_r, $i_);
 }
@@ -193,8 +194,8 @@ section {
 
 
 /***** dependent files *****/
-@import "forms.css.scss";
 @import "nav.css.scss";
+@import "events-form.css.scss";
 @import "events-feed.css.scss";
 @import "activities-feed.css.scss";
 @import "comments-feed.css.scss";
