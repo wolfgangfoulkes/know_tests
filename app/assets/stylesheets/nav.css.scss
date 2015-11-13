@@ -1,0 +1,72 @@
+/* 
+	rather than the following, could 
+	use a parent 'section' item
+	with 
+	space-between
+	and either
+	flex-grow: <relative size for space and margins>;
+	or
+	margin-left: auto
+	with item margins
+
+	the latter might be preferable for maintaining margins
+*/
+.nav-bar.row {
+	align-items: center;
+	height: $nav-bar-h;
+	background-color: rgb2rgba($salmender, 0.95);
+	z-index: 1000;
+}
+
+#bar-t {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	justify-content: space-around;
+
+	.br {
+		flex-basis: 0;
+		flex-grow: 1;
+
+		@include mq(0, _bps(2))
+		{
+			display: none;
+		}
+	}
+
+	.item {
+		@include mq(0, _bps(2))
+		{
+			flex-basis: 30px;
+			margin: 0 0;
+			height: 30px;
+			/* RATIO: 0.6 or 1.666... */
+		}
+		@include mq(_bps(2), _bps(3))
+		{
+			flex-basis: 36px;
+			margin: 0 22px;
+			height: 36px;
+			/* RATIO: 0.6111... or 1.6363... */
+		}
+		@include mq(_bps(3), 0)
+		{
+			flex-basis: 40px;
+			margin: 0 36px;
+			height: 40px;
+			/* RATIO: 0.9 or 1.111... */
+		}
+	}
+}
+
+#bar-b {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	justify-content: space-around;
+
+	> * {
+	}
+}

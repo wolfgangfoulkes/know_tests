@@ -4,10 +4,10 @@
 	justify-content: center;
 	> * {
 		font-family: "PT Sans", sans-serif;
+
 		padding: 8px 13px;
 	}
 }
-
 
 .tabs >[data-sel-snd] {
 	&[data-sel-state='true'] {
@@ -21,11 +21,30 @@
 }
 
 [data-sel-rcv] {
-/*		* > & {
-	}*/
 	width: 100%;
+
 	&[data-sel-state='false'] {
 		display: none;
+	}
+}
+
+
+.comment-list.col .item {
+	&[data-fresh=true] {
+
+	}
+	&[data-fresh=false] {
+		color: rgba(100, 0, 0, 0.3);
+	}
+}
+
+.activities.list.col .item 
+{
+	&[data-fresh=true] {
+
+	}
+	&[data-fresh=false] {
+		color: rgba(100, 0, 0, 0.3);
 	}
 }
 

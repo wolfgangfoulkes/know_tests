@@ -30,6 +30,15 @@
 	}
 }
 
+.comment-list.col .item {
+	&[data-fresh=true] {
+
+	}
+	&[data-fresh=false] {
+		color: rgba(100, 0, 0, 0.3);
+	}
+}
+
 form.new_comment {
 	display: inline-flex;
 	flex-direction: column;
