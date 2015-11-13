@@ -78,4 +78,22 @@ module ApplicationHelper
 	  end
 	end
 
+	def sel_snd(id, state: false, off: nil, group: nil)
+		_d = {}
+		_d["sel-snd"] = id
+		_d["sel-state"] = state
+		_d["sel-off"] = off
+		_d["sel-group"] = group
+		return _d.compact
+	end
+
+	def sel_rcv(id, state: false, off: nil, group: nil)
+		_d = {}
+		_d["sel-rcv"] = id
+		_d["sel-state"] = state
+		_d["sel-off"] = off
+		_d["sel-group"] = group
+		puts _d.to_yaml
+		return _d.compact
+	end
 end

@@ -2,12 +2,12 @@ form.new_comment {
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
-	margin: -28px auto;
+	margin: 0 auto;
 	box-sizing: border-box;
 }
 
-form.new_comment label {
-	display: none;
+form.new_comment #comment_subject {
+	margin-bottom: .8em;
 }
 
 form.new_comment input {
@@ -20,12 +20,12 @@ form.new_question {
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
-	margin: -28px auto;
+	margin: 0 auto;
 	box-sizing: border-box;
 }
 
-form.new_question label {
-	display: none;
+form.new_question #question_subject {
+	margin-bottom: .8em;
 }
 
 form.new_question input {
