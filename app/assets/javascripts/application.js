@@ -35,6 +35,19 @@ var parseBool = function(string) {
     }
 }
 
+/*****
+the sel attributes should be more arbitrary
+you don't need to use the same function for both
+you can use 
+data-state
+otherwise, do 
+data-tog: snd
+data-id: 
+data-sel: snd
+data-sel-id
+data-sel-group
+*****/
+
 var dropToggle = function(sender_, e_)
 {
 	var id = $(sender_).data("id");
