@@ -17,8 +17,6 @@
 
 .description {
 	margin-top: 1.5em;
-	font-family: 'Helvetica';
-	font-weight: 100;
 
 	width: 100%;
 }
@@ -26,31 +24,7 @@
 /*****
 * 	unrelated to layout, a few temporary
 */
-.show.head.col > .field.date {
-	font-family: 'Avenir Next';
 
-	* {
-		font-weight: 100;
-		letter-spacing: -1px;
-		word-spacing: +1px;
-	}
-}
-
-.show.head.col > .field.title {
-	font-family: 'Avenir Next';
-
-	/* the following prevents line wrapping: */
-	/* white-space: nowrap; */
-}
-
-.show.head.col > .field.user {
-	font-family: 'Avenir Next';
-}
-
-.show.head.col > .field.tags {
-	font-family: 'Helvetica';
-	font-weight: bold;
-}
 
 .show.head.col > .img-main {
 	background-color: red;

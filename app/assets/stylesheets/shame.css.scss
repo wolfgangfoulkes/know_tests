@@ -1,3 +1,86 @@
+.tags {
+	color: rgba(100, 0, 0, 0.3);
+}
+
+/* ----- TEMP FONTS ----- */
+	html {
+		font-family: 'Helvetica', sans-serif;
+	}
+
+	.events.feed .h2 {
+		font-family: 'Avenir Next';
+		/*font-family: 'Helvetica';*/
+	}
+
+	.events.feed .date {
+		font-family: 'Avenir Next Condensed';
+	}
+
+	/* - 2Tab - */
+	.tabs {
+		* {
+			font-family: 'Avenir Next', sans-serif;
+			/*font-family: 'PT Sans', sans-serif;*/
+			font-weight: bolder;
+			/*font-weight: lighter;*/
+		}
+	}
+
+	/* - COMMENTS - */
+	.comment-list.col {
+		font-family: 'PT Sans', sans-serif;
+	}
+
+	/* - CALENDAR - */
+	#calendar {
+		font-family: "Avenir Next Condensed", sans-serif;
+	}
+
+	#calendar-title {
+		font-family: "Avenir Next", sans-serif;
+		font-weight: lighter;
+	}
+
+	/* - SHOW - */
+	/*
+		these are close to finished
+	*/
+	.show.head.col > .field.date {
+		font-family: 'Avenir Next';
+		/*font-family 'Avenir Next Condensed';*/
+
+		* {
+			font-weight: 100;
+			letter-spacing: -1px;
+			word-spacing: +1px;
+		}
+	}
+
+	.show.head.col > .field.title {
+		font-family: 'Avenir Next';
+
+		/*font-family 'PT Sans';*/
+
+		/* the following prevents line wrapping: */
+		/* white-space: nowrap; */
+	}
+
+	.show.head.col > .field.user {
+		font-family: 'Avenir Next';
+	}
+
+	.show.head.col > .field.tags {
+		font-family: 'Helvetica';
+		font-weight: bold;
+	}
+
+	.description {
+		font-family: 'Helvetica';
+		font-weight: 100;
+	}
+	/* --- */
+/* ----- */
+
 /* ----- MISC ----- */
 /* 
 *	- used only in nav currently, could be reused
@@ -15,10 +98,6 @@
 			height: 98%;
 		}
 	}
-}
-
-.tags {
-	color: rgba(100, 0, 0, 0.3);
 }
 /* ----- */
 
