@@ -9,11 +9,10 @@
 
 <div class="vmn"> </div>
 
-<section>
-	<%= render partial: "comments/list",
-		locals: { 
-			commentable: @question,
-			comments: @question.comments
-		}
-	%>
-</section>
+
+<%= render partial: "comments/list",
+	locals: { 
+		commentable: @question,
+		comments: @question.comments
+	}
+%>

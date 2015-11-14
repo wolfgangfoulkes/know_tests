@@ -12,6 +12,26 @@
 	or just make all mobile sizes default to day
 */
 
+var resetFCSize = function() 
+{
+	var height = $('#calendar').height();
+	$('#calendar').fullCalendar('option', 'height', height);
+}
+
+var setFCTitle = function(view, element)
+{
+	var title = view.title;
+	$('#calendar-title').text(title);
+}
+
+var onViewRender = function(view, element) 
+{
+	$('#calendar').attr('data-fc-view', view.name);
+	resetFCSize();
+	setFCViewSettings(view, element);
+	setFCTitle(view, element);
+}
+
 var getFCView = function(width)
 {
 	if (width > 800)
@@ -34,14 +54,7 @@ var setFCViewSettings = function(view, element)
 	var start = $('#calendar').fullCalendar('getView').intervalStart;
 	var end = $('#calendar').fullCalendar('getView').intervalEnd;
 	// http://momentjs.com/
-	console.log(start.format("MM"), start.format("YY"));
-}
-
-var onWindowResize = function()
-{
-	var width = $(window).width();
-	var view = getFCView(width);
-	setFCView(view);
+	//console.log(start.format("MM"), start.format("YY"));
 }
 
 var transformData = function(event_)
@@ -64,13 +77,15 @@ var transformData = function(event_)
 	return _event;
 }
 
-//$(window).resize(onWindowResize);
+
 
 $(document).on("page:change", function()
 {
+	
+
 	var data = $('#calendar').data();
 	$('#calendar').fullCalendar({
-			viewRender: setFCViewSettings,
+			viewRender: onViewRender,
 
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,
@@ -80,9 +95,9 @@ $(document).on("page:change", function()
 
 			header: 
 			{
-				left: "basicDay, basicWeek, month",
-				center: "title",
-				right: "prev, next, today"
+				left: "prev",
+				center: "basicDay, basicWeek, month, today",
+				right: "next"
 			},
 			views: 
 			{
@@ -98,11 +113,16 @@ $(document).on("page:change", function()
 				},
 				day: 
 				{
-					titleFormat: "M > D >> 'YY",
-					columnFormat: "dddd"
+					titleFormat: " ",//"M : D :: 'YY",
+					columnFormat: "ddd M | D"//"dddd"
 				}
 			}
 	        //aspectRatio: 1.35 //height determined from width, width from css
+	});
+
+	$(window).on('resize', function()
+	{
+		resetFCSize()
 	});
 
 
@@ -117,6 +137,4 @@ $(document).on("page:change", function()
 		var view = getFCView(width);
 		setFCView(view);
 	}
-
-
 });

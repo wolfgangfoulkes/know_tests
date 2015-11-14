@@ -17,6 +17,7 @@ $nav-icon-size: 40px;
 
 /* --- LAYOUT --- */
 $margins-rl: 48px;
+$vmn: 48px;
 $nav-bar-h: 96px;
 /* --- */
 
@@ -136,7 +137,7 @@ $sizes_r: (
 
 /* ----- LAYOUT ----- */
 .vmn {
-	height: 48px;
+	height: $vmn;
 	/* margins r-l */
 }
 
@@ -144,10 +145,12 @@ $sizes_r: (
 	width: 100vw;
 	box-sizing: border-box;
 	margin: 0 auto;
+	position: relative;
 
 	padding: $nav-bar-h $margins-rl;
 	padding-bottom: $nav-bar-h*2;
 	max-width: 960px;
+	min-height: 100vh;
 	
 	@include mq(0, _bps(2)) {
 		padding: $nav-bar-h $margins-rl*0.25;
