@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
+# VERSIONS FIXED 11/15/15
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
-# Use postgresql, removed for errors
-gem 'pg'
+# Use postgresql
+gem 'pg', '~> 0.18.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -14,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-# Use jquery as the JavaScript library
+# Use jquery as the JavaScript library UNFIXED VERSION
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -43,29 +45,29 @@ gem 'devise'
 gem 'cancancan'
 
 # social media functionality (e.g. follow, like)
-gem 'socialization'
+gem 'socialization', '~> 1.2.0'
 
 # environmental variables
-gem 'figaro'
+gem 'figaro', '~> 1.1.1'
 
-# google
+# google, UNFIXED VERSIONS
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'json'
 
 # dates
-gem 'chronic'
+gem 'chronic', '~> 0.10.2'
 
 # calendar
-gem 'momentjs-rails'
-gem 'fullcalendar-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'fullcalendar-rails', '~> 2.4.0.0'
 
 # svg
-gem 'inline_svg'
+gem 'inline_svg', '~> 0.6.1'
 
 # track activities
 gem 'public_activity', '~> 1.4.2'
 
-# prefix css
+# prefix css, UNFIXED VERSION
 gem 'autoprefixer-rails'
