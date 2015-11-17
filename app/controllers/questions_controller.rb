@@ -18,10 +18,13 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    _target = params[:refresh]
-    _content = {partial: @event.questions}
     respond_to do |format|
-      format.js   { render 'shared/refresh.js.erb', locals: {target: _target, content: _content} }
+      format.js
+      {
+        _target = params[:refresh]
+        _content = {partial: @event.questions}
+        render 'shared/refresh.js.erb', locals: {target: _target, content: _content}
+      }
     end
   end
 
