@@ -117,8 +117,11 @@
 	left: 0;
 	right: 0;
 	top: $nav-bar-h;
-	width: 100%;
-	text-align: center;
+	height: $vmn - 2px;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 #calendar .fc-day-header 
@@ -126,7 +129,7 @@
 	@include sizes(4, "font-size");
 	padding: .8em 0 !important;
 	
-	&.fc-sun, &.fc-mon 
+	&.fc-sun, &.fc-mon
 	{
 	}
 }
