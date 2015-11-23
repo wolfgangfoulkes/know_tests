@@ -27,6 +27,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts_as_commentable (4.0.2)
     addressable (2.3.8)
     arel (5.0.1.20140414130214)
     autoparse (0.3.3)
@@ -216,6 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_commentable
   autoprefixer-rails
   cancancan
   chronic (~> 0.10.2)

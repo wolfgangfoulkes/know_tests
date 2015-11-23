@@ -5,10 +5,10 @@ class Event < ActiveRecord::Base
 	#--- socialization
 	acts_as_followable
 	#-----
+	
+	acts_as_commentable :default, :owner, :public, :private
 
 	belongs_to :user
-	has_many :comments, as: :commentable, dependent: :destroy 
-	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
@@ -56,6 +56,18 @@ class Event < ActiveRecord::Base
 		#  										  faster -> owner_id: select(:id))
 	}
 
+	scope :comments, -> {
+		Comment.where(commentable_type: 'Event', commentable_id: all)
+	}
+
+	scope :comments, -> (role) {
+		Comment.where(commentable_type: 'Event', commentable_id: all, role: role)
+	}
+
+	scope :feed_comments, -> {
+		comments(["public", "private", "default"])
+	}
+
 	# NOTE TO WOLFGANG: if you come back here, 
 	# learn find_each do
 	# see how it returns
@@ -73,6 +85,20 @@ class Event < ActiveRecord::Base
 	#--------
 
 	#----- METHODS -----
+
+	#--- comments 
+	def comments
+		Comment.where(commentable_type: 'Event', commentable_id: self.id)
+	end
+
+	def comments(roles)
+		Comment.where(commentable_type: 'Event', commentable_id: self.id, role: roles)
+	end
+
+	def feed_comments
+		self.comments(["public", "private", "default"])
+	end
+	#-----
 
 	#--- activities
 	def fresh_for(user)

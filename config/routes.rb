@@ -13,16 +13,18 @@ Rails.application.routes.draw do
     member do #event/:id/ with :id passed in params[:id]
     end
 
-    resources :comments, :only => [:show, :create, :destroy], module: :events
-    resources :questions, :only => [:create, :destroy]
-
     post 'follow', to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
   end
 
-  resources :questions, :only => [:show] do
-    resources :comments, :only => [:show, :create, :destroy], module: :questions
+  roles = [:default, :private, :public, :owner]
+  resources :comments, :only => [:create, :destroy, :show] do
+    roles.each do |role|
+      patch "set_#{role}", on: :member, as: "set_#{role}"
+    end
   end
+
+  
 
   #post ':controller(/filtered)', action: 'filtered'
   

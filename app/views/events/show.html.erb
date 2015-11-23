@@ -68,12 +68,11 @@
 		class: ["comment-list", "col"], 
 		data: {refresh: "comments"} do
 		-%>
-			<%= render @event.comments.deef %>
+			<%= render @event.owner_comments.deef %>
 		<% end -%>
 		<%= render partial: 'comments/form', 
 			locals: {
-				owner: @event,
-				comment: @event.comments.build
+				comment: @event.owner_comments.build
 			} 
 		%>
 	<% end %>
@@ -87,13 +86,12 @@
 		class: ["comment-list", "col"], 
 		data: {refresh: "questions"} do
 		-%>
-			<%= render @event.questions.deef %>
+			<%= render @event.feed_comments.accessible_by(current_ability, :read) %>
 		<% end -%>
 
 		<%= render partial: 'comments/form', locals:
 			{ 
-				owner: @event,
-				comment: @event.questions.build 
+				comment: @event.default_comments.build
 			}
 		%>
 	<% end %>

@@ -1,17 +1,29 @@
 class Ability
   include CanCan::Ability
 
+
   def initialize(user)
     can :read, :all
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
-    can [:create, :destroy], Question do |c|
-        true
-    end
-    can [:create, :destroy], Comment do |c|
-        (c.commentable_type == "Question") ||
-        ((c.commentable_type == "Event") && (c.commentable.user_id == user.id))
-    end
+
+    owner_events = user.events.pluck(:id)
+
+    cannot [:read], Comment, { role: ["default", "private"] }
+    can [:create, :destroy]
+    can [:read, :create, :destroy], Comment, 
+        {   commentable_id: owner_events, 
+            role: ["owner", "public", "default", "private"]}
+    can [:read, :destroy], Comment,
+        {   user_id: user.id, 
+            role: ["public", "default", "private"] }
+    can [:create], Comment,
+        {   user_id: user.id, 
+            role: ["default", "private"] }
+
+    can [:set_public, :set_default], Comment,
+        {   commentable_id: owner_events, 
+            role: ["default", "public"]}
     
     
     # Define abilities for the passed in user here. For example:

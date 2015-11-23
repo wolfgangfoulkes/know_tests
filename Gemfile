@@ -71,3 +71,6 @@ gem 'public_activity', '~> 1.4.2'
 
 # prefix css, UNFIXED VERSION
 gem 'autoprefixer-rails'
+
+# comments UNFIXED VERSION
+gem 'acts_as_commentable'

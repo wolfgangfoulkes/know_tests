@@ -1,6 +1,9 @@
 class EventsController < ApplicationController
   load_and_authorize_resource only: [:show, :edit, :update, :new, :create, :destroy]
 
+  # DON'T PASS USER_ID THROUGH FORM OR ACCEPT IT IN PARAMS
+  # CHANGE THAT
+
   def index
     @events = Event.filter(filtering_params)
   end
