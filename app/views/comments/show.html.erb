@@ -4,5 +4,28 @@
 <div class="content h4">
 	<%= @comment.comment %>
 </div>
-
 <div class="vmn"> </div>
+<div class="options h3">
+	<% if can?(:set_role, @comment) %>
+		<% if @comment.role == "default" %>
+		  <%= link_to 'publish', set_public_comment_path(@comment), method: :patch, class: "h4" %>
+		<% elsif @comment.role == "public" %>
+		  <%= link_to 'hide', set_default_comment_path(@comment), method: :patch, class: "h4" %>
+		<% end %>
+	<% end %>
+</div>
+
+<% if @comment.threaded? %>
+	<%= content_tag :div,
+	class: ["comment-list", "col"], 
+	data: {refresh: "reply_comments"} do
+	-%>
+		<%= render @comment.comments %>
+	<% end -%>
+
+	<%= render partial: 'comments/form', locals:
+		{ 
+			comment: @comment.build_comment
+		}
+	%>
+<% end %>

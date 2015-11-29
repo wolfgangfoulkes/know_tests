@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
 	acts_as_followable
 	#-----
 	
-	acts_as_commentable :default, :owner, :public
+	has_many :comments, as: :commentable, dependent: :destroy
 
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
@@ -56,18 +56,6 @@ class Event < ActiveRecord::Base
 		#  										  faster -> owner_id: select(:id))
 	}
 
-	scope :comments, -> {
-		Comment.where(commentable_type: 'Event', commentable_id: all)
-	}
-
-	scope :comments, -> (role) {
-		Comment.where(commentable_type: 'Event', commentable_id: all, role: role)
-	}
-
-	scope :feed_comments, -> {
-		comments(["public", "private", "default"])
-	}
-
 	# NOTE TO WOLFGANG: if you come back here, 
 	# learn find_each do
 	# see how it returns
@@ -87,16 +75,33 @@ class Event < ActiveRecord::Base
 	#----- METHODS -----
 
 	#--- comments 
-	def comments
-		Comment.where(commentable_type: 'Event', commentable_id: self.id)
-	end
 
-	def comments(roles)
+	def comments_with_roles(roles)
 		Comment.where(commentable_type: 'Event', commentable_id: self.id, role: roles)
 	end
 
 	def feed_comments
-		self.comments(["public", "private", "default"])
+		self.comments_with_roles(["public", "private", "default"])
+	end
+
+	def owner_comments
+		self.comments_with_roles(["owner"])
+	end
+
+	def default_comments
+		self.comments_with_roles(["default"])
+	end
+
+	def public_comments
+		self.comments_with_roles(["public"])
+	end
+
+	def build_comment(role)
+		comment = self.comments.build
+		comment.commentable = self
+		comment.root = self
+		comment.role = role
+		comment
 	end
 	#-----
 

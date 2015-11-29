@@ -3,12 +3,15 @@ class CreateComments < ActiveRecord::Migration
     create_table :comments do |t|
       t.string :title, :limit => 50, :default => "" 
       t.text :comment
+      t.references :root, :polymorphic => true
       t.references :commentable, :polymorphic => true
       t.references :user
-      t.string :role, :default => "comments"
+      t.string :role, :default => "default"
       t.timestamps
     end
 
+    add_index :comments, :root_type
+    add_index :comments, :root_id
     add_index :comments, :commentable_type
     add_index :comments, :commentable_id
     add_index :comments, :user_id

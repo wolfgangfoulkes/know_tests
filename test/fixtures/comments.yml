@@ -6,6 +6,7 @@
 #
 
 one:
+  root: one (Event)
   commentable: one (Event)
   user_id: 2
   role: "public"
@@ -14,6 +15,7 @@ one:
   created_at: <%= DateTime.now.advance(:days => -1) %>
 
 two:
+  root: one (Event)
   commentable: one (Event)
   user_id: 2
   role: "default"
@@ -22,6 +24,7 @@ two:
   created_at: <%= DateTime.now.advance(:days => -1) %>
 
 three:
+  root: one (Event)
   commentable: one (Event)
   user_id: 2
   role: "default"
@@ -30,6 +33,7 @@ three:
   created_at: <%= DateTime.now.advance(:minutes => -1) %>
 
 four:
+  root: three (Event)
   commentable: three (Event)
   user_id: 1
   role: "public"
@@ -38,6 +42,7 @@ four:
   created_at: <%= DateTime.now.advance(:minutes => -2) %>
 
 five:
+  root: three (Event)
   commentable: three (Event)
   user_id: 1
   role: "default"
@@ -46,6 +51,7 @@ five:
   created_at: <%= DateTime.now.advance(:minutes => -3) %>
 
 six:
+  root: three (Event)
   commentable: three (Event)
   user_id: 2
   role: "default"

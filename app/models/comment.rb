@@ -1,14 +1,12 @@
 class Comment < ActiveRecord::Base
   include Filterable
-  include ActsAsCommentable::Comment
   include PublicActivity::Common
 
-#acts_as_commentable generator
+  belongs_to :root, :polymorphic => true
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
-#wolfgang
-  acts_as_commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
   # validates :user_id, presence: true
@@ -28,8 +26,24 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
+  def threaded?
+    (self.root == self.commentable) && (self.role != "owner")
+  end
+
+  def build_comment
+    if self.threaded?
+      comment = self.comments.build
+      comment.commentable = self
+      comment.root = self.root
+      comment.role = "reply"
+      comment
+    else
+      nil
+    end
+  end
+
   def activity_for_save
-		a = create_activity key: "comment", trackable: self, owner: self.commentable, parameters: {role: self.role}
+		a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
 		# owner.updated_at = a.updated_at
   end
 

@@ -13,6 +13,8 @@
       <%= f.submit %>
     </div>
     <%= f.hidden_field :role %>
+    <%= f.hidden_field :root_id %>
+    <%= f.hidden_field :root_type %>
     <%= f.hidden_field :commentable_id %>
     <%= f.hidden_field :commentable_type %>
     <!-- here for cancancan's load_and_authorize -->

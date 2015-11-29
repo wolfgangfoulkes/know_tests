@@ -65,14 +65,15 @@
 	data: sel_rcv(0, group: 0, state: true) do
 	%>
 		<%= content_tag :div, 
-		class: ["comment-list", "col"], 
-		data: {refresh: "comments"} do
+		class: ["comment-list", "col"],
+		data: {refresh: "owner_comments"} do
 		-%>
 			<%= render @event.owner_comments.deef %>
 		<% end -%>
 		<%= render partial: 'comments/form',
-			locals: {
-				comment: @event.owner_comments.build
+			locals: 
+			{
+				comment: @event.build_comment("owner")
 			} 
 		%>
 	<% end %>
@@ -84,14 +85,14 @@
 
 		<%= content_tag :div,
 		class: ["comment-list", "col"], 
-		data: {refresh: "comments"} do
+		data: {refresh: "feed_comments"} do
 		-%>
 			<%= render @event.feed_comments.deef %>
 		<% end -%>
 
 		<%= render partial: 'comments/form', locals:
 			{ 
-				comment: @event.default_comments.build
+				comment: @event.build_comment("default")
 			}
 		%>
 	<% end %>

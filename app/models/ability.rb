@@ -20,18 +20,11 @@ class Ability
         role: ["default"]
     }
 
-    # event owner can read, destroy all comments
-    can [:read, :destroy], Comment,
+    # event owner can create, read, destroy all comments
+    can [:create, :read, :destroy], Comment,
     {   
-        commentable_id: owner_events,
-        role: ["owner", "public", "default"]
-    }
-
-    # owner comments
-    can [:create], Comment,
-    {   
-        commentable_id: owner_events,
-        role: ["owner"]
+        root_id: owner_events,
+        role: ["owner", "public", "default", "reply"]
     }
 
     # comment owner can read and destroy their own comments
@@ -41,11 +34,21 @@ class Ability
         role: ["public", "default"]
     }
 
+    # set roles only for top-level comments
     can [:set_role], Comment,
     {
         commentable_id: owner_events,
-        role: ["default", "public"]
+        role: ["public", "default"]
     }
+
+    # users can reply
+    can [:create, :read, :destroy], Comment do |comment|
+        (comment.role == "reply") && (comment.commentable.user_id == user.id)
+    end
+
+    can [:read], Comment do |comment|
+        (comment.role == "reply") && (comment.commentable.role == "public")
+    end
 
     # Define abilities for the passed in user here. For example:
     #
