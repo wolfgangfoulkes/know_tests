@@ -12,11 +12,7 @@
     <div class="actions h3">
       <%= f.submit %>
     </div>
-    <% if comment.role == "default" %>
-        <%= f.select(:role, [["public", "default"], ["private", "private"]]) %>
-    <% else %>
-        <%= f.hidden_field :role %>
-    <% end %>
+    <%= f.hidden_field :role %>
     <%= f.hidden_field :commentable_id %>
     <%= f.hidden_field :commentable_type %>
     <!-- here for cancancan's load_and_authorize -->

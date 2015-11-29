@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-	load_and_authorize_resource
+	load_resource
+	authorize_resource :only => [:create, :destroy, :show]
 
 	def create
 		respond_to do |format|
@@ -22,19 +23,26 @@ class CommentsController < ApplicationController
 	end
 
 	def set_public
-		authorize! :set_public, @comment
+		authorize! :set_role, @comment
 		@comment.role = "public"
 		respond_to do |format|
-			format.html { redirect_to @comment.commentable }
+			if @comment.save
+				format.html { redirect_to @comment.commentable }
+			else
+				format.html { redirect_to @comment.commentable, notice: @comment.errors.full_messages.join(", ") }
+			end
 		end
 	end
 
 	def set_default
-		authorize! :set_default, @comment
+		authorize! :set_role, @comment
 		@comment.role = "default"
-		redirect_to @comment.commentable
 		respond_to do |format|
-			format.html { redirect_to @comment.commentable }
+			if @comment.save
+				format.html { redirect_to @comment.commentable }
+			else
+				format.html { redirect_to @comment.commentable, notice: @comment.errors.full_messages.join(", ") }
+			end
 		end
 	end
 

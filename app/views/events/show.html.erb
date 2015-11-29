@@ -70,7 +70,7 @@
 		-%>
 			<%= render @event.owner_comments.deef %>
 		<% end -%>
-		<%= render partial: 'comments/form', 
+		<%= render partial: 'comments/form',
 			locals: {
 				comment: @event.owner_comments.build
 			} 
@@ -84,7 +84,7 @@
 
 		<%= content_tag :div,
 		class: ["comment-list", "col"], 
-		data: {refresh: "questions"} do
+		data: {refresh: "comments"} do
 		-%>
 			<%= render @event.feed_comments.accessible_by(current_ability, :read) %>
 		<% end -%>

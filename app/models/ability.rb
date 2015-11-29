@@ -7,25 +7,46 @@ class Ability
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
 
+    # all owned events for user
     owner_events = user.events.pluck(:id)
 
-    cannot [:read], Comment, { role: ["default", "private"] }
-    can [:create, :destroy]
-    can [:read, :create, :destroy], Comment, 
-        {   commentable_id: owner_events, 
-            role: ["owner", "public", "default", "private"]}
-    can [:read, :destroy], Comment,
-        {   user_id: user.id, 
-            role: ["public", "default", "private"] }
-    can [:create], Comment,
-        {   user_id: user.id, 
-            role: ["default", "private"] }
+    # override :read, :all
+    cannot [:read], Comment, { role: ["default"] }
 
-    can [:set_public, :set_default], Comment,
-        {   commentable_id: owner_events, 
-            role: ["default", "public"]}
-    
-    
+    # any user can create a default comment
+    can [:create], Comment,
+    {   
+        user_id: user.id,
+        role: ["default"]
+    }
+
+    # event owner can read, destroy all comments
+    can [:read, :destroy], Comment,
+    {   
+        commentable_id: owner_events,
+        role: ["owner", "public", "default"]
+    }
+
+    # owner comments
+    can [:create], Comment,
+    {   
+        commentable_id: owner_events,
+        role: ["owner"]
+    }
+
+    # comment owner can read and destroy their own comments
+    can [:read, :destroy], Comment,
+    {   
+        user_id: user.id,
+        role: ["public", "default"]
+    }
+
+    can [:set_role], Comment,
+    {
+        commentable_id: owner_events,
+        role: ["default", "public"]
+    }
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

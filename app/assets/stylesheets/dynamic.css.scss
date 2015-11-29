@@ -38,13 +38,9 @@
 	&[data-role="default"] {
 		.options.h4 {
 			border-bottom: 2px solid rgba(150, 100, 100, 0.05);
-			color: rgba(80, 0, 0, 0.05);
+			color: rgba(0, 0, 0, 0.5);
 			
 		}
-	}
-
-	&[data-role="private"] {
-		color: rgba(100, 50, 50, 0.5);
 	}
 
 	&[owner=true][data-role="default"] {

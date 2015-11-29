@@ -38,7 +38,7 @@ module ApplicationHelper
 	# - can be referenced in view, and in model, with 'include' 
 	# - non-class methods will be overriden by helpers with alphabetically later names
 	
-	# --- from class methods
+	# ----- from class methods
 	def isa?(o_, class_)
 		ApplicationHelper.isa?(o_, class_)
 	end
@@ -78,6 +78,7 @@ module ApplicationHelper
 	  end
 	end
 
+	# ----- javascript data params
 	def sel_snd(id, state: false, off: nil, group: nil)
 		_d = {}
 		_d["sel-snd"] = id
@@ -96,4 +97,5 @@ module ApplicationHelper
 		puts _d.to_yaml
 		return _d.compact
 	end
+	# -----
 end

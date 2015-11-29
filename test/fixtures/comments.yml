@@ -24,7 +24,7 @@ two:
 three:
   commentable: one (Event)
   user_id: 2
-  role: "private"
+  role: "default"
   title: "this is offensive!"
   comment: "remove this immediately!"
   created_at: <%= DateTime.now.advance(:minutes => -1) %>
@@ -48,7 +48,7 @@ five:
 six:
   commentable: three (Event)
   user_id: 2
-  role: "private"
+  role: "default"
   title: "why more?"
   comment: "why?"
   created_at: <%= DateTime.now.advance(:minutes => -4) %>

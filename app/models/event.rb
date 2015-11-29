@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
 	acts_as_followable
 	#-----
 	
-	acts_as_commentable :default, :owner, :public, :private
+	acts_as_commentable :default, :owner, :public
 
 	belongs_to :user
 	has_many :taggings, dependent: :destroy

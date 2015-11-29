@@ -1,7 +1,7 @@
 <%= content_tag :div, class: ["item"], 
 	data: { 
     fresh: "#{ fresh?(comment) }", 
-    role: comment.role, 
+    role: comment.role,
     owner: can?(:set_public, comment)
   } do %>
   <%= link_to comment.title, [comment], class: "subject h4" %>
@@ -9,11 +9,16 @@
     <%= comment.comment %>
   </div>
   <div class="options h4">
-    <% if can?(:set_public, comment) %>
-      <%= link_to 'Public!', set_public_comment_path(comment), class: "h4" %>
+    <% if can?(:set_role, comment) %>
+      <% if comment.role == "default" %>
+        <%= link_to 'publish', set_public_comment_path(comment), method: :patch, class: "h4" %>
+      <% elsif comment.role == "public" %>
+        <%= link_to 'hide', set_default_comment_path(comment), method: :patch, class: "h4" %>
+      <% end %>
+      <%= link_to 'reply', comment_path(comment),  class: "h4" %>
     <% end %>
   	<% if can? :destroy, comment %>
-	  	<%= link_to 'Destroy', [comment], method: :delete, class: "h4" %>
+	  	<%= link_to 'destroy', [comment], method: :delete, class: "h4" %>
   	<% end %>
   </div>
 <% end %>
