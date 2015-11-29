@@ -26,12 +26,12 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
-  def threaded?
-    (self.root == self.commentable) && (self.role != "owner")
+  def is_thread?
+    (self.role == "default") || (self.role == "public")
   end
 
   def build_comment
-    if self.threaded?
+    if self.is_thread?
       comment = self.comments.build
       comment.commentable = self
       comment.root = self.root

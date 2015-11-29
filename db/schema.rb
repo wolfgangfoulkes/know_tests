@@ -34,14 +34,14 @@ ActiveRecord::Schema.define(version: 20151119034306) do
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50, default: ""
+    t.string   "title",            default: ""
     t.text     "comment"
     t.integer  "root_id"
     t.string   "root_type"
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.string   "role",                        default: "default"
+    t.string   "role",             default: "default"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

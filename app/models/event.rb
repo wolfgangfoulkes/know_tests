@@ -76,6 +76,7 @@ class Event < ActiveRecord::Base
 
 	#--- comments 
 
+
 	def comments_with_roles(roles)
 		Comment.where(commentable_type: 'Event', commentable_id: self.id, role: roles)
 	end

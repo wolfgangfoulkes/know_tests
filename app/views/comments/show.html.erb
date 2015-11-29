@@ -15,7 +15,7 @@
 	<% end %>
 </div>
 
-<% if @comment.threaded? %>
+<% if @comment.is_thread? %>
 	<%= content_tag :div,
 	class: ["comment-list", "col"], 
 	data: {refresh: "reply_comments"} do
