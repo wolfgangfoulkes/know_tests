@@ -81,7 +81,7 @@ class Event < ActiveRecord::Base
 	end
 
 	def feed_comments
-		self.comments_with_roles(["public", "private", "default"])
+		self.comments_with_roles(["public", "default"])
 	end
 
 	def owner_comments
