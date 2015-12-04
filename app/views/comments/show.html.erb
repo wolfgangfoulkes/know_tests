@@ -20,7 +20,7 @@
 <div class="vmn"> </div>
 
 
-<% if @comment.is_thread? %>
+<% if @comment.can_add_comment? %>
 	<%= content_tag :div,
 		class: ["col"] do
 	%>
@@ -33,7 +33,7 @@
 
 		<%= render partial: 'comments/form', locals:
 			{ 
-				comment: @comment.build_comment
+				comment: @comment.comments.build
 			}
 		%>
 	<% end %>

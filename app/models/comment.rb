@@ -6,9 +6,10 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy, before_add: :setup_nested_comment
   has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
+  validate :commentable_valid?
   # validates :user_id, presence: true
   # validates :commentable_id, presence: true
   # role should != "comment"
@@ -26,12 +27,42 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
-  def is_thread?
-    (self.role == "default") || (self.role == "public")
+  def setup_nested_comment(comment)
+    comment.root = self.root
+    comment.role = "reply"
+  end
+
+  def owner_id
+    self.root.user_id
+  end
+
+  def owner?(owner)
+    (owner.id == self.owner_id)
+  end
+
+  def commentable_valid?
+    if Comment.can_add_comment_to(commentable)
+    else
+      errors[:base] << "can't add comment to this model!"
+    end
+  end
+
+  def self.can_add_comment_to(commentable)
+    if commentable.class.name == "Comment"
+      commentable.can_add_comment?
+    elsif commentable.class.name == "Event"
+      true
+    else
+      false
+    end
+  end
+
+  def can_add_comment?
+    ["default", "public"].include?(self.role)
   end
 
   def build_comment
-    if self.is_thread?
+    if self.can_comment?
       comment = self.comments.build
       comment.commentable = self
       comment.root = self.root

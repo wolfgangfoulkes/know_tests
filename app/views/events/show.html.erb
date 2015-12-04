@@ -73,7 +73,8 @@
 		<%= render partial: 'comments/form',
 			locals: 
 			{
-				comment: @event.build_comment("owner")
+				comment: @event.comments.build(role: "owner", 
+					root: @event)
 			} 
 		%>
 	<% end %>
@@ -92,7 +93,8 @@
 
 		<%= render partial: 'comments/form', locals:
 			{ 
-				comment: @event.build_comment("default")
+				comment: @event.comments.build(role: "default", 
+					root: @event)
 			}
 		%>
 	<% end %>
