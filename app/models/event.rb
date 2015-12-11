@@ -6,7 +6,23 @@ class Event < ActiveRecord::Base
 	acts_as_followable
 	#-----
 	
-	has_many :comments, as: :commentable, dependent: :destroy
+	has_many :comments, as: :root, dependent: :destroy
+	has_many :owner_comments, -> (event) { where(role: "owner", commentable: event) }, 
+		class_name: "Comment", 
+		as: :root,
+		dependent: :destroy
+	has_many :default_comments, -> (event) { where(role: "default", commentable: event) }, 
+		class_name: "Comment", 
+		as: :root,
+		dependent: :destroy
+	has_many :public_comments, -> (event) { where(role: "public", commentable: event) }, 
+		class_name: "Comment", 
+		as: :root,
+		dependent: :destroy
+	has_many :reply_comments, -> (event) { where(role: "reply", commentable_type: "Comment") }, 
+		class_name: "Comment",
+		as: :root,
+		dependent: :destroy
 
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
@@ -73,38 +89,9 @@ class Event < ActiveRecord::Base
 	#--------
 
 	#----- METHODS -----
-
-	#--- comments 
-
-
-	def comments_with_roles(roles)
-		Comment.where(commentable_type: 'Event', commentable_id: self.id, role: roles)
-	end
-
 	def feed_comments
-		self.comments_with_roles(["public", "default"])
+		self.comments.where( role: ["default", "public"] )
 	end
-
-	def owner_comments
-		self.comments_with_roles(["owner"])
-	end
-
-	def default_comments
-		self.comments_with_roles(["default"])
-	end
-
-	def public_comments
-		self.comments_with_roles(["public"])
-	end
-
-	def build_comment(role)
-		comment = self.comments.build
-		comment.commentable = self
-		comment.root = self
-		comment.role = role
-		comment
-	end
-	#-----
 
 	#--- activities
 	def fresh_for(user)

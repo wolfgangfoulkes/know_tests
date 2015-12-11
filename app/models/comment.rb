@@ -6,19 +6,24 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
-  has_many :comments, as: :commentable, dependent: :destroy, before_add: :setup_nested_comment
+  has_many :comments, -> (comment) { where(role: "reply", root: comment.root) }, 
+    as: :commentable,
+    dependent: :destroy,
+    before_add: :setup_nested_comment
   has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
   validate :commentable_valid?
-  # validates :user_id, presence: true
-  # validates :commentable_id, presence: true
-  # role should != "comment"
-  # this also returns false for a not-empty string, so you could change the migration to remove default
+  validates :user_id, presence: true
+  validates :commentable_id, presence: true
   validates :role, presence: true
   validates :title, presence: true, length: { maximum: 60 }
   validates :comment, presence: true, length: { maximum: 240 }
 
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
+  scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  scope :reply_comments, -> (commentable) { where(role: "owner", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
 
   after_save do 
   	activity_for_save
@@ -27,9 +32,12 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
+  def activity_for_save
+    a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
+    # owner.updated_at = a.updated_at
+  end
+
   def setup_nested_comment(comment)
-    comment.root = self.root
-    comment.role = "reply"
   end
 
   def owner_id
@@ -61,21 +69,6 @@ class Comment < ActiveRecord::Base
     ["default", "public"].include?(self.role)
   end
 
-  def build_comment
-    if self.can_comment?
-      comment = self.comments.build
-      comment.commentable = self
-      comment.root = self.root
-      comment.role = "reply"
-      comment
-    else
-      nil
-    end
-  end
-
-  def activity_for_save
-		a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
-		# owner.updated_at = a.updated_at
-  end
+  
 
 end
