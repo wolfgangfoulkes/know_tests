@@ -46,13 +46,20 @@ class Event < ActiveRecord::Base
 
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
 	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
+	scope :description_starts_with, -> (q) { where("lower(description) like ?", "#{q.downcase}%")}
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
 	scope :starts_after, -> (q) { where("starts_at >= ?", q ) }
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
 
 	# order determines final order
-	scope :search, -> (q) { where(id: name_starts_with(q) | name_contains(q)) }
+	scope :search, -> (q) {
+		if q.size > 3 
+			where(id: name_starts_with(q) | description_starts_with(q) | name_contains(q) |  description_contains(q))
+		else
+			where(id: name_starts_with(q) | description_starts_with(q))
+		end
+	}
 
 	# works with array or relation
 	# does not retain activities order
@@ -88,10 +95,10 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 	#--------
 
-	#----- METHODS -----
 	def feed_comments
 		self.comments.where( role: ["default", "public"] )
 	end
+	#----- METHODS -----
 
 	#--- activities
 	def fresh_for(user)
