@@ -26,6 +26,10 @@ class Comment < ActiveRecord::Base
   scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
   scope :reply_comments, -> (commentable) { where(role: "owner", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
 
+  after_create do
+    activity_for_create
+  end
+
   after_save do 
   	activity_for_save
   end
@@ -33,8 +37,11 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
-  def activity_for_save
+  def activity_for_create
     a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
+  end
+
+  def activity_for_save
     # owner.updated_at = a.updated_at
   end
 
