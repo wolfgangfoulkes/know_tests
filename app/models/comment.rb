@@ -20,6 +20,7 @@ class Comment < ActiveRecord::Base
   validates :comment, presence: true, length: { maximum: 240 }
 
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
+  # unused currently
   scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
   scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
   scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
@@ -68,7 +69,5 @@ class Comment < ActiveRecord::Base
   def can_add_comment?
     ["default", "public"].include?(self.role)
   end
-
-  
 
 end
