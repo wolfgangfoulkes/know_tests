@@ -28,6 +28,7 @@
 	margin: 0 auto;
 
 	> .fc-toolbar {
+		z-index: 1;
 		background-color: $salmender;
 
 		position: fixed;
@@ -112,12 +113,15 @@
 }
 
 #calendar-title {
-	
+	font-size: $nav-bar-h;
+	color: rgba(0, 0, 0, 0.1);
+	white-space: nowrap;
+
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: $nav-bar-h;
-	height: $vmn - 2px;
+	bottom: $nav-bar-h * 0.5;
+	
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -134,10 +138,17 @@
 	}
 }
 
+
 #calendar .fc-button 
 {
 	background: none !important;
 	border: 1px solid rgba(100, 0, 0, 0.1) !important;
+
+	&.fc-prev-button, &.fc-next-button {
+		font-size: 1.3em;
+	}
+
+	
 
 	&.fc-state-disabled 
 	{

@@ -103,18 +103,18 @@ $(document).on("page:change", function()
 			{
 				month: 
 				{
-					titleFormat: "MM | 'YY",
+					titleFormat: "MM | YYYY",
 					columnFormat: "ddd"
 				},
 				week: 
 				{
-					titleFormat: " ",
-					columnFormat: "ddd M | D"
+					titleFormat: "MM | YYYY",
+					columnFormat: "ddd D"
 				},
 				day: 
 				{
-					titleFormat: " ",//"M : D :: 'YY",
-					columnFormat: "ddd M | D"//"dddd"
+					titleFormat: "MM | YYYY",//"M : D :: 'YY",
+					columnFormat: "ddd D"//"dddd"
 				}
 			}
 	        //aspectRatio: 1.35 //height determined from width, width from css
