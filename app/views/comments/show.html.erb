@@ -1,5 +1,7 @@
 <div id="bar-b" class="nav-bar row h2">
+	<%= link_to "back", @comment.commentable %>
 	<% if can?(:set_role, @comment) %>
+		|
 		<% if @comment.role == "default" %>
 		  <%= link_to 'publish', set_public_comment_path(@comment), method: :patch %>
 		<% elsif @comment.role == "public" %>
@@ -7,7 +9,7 @@
 		<% end %>
 	<% end %>
 	<% if can?(:destroy, @comment) %>
-		<%= link_to 'destroy', @comment, method: :delete %>
+		| <%= link_to 'destroy', @comment, method: :delete %>
 	<% end %>
 </div>
 
