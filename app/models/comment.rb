@@ -52,7 +52,7 @@ class Comment < ActiveRecord::Base
   end
 
   def is_nested?
-    self.commentable_type == "Comment"
+    (self.commentable_type == "Comment")
   end
 
   def activity_for_create
