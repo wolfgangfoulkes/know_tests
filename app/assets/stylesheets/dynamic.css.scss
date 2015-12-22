@@ -36,18 +36,24 @@
 	}
 
 	&[data-role="default"] {
-		.options.h4 {
+		.options {
 			border-bottom: 2px solid rgba(150, 100, 100, 0.05);
 			color: rgba(0, 0, 0, 0.5);
-			
 		}
 	}
 
 	&[owner=true][data-role="default"] {
 	}
 
-	&[owner=true][data-role="private"] {
+	&[data-public=false][data-owner=true] {
+		 color: rgba(200, 100, 100, 0.5);
+		 .options {
+		 	border-bottom: 2px solid rgba(180, 100, 100, 0.2);
+			color: rgba(200, 100, 100, 0.7);
+
+		}
 	}
+
 }
 
 .activities.list.col .item 

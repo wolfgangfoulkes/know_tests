@@ -11,43 +11,53 @@ class Ability
     owner_events = user.events.pluck(:id)
 
     # override :read, :all
-    cannot [:read], Comment, { role: ["default"] }
-
-    # any user can create a default comment
-    can [:create], Comment,
-    {   
-        user_id: user.id,
-        role: ["default"]
-    }
+    cannot [:read], Comment, { public: false }
 
     # event owner can create, read, destroy all comments
     can [:create, :read, :destroy], Comment,
     {   
         root_id: owner_events,
-        role: ["owner", "public", "default", "reply"]
+        role: ["owner", "default", "reply"]
+    }
+
+     # any user can create a default comment
+    can [:create], Comment,
+    {   
+        user_id: user.id,
+        role: ["default"],
+        public: false
     }
 
     # comment owner can read and destroy their own comments
     can [:read, :destroy], Comment,
     {   
         user_id: user.id,
-        role: ["public", "default"]
+        role: ["default", "reply"]
     }
 
-    # set roles only for top-level comments
-    can [:set_role], Comment,
-    {
-        commentable_id: owner_events,
-        role: ["public", "default"]
-    }
 
-    # users can reply
-    can [:create, :read, :destroy], Comment do |comment|
-        (comment.role == "reply") && (comment.commentable.user_id == user.id)
+    # anyone can reply to a public comment
+    can [:create, :read], Comment do |comment|
+        (comment.is_nested?) &&
+        (comment.commentable.public == true)
     end
 
-    can [:read], Comment do |comment|
-        (comment.role == "reply") && (comment.commentable.role == "public")
+    # comment creator can reply to their own comment
+    can [:create, :read, :destroy], Comment do |comment|
+        (comment.is_nested?) &&
+        (comment.commentable.user_id == user.id)
+    end
+
+    # set public only for top-level comments
+    can [:set_public], Comment,
+    {
+        commentable_id: owner_events,
+        role: ["default"]
+    }
+
+    can [:comment_on], Comment do |comment|
+        (comment.role == "default") &&
+        (!comment.is_nested?)
     end
 
     # Define abilities for the passed in user here. For example:

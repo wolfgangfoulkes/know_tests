@@ -23,8 +23,8 @@ class CommentsController < ApplicationController
 	end
 
 	def set_public
-		authorize! :set_role, @comment
-		@comment.role = "public"
+		authorize! :set_public, @comment
+		@comment.public = true
 		respond_to do |format|
 			if @comment.save
 				format.html { redirect_to @comment.commentable }
@@ -35,8 +35,8 @@ class CommentsController < ApplicationController
 	end
 
 	def set_default
-		authorize! :set_role, @comment
-		@comment.role = "default"
+		authorize! :set_public, @comment
+		@comment.public = false
 		respond_to do |format|
 			if @comment.save
 				format.html { redirect_to @comment.commentable }

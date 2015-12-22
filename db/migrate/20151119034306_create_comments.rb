@@ -7,6 +7,7 @@ class CreateComments < ActiveRecord::Migration
       t.references :commentable, :polymorphic => true
       t.references :user
       t.string :role, :default => "default"
+      t.boolean :public, :default => false
       t.timestamps
     end
 

@@ -10,12 +10,9 @@ class Event < ActiveRecord::Base
 	has_many :owner_comments, -> (event) { where(role: "owner", commentable: event) }, 
 		class_name: "Comment", 
 		as: :root,
-		dependent: :destroy
-	has_many :default_comments, -> (event) { where(role: "default", commentable: event) }, 
-		class_name: "Comment", 
-		as: :root,
-		dependent: :destroy
-	has_many :public_comments, -> (event) { where(role: "public", commentable: event) }, 
+		dependent: :destroy,
+		after_add: :setup_comment
+	has_many :feed_comments, -> (event) { where(role: "default", commentable: event) }, 
 		class_name: "Comment", 
 		as: :root,
 		dependent: :destroy
@@ -95,10 +92,13 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 	#--------
 
-	def feed_comments
-		self.comments.where( role: ["default", "public"] )
-	end
 	#----- METHODS -----
+
+	def setup_comment(comment)
+		if comment.role == "owner"
+			comment.public = true
+		end
+	end
 
 	#--- activities
 	def fresh_for(user)

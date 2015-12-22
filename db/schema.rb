@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20151119034306) do
     t.string   "commentable_type"
     t.integer  "user_id"
     t.string   "role",             default: "default"
+    t.boolean  "public",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

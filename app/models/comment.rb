@@ -8,8 +8,7 @@ class Comment < ActiveRecord::Base
 
   has_many :comments, -> (comment) { where(role: "reply", root: comment.root) }, 
     as: :commentable,
-    dependent: :destroy,
-    before_add: :setup_nested_comment
+    dependent: :destroy
   has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
   validate :commentable_valid?
@@ -21,12 +20,13 @@ class Comment < ActiveRecord::Base
 
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
   # unused currently
-  scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  scope :reply_comments, -> (commentable) { where(role: "owner", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
+  # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :reply_comments, -> (commentable) { where(role: "owner", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
 
   after_create do
+    setup_params
     activity_for_create
   end
 
@@ -37,15 +37,30 @@ class Comment < ActiveRecord::Base
   before_destroy do
   end
 
+  def setup_params
+    if self.role == "default"
+      self.commentable = self.root
+    elsif self.role == "owner"
+      self.public = true
+      self.commentable = self.root
+    elsif self.role == "reply"
+      self.public = true
+      self.root = self.commentable.root
+    else
+      throw "bad role"
+    end
+  end
+
+  def is_nested?
+    self.commentable_type == "Comment"
+  end
+
   def activity_for_create
     a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
   end
 
   def activity_for_save
     # owner.updated_at = a.updated_at
-  end
-
-  def setup_nested_comment(comment)
   end
 
   def owner_id
@@ -74,7 +89,8 @@ class Comment < ActiveRecord::Base
   end
 
   def can_add_comment?
-    ["default", "public"].include?(self.role)
+    ( ["default"].include?(self.role) ) &&
+    ( !self.is_nested? )
   end
 
 end
