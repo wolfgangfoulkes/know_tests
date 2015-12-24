@@ -19,6 +19,14 @@
 }
 
 #bar-t {
+	/*
+		at the lowest width, reduce to 70px with icons 30px (ish)
+		7/3 might be a good ratio
+		nother possible sizing:
+		bar is always 81.18
+		icons-large are 44
+		icons-small are 30.8
+	*/
 	position: fixed;
 	left: 0;
 	right: 0;
