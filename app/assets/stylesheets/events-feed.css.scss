@@ -17,7 +17,7 @@
 	justify-content: flex-start;
 	align-items: center;
 
-	padding: 32px 16px; /* 30.4, 15.2 might be nice */
+	padding: 24px 16px; /* 30.4, 15.2 might be nice */
 	border-bottom: 1px solid black;
 
 	&.past {
@@ -35,7 +35,7 @@
 		justify-content: center;
 
 		box-sizing: border-box;
-		padding: 16px 0;
+		padding: 18px 0;
 
 		> .br {
 			flex-basis: 0;
