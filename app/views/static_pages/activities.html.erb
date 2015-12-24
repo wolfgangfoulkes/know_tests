@@ -9,11 +9,11 @@
           <div class="col">
             <span class="h5"> <%= event.starts_at %> </span>
             <div class="br"> </div>
-            <%= link_to event.name, event, 
+            <%= link_to event.name, "#", 
             class: "h2" %> 
             <span class="h4">
               <%= event.activities.count %> |
-              <%= event.fresh_for(current_user).count %> 
+              <%= event.fresh_for(current_user).count %>
             </span>
             <div class="br"> </div>
           </div>
