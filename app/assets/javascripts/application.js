@@ -110,10 +110,10 @@ var setLinkFromCUrl = function(sel_)
 
 $(document).on("page:change", function()
 {
-	$("[data-lrefresh]").on("ajax:beforeSend", function(e, jqXHR, settings) {
-		$("[data-lrefresh]").attr("data-lrefresh", false);
-		$(this).attr("data-lrefresh", true);
-	});
+	// $("[data-lrefresh]").on("ajax:beforeSend", function(e, jqXHR, settings) {
+	// 	$("[data-lrefresh]").attr("data-lrefresh", false);
+	// 	$(this).attr("data-lrefresh", true);
+	// });
 
 	setLinkFromCUrl(".nav-bar > a");
 

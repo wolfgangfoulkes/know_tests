@@ -19,6 +19,8 @@ class Comment < ActiveRecord::Base
   validates :comment, presence: true, length: { maximum: 240 }
 
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
+
+  # ----- simplifies ajax
   scope :same_type?, ->  { (pluck(:role).uniq.size == 1) }
   scope :type, -> { 
     c = pluck(:role).uniq
@@ -31,15 +33,14 @@ class Comment < ActiveRecord::Base
   scope :collection, -> (role) {
     where(role: role)
   }
-  
-
   def type
     "#{self.role}_comments"
   end
-
   def collection
     self.commentable.comments.where(role: self.role)
   end
+  # -----
+  
   # unused currently
   # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
   # scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }

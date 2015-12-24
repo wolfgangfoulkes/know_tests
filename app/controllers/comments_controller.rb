@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 			if @comment.save
 				format.html { redirect_to @comment.commentable }
 				format.js {
-					render "shared/refresh.js.erb", locals: {target: "#{@comment.role}_comments", content: @comments.deef }
+					render "shared/refresh.js.erb", locals: {target: @comment.type, content: @comments.deef }
 				}
 			else
 				format.html { redirect_to @comment.commentable, notice: @comment.errors.full_messages.join(", ") }
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
 	private
 
 		def set_collection
-			@comments = @comment.commentable.comments.where(role: @comment.role)
+			@comments = Comment.where(commentable: @comment.commentable, role: @comment.role)
 		end
 
 		def comment_params
