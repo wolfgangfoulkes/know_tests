@@ -81,6 +81,7 @@ class Event < ActiveRecord::Base
 	# see how it returns
 
 
+
 	#--------
 
 	#----- callbacks -----

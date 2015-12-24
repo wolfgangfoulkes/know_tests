@@ -85,7 +85,7 @@
 
 		<%= content_tag :div,
 		class: ["comment-list", "col"], 
-		data: {refresh: "feed_comments"} do
+		data: {refresh: "default_comments"} do
 		-%>
 			<%= render @event.feed_comments.deef %>
 		<% end -%>

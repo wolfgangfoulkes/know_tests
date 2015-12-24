@@ -1,6 +1,6 @@
 <% comment.user_id = current_user.id %>
 <% if can? :create, comment %>
-  <%= form_for comment do |f| %>
+  <%= form_for [comment], remote: true do |f| %>
     <div class="field h4">
       <%= f.text_field :title %>
       <br/>

@@ -37,7 +37,7 @@ module ApplicationHelper
 	# ----- HELPER METHODS -----
 	# - can be referenced in view, and in model, with 'include' 
 	# - non-class methods will be overriden by helpers with alphabetically later names
-	
+
 	# ----- from class methods
 	def isa?(o_, class_)
 		ApplicationHelper.isa?(o_, class_)

@@ -1,7 +1,1 @@
-// $("*[data-refresh=<%= j target %>]").on("ajax:success", 
-// 	function(e, data, status, xhr)
-// 	{
-// 		$(this).empty().append("<%= j render content %>");
-// 	}
-// );
-$("*[data-refresh=<%= j target %>]").empty().append("<%= j render content %>");
+$("[data-refresh=<%= target %>]").empty().append("<%= j render content %>");

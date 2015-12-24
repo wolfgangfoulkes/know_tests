@@ -35,6 +35,10 @@ var parseBool = function(string) {
     }
 }
 
+var onComplete = function(jqXHR, status) {
+}
+
+
 /*****
 the sel attributes should be more arbitrary
 you don't need to use the same function for both
@@ -47,6 +51,7 @@ data-sel: snd
 data-sel-id
 data-sel-group
 *****/
+
 
 var dropToggle = function(sender_, e_)
 {
@@ -105,6 +110,11 @@ var setLinkFromCUrl = function(sel_)
 
 $(document).on("page:change", function()
 {
+	$("[data-lrefresh]").on("ajax:beforeSend", function(e, jqXHR, settings) {
+		$("[data-lrefresh]").attr("data-lrefresh", false);
+		$(this).attr("data-lrefresh", true);
+	});
+
 	setLinkFromCUrl(".nav-bar > a");
 
 	$("[data-sel-snd][data-sel-group]").on("click", function(e)
