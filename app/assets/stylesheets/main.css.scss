@@ -18,7 +18,10 @@ $nav-icon-size: 40px;
 /* --- LAYOUT --- */
 $margins-rl: 48px;
 $vmn: 48px;
-$nav-bar-h: 80px; /* formerly 96 */
+$nav-bar-h: 80px; 	/* formerly 96, then 72. */
+					/* 72 might be the best choice */
+					/* with smallest icon 27.5 */
+					/* codepen's is 64 */
 /* --- */
 
 /* --- BPS --- */
