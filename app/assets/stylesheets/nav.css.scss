@@ -46,9 +46,9 @@
 	.item {
 		@include mq(0, _bps(1))
 		{
-			flex-basis: 30.258px; 
+			flex-basis: 30.55728px;
 			margin: 0 0;
-			height: 30.258px;
+			height: 30.55728px;
 			/* 1 * 30px */
 		}
 		@include mq(_bps(1), _bps(2))
