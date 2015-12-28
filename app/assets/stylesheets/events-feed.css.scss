@@ -17,7 +17,7 @@
 	justify-content: flex-start;
 	align-items: center;
 
-	padding: 24px 16px; /* 30.4, 15.2 might be nice */
+	padding: 24px 16px; /* <0.75em or (2./3)em> 0.5em */
 	border-bottom: 1px solid black;
 
 	&.past {
@@ -26,8 +26,8 @@
 
 	> * 
 	{
-		margin: 0 16px;
-		height: 96px;
+		margin: 0 16px; /* 0.5em */
+		height: 96px; /* 3em */
 	}
 
 	> .col
@@ -35,7 +35,7 @@
 		justify-content: center;
 
 		box-sizing: border-box;
-		padding: 18px 0;
+		padding: 2.7% 0; /* padding-top is relative to width, remember */
 
 		> .br {
 			flex-basis: 0;
@@ -47,43 +47,43 @@
 	{
 		flex-shrink: 0;
 
-		width: 96px;
+		width: 96px; /* 3em */
 	}
 
 	@include mq(0, _bps(2)) 
 	{
 		> * 
 		{
-			height: 64px;
+			height: 64px; /* 3em */
 		}
 
 		> .image-temp 
 		{
-			width: 64px;
+			width: 64px; /* 3em */
 		}
 	}
 	@include mq(_bps(2), _bps(3)) 
 	{
 		> * 
 		{
-			height: 76px;
+			height: 76px; /* 3em */
 		}
 
 		> .image-temp 
 		{
-			width: 76px;
+			width: 76px; /* 3em */
 		}
 	}
 	@include mq(_bps(3), 0) 
 	{
 		> * 
 		{
-			height: 96px;
+			height: 96px; /* 3.2em? */
 		}
 
 		> .image-temp 
 		{
-			width: 96px;
+			width: 96px; /* 3.2em? */
 		}
 	}
 }

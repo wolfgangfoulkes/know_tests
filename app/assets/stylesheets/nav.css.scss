@@ -46,22 +46,22 @@
 	.item {
 		@include mq(0, _bps(2))
 		{
-			flex-basis: 30px;
+			flex-basis: 36px;
 			margin: 0 0;
-			height: 30px;
+			height: 36px;
 			/* RATIO: 0.6 or 1.666... */
 		}
 		@include mq(_bps(2), _bps(3))
 		{
 			flex-basis: 36px;
-			margin: 0 22px;
+			margin: 0 21.6px;
 			height: 36px;
 			/* RATIO: 0.6111... or 1.6363... */
 		}
 		@include mq(_bps(3), 0)
 		{
 			flex-basis: 40px;
-			margin: 0 36px;
+			margin: 0 20px;
 			height: 40px;
 			/* RATIO: 0.9 or 1.111... */
 		}
