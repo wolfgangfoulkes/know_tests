@@ -77,14 +77,6 @@ class Comment < ActiveRecord::Base
     (self.commentable_type == "Comment")
   end
 
-  def activity_for_create
-    a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
-  end
-
-  def activity_for_save
-    # owner.updated_at = a.updated_at
-  end
-
   def owner_id
     self.root.user_id
   end
@@ -114,5 +106,15 @@ class Comment < ActiveRecord::Base
     ( ["default"].include?(self.role) ) &&
     ( !self.is_nested? )
   end
+
+  # ----- public activity
+  def activity_for_create
+    a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
+  end
+
+  def activity_for_save
+    # owner.updated_at = a.updated_at
+  end
+  # -----
 
 end

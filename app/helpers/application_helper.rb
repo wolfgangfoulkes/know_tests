@@ -78,6 +78,37 @@ module ApplicationHelper
 	  end
 	end
 
+	# ----- activities
+	def activities_by_date(a_)
+		_a = a_.all.group_by{ |i| i.created_at.to_date.to_s }
+		_a
+	end
+	# -----
+
+	# ----- style
+	def date_style(date)
+		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
+		_output = content_tag(:span, :class => "know-dt") do
+			_d = content_tag(:span, class: "d") do
+				concat content_tag(:date, _a[0])
+				concat content_tag(:b, ".")
+				concat content_tag(:date, _a[1])
+				concat content_tag(:b, ".")
+				concat content_tag(:date, _a[2])
+			end
+			_t = content_tag(:span, class: "t") do
+				concat content_tag(:date, _a[3])
+				concat content_tag(:b, ":")
+				concat content_tag(:date, _a[4])
+			end
+			concat _d
+			concat ( content_tag(:b, "\t") )
+			concat _t
+		end
+		_output
+	end
+	# -----
+
 	# ----- javascript data params
 	def sel_snd(id, state: false, off: nil, group: nil)
 		_d = {}

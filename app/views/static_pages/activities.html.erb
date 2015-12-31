@@ -1,4 +1,4 @@
-<div class="events feed col">
+<div class="activity-feed events feed col">
 		<% @events.each do |event| %>
   		  <div class="item row"
         data-drop="toggle"
@@ -19,7 +19,7 @@
           </div>
 
   			</div>
-  			<div class="list activities col"
+  			<div class="activity-list col"
         data-drop="target"
         data-id="<%= event.id %>"
         data-state="false">

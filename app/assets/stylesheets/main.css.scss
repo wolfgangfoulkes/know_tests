@@ -164,11 +164,12 @@ $sizes_r: (
 
 
 /***** dependent files *****/
+@import "typography.css.scss";
 @import "nav.css.scss";
 @import "events-form.css.scss";
 @import "events-feed.css.scss";
-@import "activities-feed.css.scss";
 @import "comments-feed.css.scss";
+@import "activity-feed.css.scss";
 @import "show.css.scss";
 @import "dynamic.css.scss";
 @import "calendar.css.scss";
