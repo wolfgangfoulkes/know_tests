@@ -3,11 +3,20 @@
 }
 
 /* ----- TEMP FONTS ----- */
+
+	.activity-list {
+		>.item .title {
+			font-family: "Helvetica", sans-serif;
+		}
+	}
+
+
 	html {
 		font-family: 'Helvetica', sans-serif;
 	}
 
 	.events.feed .h2 {
+		/*font-variant: small-caps; do this in Ruby. sizes are still diff otherwise*/
 		font-family: 'Avenir Next';
 		/*font-family: 'Helvetica';*/
 	}
@@ -21,7 +30,8 @@
 		* {
 			font-family: 'Avenir Next', sans-serif;
 			/*font-family: 'PT Sans', sans-serif;*/
-			font-weight: bolder;
+			font-weight: normal;
+			/*font-weight: bolder;*/
 			/*font-weight: lighter;*/
 		}
 	}
@@ -57,6 +67,7 @@
 	}
 
 	.show.head.col > .field.title {
+		/*font-variant: small-caps; do this in Ruby. sizes are still diff otherwise*/
 		font-family: 'Avenir Next';
 
 		/*font-family 'PT Sans';*/
@@ -114,6 +125,16 @@ section {
 /* --- */
 
 /* ----- ACTIVITY FEED AND DATES ----- */
+.activity-list {
+
+	>.item {
+		.know-dt {
+			font-size: 0.8em;
+		}
+	}
+
+}
+
 .know-dt 
 {
 	> .d 

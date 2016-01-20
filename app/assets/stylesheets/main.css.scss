@@ -22,6 +22,7 @@ $nav-bar-h: 80px; 	/* formerly 96, then 72. */
 					/* 72 might be the best choice */
 					/* with smallest icon 27.5 */
 					/* codepen's is 64 */
+$max-width: 960px;
 /* --- */
 
 /* --- BPS --- */
@@ -89,6 +90,26 @@ $sizes_r: (
 		#{$p_}: size_at($i_, 4);
 	}
 }
+
+@mixin scales($max_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: sizes_r(1) * $max_;
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: sizes_r(2) * $max_;
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: sizes_r(3) * $max_;
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
+}
 /* --- */
 
 /* ----- */
@@ -103,6 +124,11 @@ $sizes_r: (
 .col {
 	display: inline-flex;
 	flex-direction: column;
+}
+
+.row > .br, .col > .br {
+	flex-basis: 0;
+	flex-grow: 1;
 }
 
 /* --- FONTS --- */
@@ -146,20 +172,21 @@ $sizes_r: (
 
 .page {
 	width: 100vw;
+	min-height: 100vh;
 	box-sizing: border-box;
 	margin: 0 auto;
 	position: relative;
 
 	padding: $nav-bar-h $margins-rl;
 	padding-bottom: $nav-bar-h*2;
-	max-width: 960px;
-	min-height: 100vh;
+	max-width: $max-width;
 	
 	@include mq(0, _bps(2)) {
 		padding: $nav-bar-h $margins-rl*0.25;
 	}
 }
 /* ----- */
+
 
 
 

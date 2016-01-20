@@ -34,9 +34,6 @@
 	justify-content: space-around;
 
 	.br {
-		flex-basis: 0;
-		flex-grow: 1;
-
 		@include mq(0, _bps(2))
 		{
 			display: none;

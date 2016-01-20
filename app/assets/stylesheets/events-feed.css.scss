@@ -1,4 +1,27 @@
-/* --- FEED --- */
+/* --- RESPONSIVE SIZES --- */
+@mixin events_feed($box, $pv, $ph, $mh)
+{
+	
+		padding: $box * $pv $box * $ph;
+		> *
+		{
+			margin: 0 $box * $mh; /* 0.5em */
+			height: $box; /* 3em */
+		}
+		> .image-temp
+		{
+			width: $box; /* 3em */
+		}
+		> .col
+		{
+			padding: 2.7% 0; /* padding-top is relative to width, remember */
+		}
+
+		@content;
+
+}
+
+/* --- EVENTS FEED --- */
 
 .events.feed.col > .item.row > .image-temp {
 	/*object-fit: cover;*/
@@ -8,8 +31,8 @@
 
 .events.feed.col 
 {
-	border-top: 1px solid black;
 	width: 100%;
+	border-top: 1px solid black;
 }
 
 .events.feed.col > .item.row 
@@ -17,73 +40,23 @@
 	justify-content: flex-start;
 	align-items: center;
 
-	padding: 24px 16px; /* <0.75em or (2./3)em> 0.5em */
 	border-bottom: 1px solid black;
+
+/*	height: $nav-bar-h * $gm;*/
 
 	&.past {
 		color: rgba(100, 0, 0, 0.1);
 	}
 
-	> * 
+	> *
 	{
-		margin: 0 16px; /* 0.5em */
-		height: 96px; /* 3em */
 	}
 
 	> .col
 	{
 		justify-content: center;
-
 		box-sizing: border-box;
-		padding: 2.7% 0; /* padding-top is relative to width, remember */
-
 		> .br {
-			flex-basis: 0;
-			flex-grow: 1;
-		}
-	}
-
-	> .image-temp
-	{
-		flex-shrink: 0;
-
-		width: 96px; /* 3em */
-	}
-
-	@include mq(0, _bps(2)) 
-	{
-		> * 
-		{
-			height: 64px; /* 3em */
-		}
-
-		> .image-temp 
-		{
-			width: 64px; /* 3em */
-		}
-	}
-	@include mq(_bps(2), _bps(3)) 
-	{
-		> * 
-		{
-			height: 76px; /* 3em */
-		}
-
-		> .image-temp 
-		{
-			width: 76px; /* 3em */
-		}
-	}
-	@include mq(_bps(3), 0) 
-	{
-		> * 
-		{
-			height: 96px; /* 3.2em? */
-		}
-
-		> .image-temp 
-		{
-			width: 96px; /* 3.2em? */
 		}
 	}
 }
@@ -114,3 +87,33 @@
 	cursor: pointer;
 }
 /* --- */
+
+.events.feed.col > .item.row 
+{
+
+	@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+	{
+	}
+
+	@include mq(0, _bps(2))
+	{
+		@include events_feed(64px, 1.0/4, 1.0/8, 1.0/8)
+		{
+		}
+	}
+	@include mq(_bps(2), _bps(3)) 
+	{
+		@include events_feed(76px, 1.0/4, 1.0/6, 1.0/6)
+		{		
+		}
+	}
+	@include mq(_bps(3), 0) 
+	{
+		@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+		{	
+		}
+}
+}
+
+
+
