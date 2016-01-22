@@ -32,10 +32,13 @@
 	right: 0;
 	top: 0;
 	justify-content: space-around;
+}
 
-	.br {
-		@include mq(0, _bps(2))
-		{
+#bar-t {
+
+	@include mq(0, _bps(2))
+	{
+		.br {
 			display: none;
 		}
 	}

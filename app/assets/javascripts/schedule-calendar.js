@@ -40,7 +40,7 @@ var getFCView = function(width)
 	}
 	else
 	{
-		return "basicDay"
+		return "agendaDay"
 	}
 }
 
@@ -59,20 +59,21 @@ var setFCViewSettings = function(view, element)
 
 var transformData = function(event_)
 {
+	var classes = "know-fcevent";
+	classes += " "
+	classes += (event_.is_current_user) ? 'know-cuser' : 'know-user';
 	var _event = 
 	{
 		title: event_.summary,
 		start: event_.start,
 		end: event_.end,
 		url: event_.url,
-		className: (event_.is_current_user) ? 'know-cue' : 'know-ue',
+		className: classes
 		//color: (event_.is_current_user) ?  'rgba(100, 100, 120, 0.2)' : 'rgba(100, 0, 0, 0.3)'
-		backgroundColor: (event_.is_current_user) ? 'rgba(0, 0, 0, 0.0)' : 'rgba(100, 0, 0, 0.3)',
-		borderColor: (event_.is_current_user) ? 'rgba(100, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.0)',
-		textColor: (event_.is_current_user) ? 'rgba(100, 80, 80, 0.3)' : 'white'
+		//backgroundColor: (event_.is_current_user) ? 'rgba(0, 0, 0, 0.0)' : 'rgba(100, 0, 0, 0.3)',
+		//borderColor: (event_.is_current_user) ? 'rgba(100, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.0)',
+		//textColor: (event_.is_current_user) ? 'rgba(100, 80, 80, 0.3)' : 'white'
 		//id:
-		//url:
-		//className:
 	}
 	return _event;
 }
@@ -91,12 +92,14 @@ $(document).on("page:change", function()
 			eventDataTransform: transformData,
 			height: $('#calendar').height(),
 			defaultView: 'basicWeek',
-
+			slotDuration: '01:00:00',//'12:00:00',
+			allDaySlot: false,
+			
 
 			header: 
 			{
 				left: "prev",
-				center: "basicDay, basicWeek, month, today",
+				center: "agendaDay, basicWeek, month, today",
 				right: "next"
 			},
 			views: 
@@ -129,7 +132,7 @@ $(document).on("page:change", function()
 	if (data["date"])
 	{
 		$('#calendar').fullCalendar("gotoDate", moment( data["date"] ).utc() );
-		setFCView("basicDay");
+		setFCView("agendaDay");
 	}
 	else {
 		//onWindowResize();

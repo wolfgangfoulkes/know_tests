@@ -88,7 +88,7 @@ module ApplicationHelper
 	# ----- style
 	def date_style(date)
 		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
-		_output = content_tag(:span, :class => "know-dt") do
+		_output = content_tag(:span, :class => "dt") do
 			_d = content_tag(:span, class: "d") do
 				concat content_tag(:date, _a[0])
 				concat content_tag(:b, ".")

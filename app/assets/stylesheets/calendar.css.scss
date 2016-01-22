@@ -71,11 +71,20 @@
 		/*font-size: ; should be less when it gets small */
 		max-height: 133.3vw;
 	}
+}
 
+#calendar 
+{
 	@include mq(0, nth($bps, 2))
 	{
 		top: 0;
 		&[data-fc-view="basicDay"]
+		{
+			max-width: none;
+			max-height: none;
+			padding-bottom: 0;
+		}
+		&[data-fc-view="agendaDay"]
 		{
 			max-width: none;
 			max-height: none;
@@ -96,6 +105,10 @@
 		{
 			
 		}
+		&[data-fc-view="agendaDay"]
+		{
+			
+		}
 		&[data-fc-view="month"] 
 		{
 		}
@@ -105,6 +118,9 @@
 		max-width: 960px;
 		padding-bottom: 59px;
 		/*max-height: 590px;*/
+		&[data-fc-view="agendaDay"]
+		{
+		}	
 		&[data-fc-view="basicDay"]
 		{
 		}	
@@ -159,5 +175,21 @@
 	&.fc-state-active 
 	{
 		background-color: rgba(100, 0, 0, 0.1) !important;
+	}
+}
+
+.know-fcevent {
+	/*font-size: 1.5em;*/
+
+	&.know-user {
+		background-color: rgba(100, 0, 0, 0.3);
+		border-color: rgba(0, 0, 0, 0.0);
+		color: white;
+	}
+
+	&.know-cuser {
+		background-color: rgba(0, 0, 0, 0.0);
+		border-color: rgba(100, 0, 0, 0.3);
+		color: rgba(100, 80, 80, 0.3);
 	}
 }

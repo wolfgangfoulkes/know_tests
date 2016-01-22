@@ -53,7 +53,7 @@
 		}
 	}
 
-	&[owner=true][data-role="default"] {
+	&[data-owner=true][data-role="default"] {
 	}
 
 	&[data-public=false][data-owner=true] {

@@ -71,6 +71,9 @@ $sizes_r: (
 	@return _sizes_r($i_) * _sizes_b($bp_);
 }
 
+/*
+	should be "font-sizes"
+*/
 @mixin sizes($i_, $p_) {
 	@include mq(0, _bps(1)) {
 		#{$p_}: size_at($i_, 1);

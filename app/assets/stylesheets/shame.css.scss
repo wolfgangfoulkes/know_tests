@@ -127,6 +127,8 @@ section {
 /* ----- ACTIVITY FEED AND DATES ----- */
 .activity-list {
 
+	padding-left: 0;
+
 	>.item {
 		.know-dt {
 			font-size: 0.8em;
@@ -135,7 +137,8 @@ section {
 
 }
 
-.know-dt 
+
+.activity-list .dt 
 {
 	> .d 
 	{
@@ -202,3 +205,4 @@ section {
 	}
 }
 /* ----- */
+
