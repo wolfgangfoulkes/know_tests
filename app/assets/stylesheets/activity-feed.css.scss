@@ -68,16 +68,18 @@
 /* ----- */
 
 /* ----- ACTIVITY-FEED ----- */
+.activity-feed.col
+{
+	width: 100%;
+}
+
+
 .activity-feed.col > .item.row > .svg-link
 {
 	/*object-fit: cover;*/
 	border-radius: 50%;
 }
 
-.activity-feed.col
-{
-	width: 100%;
-}
 
 .activity-feed .activity-list
 {
@@ -210,15 +212,19 @@ $list_offs_h: -6px;
 {
 	flex-grow: 1;
 	border: none;
-	border-bottom: 1px solid rgba(50, 0, 0, 0.05);
+	border-bottom: 1px solid rgba(10, 0, 0, 0.08);
+	color: rgba(10, 0, 0, 0.8);
+	opacity: 1.0;
 }
 
 .activity.search.row input[type="submit"]
 {
 	width: 5em;
-	border: none;
 	cursor: pointer;
-	background: rgba(50, 0, 0, 0.05);
+	border: 1px solid rgba(10, 0, 0, 0.08);
+	background: none;
+	color: rgba(10, 0, 0, 0.8);
+	
 }
 
 /* ----- */
