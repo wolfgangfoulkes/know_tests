@@ -12,6 +12,17 @@
 	or just make all mobile sizes default to day
 */
 
+var linkToDay = function(moment_)
+{
+	$('#calendar').fullCalendar("gotoDate", moment_.utc() );
+	setFCView("agendaDay");
+}
+
+var onDayClick = function(date_, jsevent_, view_)
+{
+	linkToDay(date_);
+}
+
 var resetFCSize = function() 
 {
 	var height = $('#calendar').height();
@@ -27,7 +38,7 @@ var setFCTitle = function(view, element)
 var onViewRender = function(view, element) 
 {
 	$('#calendar').attr('data-fc-view', view.name);
-	resetFCSize();
+	//resetFCSize();
 	setFCViewSettings(view, element);
 	setFCTitle(view, element);
 }
@@ -51,8 +62,8 @@ var setFCView = function(view)
 
 var setFCViewSettings = function(view, element) 
 {
-	var start = $('#calendar').fullCalendar('getView').intervalStart;
-	var end = $('#calendar').fullCalendar('getView').intervalEnd;
+	//var start = $('#calendar').fullCalendar('getView').intervalStart;
+	//var end = $('#calendar').fullCalendar('getView').intervalEnd;
 	// http://momentjs.com/
 	//console.log(start.format("MM"), start.format("YY"));
 }
@@ -86,7 +97,10 @@ $(document).on("page:change", function()
 
 	var data = $('#calendar').data();
 	$('#calendar').fullCalendar({
+			/* callbacks */
 			viewRender: onViewRender,
+			dayClick: onDayClick,
+			/***/
 
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,
@@ -123,21 +137,15 @@ $(document).on("page:change", function()
 	        //aspectRatio: 1.35 //height determined from width, width from css
 	});
 
+	/*** onPageChange callbacks ***/
+	if (data["date"])
+	{
+		linkToDay(moment( data["date"] ))
+	}
+
+	/*** other callbacks ***/
 	$(window).on('resize', function()
 	{
 		resetFCSize()
 	});
-
-
-	if (data["date"])
-	{
-		$('#calendar').fullCalendar("gotoDate", moment( data["date"] ).utc() );
-		setFCView("agendaDay");
-	}
-	else {
-		//onWindowResize();
-		var width = $(window).width();
-		var view = getFCView(width);
-		setFCView(view);
-	}
 });

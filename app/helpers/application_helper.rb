@@ -86,6 +86,10 @@ module ApplicationHelper
 	# -----
 
 	# ----- style
+	def uniq_date(dt_, dts_)
+		dts_.include(dt_.strftime("%m%d%y"))
+	end
+
 	def date_style(date)
 		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
 		_output = content_tag(:span, :class => "dt") do

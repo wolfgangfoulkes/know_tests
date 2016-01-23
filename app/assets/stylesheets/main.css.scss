@@ -129,7 +129,8 @@ $sizes_r: (
 	flex-direction: column;
 }
 
-.row > .br, .col > .br {
+.row > .br, .col > .br 
+{
 	flex-basis: 0;
 	flex-grow: 1;
 }

@@ -1,3 +1,16 @@
+svg[data-svgr="0"] {
+	transform: rotate(0deg);
+}
+svg[data-svgr="90"] {
+	transform: rotate(90deg);
+}
+svg[data-svgr="180"] {
+	transform: rotate(180deg);
+}
+svg[data-svgr="270"] {
+	transform: rotate(270deg);
+}
+
 .nav-bar {
 	>[data-current="true"] {
 		color: rgba(100, 0, 0, 0.5);
@@ -77,8 +90,69 @@
 	}
 }
 
+.activity-feed #svg-eye_1 {
+	position: relative;
+	fill: rgba(100, 0, 0, 0.5);
+	
+	&[data-state="false"] 
+	{
+		transform: rotate(180deg);
+	}
+	&[data-state="true"] 
+	{
+		transform: rotate(0);
+	}
+
+}
+
 .activity-feed .item[data-drop="toggle"] {
+	&[data-state="false"] {
+		.svg-link
+		{
+			border: 3px solid rgba(100, 0, 0, 0.0);
+			background: rgba(100, 0, 0, 0.5);
+			transform: rotate(180deg);
+			svg[data-svgid="arrow_3"]
+			{
+				top: -3px;
+				width: 14px;
+				height: 14px;
+			}
+			svg[data-svgid="arrow_4"]
+			{
+				width: 20px;
+				height: 20px;
+			}
+			svg
+			{
+				fill: white;
+				position: relative;
+			}
+		}
+		
+	}
 	&[data-state="true"] {
+		.svg-link
+		{
+			border: 3px solid rgba(100, 0, 0, 0.5);
+			background: none;
+			transform: rotate(0deg);
+			position: relative;
+			svg[data-svgid="arrow_3"]
+			{
+				width: 15px;
+				height: 15px;
+			}
+			svg[data-svgid="arrow_4"]
+			{
+				width: 20px;
+				height: 20px;
+			}
+			svg
+			{
+				position: relative;
+			}
+		}
 	}
 }
 .activity-feed .activity-list[data-drop="target"] {
