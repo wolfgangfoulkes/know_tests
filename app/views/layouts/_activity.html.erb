@@ -1,4 +1,4 @@
-<%= content_tag :div, class: ["item", "h3"],
+<%= content_tag :div, class: ["item", "h4"],
 	data: { fresh: "#{fresh?(activity)}", role: activity.parameters[:role] } do %>
 	<%= date_style(activity.created_at) %> -
 	<%= link_to "#{activity.trackable.title}", activity.owner, class: ["title"] %>

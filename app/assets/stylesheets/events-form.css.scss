@@ -3,9 +3,8 @@ form[data-form-for="event"] {
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 1rem 1.5rem;
+	padding: 16px 24px;
 	border: 1px solid black;
-
 }
 
 form[data-form-for="event"] .field {
@@ -14,12 +13,6 @@ form[data-form-for="event"] .field {
 	font-size: 1em;
 
 }
-
-form[data-form-for="event"] label {
-	color: darkgrey;
-
-}
-
 
 form[data-form-for="event"] {
 	input, textarea {
@@ -68,15 +61,16 @@ form[data-form-for="event"] .field.dt {
 	width: 100%;
 	display: inline-flex;
 	align-items: baseline;
+	justify-content: space-between;
 
 	label {
-		font-size: 0.75em;
+		font-size: 0.615em;
 		margin-right: auto;
 	}
 
 	select {
 		appearance: none;
-		font-size: 0.8em;
+		font-size: 0.615em;
 		padding: .5rem;
 		margin: 5px;
 		border: 1px solid rgba(100, 0, 0, 0.08);
@@ -90,4 +84,6 @@ form[data-form-for="event"] .field.dt {
 		margin-left: 10px;
 	}
 }
+
+
 /*****/

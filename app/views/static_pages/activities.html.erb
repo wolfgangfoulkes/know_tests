@@ -17,18 +17,18 @@
           <!-- 'svg/test/arrowd_1.svg' -->
           </div>
           <div class="col">
-            <span class="h5"> <%= event.starts_at %> </span>
+            <span class="h5"> <%= date_style(event.starts_at) %> </span>
             <div class="br"> </div>
             <%= link_to event.name, "#", 
             class: "h2" %> 
-            <span class="h4">
-            <!-- event.fresh_for(current_user).count  -->
+            <span class="h5">
+            <%= event.user.name %>
             </span>
             <div class="br"> </div>
           </div>
 
   			</div>
-  			<div class="activity-list col"
+  			<div class="activity-list col h4"
         data-drop="target"
         data-id="<%= event.id %>"
         data-state="false">

@@ -78,12 +78,29 @@
 {
 	/*object-fit: cover;*/
 	border-radius: 50%;
+	background-image: image-url('landscape.png');
 }
 
 
 .activity-feed .activity-list
 {
 	border-left: 2px solid rgba(100, 0, 0, 0.5);
+	
+
+	.item {
+		display: inline-flex;
+		flex-direction: row;
+		> * {
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		> .title {
+			flex-basis: 0;
+			flex-grow: 1;
+			margin-left: 2%;
+			text-overflow: ellipsis;
+		}
+	}	
 }
 
 .activity-feed.col > .item.row
@@ -145,6 +162,15 @@ $list_offs_h: -6px;
 			margin-top: 0.25 * -64px + $list_offs_v;
 			margin-left: (64px * 0.5) + (64px * 1.0/3) + $list_offs_h;
 			padding-left: 64px * 0.15;
+
+			.item {
+				> .dt {
+					font-size: 0.8em;
+				}
+				> .title {
+					display: block;
+				}
+			}
 		}
 	}
 	 
@@ -161,6 +187,7 @@ $list_offs_h: -6px;
 			margin-top: 0.25 * -76px + $list_offs_v;
 			margin-left: (76px * 0.5) + (76px * 1.0/3) + $list_offs_h;
 			padding-left: 76px * 0.15;
+
 		}
 	}
 	 
@@ -213,8 +240,6 @@ $list_offs_h: -6px;
 	flex-grow: 1;
 	border: none;
 	border-bottom: 1px solid rgba(10, 0, 0, 0.08);
-	color: rgba(10, 0, 0, 0.8);
-	opacity: 1.0;
 }
 
 .activity.search.row input[type="submit"]
@@ -224,6 +249,7 @@ $list_offs_h: -6px;
 	border: 1px solid rgba(10, 0, 0, 0.08);
 	background: none;
 	color: rgba(10, 0, 0, 0.8);
+
 	
 }
 

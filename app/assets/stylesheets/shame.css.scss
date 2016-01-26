@@ -8,6 +8,27 @@
 		>.item .title {
 			font-family: "Helvetica", sans-serif;
 		}
+
+		>.item[data-fresh="false"] {
+			opacity: 0.5;
+
+		}
+		>.item[data-fresh="true"] {
+			opacity: 1.0;
+			/*margin-left: 2%;*/
+			&:before
+			{
+				display: inline-block;
+				/*content: ". . . !";*/
+				content: "!";
+				font-size: 0.8em;
+/*				margin-right: 3%;*/
+				margin-right: 1.0em;
+/*				margin-left: 8%;*/
+				/*margin-left: 2.3em;*/
+				margin-left: 1.5em;
+			}
+		}
 	}
 
 
@@ -90,6 +111,26 @@
 		font-weight: 100;
 	}
 	/* --- */
+/* ----- */
+
+/* ----- EVENTS FORM ----- */
+form[data-form-for="event"] 
+{
+	@include sizes(3, "font-size");
+
+	@include mq(0, _bps(2)) 
+	{
+		.field.dt > label 
+		{
+			display: none;
+		}
+	}
+}
+
+form[data-form-for="event"] label {
+	color: darkgrey;
+
+}
 /* ----- */
 
 /* ----- MISC ----- */
