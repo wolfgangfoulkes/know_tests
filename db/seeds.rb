@@ -7,9 +7,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Comment.find_each do |comment| 
-	comment.activity_for_save
-end
-
-Question.find_each do |question| 
-	question.activity_for_save
+	comment.activity_for_create
 end

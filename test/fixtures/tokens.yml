@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: 'wolfgangfoulkes@gmail.com'
+  access_token: 'ya29.rAF4ypki4JSjiv4RP64W2TMxq_ATMNBVqC8abVj4zg9Kl6XkJ_I6I5Ymkv3JIgQKbyD3'
+  refresh_token: '1/-XmNy7TbJPRWehjB7WR13jGiZtKCMI3e6nmkTixg9kk'
+  expires_at: 2015-07-10 04:18:37 -5

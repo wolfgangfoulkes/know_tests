@@ -1,26 +1,34 @@
-
-<div class="events feed col">
+<%= form_tag "#", remote: true, class: 'activity search row h2' do %>
+  <%= hidden_field_tag :items, @events.pluck(:id).join(',') %>
+  <%= text_field_tag :search, params[:search], placeholder: 'search' %>
+  <%= submit_tag '>>' %>
+<% end %>
+<div class="activity-feed col">
 		<% @events.each do |event| %>
   		  <div class="item row"
         data-drop="toggle"
         data-id="<%= event.id %>"
         data-state="false">
 
-          <div class="image-temp"> </div>
+          <div class="image-temp svg-link">
+            <%= inline_svg 'svg/test/arrow_3.svg'
+            %>
+          <!-- 'svg/test/arrowr_2.svg' -->
+          <!-- 'svg/test/arrowd_1.svg' -->
+          </div>
           <div class="col">
-            <span class="h5"> <%= event.starts_at %> </span>
+            <span class="h5"> <%= date_style(event.starts_at) %> </span>
             <div class="br"> </div>
-            <%= link_to event.name, event, 
+            <%= link_to event.name, "#", 
             class: "h2" %> 
-            <span class="h4">
-              <%= event.activities.count %> |
-              <%= event.fresh_for(current_user).count %> 
+            <span class="h5">
+            <%= event.user.name %>
             </span>
             <div class="br"> </div>
           </div>
 
   			</div>
-  			<div class="list activities col"
+  			<div class="activity-list col h4"
         data-drop="target"
         data-id="<%= event.id %>"
         data-state="false">

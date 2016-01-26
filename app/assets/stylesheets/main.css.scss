@@ -5,42 +5,30 @@
 @import "base/meyer-reset-mod.css.scss";
 @import "base/utilities.css.scss";
 
-@function nth_if($map_, $i_)
-{
-	$max: length($map_);
-	@if ($i_ > $max) {
-		@return nth($map_, $max);
-	}
-	@if ($i_ < 1) {
-		@return nth($map_, 1);
-	}
-	@return nth($map_, $i_);
-}
+/* ----- VARS ----- */
 
-@mixin mq($min_, $max_) {
-	@if $min_ == 0 {
-		@media only screen and (max-width: "#{$max_}")
-		{ @content; }
-	}
-	@else if $max_ == 0 {
-		@media only screen and (min-width: "#{$min_}")
-		{ @content; }
-	}
-	@else {
-		@media only screen and (min-width: "#{$min_}") and (max-width: "#{$max_}")
-		{ @content; }
-	}
-}
+/* --- COLORS --- */
+$salmender: w_bl(rgb(100, 0, 0), 0.1);
+/* --- */
 
-/***** VARS *****/
-$namespace: "know";
+/* --- ICONS --- */
+$nav-icon-size: 40px;
+/* --- */
 
+/* --- LAYOUT --- */
+$margins-rl: 48px;
+$vmn: 48px;
+$nav-bar-h: 80px; 	/* formerly 96, then 72. */
+					/* 72 might be the best choice */
+					/* with smallest icon 27.5 */
+					/* codepen's is 64 */
+$max-width: 960px;
+/* --- */
 
-/*** BREAKPOINTS
-*/
+/* --- BPS --- */
 $bps: 
 (
-	340px, 
+	340px,
 	480px,
 	800px,
 	1024px
@@ -48,9 +36,13 @@ $bps:
 @function _bps($i_) {
 	@return nth($bps, $i_);
 }
-/***/
+/* --- */
 
-/*** SIZES 
+/* --- RESPONSIVE SIZES --- */
+/*
+	- sizes_b * sizes_r -> size_at -> sizes(bp)
+  	used in h's primarily,
+  	but elsewhere
 */
 $sizes_b: 
 (
@@ -70,6 +62,7 @@ $sizes_r: (
 	.465,
 	.378
 );
+
 @function _sizes_r($i_) {
 	@return nth($sizes_r, $i_);
 }
@@ -77,8 +70,10 @@ $sizes_r: (
 @function size_at($i_, $bp_) {
 	@return _sizes_r($i_) * _sizes_b($bp_);
 }
-/***/
 
+/*
+	should be "font-sizes"
+*/
 @mixin sizes($i_, $p_) {
 	@include mq(0, _bps(1)) {
 		#{$p_}: size_at($i_, 1);
@@ -99,42 +94,31 @@ $sizes_r: (
 	}
 }
 
-/*** COLORS
-*/
-$salmender: w_bl(rgb(100, 0, 0), 0.1);
-/***/
+@mixin scales($max_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: sizes_r(1) * $max_;
+	}
 
-/*** LAYOUT
-*/
-$margins-rl: 48px;
-$nav-bar-h: 96px;
-/***/
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: sizes_r(2) * $max_;
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: sizes_r(3) * $max_;
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
 
-/*** ICONS
-*/
-$nav-icon-size: 40px;
-/***/
-
-/*****/
-
-/***** https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=sass%20prefix%20every%20class *****/
-
-/***** STUFF I DON'T WANNA FUCK UP *****/
-.#{$namespace} {
-	/* this was here before, don't wanna fuck it up */
-	box-sizing: border-box;
+	@include mq(_bps(4), 0) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
 }
+/* --- */
 
-section {
-	width: 100%;
-}
+/* ----- */
 
-/***** GLOBAL *****/
-.vmn {
-	height: 48px;
-	/* margins r-l */
-}
 
+/* ----- GLOBAL ----- */
 .row {
 	display: inline-flex;
 	flex-direction: row;
@@ -145,104 +129,13 @@ section {
 	flex-direction: column;
 }
 
-
-
-/***** OBJECTS *****/
-.svg-link {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	svg {
-		height: 100%;
-		&.svg-plus {
-			height: 85%;
-		}
-		&.svg-user {
-			height: 98%;
-		}
-	}
+.row > .br, .col > .br 
+{
+	flex-basis: 0;
+	flex-grow: 1;
 }
 
-/***** APP LAYOUT *****/
-.nav-bar.row {
-	align-items: center;
-	height: $nav-bar-h;
-	background-color: rgb2rgba($salmender, 0.95);
-	z-index: 1000;
-}
-
-/* 
-	rather than the following, could 
-	use a parent 'section' item
-	with 
-	space-between
-	and either
-	flex-grow: <relative size for space and margins>;
-	or
-	margin-left: auto
-	with item margins
-
-	the latter might be preferable for maintaining margins
-*/
-#bar-t {
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	justify-content: space-around;
-
-	.br {
-		flex-basis: 0;
-		flex-grow: 1;
-
-		@include mq(0, _bps(2))
-		{
-			display: none;
-		}
-	}
-
-	.item {
-		@include mq(0, _bps(2))
-		{
-			flex-basis: 30px;
-			margin: 0 0;
-			height: 30px;
-			/* RATIO: 0.6 or 1.666... */
-		}
-		@include mq(_bps(2), _bps(3))
-		{
-			flex-basis: 36px;
-			margin: 0 22px;
-			height: 36px;
-			/* RATIO: 0.6111... or 1.6363... */
-		}
-		@include mq(_bps(3), 0)
-		{
-			flex-basis: 40px;
-			margin: 0 36px;
-			height: 40px;
-			/* RATIO: 0.9 or 1.111... */
-		}
-	}
-}
-
-#bar-b {
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	justify-content: space-around;
-
-	> * {
-	}
-}
-
-/***** HEADERS *****/
-.#{$namespace} {
-	font-size: 36px;
-}
-
-
+/* --- FONTS --- */
 .h1 {
 	/* change to f1, etc. */
 	font-size: size_at(1, 4);
@@ -272,76 +165,46 @@ section {
 
 	@include sizes(5, "font-size");
 }
-/*****/
+/* --- */
+/* ----- */
+
+/* ----- LAYOUT ----- */
+.vmn {
+	height: $vmn;
+	/* margins r-l */
+}
 
 .page {
 	width: 100vw;
+	min-height: 100vh;
 	box-sizing: border-box;
+	margin: 0 auto;
+	position: relative;
+
 	padding: $nav-bar-h $margins-rl;
 	padding-bottom: $nav-bar-h*2;
-	max-width: 960px;
-	margin: 0 auto;
-
+	max-width: $max-width;
+	
 	@include mq(0, _bps(2)) {
 		padding: $nav-bar-h $margins-rl*0.25;
 	}
 }
-
-/***** FORM *****/
-form.new_event {
-	display: inline-flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: 1rem 1.5rem;
-	border: 1px solid black;
-
-}
-
-form.new_event .field {
-	flex-grow: 1;
-	margin: .5rem 0;
-	font-size: 1em;
-
-}
-
-form.new_event input {
-	/***** overrides *****/
-	padding: 0 0;
-	margin: 0 0;
-	box-sizing: border-box;
-	width: 100%;
-	font-size: 1em;
-	/*****/
-}
-
-form.new_event .actions {
-	flex-grow: 1;
-	margin: 1rem 0;
-}
-
-form.new_event .actions input {
-	/***** overrides *****/
-	background: none;
-	border: none;
-	height: 100%;
-	/*****/
-
-	background-color: rgba(100, 0, 0, 0.1);
-	padding: .5rem 0;
-}
-/*****/
-
-.tags {
-	color: rgba(100, 0, 0, 0.3);
-}
+/* ----- */
 
 
 
 
 /***** dependent files *****/
-@import "lists.css.scss";
+@import "typography.css.scss";
+@import "nav.css.scss";
+@import "events-form.css.scss";
+@import "events-feed.css.scss";
+@import "comments-feed.css.scss";
+@import "activity-feed.css.scss";
 @import "show.css.scss";
-@import "comments.css.scss";
 @import "dynamic.css.scss";
 @import "calendar.css.scss";
+/***** ALWAYS LAST, for tweaks, hacks and overrides *****/
+/*** ...might need a folder... ***/
+@import "shame.css.scss";
 /*****/

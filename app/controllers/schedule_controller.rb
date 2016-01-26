@@ -1,10 +1,9 @@
 class ScheduleController < ApplicationController
-	before_action :setup, only: [:list]
+	before_action :setup, only: [:list, :calendar]
 	before_action :set_date, only: [:calendar]
 
 	def list
 		respond_to do |format|
-			format.html
 			format.json
 		end
 	end

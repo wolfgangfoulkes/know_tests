@@ -5,10 +5,23 @@ class Event < ActiveRecord::Base
 	#--- socialization
 	acts_as_followable
 	#-----
+	
+	has_many :comments, as: :root, dependent: :destroy
+	has_many :owner_comments, -> (event) { where(role: "owner", commentable: event) }, 
+		class_name: "Comment", 
+		as: :root,
+		dependent: :destroy,
+		after_add: :setup_comment
+	has_many :feed_comments, -> (event) { where(role: "default", commentable: event) }, 
+		class_name: "Comment", 
+		as: :root,
+		dependent: :destroy
+	has_many :reply_comments, -> (event) { where(role: "reply", commentable_type: "Comment") }, 
+		class_name: "Comment",
+		as: :root,
+		dependent: :destroy
 
 	belongs_to :user
-	has_many :comments, as: :commentable, dependent: :destroy 
-	has_many :questions, dependent: :destroy
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
@@ -30,13 +43,20 @@ class Event < ActiveRecord::Base
 
 	scope :name_starts_with, -> (q) { where("lower(name) like ?", "#{q.downcase}%") }
 	scope :name_contains, -> (q) { where("lower(name) like ?", "%#{q.downcase}%") }
+	scope :description_starts_with, -> (q) { where("lower(description) like ?", "#{q.downcase}%")}
 	scope :description_contains, -> (q) { where("lower(description) like ?", "%#{q.downcase}%")}
 
 	scope :starts_after, -> (q) { where("starts_at >= ?", q ) }
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
 
 	# order determines final order
-	scope :search, -> (q) { where(id: name_starts_with(q) | name_contains(q)) }
+	scope :search, -> (q) {
+		if q.size > 3 
+			where(id: name_starts_with(q) | description_starts_with(q) | name_contains(q) |  description_contains(q))
+		else
+			where(id: name_starts_with(q) | description_starts_with(q))
+		end
+	}
 
 	# works with array or relation
 	# does not retain activities order
@@ -61,6 +81,7 @@ class Event < ActiveRecord::Base
 	# see how it returns
 
 
+
 	#--------
 
 	#----- callbacks -----
@@ -73,6 +94,12 @@ class Event < ActiveRecord::Base
 	#--------
 
 	#----- METHODS -----
+
+	def setup_comment(comment)
+		if comment.role == "owner"
+			comment.public = true
+		end
+	end
 
 	#--- activities
 	def fresh_for(user)

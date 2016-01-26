@@ -1,0 +1,87 @@
+/* 
+	rather than the following, could 
+	use a parent 'section' item
+	with 
+	space-between
+	and either
+	flex-grow: <relative size for space and margins>;
+	or
+	margin-left: auto
+	with item margins
+
+	the latter might be preferable for maintaining margins
+*/
+.nav-bar.row {
+	align-items: center;
+	height: $nav-bar-h;
+	background-color: rgb2rgba($salmender, 0.95);
+	z-index: 1000;
+}
+
+#bar-t {
+	/*
+		at the lowest width, reduce to 70px with icons 30px (ish)
+		7/3 might be a good ratio
+		nother possible sizing:
+		bar is always 81.18
+		icons-large are 44
+		icons-small are 30.8
+	*/
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	justify-content: space-around;
+}
+
+#bar-t {
+
+	@include mq(0, _bps(2))
+	{
+		.br {
+			display: none;
+		}
+	}
+
+	.item {
+		@include mq(0, _bps(1))
+		{
+			flex-basis: 30.55728px;
+			margin: 0 0;
+			height: 30.55728px;
+			/* 1 * 30px */
+		}
+		@include mq(_bps(1), _bps(2))
+		{
+			flex-basis: 36px;
+			margin: 0 0;
+			height: 36px;
+			/* 0.888- * 32px */
+		}
+		@include mq(_bps(2), _bps(3))
+		{
+			flex-basis: 36px;
+			margin: 0 22px;
+			height: 36px;
+			/* 1 * 36px */
+		}
+		@include mq(_bps(3), 0)
+		{
+			flex-basis: 40px;
+			margin: 0 20px;
+			height: 40px;
+			/* 1 * 40px */
+		}
+	}
+}
+
+#bar-b {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	justify-content: space-around;
+
+	> * {
+	}
+}

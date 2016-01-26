@@ -1,0 +1,12 @@
+<%= content_tag :div, 
+	class: ["comment-list", "col"],
+	data: {refresh: comments.type} do
+-%>
+	<%= render comments.deef %>
+<% end -%>
+<%= render partial: 'comments/form',
+	locals: 
+	{
+		comment: comments.build
+	} 
+%>

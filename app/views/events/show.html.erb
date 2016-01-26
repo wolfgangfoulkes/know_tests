@@ -48,28 +48,30 @@
 
 <div class="vmn"> </div>
 
-<section class="col">
-	<div class="h2"> Updates </div>
-	<div class="comment-list col" 
-		data-refresh="comments">
-		<%= render @event.comments %>
+<section>
+	<div class="row tabs">
+		<%= content_tag :a, class: ["h2"], data: 
+			sel_snd(0, group: 0, state: true) do %>
+		Updates 
+		<% end %>
+		<%= content_tag :a, class: ["h2"], data:
+			sel_snd(1, group: 0, state: false) do %>
+		Questions 
+		<% end %>
 	</div>
-	<% if (can? :edit, @event) %>
-		<%= render partial: 'comments/form', 
-		locals: { comment: @event.comments.build } 
-		%>
+
+	<%= content_tag :div,
+	class: ["col"],
+	data: sel_rcv(0, group: 0, state: true) do
+	%>
+		<%= render partial: 'comments/feed', locals: {comments: @event.owner_comments} %>
 	<% end %>
-</section>
 
-<div class="vmn"> </div>
+	<%= content_tag :div,
+	class: ["col"], 
+	data: sel_rcv(1, group: 0, state: false) do
+	%>
 
-<section class="col">
-	<div class="h2"> Questions </div>
-	<%= content_tag :div, class: ["comment-list", "col"], data: {refresh: "questions"} do -%>
-		<%= render @event.questions %>
-	<% end -%>
-
-	<%= render partial: 'questions/form', locals: 
-	{ question: @event.questions.build } %>
-</section>
-
+		<%= render partial: 'comments/feed', locals: {comments: @event.feed_comments} %>
+	<% end %>
+<section/>

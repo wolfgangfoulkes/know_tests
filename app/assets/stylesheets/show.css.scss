@@ -1,27 +1,59 @@
+/***
+	page
+	{
+		.show.head
+		{
+			img-main
+			field
+			field
+			field
+			field
+		}
+		.description
 
-
+		(.comments)
+	}
+***/
 
 .description {
 	margin-top: 1.5em;
-	font-family: 'Helvetica';
-	font-weight: 100;
 
 	width: 100%;
 }
 
+/*****
+* 	unrelated to layout, a few temporary
+*/
+
+
+.show.head.col > .img-main {
+	background-color: red;
+
+	border-radius: 50%;
+	object-fit: cover;
+	opacity: 0.8;
+}
+/*
+*****/
+
+/***** HEAD  *****/
 .show.head.col {
+		border-bottom: 1px solid rgba(100, 0, 0, 0.1);
+
 		position: relative;
 		width: 100%;
-		border-bottom: 1px solid rgba(100, 0, 0, 0.1);
+		
 
 		> .img-main {
 			position: absolute;
-			border-radius: 50%;
-			background-color: red;
 			z-index: -1;
-			object-fit: cover;
-			opacity: 0.8;
 
+			/*
+				"top" of image is relative to the size of 
+				everything else in show.head
+				so, this size is determined inevitably
+				by the font and line spacing
+			*/
 			@include mq( 0, _bps(2)) {
 				right: 0;
 				top: 20%;
@@ -56,45 +88,29 @@
 
 		>.field.date {
 			width: 100%;
-
-			font-family: 'Avenir Next';
-			* {
-				font-weight: 100;
-				letter-spacing: -1px;
-				word-spacing: +1px;
-			}
 		}
 
 		>.field.title {
-			width: 60%;
-
-			font-family: 'Avenir Next';
-
-			/* the following prevents line wrapping */
-			/*white-space: nowrap;*/
-			
+			width: 60%;		
 		}
 
 		>.field.user {
 			margin-top: 0px;
-			font-family: 'Avenir Next';
 		}
 
 		>.field.tags {
 			/*box-sizing: border-box;
 			padding-left: 8px;*/
-			width: 50%;
-			text-indent: 20%;
 			margin-right: auto;
 			margin-top: auto;
+
+			width: 50%;
+			text-indent: 20%;
 			text-align: right;
-			font-family: 'Helvetica';
-			font-weight: bold;
 		}		
 }
-/*
-	
-*/
+
+
 /*-webkit-clip-path: circle($width * .75 at center);*/
 
 

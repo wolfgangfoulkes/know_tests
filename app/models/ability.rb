@@ -1,19 +1,65 @@
 class Ability
   include CanCan::Ability
 
+
   def initialize(user)
     can :read, :all
     can :create, Event
     can [:update, :destroy], Event, :user_id => user.id
-    can [:create, :destroy], Question do |c|
-        true
+
+    # all owned events for user
+    owner_events = user.events.pluck(:id)
+
+    # override :read, :all
+    cannot [:read], Comment, { public: false }
+
+    # event owner can create, read, destroy all comments
+    can [:create, :read, :destroy], Comment,
+    {   
+        root_id: owner_events,
+        role: ["owner", "default", "reply"]
+    }
+
+     # any user can create a default comment
+    can [:create], Comment,
+    {   
+        user_id: user.id,
+        role: ["default"],
+        public: false
+    }
+
+    # comment owner can read and destroy their own comments
+    can [:read, :destroy], Comment,
+    {   
+        user_id: user.id,
+        role: ["default", "reply"]
+    }
+
+
+    # anyone can reply to a public comment
+    can [:create, :read], Comment do |comment|
+        (comment.is_nested?) &&
+        (comment.commentable.public == true)
     end
-    can [:create, :destroy], Comment do |c|
-        (c.commentable_type == "Question") ||
-        ((c.commentable_type == "Event") && (c.commentable.user_id == user.id))
+
+    # comment creator can reply to their own comment
+    can [:create, :read, :destroy], Comment do |comment|
+        (comment.is_nested?) &&
+        (comment.commentable.user_id == user.id)
     end
-    
-    
+
+    # set public only for top-level comments
+    can [:set_public], Comment,
+    {
+        commentable_id: owner_events,
+        role: ["default"]
+    }
+
+    can [:comment_on], Comment do |comment|
+        (comment.role == "default") &&
+        (!comment.is_nested?)
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

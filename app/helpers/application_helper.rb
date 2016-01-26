@@ -37,8 +37,8 @@ module ApplicationHelper
 	# ----- HELPER METHODS -----
 	# - can be referenced in view, and in model, with 'include' 
 	# - non-class methods will be overriden by helpers with alphabetically later names
-	
-	# --- from class methods
+
+	# ----- from class methods
 	def isa?(o_, class_)
 		ApplicationHelper.isa?(o_, class_)
 	end
@@ -78,4 +78,59 @@ module ApplicationHelper
 	  end
 	end
 
+	# ----- activities
+	def activities_by_date(a_)
+		_a = a_.all.group_by{ |i| i.created_at.to_date.to_s }
+		_a
+	end
+	# -----
+
+	# ----- style
+	def uniq_date(dt_, dts_)
+		dts_.include(dt_.strftime("%m%d%y"))
+	end
+
+	def date_style(date)
+		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
+		_output = content_tag(:span, :class => "dt") do
+			_d = content_tag(:span, class: "d") do
+				concat content_tag(:date, _a[0])
+				concat content_tag(:b, ".")
+				concat content_tag(:date, _a[1])
+				concat content_tag(:b, ".")
+				concat content_tag(:date, _a[2])
+			end
+			_t = content_tag(:span, class: "t") do
+				concat content_tag(:date, _a[3])
+				concat content_tag(:b, ":")
+				concat content_tag(:date, _a[4])
+			end
+			concat _d
+			concat ( content_tag(:b, "\t") )
+			concat _t
+		end
+		_output
+	end
+	# -----
+
+	# ----- javascript data params
+	def sel_snd(id, state: false, off: nil, group: nil)
+		_d = {}
+		_d["sel-snd"] = id
+		_d["sel-state"] = state
+		_d["sel-off"] = off
+		_d["sel-group"] = group
+		return _d.compact
+	end
+
+	def sel_rcv(id, state: false, off: nil, group: nil)
+		_d = {}
+		_d["sel-rcv"] = id
+		_d["sel-state"] = state
+		_d["sel-off"] = off
+		_d["sel-group"] = group
+		puts _d.to_yaml
+		return _d.compact
+	end
+	# -----
 end

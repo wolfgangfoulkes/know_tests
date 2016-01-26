@@ -12,6 +12,37 @@
 	or just make all mobile sizes default to day
 */
 
+var linkToDay = function(moment_)
+{
+	$('#calendar').fullCalendar("gotoDate", moment_.utc() );
+	setFCView("agendaDay");
+}
+
+var onDayClick = function(date_, jsevent_, view_)
+{
+	linkToDay(date_);
+}
+
+var resetFCSize = function() 
+{
+	var height = $('#calendar').height();
+	$('#calendar').fullCalendar('option', 'height', height);
+}
+
+var setFCTitle = function(view, element)
+{
+	var title = view.title;
+	$('#calendar-title').text(title);
+}
+
+var onViewRender = function(view, element) 
+{
+	$('#calendar').attr('data-fc-view', view.name);
+	//resetFCSize();
+	setFCViewSettings(view, element);
+	setFCTitle(view, element);
+}
+
 var getFCView = function(width)
 {
 	if (width > 800)
@@ -20,7 +51,7 @@ var getFCView = function(width)
 	}
 	else
 	{
-		return "basicDay"
+		return "agendaDay"
 	}
 }
 
@@ -31,92 +62,90 @@ var setFCView = function(view)
 
 var setFCViewSettings = function(view, element) 
 {
-	var start = $('#calendar').fullCalendar('getView').intervalStart;
-	var end = $('#calendar').fullCalendar('getView').intervalEnd;
+	//var start = $('#calendar').fullCalendar('getView').intervalStart;
+	//var end = $('#calendar').fullCalendar('getView').intervalEnd;
 	// http://momentjs.com/
-	console.log(start.format("MM"), start.format("YY"));
-}
-
-var onWindowResize = function()
-{
-	var width = $(window).width();
-	var view = getFCView(width);
-	setFCView(view);
+	//console.log(start.format("MM"), start.format("YY"));
 }
 
 var transformData = function(event_)
 {
+	var classes = "know-fcevent";
+	classes += " "
+	classes += (event_.is_current_user) ? 'know-cuser' : 'know-user';
 	var _event = 
 	{
 		title: event_.summary,
 		start: event_.start,
 		end: event_.end,
 		url: event_.url,
-		className: (event_.is_current_user) ? 'know-cue' : 'know-ue',
+		className: classes
 		//color: (event_.is_current_user) ?  'rgba(100, 100, 120, 0.2)' : 'rgba(100, 0, 0, 0.3)'
-		backgroundColor: (event_.is_current_user) ? 'rgba(0, 0, 0, 0.0)' : 'rgba(100, 0, 0, 0.3)',
-		borderColor: (event_.is_current_user) ? 'rgba(100, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.0)',
-		textColor: (event_.is_current_user) ? 'rgba(100, 80, 80, 0.3)' : 'white'
+		//backgroundColor: (event_.is_current_user) ? 'rgba(0, 0, 0, 0.0)' : 'rgba(100, 0, 0, 0.3)',
+		//borderColor: (event_.is_current_user) ? 'rgba(100, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.0)',
+		//textColor: (event_.is_current_user) ? 'rgba(100, 80, 80, 0.3)' : 'white'
 		//id:
-		//url:
-		//className:
 	}
 	return _event;
 }
 
-//$(window).resize(onWindowResize);
+
 
 $(document).on("page:change", function()
 {
+	
+
 	var data = $('#calendar').data();
 	$('#calendar').fullCalendar({
-			viewRender: setFCViewSettings,
+			/* callbacks */
+			viewRender: onViewRender,
+			dayClick: onDayClick,
+			/***/
 
 			events: '/schedule/list.json',
 			eventDataTransform: transformData,
 			height: $('#calendar').height(),
 			defaultView: 'basicWeek',
-
+			slotDuration: '01:00:00',//'12:00:00',
+			allDaySlot: false,
+			
 
 			header: 
 			{
-				left: "basicDay, basicWeek, month",
-				center: "title",
-				right: "prev, next, today"
+				left: "prev",
+				center: "agendaDay, basicWeek, month, today",
+				right: "next"
 			},
 			views: 
 			{
 				month: 
 				{
-					titleFormat: "MM | 'YY",
+					titleFormat: "MM | YYYY",
 					columnFormat: "ddd"
 				},
 				week: 
 				{
-					titleFormat: " ",
-					columnFormat: "ddd M | D"
+					titleFormat: "MM | YYYY",
+					columnFormat: "ddd D"
 				},
 				day: 
 				{
-					titleFormat: "M > D >> 'YY",
-					columnFormat: "dddd"
+					titleFormat: "MM | YYYY",//"M : D :: 'YY",
+					columnFormat: "ddd D"//"dddd"
 				}
 			}
 	        //aspectRatio: 1.35 //height determined from width, width from css
 	});
 
-
+	/*** onPageChange callbacks ***/
 	if (data["date"])
 	{
-		$('#calendar').fullCalendar("gotoDate", moment( data["date"] ).utc() );
-		setFCView("basicDay");
-	}
-	else {
-		//onWindowResize();
-		var width = $(window).width();
-		var view = getFCView(width);
-		setFCView(view);
+		linkToDay(moment( data["date"] ))
 	}
 
-
+	/*** other callbacks ***/
+	$(window).on('resize', function()
+	{
+		resetFCSize()
+	});
 });

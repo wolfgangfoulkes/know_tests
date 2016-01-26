@@ -1,6 +1,6 @@
-<%= render layout: 'schedule' do %>
-	<section>
-		<%= content_tag 'div', id: 'calendar', data: { date: @date } do %>
-		<% end %>
-	</section>
+
+<%= content_tag 'div', id: 'calendar', data: { date: @date } do %>
+	<%= content_tag 'div', id: 'calendar-title', class: ['h1'] do %>
+	<% end %>
 <% end %>
+

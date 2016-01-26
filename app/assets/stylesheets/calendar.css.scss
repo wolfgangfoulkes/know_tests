@@ -1,46 +1,195 @@
-#calendar {
+/*
+	FULL CALENDAR:
+	globals:
+		.fc
+		.fc-row
+		.fc th, .fc td 
+	#calendar -> <my container>
+	{
+		.fc-view-container
+			.fc-view
+				table
+					thead.fc-head
+						...
+					tbody.fc-body
+						...
+	}
+*/
+#calendar
+{
 	@include sizes(4, "font-size");
 
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: $vmn;
+	padding-top: inherit;
 	margin: 0 auto;
-	max-width: 960px;
-	height: 600px;
-	@include mq(0, nth($bps, 3)) {
-		margin: 0 0;
-		position: absolute;
-		left: -1 * $margins-rl;
-		right: -1 * $margins-rl;
-	}
-	@include mq(nth($bps, 3) + 1, nth($bps, 4)) {
-		width: 740px;
-	}
-	@include mq(nth($bps, 4) + 1, 0) {
-		width: 960px;
-	}
 
-	.fc-day-header {
-		padding: .5em 0 !important;
+	> .fc-toolbar {
+		z-index: 1;
+		background-color: $salmender;
+
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: $nav-bar-h * 0.8;
+
+		display: inline-flex;
+		justify-content: space-around;
+		align-items: center;
+
 		
-		&.fc-sun, &.fc-mon {
+		.fc-left {
+			order: 0;
+		}
+
+		.fc-center {
+			order: 1;
+		}
+
+		.fc-right {
+			order: 2;
+		}
+
+		/* reset */
+		margin-bottom: 0;
+		* {
+			float: none;
+			clear: both;
+		}
+		.fc-clear {
+			display: none;
 		}
 	}
 
-	.fc-center {
-		font-size: 3em !important;
-		color: rgba(100, 0, 0, 0.1) !important;
-		line-height: 0 !important;
+	
+	&[data-fc-view="month"]
+	{
+		/*font-size: ; should be less when it gets small */
+		max-height: 133.3vw;
+	}
+}
+
+#calendar 
+{
+	@include mq(0, nth($bps, 2))
+	{
+		top: 0;
+		&[data-fc-view="basicDay"]
+		{
+			max-width: none;
+			max-height: none;
+			padding-bottom: 0;
+		}
+		&[data-fc-view="agendaDay"]
+		{
+			max-width: none;
+			max-height: none;
+			padding-bottom: 0;
+		}
+		&[data-fc-view="month"]
+		{
+			max-height: none;
+		}
 	}
 
-	.fc-button {
-		background: none !important;
-
-		border: 1px solid rgba(100, 0, 0, 0.1) !important;
-
-		&.fc-state-disabled {
-			border: 1px solid rgba(0, 0, 0, 0) !important;
-			background-color: rgba(0, 0, 0, 0.1) !important;
+	@include mq(nth($bps, 3) + 1, nth($bps, 4)) 
+	{
+		max-width: 800px;
+		max-height: none;
+		padding-bottom: 49px;
+		&[data-fc-view="basicDay"]
+		{
+			
 		}
-		&.fc-state-active {
-			background-color: rgba(100, 0, 0, 0.1) !important;
+		&[data-fc-view="agendaDay"]
+		{
+			
 		}
+		&[data-fc-view="month"] 
+		{
+		}
+	}
+	@include mq(nth($bps, 4) + 1, 0) 
+	{
+		max-width: 960px;
+		padding-bottom: 59px;
+		/*max-height: 590px;*/
+		&[data-fc-view="agendaDay"]
+		{
+		}	
+		&[data-fc-view="basicDay"]
+		{
+		}	
+		
+	}
+}
+
+#calendar-title {
+	font-size: $nav-bar-h;
+	color: rgba(0, 0, 0, 0.1);
+	white-space: nowrap;
+
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: $nav-bar-h * 0.5;
+	
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#calendar .fc-day-header 
+{
+	@include sizes(4, "font-size");
+	padding: .8em 0 !important;
+	
+	&.fc-sun, &.fc-mon
+	{
+	}
+}
+
+
+#calendar .fc-button 
+{
+	background: none !important;
+	border: 1px solid rgba(100, 0, 0, 0.1) !important;
+
+	&.fc-prev-button, &.fc-next-button {
+		font-size: 1.3em;
+	}
+
+	
+
+	&.fc-state-disabled 
+	{
+		border: 1px solid rgba(0, 0, 0, 0) !important;
+		background-color: rgba(0, 0, 0, 0.1) !important;
+	}
+
+	&.fc-state-active 
+	{
+		background-color: rgba(100, 0, 0, 0.1) !important;
+	}
+}
+
+.know-fcevent {
+	/*font-size: 1.5em;*/
+
+	&.know-user {
+		background-color: rgba(100, 0, 0, 0.3);
+		border-color: rgba(0, 0, 0, 0.0);
+		color: white;
+	}
+
+	&.know-cuser {
+		background-color: rgba(0, 0, 0, 0.0);
+		border-color: rgba(100, 0, 0, 0.3);
+		color: rgba(100, 80, 80, 0.3);
 	}
 }
