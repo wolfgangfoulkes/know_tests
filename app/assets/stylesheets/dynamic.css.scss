@@ -106,6 +106,10 @@ svg[data-svgr="270"] {
 }
 
 .activity-feed .item[data-drop="toggle"] {
+	.svg-link {
+		box-sizing: border-box;
+	}
+	
 	&[data-state="false"] {
 		.svg-link
 		{

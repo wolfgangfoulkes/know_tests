@@ -32,7 +32,6 @@
 .events.feed.col 
 {
 	width: 100%;
-	border-top: 1px solid black;
 }
 
 .events.feed.col > .item.row 
@@ -78,6 +77,7 @@
 {
 	flex-grow: 1;
 	border-width: 0 1px;
+	border-bottom: 1px solid rgba(50, 0, 0, 0.15);
 }
 
 .events.search.row input[type="submit"]

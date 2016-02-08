@@ -51,11 +51,18 @@ class Event < ActiveRecord::Base
 
 	# order determines final order
 	scope :search, -> (q) {
+		filters = {}
 		if q.size > 3 
-			where(id: name_starts_with(q) | description_starts_with(q) | name_contains(q) |  description_contains(q))
+			filters[:name_starts_with] = q
+			filters[:description_starts_with] = q
+			filters[:name_contains] = q
+			filters[:description_contains] = q
+			filters[:activity_in]
 		else
-			where(id: name_starts_with(q) | description_starts_with(q))
+			filters[:name_starts_with] = q
+			filters[:description_starts_with] = q
 		end
+		filter_combine(f)
 	}
 
 	# works with array or relation

@@ -22,6 +22,7 @@ class Comment < ActiveRecord::Base
 
   # ----- simplifies ajax
   scope :same_type?, ->  { (pluck(:role).uniq.size == 1) }
+  
   scope :type, -> { 
     c = pluck(:role).uniq
     if c.size == 1

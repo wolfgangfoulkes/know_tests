@@ -74,3 +74,6 @@ gem 'autoprefixer-rails'
 
 # comments UNFIXED VERSION
 gem 'acts_as_commentable'
+
+# generate test data
+gem 'faker'

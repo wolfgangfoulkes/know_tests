@@ -72,8 +72,9 @@ a {
 }
 
 * {
-	font-style: initial;
-	font-weight: initial;
+	font: inherit;
+	font-style: inherit;
+	font-weight: inherit;
 }
 
 /*****/

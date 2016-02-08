@@ -78,7 +78,6 @@
 {
 	/*object-fit: cover;*/
 	border-radius: 50%;
-	background-image: image-url('landscape.png');
 }
 
 
@@ -234,6 +233,7 @@ $list_offs_h: -6px;
 	border: none;
 	cursor: pointer;
 }
+
 /* --- OVERRIDE FOR ACTIVITY STYLE --- */
 .activity.search.row input[type="text"]
 {

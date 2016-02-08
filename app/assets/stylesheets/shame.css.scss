@@ -113,26 +113,6 @@
 	/* --- */
 /* ----- */
 
-/* ----- EVENTS FORM ----- */
-form[data-form-for="event"] 
-{
-	@include sizes(3, "font-size");
-
-	@include mq(0, _bps(2)) 
-	{
-		.field.dt > label 
-		{
-			display: none;
-		}
-	}
-}
-
-form[data-form-for="event"] label {
-	color: darkgrey;
-
-}
-/* ----- */
-
 /* ----- MISC ----- */
 /* 
 *	- used only in nav currently, could be reused

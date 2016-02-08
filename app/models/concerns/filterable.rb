@@ -9,5 +9,6 @@ module Filterable
       end
       results
     end
+
   end
 end

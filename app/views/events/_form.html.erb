@@ -11,26 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field h2">
     <%= f.text_field :name, placeholder: "name of the event" %>
   </div>
-  <div class="field">
+  <div class="field h4">
     <%= f.text_area :description, placeholder: "describe the event..." %>
   </div>
-  <div class="field dt">
+  <div class="field dt h4">
     <%= f.label :starts_at, "starts:" %>
-    <div class="br"></div>
     <%= f.datetime_select :starts_at %>
   </div>
-  <div class="field dt">
+  <div class="field dt h4">
     <%= f.label :ends_at, "ends:" %>
-    <div class="br"></div>
     <%= f.datetime_select :ends_at %>
   </div>
-  <div class="field">
+  <div class="field h3">
     <%= f.text_field :tag_list, placeholder: "add tags" %>
   </div>
-  <div class="actions">
+  <div class="actions h2">
     <%= f.submit %>
   </div>
 
