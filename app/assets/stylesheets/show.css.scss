@@ -1,3 +1,39 @@
+@mixin show_head($i_right, $i_top, $i_size) {
+	position: relative;
+
+
+	> .img-main 
+	{ 
+		right: $i_right;
+		top: $i_top;
+		width: $i_size;
+		height: $i_size;
+	}
+
+	>.field {
+		box-sizing: border-box;
+	}
+
+	>.field.date {
+		width: 100%;
+	}
+
+	>.field.title {
+		width: 100%;
+		padding-right: $i_size;
+	}
+
+	>.field.user {
+		margin-top: 0px;
+	}
+
+	>.field.tags {
+		width: 50%;
+		text-indent: 20%;
+		text-align: right;
+	}		
+}
+
 /***
 	page
 	{
