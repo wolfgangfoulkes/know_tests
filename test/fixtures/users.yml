@@ -15,4 +15,10 @@ two:
     id: 2
     email: candacehilligoss@gmail.com
     name: Candace Hilligoss
-    encrypted_password: <%= Devise.bcrypt(User, 'harmonykorine') %>
+    encrypted_password: <%= Devise.bcrypt(User, 'know') %>
+
+three:
+    id: 3
+    email: wolfgangfoulkes@alum.calarts.edu
+    name: Cerpin Taxt
+    encrypted_password: <%= Devise.bcrypt(User, 'know') %>
