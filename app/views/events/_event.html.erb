@@ -1,11 +1,15 @@
-<div class="item row <%= 'past' if (event.starts_at <= DateTime.now) %>">
+<%= content_tag :div, 
+  class: "item row #{'past' if (event.starts_at <= DateTime.now) }", 
+  data: data ||= {} do 
+%>
     <div class="image-temp"> </div>
     <div class= "col">
-      <div class="date h5"> <%= event.starts_at %> </div>
+      <span class="h5"> <%= date_style(event.starts_at) %> </span>
 
       <div class="br"> </div>
 
       <%= link_to event.name, event, class: "title h2" %>
+      <span class="h5 username"> <%= event.user.name %> </span>
       <span class="tags h4"> 
         <% event.tags.first(10).each do |tag| %> 
           <%= "#{tag.name}" %>
@@ -15,4 +19,5 @@
       <div class="br"> </div>
       
     </div>
-</div>
+<% end %>
+

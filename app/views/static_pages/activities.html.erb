@@ -1,36 +1,9 @@
-<%= form_tag "#", remote: true, class: 'activity search row h2' do %>
+<%= form_tag url_for(controller: 'events', action: 'search', target: 'activities'), remote: true, class: 'activity search row h2' do %>
   <%= hidden_field_tag :items, @events.pluck(:id).join(',') %>
   <%= text_field_tag :search, params[:search], placeholder: 'search' %>
   <%= submit_tag '>>' %>
 <% end %>
-<div class="activity-feed col">
-		<% @events.each do |event| %>
-  		  <div class="item row"
-        data-drop="toggle"
-        data-id="<%= event.id %>"
-        data-state="false">
-
-          <div class="image-temp svg-link">
-            <%= inline_svg 'svg/test/arrow_3.svg'
-            %>
-          </div>
-          <div class="col">
-            <span class="h5"> <%= date_style(event.starts_at) %> </span>
-            <div class="br"> </div>
-            <%= link_to event.name, "#", 
-            class: "h2" %> 
-            <span class="h5">
-            <%= event.user.name %>
-            </span>
-            <div class="br"> </div>
-          </div>
-
-  			</div>
-  			<div class="activity-list col h4"
-        data-drop="target"
-        data-id="<%= event.id %>"
-        data-state="false">
-				  <%= render_activities(event.activities, layout: :activity) %>
-        </div>
-		<% end %>
+<div class="activity-feed feed col" data-search-target="1">
+    <!-- render partial: @events, spacer_template: "activity" -->
+		<%= render partial: "events/activities", collection: @events, as: :event %>
 </div>

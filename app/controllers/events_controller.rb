@@ -9,9 +9,18 @@ class EventsController < ApplicationController
   end
 
   def search
-    events = Event.where(id: params[:items].split(",")).search(params[:search]).deef
+    if params[:target] == "activities"
+      partial = "events/activities"
+      events = Event.where(id: params[:items].split(",")).search(params[:search])
+      local = :event
+    else
+      partial = "events/event"
+      events = Event.where(id: params[:items].split(",")).search(params[:search])
+      local = :event
+    end
+    
     respond_to do |format|
-      format.js { render 'shared/search_complete.js.erb', locals: {items: events} }
+      format.js { render 'shared/events_search.js.erb', locals: {partial: partial, collection: events, local: local} }
     end
   end
 

@@ -50,20 +50,21 @@ class Event < ActiveRecord::Base
 	scope :time_contains, -> (q) { where("starts_at <= :time AND ends_at >= :time", { time: q }) }
 
 	# order determines final order
-	scope :search, -> (q) {
+	def self.search(q)
 		filters = {}
 		if q.size > 3 
 			filters[:name_starts_with] = q
 			filters[:description_starts_with] = q
 			filters[:name_contains] = q
 			filters[:description_contains] = q
-			filters[:activity_in]
+			#filters[:activity_in] = q
 		else
 			filters[:name_starts_with] = q
 			filters[:description_starts_with] = q
 		end
-		filter_combine(f)
-	}
+		
+		self.filter_combine(filters)
+	end
 
 	# works with array or relation
 	# does not retain activities order
