@@ -1,8 +1,6 @@
-.tags 
-{
-	color: rgba(100, 0, 0, 0.3);
-}
 
+
+/* ----- colors for filler ----- */
 .events.feed .image-temp 
 {
 	background-color: rgba(100, 0, 50, 0.8);
@@ -12,12 +10,19 @@
 	background-color: red;
 }
 
-.h1, .h2 
-{
-	font-weight: bold;
-}
+/* ----- */
 
-/* ----- TEMP FONTS ----- */
+
+/* ----- TEMP TYPOGRAPHY ----- */
+	.h1, .h2 
+	{
+		font-weight: bold;
+	}
+
+	.tags 
+	{
+		color: rgba(100, 0, 0, 0.3);
+	}
 
 	html {
 		font-family: 'Helvetica', sans-serif;

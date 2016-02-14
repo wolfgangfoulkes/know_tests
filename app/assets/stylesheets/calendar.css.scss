@@ -45,7 +45,6 @@ $month-row-height: 4em;
 {
 	@include mq(0, 				nth($bps, 2))
 	{
-
 	}
 	@include mq(nth($bps, 2), 	nth($bps, 3))
 	{
@@ -107,6 +106,25 @@ $month-row-height: 4em;
 		height: $vmn;
 	};*/
 
+#calendar .fc-day-header 
+{
+	@include sizes(4, "font-size");
+	padding: .8em 0 !important;
+	
+	&.fc-sun, &.fc-mon
+	{
+	}
+}
+
+#calendar .fc-today 
+{
+	/* - overrides - */
+	background-color: initial;
+	border-style: initial;
+	/* ----- */
+
+	background-color: rgba(100, 0, 0, 0.02);
+}
 
 
 /* ----- RESPONSIVE SIZES ----- */
@@ -166,7 +184,7 @@ $month-row-height: 4em;
 	}
 }
 
-/* --- agenda view overrides ----- */
+/* --- AGENDA view overrides ----- */
 [data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
 	table {
 		height: 100% !important;
@@ -184,7 +202,7 @@ $month-row-height: 4em;
 	}		
 }	
 
-/* ----- agenda view label style ----- */
+/* --- AGENDA view label style CLEAN THIS UP--- */
 
 /* - temporarily removed - */
 [data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
@@ -233,18 +251,9 @@ $month-row-height: 4em;
 	}
 }*/
 
-
 /* ----- */
 
-#calendar .fc-day-header 
-{
-	@include sizes(4, "font-size");
-	padding: .8em 0 !important;
-	
-	&.fc-sun, &.fc-mon
-	{
-	}
-}
+
 
 #calendar-title {
 	font-size: $nav-bar-h;
@@ -261,6 +270,7 @@ $month-row-height: 4em;
 	justify-content: flex-end;
 	align-items: center;
 }
+
 
 /* -------- UI
 *
@@ -335,6 +345,27 @@ $fc-bar-h: $nav-bar-h * 0.8;
 *
 * -------- */
 
+@mixin FCEvent($fc_view, $fsize)
+{
+	padding: 2px 0px;
+	padding-bottom: $fsize * 0.22222;
+	line-height: 1.2;
+
+	.fc-content
+	{
+	}
+	.fc-content span
+	{
+	}
+	.fc-content span.fc-time
+	{
+	}
+	.fc-content span.fc-title
+	{
+	}
+
+}
+
 /* ----- EVENT STYLE
 *
 */
@@ -386,13 +417,7 @@ $fc-bar-h: $nav-bar-h * 0.8;
 	
 }
 
-@mixin FCEvent($fc_view, $fsize)
-{
-	padding: 2px 0px;
-	padding-bottom: $fsize * 0.22222;
 
-
-}
 
 /* change these colors maybe */
 #calendar[data-fc-view="agendaDay"] .know-fcevent
@@ -400,7 +425,9 @@ $fc-bar-h: $nav-bar-h * 0.8;
 	height: auto;
 	font-size: 1.5em;
 	line-height: 1.2;
-	padding: 2px 0px;
+
+	padding: 10px 8px;
+	margin: 0px 0;
 
 
 	.fc-content
@@ -411,17 +438,53 @@ $fc-bar-h: $nav-bar-h * 0.8;
 		}
 		.fc-time 
 		{
-			margin: 0px 2px;
-			border-bottom: 1px solid rgba(100, 0, 0, 0.1);
+			margin: 0 6px;
+			padding-bottom: 2px;
 		}
 		.fc-title 
 		{
 			font-weight: lighter;
-			margin: 0 4px;
-			margin-top: 2px;
-			font-size: 1.2em;
+			padding: 0 4px;
+			padding-top: 5px;
+			font-size: 1.0em;
 
 			white-space: normal;
+		}
+	}
+
+	&.know-user {
+		background-color: rgba(150, 90, 90, 1.0);
+		color: white;
+		
+		border-color: rgba(255, 255, 255, 1.0);
+		border-width: 6px;
+		
+
+		.fc-bg {
+		/*	opacity: 1.0;
+			background-color: rgba(255, 255, 255, 0.1);
+			top: 1.4em;
+			border-top: 1px solid rgba(0, 0, 0, 0.1);*/
+
+		}
+		.fc-time 
+		{
+			margin: 0 0;
+			padding: 0 0;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+
+	}
+
+	&.know-cuser {
+		background-color: rgba(255, 255, 255, 1.0);
+		border-color: rgba(100, 0, 0, 0.35);
+		border-width: 3px 1px 3px 1px;
+		color: rgba(100, 80, 80, 1.0);
+
+		.fc-time 
+		{
+			border-bottom: 1px solid rgba(100, 0, 0, 0.2);
 		}
 	}
 }
@@ -457,11 +520,14 @@ $fc-bar-h: $nav-bar-h * 0.8;
 	}
 }
 
+/* --- MONTH view --- */
 #calendar[data-fc-view="month"] .know-fcevent
 {
 	font-size: 1.0em;
 	line-height: 1.0;
 	height: auto;
+	border: none;
+	margin-bottom: 1px;
 
 	.fc-content
 	{
@@ -472,26 +538,96 @@ $fc-bar-h: $nav-bar-h * 0.8;
 	.fc-content span
 	{
 	}
-	.fc-content .fc-time
+	.fc-content span.fc-time
 	{
-		flex-basis: 3.5em;
+		flex-basis: 3em;
 		flex-grow: 0;
+		flex-shrink: 0;
 		font-size: 0.65em;
 	}
-	.fc-content .fc-title
+	.fc-content span.fc-title
 	{
-		margin-left: 2px;
+		margin-left: 3px;
 		flex-grow: 1;
-		font-size: 0.55em;
+		font-size: 0.65em;
+		text-overflow: ellipsis;
 	}
 }
+
+@include mq(0, 				nth($bps, 3)) 
+{
+
+	#calendar[data-fc-view="month"] .know-fcevent
+	{
+		
+
+
+		.fc-content 
+		{
+			display: block;
+
+		}
+		.fc-content span
+		{
+			display: block;
+			box-sizing: border-box;
+		}
+		.fc-content span.fc-time
+		{
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+			
+			padding: 1px 3px;
+
+			white-space: nowrap;
+		}
+		.fc-content span.fc-title
+		{
+			padding-top: 2px;
+			padding-bottom: 3px;
+
+			white-space: nowrap;
+		}
+
+		&.know-user
+		{
+			.fc-content span.fc-time {
+				/*background: rgba(100, 0, 0, 0.8);*/
+				border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+			}
+		}
+		&.know-cuser
+		{
+			.fc-content span.fc-time {
+				border-bottom: 2px solid rgba(120, 0, 0, 0.6);
+			}
+		}
+	}
+}
+@include mq(nth($bps, 3), 				0) 
+{
+	#calendar[data-fc-view="month"] .know-fcevent
+	{
+		border: 1px solid rgba(100, 0, 0, 0.01);
+
+		&.know-user 
+		{
+			border-width: 0 0 1px 0;
+
+		}
+		&.know-cuser
+		{
+			border-width: 0 0 1px 0;
+		}
+	}
+}
+
 
 
 #calendar[data-fc-view="month"]	.know-fcevent.know-user
 {
 	background-color: rgba(100, 0, 0, 0.01);
-	border-color: rgba(0, 0, 0, 0.75);
-	border-width: 0 0 1px 0;
+	border-color: rgba(0, 0, 0, 0.5);
 
 	.fc-content span.fc-time
 	{
@@ -510,29 +646,17 @@ $fc-bar-h: $nav-bar-h * 0.8;
 #calendar[data-fc-view="month"] .know-fcevent.know-cuser
 {
 	background-color: rgba(0, 0, 0, 0.0);
-	border-color: rgba(50, 0, 0, 0.1);
-	border-width: 0 0 1px 0;
-	color: rgba(100, 80, 80, 1.0);
+	border-color: rgba(100, 0, 0, 0.3);
 
 	.fc-content span.fc-time 
 	{
-		color: rgba(100, 75, 75, 0.5);
+		color: rgba(120, 0, 0, 0.7);
 		font-weight: medium;
 
 	}
 	.fc-content span.fc-title 
 	{
-		color: rgba(100, 60, 60, 0.65);
+		color: rgba(50, 0, 0, 0.6);
 	}
 }
-
-#calendar .fc-today 
-{
-	/* - overrides - */
-	background-color: initial;
-	border-style: initial;
-	/* ----- */
-
-	background-color: rgba(100, 0, 0, 0.02);
-}
-
+/* ----- */
