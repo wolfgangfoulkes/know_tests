@@ -133,4 +133,8 @@ module ApplicationHelper
 		return _d.compact
 	end
 	# -----
+
+	def defdAElseB(a_, b_)
+		defined?(a_) ? a_ : b_
+	end
 end
