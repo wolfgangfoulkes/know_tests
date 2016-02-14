@@ -184,8 +184,17 @@ $month-row-height: 4em;
 	}		
 }	
 
-/* --- agenda view label style ----- */
+/* ----- agenda view label style ----- */
+
+/* - temporarily removed - */
 [data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+	.fc-axis {
+		display: none;
+	}
+}
+
+/* - filler - */
+/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
 
 	.fc-axis {
 		overflow: hidden;
@@ -194,12 +203,38 @@ $month-row-height: 4em;
 		font-size: 1.5em;
 		font-weight: normal;
 		> span {
+			color: rgba(80, 0, 0, 0.4);
 			position: relative;
 			top: -0.3em;
 			right: -2px;
 		}
 	}
-}
+}*/
+
+/* - better but incomplete - */
+/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+
+	.fc-widget-content {
+		border-left: none;
+	}
+	.fc-axis {
+		overflow: visible;
+		padding: 0 3px;
+
+		font-size: 16px;
+		font-weight: normal;
+		border: none;
+		> span {
+			color: rgba(100, 0, 0, 0.1);
+			position: relative;
+			top: -0.5em;
+			right: 0;
+		}
+	}
+}*/
+
+
+/* ----- */
 
 #calendar .fc-day-header 
 {
@@ -489,5 +524,15 @@ $fc-bar-h: $nav-bar-h * 0.8;
 	{
 		color: rgba(100, 60, 60, 0.65);
 	}
+}
+
+#calendar .fc-today 
+{
+	/* - overrides - */
+	background-color: initial;
+	border-style: initial;
+	/* ----- */
+
+	background-color: rgba(100, 0, 0, 0.02);
 }
 

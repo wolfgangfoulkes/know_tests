@@ -69,6 +69,16 @@ var onViewRender = function(view, element)
 	resetFCSize();
 }
 
+var onEventRender = function(event_, element_)
+{
+
+}
+
+var onDayRender = function(date_, cell_) // only applies to month, basicWeek, and basicDay
+{
+	cell_.addClass("k-fcday");
+}
+
 var transformData = function(event_)
 {
 	var classes = "know-fcevent";
@@ -99,6 +109,8 @@ $(document).on("page:change", function()
 			/* callbacks */
 			viewRender: onViewRender,
 			dayClick: onDayClick,
+			eventRender: onEventRender,
+			dayRender: onDayRender,
 			/***/
 
 			events: '/schedule/list.json',
@@ -134,6 +146,7 @@ $(document).on("page:change", function()
 					columnFormat: "ddd D"//"dddd"
 				}
 			}
+			
 	        //aspectRatio: 1.35 //height determined from width, width from css
 	});
 
