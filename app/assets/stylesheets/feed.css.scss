@@ -1,0 +1,229 @@
+/* --- RESPONSIVE SIZES --- */
+@mixin feed($box, $pv, $ph, $mh)
+{
+	
+		padding: $box * $pv $box * $ph;
+		> *
+		{
+			margin: 0 $box * $mh; /* 0.5em */
+			height: $box; /* 3em */
+		}
+		> .image-temp
+		{
+			width: $box; /* 3em */
+		}
+		> .col
+		{
+			padding: 2.7% 0; /* padding-top is relative to width, remember */
+		}
+
+		@content;
+
+}
+
+@mixin activity_list($box, $offs_v, $offs_h)
+{
+	
+	margin-top: 0.25 * -1.0 * $box + $offs_v;
+	margin-left: ($box * 0.5) + ($box * 1.0/3) + $offs_h;
+	padding-left: $box * 0.15;
+
+
+	@content;
+}
+
+.feed.col 
+{
+	width: 100%;
+}
+
+/* --- EVENTS FEED --- */
+.feed.col > .item.row > .image-temp
+{
+	/*object-fit: cover;*/
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+
+
+.feed.col > .item.row
+{
+	justify-content: flex-start;
+	align-items: center;
+
+	/*height: $nav-bar-h * $gm;*/
+
+	&.past 
+	{
+		color: rgba(100, 0, 0, 0.1);
+	}
+
+	> *
+	{
+	}
+
+	> .col
+	{
+		justify-content: center;
+		box-sizing: border-box;
+		> .br 
+		{
+		}
+	}
+}
+/* --- */
+
+$ff_l: 96px;
+$ff_m: 76px;
+$ff_s: 64px;
+
+.feed.col > .item.row 
+{
+
+	@include feed(96px, 1.0/4, 1.0/6, 1.0/6)
+	{
+	}
+
+	@include mq(0, _bps(2))
+	{
+		@include feed(64px, 1.0/4, 1.0/8, 1.0/8)
+		{
+		}
+	}
+	@include mq(_bps(2), _bps(3)) 
+	{
+		@include feed(76px, 1.0/4, 1.0/6, 1.0/6)
+		{		
+		}
+	}
+	@include mq(_bps(3), 0) 
+	{
+		@include feed(96px, 1.0/4, 1.0/6, 1.0/6)
+		{	
+		}
+	}
+}
+
+
+
+/* ----- SEARCH ----- */
+.search.row {
+	width: 100%;
+/*	font-size: 36px;*/
+	height: 1.875em;
+}
+
+
+/* --- OVERRIDES FIRST --- */
+.search.row input
+{
+	font-size: inherit;
+}
+
+.search.row input[type="text"]
+{
+	border: none;
+}
+
+.search.row input[type="text"]
+{
+	flex-grow: 1;
+	border-bottom: 1px solid rgba(10, 0, 0, 0.08);
+}
+
+.search.row input[type="submit"]
+{
+	border: none;
+	cursor: pointer;
+	background: none;
+}
+
+.search.row input[type="submit"]
+{
+	width: 5em;
+	border: 1px solid rgba(10, 0, 0, 0.08);
+	color: rgba(10, 0, 0, 0.8);
+}
+/* ----- */
+
+
+
+/* ----- ACTIVITY-FEED ----- */
+.activity-feed.col > .item.row
+{
+	cursor: pointer;
+}
+
+.activity-feed.col > .activity-list
+{
+	border-left: 2px solid rgba(100, 0, 0, 0.5);
+	
+	.item {
+		display: inline-flex;
+		flex-direction: row;
+		> * {
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		> .title {
+			flex-basis: 0;
+			flex-grow: 1;
+			margin-left: 2%;
+			text-overflow: ellipsis;
+		}
+	}	
+}
+
+$list_offs_v: 3px;
+$list_offs_h: -6px;
+.feed.col > .activity-list
+{ 
+
+	@include activity_list($ff_l, $list_offs_v, $list_offs_h)
+	{
+			
+	}
+
+	
+	@include mq(0, _bps(2))
+	{
+
+		@include activity_list($ff_s, $list_offs_v, $list_offs_h)
+		{
+			.item
+			{
+				> .dt {
+					font-size: 0.8em;
+				}
+				> .title {
+					display: block;
+				}
+			}
+		}
+		
+	}
+	 
+	@include mq(_bps(2), _bps(3))
+	{
+		@include activity_list($ff_m, $list_offs_v, $list_offs_h)
+		{
+
+		}
+	}
+	 
+	@include mq(_bps(3), 0)
+	{
+		@include activity_list($ff_l, $list_offs_v, $list_offs_h)
+		{
+			
+		}
+	}
+}
+/* --- */
+
+
+
+/* ----- */
+
+
+

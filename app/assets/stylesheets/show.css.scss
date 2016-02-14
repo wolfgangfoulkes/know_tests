@@ -27,7 +27,6 @@
 
 
 .show.head.col > .img-main {
-	background-color: red;
 
 	border-radius: 50%;
 	object-fit: cover;
@@ -44,7 +43,7 @@
 		width: 100%;
 		
 
-		> .img-main {
+		> .img-main { 
 			position: absolute;
 			z-index: -1;
 

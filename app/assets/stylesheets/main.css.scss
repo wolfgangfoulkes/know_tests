@@ -113,6 +113,26 @@ $sizes_r: (
 		#{$p_}: sizes_r(4) * $max_;
 	}
 }
+
+@mixin scale_up($min_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: ( 1.0/sizes_r(1) ) * $max_;
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: ( 1.0/sizes_r(2) ) * $max_;
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: ( 1.0/sizes_r(3) ) * $max_;
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: ( 1.0/sizes_r(4) ) * $max_;
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: ( 1.0/sizes_r(4) ) * $max_;
+	}
+}
 /* --- */
 
 /* ----- */
@@ -139,13 +159,11 @@ $sizes_r: (
 .h1 {
 	/* change to f1, etc. */
 	font-size: size_at(1, 4);
-	font-weight: bold;
 
 	@include sizes(1, "font-size");
 }
 .h2 {
 	font-size: size_at(2, 4);
-	font-weight: bold;
 
 	@include sizes(2, "font-size");
 }
@@ -196,9 +214,9 @@ $sizes_r: (
 @import "typography.css.scss";
 @import "nav.css.scss";
 @import "events-form.css.scss";
-@import "events-feed.css.scss";
+
 @import "comments-feed.css.scss";
-@import "activity-feed.css.scss";
+@import "feed.css.scss";
 @import "show.css.scss";
 @import "dynamic.css.scss";
 @import "calendar.css.scss";

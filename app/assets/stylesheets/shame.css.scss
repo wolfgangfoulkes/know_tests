@@ -1,36 +1,23 @@
-.tags {
+.tags 
+{
 	color: rgba(100, 0, 0, 0.3);
 }
 
+.events.feed .image-temp 
+{
+	background-color: rgba(100, 0, 50, 0.8);
+}
+
+.show.head.col > .img-main {
+	background-color: red;
+}
+
+.h1, .h2 
+{
+	font-weight: bold;
+}
+
 /* ----- TEMP FONTS ----- */
-
-	.activity-list {
-		>.item .title {
-			font-family: "Helvetica", sans-serif;
-		}
-
-		>.item[data-fresh="false"] {
-			opacity: 0.5;
-
-		}
-		>.item[data-fresh="true"] {
-			opacity: 1.0;
-			/*margin-left: 2%;*/
-			&:before
-			{
-				display: inline-block;
-				/*content: ". . . !";*/
-				content: "!";
-				font-size: 0.8em;
-/*				margin-right: 3%;*/
-				margin-right: 1.0em;
-/*				margin-left: 8%;*/
-				/*margin-left: 2.3em;*/
-				margin-left: 1.5em;
-			}
-		}
-	}
-
 
 	html {
 		font-family: 'Helvetica', sans-serif;
@@ -38,12 +25,26 @@
 
 	.events.feed .h2 {
 		/*font-variant: small-caps; do this in Ruby. sizes are still diff otherwise*/
-		font-family: 'Avenir Next';
-		/*font-family: 'Helvetica';*/
+		/*font-family: 'Avenir Next';*/
+		font-family: 'Helvetica';
 	}
 
-	.events.feed .date {
-		font-family: 'Avenir Next Condensed';
+	.events.feed .dt {
+		/*font-family: 'Avenir Next Condensed';*/
+		font-family: 'Avenir Next'; 
+		font-weight: initial;
+	}
+
+	.events.feed .title {
+	}
+
+	.events.feed .username {
+		font-family: "Avenir Next";
+		font-weight: lighter;
+	}
+
+	.activity-feed.feed .h5 {
+		font-weight: lighter;
 	}
 
 	/* - 2Tab - */
@@ -111,6 +112,103 @@
 		font-weight: 100;
 	}
 	/* --- */
+
+
+	/* - ACTIVITY-LIST FONTS - */
+	.activity-list {
+		>.item .title {
+			font-family: "Helvetica", sans-serif;
+		}
+
+		>.item[data-fresh="false"] {
+			opacity: 0.5;
+
+		}
+		>.item[data-fresh="true"] {
+			opacity: 1.0;
+			/*margin-left: 2%;*/
+			&:before
+			{
+				display: inline-block;
+				/*content: ". . . !";*/
+				content: "!";
+				font-size: 0.8em;
+/*				margin-right: 3%;*/
+				margin-right: 1.0em;
+/*				margin-left: 8%;*/
+				/*margin-left: 2.3em;*/
+				margin-left: 1.5em;
+			}
+		}
+	}
+
+	.activity-list .dt 
+	{
+		> .d 
+		{
+			font-family: "Avenir Next Condensed", "sans-serif";
+			font-size: 0.8em;
+
+			> date
+			{
+				color: rgba(100, 0, 0, 0.8);
+				font-weight: normal;
+
+				&:nth-of-type(1) {
+				}
+				&:nth-of-type(2) {
+				}
+				&:nth-of-type(3) {
+				}
+			}
+			> b 
+			{
+				color: rgba(100, 0, 0, 0.3);
+
+				&:nth-of-type(1) {
+					
+				}
+				&:nth-of-type(2) {
+				}
+
+			}
+		}
+		> .t
+		{
+			font-family: "Avenir Next", "sans-serif";
+			font-size: 1em;
+			margin-left: 1em;
+
+			> date
+			{
+				color: rgba(0, 0, 0, 1.0);
+				font-weight: normal;
+
+				&:nth-of-type(1) {
+				}
+				&:nth-of-type(2) {
+				}
+			}
+			> b 
+			{
+				margin: 0 1px;
+				color: rgba(100, 0, 0, 0.2);
+
+				&:nth-of-type(1) {
+				}
+
+			}
+
+		}
+		> b
+		{
+			margin: 0 2px;
+
+			&:nth-of-type(1) {
+			}
+		}
+	}
+
 /* ----- */
 
 /* ----- MISC ----- */
