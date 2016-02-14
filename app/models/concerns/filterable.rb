@@ -8,6 +8,7 @@ module Filterable
         results = results.public_send(key, value) if value.present?
       end
       results
+      
     end
 
   end
