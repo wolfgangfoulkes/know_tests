@@ -35,14 +35,6 @@ var setFCTitle = function(view, element)
 	$('#calendar-title').text(title);
 }
 
-var onViewRender = function(view, element) 
-{
-	$('#calendar').attr('data-fc-view', view.name);
-	//resetFCSize();
-	setFCViewSettings(view, element);
-	setFCTitle(view, element);
-}
-
 var getFCView = function(width)
 {
 	if (width > 800)
@@ -68,6 +60,15 @@ var setFCViewSettings = function(view, element)
 	//console.log(start.format("MM"), start.format("YY"));
 }
 
+var onViewRender = function(view, element) 
+{
+	$('#calendar').attr('data-fc-view', view.name);
+	//resetFCSize();
+	setFCViewSettings(view, element);
+	setFCTitle(view, element);
+	resetFCSize();
+}
+
 var transformData = function(event_)
 {
 	var classes = "know-fcevent";
@@ -89,8 +90,6 @@ var transformData = function(event_)
 	return _event;
 }
 
-
-
 $(document).on("page:change", function()
 {
 	
@@ -106,7 +105,8 @@ $(document).on("page:change", function()
 			eventDataTransform: transformData,
 			height: $('#calendar').height(),
 			defaultView: 'basicWeek',
-			slotDuration: '01:00:00',//'12:00:00',
+			slotDuration: '02:00:00',//'12:00:00',
+			slotLabelInterval: '02:00:00',
 			allDaySlot: false,
 			
 
