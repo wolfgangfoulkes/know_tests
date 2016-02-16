@@ -3,6 +3,12 @@
 	<%= text_field_tag :search, params[:search], placeholder: 'search' %>
 	<%= submit_tag '>>' %>
 <% end %>
-<div class="events feed col", data-search-target="1">
+<div class="events feed col" data-search-target="1" data-scroll-content="1">
 	<%= render @events %>
 </div>
+
+<% unless (@events.current_page == @events.total_pages) %>
+  <div data-scroll-link="1">
+    <%= link_to('View More', url_for(page: @events.current_page + 1)) %>
+  </div>  
+<% end %>

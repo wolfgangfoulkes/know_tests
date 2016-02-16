@@ -1,0 +1,7 @@
+<% unless (items.current_page == items.total_pages) %>
+  <div data-scroll-link="1">
+    <%= link_to('...', url_for(page: items.current_page + 1)) %>
+  </div>  
+<% end %>
+
+<%= javascript_include_tag "infinite_scroll.js" %>

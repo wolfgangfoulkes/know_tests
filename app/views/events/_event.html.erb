@@ -4,18 +4,18 @@
 %>
     <div class="image-temp"> </div>
     <div class= "col">
+
       <span class="h5"> <%= date_style(event.starts_at) %> </span>
-
       <div class="br"> </div>
-
       <%= link_to event.name, event, class: "title h2" %>
       <span class="h5 username"> <%= event.user.name %> </span>
       <span class="tags h4"> 
+        
         <% event.tags.first(10).each do |tag| %> 
           <%= "#{tag.name}" %>
         <% end %>
+        
       </span>
-
       <div class="br"> </div>
       
     </div>

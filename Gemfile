@@ -75,5 +75,8 @@ gem 'autoprefixer-rails'
 # comments UNFIXED VERSION
 gem 'acts_as_commentable'
 
+# pagination
+gem 'kaminari'
+
 # generate test data
 gem 'faker'

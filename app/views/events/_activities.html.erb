@@ -8,11 +8,11 @@ data: {drop: "toggle", id: event.id, state: false } do
 		%>
 	</div>
 	<div class="col">
-	<span class="h5"> <%= date_style(event.starts_at) %> </span>
-	<div class="br"> </div>
-	<div class="h2 title"> <%= event.name %> </div>
-	<span class="h5 user"> <%= event.user.name %> </span>
-	<div class="br"> </div>
+		<span class="h5"> <%= date_style(event.starts_at) %> </span>
+		<div class="br"> </div>
+		<div class="h2 title"> <%= event.name %> </div>
+		<span class="h5 user"> <%= event.user.name %> </span>
+		<div class="br"> </div>
 	</div>
 <% end %>
 
