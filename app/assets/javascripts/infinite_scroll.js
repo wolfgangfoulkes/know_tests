@@ -21,10 +21,17 @@ var onLoadSuccess = function()
   last_load_at = new Date();
 };
 
+var onLoadComplete = function(jqxhr_, textStatus_ )
+{
+  console.log(jqxhr_); 
+  console.log(textStatus_);
+};
+
 var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
+  
 	if ( is_loading || !url )
   {
     return ( is_loading || !url );
@@ -34,12 +41,14 @@ var nextPage = function()
 	is_loading = true;
 	last_load_at = new Date();
 
+
   $.ajax
   ({
        url: url,
        method: 'GET',
        dataType: 'script',
-       success: onLoadSuccess
+       success: onLoadSuccess,
+       complete: onLoadComplete
   });
 };
 

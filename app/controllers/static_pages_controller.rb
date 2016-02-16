@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def saved
-  	@events = Event.where(id: (current_user.followees(Event) | current_user.events)).page( params[:page] ).per(6).deef
+  	@events = Event.where(id: (current_user.followees(Event) | current_user.events)).page( params[:page] ).per(8).deef
 
     respond_to do |format|
       format.html { render :feed }
@@ -12,7 +12,7 @@ class StaticPagesController < ApplicationController
   end
 
   def feed
-    @events = Event.where("starts_at >= ?", DateTime.now).page( params[:page] ).per(6).deef
+    @events = Event.where("starts_at >= ?", DateTime.now).page( params[:page] ).per(8).deef
 
     respond_to do |format|
       format.html { render :feed }
@@ -30,7 +30,7 @@ class StaticPagesController < ApplicationController
     respond_to do |format|
       format.html { render :activities }
       format.js { 
-        render "static_pages/_feed.js.erb", locals: {item_partial: "events/activities", items: @events} 
+        render "static_pages/_feed.js.erb", locals: {item_partial: "events/activities", items: @events}
       }
     end
 
