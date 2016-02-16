@@ -31,7 +31,6 @@ var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
-  
 	if ( is_loading || !url )
   {
     return ( is_loading || !url );
@@ -40,6 +39,30 @@ var nextPage = function()
 	$(more_link).addClass('loading');
 	is_loading = true;
 	last_load_at = new Date();
+
+
+  $.ajax
+  ({
+       url: url,
+       method: 'GET',
+       dataType: 'script',
+       success: onLoadSuccess,
+       complete: onLoadComplete
+  });
+};
+
+var more = function()
+{
+  url = $("[data-more-link]").find('a').attr('href');
+
+  
+  if ( is_loading || !url )
+  {
+    return ( is_loading || !url );
+  }
+
+  is_loading = true;
+  last_load_at = new Date();
 
 
   $.ajax
@@ -92,6 +115,14 @@ $(document).on("page:change", function()
     	   nextPage();
     	   e.preventDefault();
     	}
+    );
+
+    $("[data-more-link]").find('a').click(
+      function(e)
+      {
+         more();
+         e.preventDefault();
+      }
     );
 
 });

@@ -1,0 +1,7 @@
+<% content_for :footer do %>
+	<%= javascript_include_tag "infinite_scroll.js" %>
+<% end %>
+
+<%= content_tag :div, data: { more_link: "1", current: items.current_page, total: items.total_pages } do %>
+	<%= link_to('...', url_for(page: items.current_page)) %>
+<% end %>
