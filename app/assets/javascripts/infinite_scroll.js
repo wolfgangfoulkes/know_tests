@@ -1,5 +1,10 @@
 var waitedLongEnoughBetweenPages = function()
 {
+  return ( last_load_at == null || new Date() - last_load_at > min_ms );
+};
+
+var waitedLongEnoughBetweenPages = function()
+{
 	return ( last_load_at == null || new Date() - last_load_at > min_ms );
 };
 
@@ -20,7 +25,6 @@ var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
-  
 	if ( is_loading || !url )
   {
     return ( is_loading || !url );
@@ -40,16 +44,24 @@ var nextPage = function()
 };
 
 
-
+/*
+  on scrolling in either direction
+    if bottom of view is < pixels from bottom of page
+    if > min_ms after last execution
+    if more_link returns a url
+      load the .js.erb script at more_link's url
+    else if more_link is clicked
+      load the .js.erb script at more_link's url
+*/
 $(document).on("page:change", function()
 {
 	content = "[data-scroll-content]"; 	      /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
-	min_ms = 1000;									          /* milliseconds to wait between loading pages */
+	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
 	pixels = 500; 									          /* pixels above the page's bottom */
 
 	is_loading = false;   							      /* keep from loading two pages at once */
-  last_load_at = null;       						 /* when you loaded the last page */
+  last_load_at = null;       						    /* when you loaded the last page */
 
   	$(window).scroll(
       function()

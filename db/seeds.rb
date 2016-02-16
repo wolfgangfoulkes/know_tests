@@ -9,7 +9,7 @@
 
 kn_sc = know_seeds_config = 
 {
-	e_n: 	10,
+	e_n: 	30,								# total events
 	e_cn: 	16,								# max comments per event
 	e_cmn: 	10.days.ago,					# earliest created_at
 	e_dmn: 	5.days.ago,						# earliest starts_at/ends_at
@@ -24,7 +24,7 @@ kn_sc = know_seeds_config =
 
 def eventParams(i, kn_sc) 
 	e = {}
-	e[:name] 		= 	Faker::Book.title
+	e[:name] 		= 	Faker::Company.catch_phrase.titleize #[Faker::Hacker.ingverb.capitalize, Faker::Book.title].join(" ") OR Faker::Company.catch_phrase
 	e[:description] = 	Faker::Hacker.say_something_smart
 	e[:user] 		= 	User.where( id: User.pluck(:id)[ rand(1..User.count) - 1] ).first
 

@@ -1,7 +1,12 @@
-<% unless (items.current_page == items.total_pages) %>
-  <div data-scroll-link="1">
-    <%= link_to('...', url_for(page: items.current_page + 1)) %>
-  </div>  
+<%= yield if block_given? %>
+
+<% content_for :footer do %>
+	<%= javascript_include_tag "infinite_scroll" %>
 <% end %>
 
-<%= javascript_include_tag "infinite_scroll.js" %>
+<% unless (items.current_page == items.total_pages) %>
+	<%= content_tag :div, data: { scroll_link: "1", current: items.current_page, total: items.total_pages } do %>
+		<%= link_to('...', url_for(page: items.current_page + 1)) %>
+	<% end %>
+<% end %>
+

@@ -3,8 +3,8 @@ class EventsController < ApplicationController
 
   # DON'T PASS USER_ID THROUGH FORM OR ACCEPT IT IN PARAMS
   # CHANGE THAT
-
   def index
+    puts params.to_yaml
     @events = Event.filter(filtering_params)
   end
 
@@ -18,6 +18,7 @@ class EventsController < ApplicationController
       events = Event.where(id: params[:items].split(",")).search(params[:search])
       local = :event
     end
+
     
     respond_to do |format|
       format.js { render 'shared/events_search.js.erb', locals: {partial: partial, collection: events, local: local} }

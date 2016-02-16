@@ -1,8 +1,0 @@
-$('[data-scroll-content]').append("<%=j render(partial: 'events/event', collection: @events, format: 'html') %>");
-
-<% if (@events.current_page == @events.total_pages) %>
-  $('[data-scroll-link]').remove();
-  $(window).off("scroll");
-<% else %>
-  $('[data-scroll-link] a').attr('href', '<%= url_for(page: @events.current_page + 1) %>');
-<% end %>

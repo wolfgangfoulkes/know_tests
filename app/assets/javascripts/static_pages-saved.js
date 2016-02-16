@@ -1,3 +1,12 @@
+/*
+* --- in static_pages/feed with action static_pages->saved
+  <% unless (@events.current_page == @events.total_pages) %>
+    <div data-scroll-link="1">
+      <%= link_to('View More', url_for(page: @events.current_page + 1)) %>
+    </div>  
+  <% end %>
+*/
+
 var waitedLongEnoughBetweenPages = function()
 {
 	return ( last_load_at == null || new Date() - last_load_at > min_ms );
@@ -45,7 +54,7 @@ $(document).on("page:change", function()
 {
 	content = "[data-scroll-content]"; 	      /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
-	min_ms = 1000;									          /* milliseconds to wait between loading pages */
+	min_ms = 500;									            /* milliseconds to wait between loading pages */
 	pixels = 500; 									          /* pixels above the page's bottom */
 
 	is_loading = false;   							      /* keep from loading two pages at once */

@@ -3,6 +3,7 @@
 	<%= link_to 'my schedule', saved_path, class: 'item' %>
 </div>
 
-<%= render 'events/feed' %>
+<%= render 'events/feed', collection: @events %>
 
+<%= render partial: "shared/scroll", locals: {items: @events} %>
 

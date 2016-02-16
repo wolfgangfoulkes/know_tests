@@ -1,0 +1,11 @@
+$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html') %>");
+
+<% if (items.current_page == items.total_pages) %>
+  $('[data-scroll-link]').remove();
+  $(window).off("scroll");
+<% else %>
+  $('[data-scroll-link] a').attr('href', '<%= url_for(page: items.current_page + 1) %>');
+  
+  $('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
+  $('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
+<% end %>
