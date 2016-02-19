@@ -61,6 +61,11 @@
 <% end %>
 </div>
 
+
+<% default_content_for :footer do %>
+	<%= link_to "fresh fish", "#" %>
+<% end %>
+
 <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
@@ -74,6 +79,8 @@
 </div>
 
 </body>
+
+
 
 <footer> <%= content_for :footer %> </footer>
 </html>

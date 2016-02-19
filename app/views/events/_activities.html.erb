@@ -1,27 +1,16 @@
-<%= 
-content_tag :div, 
-class: "item row",
-data: {drop: "toggle", id: event.id, state: false } do 
+<%= render partial: 'events/event', 
+	locals: 
+	{ 
+		event: event,
+		svg_thn: 'svg/test/arrow_3.svg',
+		link: false,
+		data: { past: "#{event.starts_at <= DateTime.now}" }.merge( drop_snd(event.id) )
+	} 
 %>
-	<div class="image-temp svg-link">
-		<%= inline_svg 'svg/test/arrow_3.svg'
-		%>
-	</div>
-	<div class="col">
-		<span class="h5"> <%= date_style(event.starts_at) %> </span>
-		<div class="br"> </div>
-		<div class="h2 title"> <%= event.name %> </div>
-		<span class="h5 user"> <%= event.user.name %> </span>
-		<div class="br"> </div>
-	</div>
-<% end %>
-
-<%= yield if block_given? %>
-
 <%= 
-content_tag :div, 
+content_tag :div,
 class: "activity-list col h4", 
-data: {drop: "target", id: event.id, state: false} do
+data: drop_rcv(event.id) do
 %>
-  <%= render_activities(event.activities, layout: :activity) %>
+  <%= render_activities(event.activities.page(1).per(10), layout: :activity) %>
 <% end %>

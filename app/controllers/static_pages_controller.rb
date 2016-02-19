@@ -12,19 +12,14 @@ class StaticPagesController < ApplicationController
   end
 
   def feed
-    offs = 8
-    max_step = 10
+    @events = Event.where("starts_at >= ?", DateTime.now).page( params[:page] ).per(8).deef
 
-    @events = Event.where("starts_at >= ?", DateTime.now).page( 1 ).per( offs ).deef 
-  
     respond_to do |format|
       format.html { render :feed }
       format.js { 
-        @events = Event.where.not(id: @events).where("starts_at >= ?", DateTime.now).page( params[:page].to_i ).per( max_step ).deef
-        render "static_pages/_feed2.js.erb", locals: {item_partial: "events/event", items: @events} 
+        render "static_pages/_feed.js.erb", locals: {item_partial: "events/event", items: @events}
       }
     end
-
   end
 
   def activities
