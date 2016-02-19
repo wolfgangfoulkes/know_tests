@@ -129,7 +129,6 @@ module ApplicationHelper
 		_d["sel-state"] = state
 		_d["sel-off"] = off
 		_d["sel-group"] = group
-		puts _d.to_yaml
 		return _d.compact
 	end
 
@@ -167,10 +166,10 @@ module ApplicationHelper
 		elsif locals.has_key?(key.to_s)
 			_local = locals[key.to_s]
 		end
-		# puts key
-		# puts alt
-		# puts locals.to_yaml
-		# puts _local.to_yaml
+		puts key
+		puts alt
+		puts locals.to_yaml
+		puts _local.to_yaml
 
 		return _local 
 	end
@@ -183,17 +182,10 @@ module ApplicationHelper
 		return _locals
 	end
 
-	def get_data(locals: {}, data: {})
-		_data = {}
-		if locals.has_key?("data")
-			_data = locals["data"]
-			_data = _data.merge(data)
-		elsif locals.has_key?(:data)
-			_data = locals[:data]
-			_data = _data.merge(data)
-		end
-		
-		return _local 
+	def get_data(locals: {}, data:{})
+		_data = get_local(locals: locals, key: "data", alt: {})
+		_data = _data.merge(data)
+		return _data
 	end
 
 	def deef_params

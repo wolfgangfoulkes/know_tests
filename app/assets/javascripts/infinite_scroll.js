@@ -19,6 +19,7 @@ var onLoadSuccess = function()
 	$(more_link).removeClass('loading');
   is_loading = false;
   last_load_at = new Date();
+  $(document).trigger("callbacks:reset")
 };
 
 var onLoadComplete = function(jqxhr_, textStatus_ )

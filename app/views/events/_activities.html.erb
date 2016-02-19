@@ -4,7 +4,7 @@
 		event: event,
 		svg_thn: 'svg/test/arrow_3.svg',
 		link: false,
-		data: { past: "#{event.starts_at <= DateTime.now}" }.merge( drop_snd(event.id) )
+		data: {}.merge( drop_snd(event.id) )
 	} 
 %>
 <%= 

@@ -20,6 +20,8 @@ KNOW =
 {
 };
 
+//CALLBACKS = {};
+
 // var initPageAttr()
 // {
 
@@ -58,6 +60,8 @@ var dropToggle = function(sender_, e_)
 	var id = $(sender_).data("id");
 	var $target = $("*[data-id=" + id + "]");
 	var state = $target.attr("data-state");
+	console.log(id);
+	console
 	$target.attr("data-state", !parseBool(state) );
 }
 
@@ -108,6 +112,24 @@ var setLinkFromCUrl = function(sel_)
 	$(sel).attr("data-current", true);
 }
 
+var resetCallbacks = function()
+{
+	$("[data-sel-snd][data-sel-group]").off("click");
+	$("[data-sel-snd][data-sel-group]").on("click", 
+	function(e)
+	{
+		sel_group(this, e);
+	});
+	
+	$("*[data-drop='toggle']").off("click");
+	$("*[data-drop='toggle']").on("click", 
+	function(e)
+	{
+		dropToggle(this, e);
+	})
+
+}
+
 $(document).on("page:change", function()
 {
 	// $("[data-lrefresh]").on("ajax:beforeSend", function(e, jqXHR, settings) {
@@ -117,15 +139,11 @@ $(document).on("page:change", function()
 
 	setLinkFromCUrl(".nav-bar > a");
 
-	$("[data-sel-snd][data-sel-group]").on("click", function(e)
-	{
-		sel_group(this, e);
-	});
-
-	$("*[data-drop='toggle']").on("click", 
+	resetCallbacks();
+	$(document).on("callbacks:reset", 
 		function(e)
 		{
-			dropToggle(this, e);
+			resetCallbacks();
 		}
 	);
 });
