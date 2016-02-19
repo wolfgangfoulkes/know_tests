@@ -20,7 +20,6 @@
 
 $fc-font-i: 4;
 $month-row-height: 4em;
-
 [data-fc-view="month"]
 {
 	@include mq(0, 				nth($bps, 2))
@@ -98,6 +97,7 @@ $month-row-height: 4em;
 #calendar[data-fc-view="month"] .fc-row.fc-week 
 {
 	height: $month-row-height;
+	overflow: hidden;
 }
 
 /*#calendar:before {

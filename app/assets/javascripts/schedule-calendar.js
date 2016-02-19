@@ -120,6 +120,7 @@ $(document).on("page:change", function()
 			slotDuration: '02:00:00',//'12:00:00',
 			slotLabelInterval: '02:00:00',
 			allDaySlot: false,
+			eventLimitClick: "day",
 			
 
 			header: 
@@ -133,7 +134,8 @@ $(document).on("page:change", function()
 				month: 
 				{
 					titleFormat: "MM | YYYY",
-					columnFormat: "ddd"
+					columnFormat: "ddd",
+					eventLimit: true
 				},
 				week: 
 				{
