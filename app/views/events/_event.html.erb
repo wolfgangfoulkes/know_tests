@@ -1,23 +1,25 @@
 <%= content_tag :div, 
-  class: "item row #{'past' if (event.starts_at <= DateTime.now) }", 
-  data: data ||= {} do 
+  class: "item row", #this could be data
+  data: {}.merge( get_local( locals: local_assigns, key: "data", alt: {} ) ) do 
 %>
-    <div class="image-temp"> </div>
+    <div class="image-temp svg-link"> <%= inline_svg get_local(locals: local_assigns, key: "svg_thn", alt: "" ) %> </div>
     <div class= "col">
 
-      <span class="h5"> <%= date_style(event.starts_at) %> </span>
-      <div class="br"> </div>
-      <%= link_to event.name, event, class: "title h2" %>
-      <span class="h5 username"> <%= event.user.name %> </span>
-      <span class="tags h4"> 
+        <span class="h5"> <%= date_style(event.starts_at) %> </span>
+        <div class="br"> </div>
+        <div class="h2 title"> 
+          <%  link = get_local(locals: local_assigns, key: "link", alt: event) %>
+          <%= link_to_unless  (link == false),  event.name,    link %> 
+        </div>
+        <span class="h5 username user"> <%= event.user.name %> </span>
+        <span class="tags h4"> 
+
+            <% event.tags.first(10).each do |tag| %> 
+              <%= "#{tag.name}" %>
+            <% end %>
         
-        <% event.tags.first(10).each do |tag| %> 
-          <%= "#{tag.name}" %>
-        <% end %>
-        
-      </span>
-      <div class="br"> </div>
+        </span>
+        <div class="br"> </div>
       
     </div>
 <% end %>
-

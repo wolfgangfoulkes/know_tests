@@ -23,8 +23,8 @@ var onLoadSuccess = function()
 
 var onLoadComplete = function(jqxhr_, textStatus_ )
 {
-  console.log(jqxhr_); 
-  console.log(textStatus_);
+  // console.log(jqxhr_); 
+  // console.log(textStatus_);
 };
 
 var nextPage = function()
@@ -54,7 +54,6 @@ var nextPage = function()
 var more = function()
 {
   url = $("[data-more-link]").find('a').attr('href');
-
   
   if ( is_loading || !url )
   {

@@ -132,10 +132,118 @@ module ApplicationHelper
 		puts _d.to_yaml
 		return _d.compact
 	end
-	# -----
+
+	def drop_snd(id, state: false)
+		_d = {}
+		_d["id"] = id
+		_d["drop"] = "toggle"
+		_d["state"] = state
+		return _d.compact
+	end
+
+	def drop_rcv(id, state: false)
+		_d = {}
+		_d["id"] = id
+		_d["drop"] = "target"
+		_d["state"] = state
+		return _d.compact
+	end
+	# --------
+
+	# ----- helpers for dynamic partial attributes -----
+	def classes2class(hash)
+		_hash = {}
+		hash.each do |key, value|
+			_key = (key == "classes") ? "class" : key
+			_hash[_key] = hash[key]
+		end
+		return _hash
+	end
+
+	def get_local(locals: {}, key: "", alt: false  )
+		_local = alt
+		if locals.has_key?(key.to_sym)
+			_local = locals[key.to_sym]
+		elsif locals.has_key?(key.to_s)
+			_local = locals[key.to_s]
+		end
+		# puts key
+		# puts alt
+		# puts locals.to_yaml
+		# puts _local.to_yaml
+
+		return _local 
+	end
+
+	def get_locals(locals: {}, params: {})
+		_locals = {}
+		params.each do |key, value|
+			if locals.has_key?(key)
+				_locals[key] = locals[key]
+			else
+				_locals[key] = params[key]
+			end
+			# _local = get_local(locals, key, params[key])
+		end
+		return _locals
+	end
+
+	def deef_params
+		return {"data" => {}, "class" => [], "id" => []} # href? image? url?
+	end
+
+	def deef_locals(locals: {})
+		return get_locals(locals, deef_params)
+	end
+
+	def deef_locals(locals: {}, add: {})
+		_locals = {}
+		deef = get_locals(locals, deef_params)
+
+		deef.each do |key, value|
+
+			_locals[key] = value
+
+			if add.has_key?(key)
+				if ["class", "id"].include?(key)
+						_locals[key] = _locals[key] + add[key]
+
+				elsif ["data"].include?(key)
+						_locals[key] = _locals[key].merge( add[key] )
+
+				end
+			end
+		end
+		return _locals.merge(add)
+	end
+
+
+
+	#def doofault_content_for(name, &block)
+  	#	name = name.kind_of?(Symbol) ? ":#{name}" : name
+  	#	out = eval("yield #{name}", block.binding)
+  	#	concat(out || capture(&block), block.binding)
+	#end
+	
+	# --------
 
 	def defdAElseB(a_, b_)
 		defined?(a_) ? a_ : b_
 	end
+
+	# I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
+
+	# def concat( content = nil, &block )
+	# output_buffer << ( block_given? ? capture( &block ) : content )
+	# end
+
+	# And then you can do this:
+
+	# concat do
+	# content_tag( something ) do
+	# concat something
+	# concat something
+	# end
+	# end
 
 end
