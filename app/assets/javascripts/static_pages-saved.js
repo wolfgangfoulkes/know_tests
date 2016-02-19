@@ -1,7 +1,11 @@
-var waitedLongEnoughBetweenPages = function()
-{
-  return ( last_load_at == null || new Date() - last_load_at > min_ms );
-};
+/*
+* --- in static_pages/feed with action static_pages->saved
+  <% unless (@events.current_page == @events.total_pages) %>
+    <div data-scroll-link="1">
+      <%= link_to('View More', url_for(page: @events.current_page + 1)) %>
+    </div>  
+  <% end %>
+*/
 
 var waitedLongEnoughBetweenPages = function()
 {
@@ -21,16 +25,11 @@ var onLoadSuccess = function()
   last_load_at = new Date();
 };
 
-var onLoadComplete = function(jqxhr_, textStatus_ )
-{
-  console.log(jqxhr_); 
-  console.log(textStatus_);
-};
-
 var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
+  
 	if ( is_loading || !url )
   {
     return ( is_loading || !url );
@@ -40,60 +39,26 @@ var nextPage = function()
 	is_loading = true;
 	last_load_at = new Date();
 
-
   $.ajax
   ({
        url: url,
        method: 'GET',
        dataType: 'script',
-       success: onLoadSuccess,
-       complete: onLoadComplete
-  });
-};
-
-var more = function()
-{
-  url = $("[data-more-link]").find('a').attr('href');
-
-  
-  if ( is_loading || !url )
-  {
-    return ( is_loading || !url );
-  }
-
-  is_loading = true;
-  last_load_at = new Date();
-
-
-  $.ajax
-  ({
-       url: url,
-       method: 'GET',
-       dataType: 'script',
-       success: onLoadSuccess,
-       complete: onLoadComplete
+       success: onLoadSuccess
   });
 };
 
 
-/*
-  on scrolling in either direction
-    if bottom of view is < pixels from bottom of page
-    if > min_ms after last execution
-    if more_link returns a url
-      load the .js.erb script at more_link's url
-    else if more_link is clicked
-      load the .js.erb script at more_link's url
-*/
+
 $(document).on("page:change", function()
 {
 	content = "[data-scroll-content]"; 	      /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
-	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
+	min_ms = 500;									            /* milliseconds to wait between loading pages */
 	pixels = 500; 									          /* pixels above the page's bottom */
 
 	is_loading = false;   							      /* keep from loading two pages at once */
-  last_load_at = null;       						    /* when you loaded the last page */
+  last_load_at = null;       						 /* when you loaded the last page */
 
   	$(window).scroll(
       function()
@@ -115,14 +80,6 @@ $(document).on("page:change", function()
     	   nextPage();
     	   e.preventDefault();
     	}
-    );
-
-    $("[data-more-link]").find('a').click(
-      function(e)
-      {
-         more();
-         e.preventDefault();
-      }
     );
 
 });

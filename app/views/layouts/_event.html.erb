@@ -1,0 +1,31 @@
+<% _data = (defined? data) ? data : {} %>
+<% _data = _data.merge({drop: "toggle", id: event.id, state: false}) %>
+<% _class = (defined? classes) ? classes : [] %>
+<% _class = classes + ["item", "row"] %>
+<%= content_tag :div, class: "item row", 
+data: {drop: "toggle", id: "<%= event.id %>", state: "false"} do %>
+    <div class="image-temp"> 
+    </div>
+    <div class= "col">
+      <div class="date h5"> <%= event.starts_at %> </div>
+
+      <div class="br"> </div>
+
+      <%= link_to event.name, event, class: "title h2" %>
+      <span class="tags h4"> 
+        <% event.tags.first(10).each do |tag| %> 
+          <%= "#{tag.name}" %>
+        <% end %>
+      </span>
+
+      <div class="br"> </div>
+
+      <div class="activity-list col h4"
+        data-drop="target"
+        data-id="<%= event.id %>"
+        data-state="false">
+        <%= yield %>
+      <div>
+
+<% end %>
+

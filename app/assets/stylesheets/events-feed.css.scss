@@ -43,7 +43,7 @@
 
 /*	height: $nav-bar-h * $gm;*/
 
-	&[data-past="true"] {
+	&.past {
 		color: rgba(100, 0, 0, 0.1);
 	}
 
