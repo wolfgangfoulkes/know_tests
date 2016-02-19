@@ -175,7 +175,6 @@ module ApplicationHelper
 		return _local 
 	end
 
-
 	def get_locals(locals: {}, params: {})
 		_locals = {}
 		params.each do |key, value|
@@ -226,20 +225,6 @@ module ApplicationHelper
 		return _locals.merge(add)
 	end
 
-
-
-	#def doofault_content_for(name, &block)
-  	#	name = name.kind_of?(Symbol) ? ":#{name}" : name
-  	#	out = eval("yield #{name}", block.binding)
-  	#	concat(out || capture(&block), block.binding)
-	#end
-	
-	# --------
-
-	def defdAElseB(a_, b_)
-		defined?(a_) ? a_ : b_
-	end
-
 	# I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 
 	# def concat( content = nil, &block )
@@ -254,5 +239,11 @@ module ApplicationHelper
 	# concat something
 	# end
 	# end
+	# --------
 
+	# ----- MISC
+		def defdAElseB(a_, b_)
+		defined?(a_) ? a_ : b_
+		end
+	# --------
 end
