@@ -191,6 +191,7 @@ $month-row-height: 4em;
 	}
 
 	.fc-time-grid {
+		overflow: scroll;
 		height: 100% !important;
 		.fc-slats {
 			height: 100% !important;
