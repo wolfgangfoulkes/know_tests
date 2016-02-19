@@ -175,17 +175,26 @@ module ApplicationHelper
 		return _local 
 	end
 
+
 	def get_locals(locals: {}, params: {})
 		_locals = {}
 		params.each do |key, value|
-			if locals.has_key?(key)
-				_locals[key] = locals[key]
-			else
-				_locals[key] = params[key]
-			end
-			# _local = get_local(locals, key, params[key])
+			_locals[key] = get_local(locals, key, params[key])
 		end
 		return _locals
+	end
+
+	def get_data(locals: {}, data: {})
+		_data = {}
+		if locals.has_key?("data")
+			_data = locals["data"]
+			_data = _data.merge(data)
+		elsif locals.has_key?(:data)
+			_data = locals[:data]
+			_data = _data.merge(data)
+		end
+		
+		return _local 
 	end
 
 	def deef_params
