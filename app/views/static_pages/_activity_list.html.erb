@@ -1,0 +1,17 @@
+<%= render partial: 'events/event', 
+	locals: 
+	{ 
+		event: event,
+		svg_thn: '',
+		link: event,
+		data: {} 
+	} 
+%>
+
+<%= 
+content_tag :div,
+class: "activity-list col h4", 
+data: {} do
+%>
+  <%= render_activities(activities, layout: :activity) %>
+<% end %>

@@ -11,6 +11,12 @@ svg[data-svgr="270"] {
 	transform: rotate(270deg);
 }
 
+.hidden 
+{
+	display: none;
+}
+
+
 .nav-bar {
 	>[data-current="true"] {
 		color: rgba(100, 0, 0, 0.5);
@@ -90,7 +96,7 @@ svg[data-svgr="270"] {
 	}
 }
 
-.activity-feed #svg-eye_1 {
+.svg-link #svg-eye_1 {
 	position: relative;
 	fill: rgba(100, 0, 0, 0.5);
 	
@@ -159,6 +165,7 @@ svg[data-svgr="270"] {
 		}
 	}
 }
+
 .activity-feed .activity-list[data-drop="target"] {
 	&[data-state="false"]
 	{

@@ -24,12 +24,25 @@ class StaticPagesController < ApplicationController
 
   def activities
     activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
-    @events = Event.where(id: activities.order("created_at DESC").pluck("owner_id") ).page( params[:page] ).per(6)
+    @events = Event.where(id: activities.order("created_at ASC", "role ASC").pluck("owner_id") ).page( params[:page] ).per(6)
 
     respond_to do |format|
       format.html { render :activities }
       format.js { 
         render "static_pages/_feed.js.erb", locals: {item_partial: "events/activities", items: @events}
+      }
+    end
+
+  end
+
+  def activity_list
+    event = Event.find(params[:id])
+    activities = PublicActivity::Activity.where(owner: event ).order("created_at ASC", "role ASC")
+
+    respond_to do |format|
+      format.html { render "static_pages/activity_list", locals: {event: event, activities: activities} }
+      format.js { 
+        render partial: "static_pages/activity_list", locals: {event: event, activities: activities}
       }
     end
 

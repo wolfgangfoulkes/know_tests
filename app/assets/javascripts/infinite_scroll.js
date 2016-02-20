@@ -52,28 +52,36 @@ var nextPage = function()
   });
 };
 
-var more = function()
+
+var stopScroll = function()
 {
-  url = $("[data-more-link]").find('a').attr('href');
-  
-  if ( is_loading || !url )
-  {
-    return ( is_loading || !url );
-  }
+  $(window).off("scroll");
+  $(more_link).find('a').off("click");
+  scrolling = false;
+}
 
-  is_loading = true;
-  last_load_at = new Date();
+var resetScroll = function()
+{
+  $(window).on("scroll",
+      function()
+      {
+        if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
+        {
+            nextPage();
+        }
+      }
+    );
 
+    $(more_link).find('a').on("click",
+      function(e)
+      {
+         nextPage();
+         e.preventDefault();
+      }
+    );
 
-  $.ajax
-  ({
-       url: url,
-       method: 'GET',
-       dataType: 'script',
-       success: onLoadSuccess,
-       complete: onLoadComplete
-  });
-};
+    scrolling = true;
+}
 
 
 /*
@@ -87,6 +95,7 @@ var more = function()
 */
 $(document).on("page:change", function()
 {
+  $(document).trigger("scroll:on");
 	content = "[data-scroll-content]"; 	      /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
 	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
@@ -95,34 +104,25 @@ $(document).on("page:change", function()
 	is_loading = false;   							      /* keep from loading two pages at once */
   last_load_at = null;       						    /* when you loaded the last page */
 
-  	$(window).scroll(
-      function()
-    	{    
-    		if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
-    		{
-        		nextPage();
-        }
-    	}
-    );
-
+  scrolling: true;
   	/* 
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
   	 */
-  	$(more_link).find('a').click(
-  		function(e)
-  		{
-    	   nextPage();
-    	   e.preventDefault();
-    	}
-    );
 
-    $("[data-more-link]").find('a').click(
-      function(e)
+    $(document).on("scroll:off", 
+      function()
       {
-         more();
-         e.preventDefault();
+        stopScroll();
+      }
+    );
+    $(document).on("scroll:on", 
+      function()
+      {
+        resetScroll();
       }
     );
 
+
+    resetScroll();
 });

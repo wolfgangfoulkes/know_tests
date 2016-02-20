@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   get '/saved', to: 'static_pages#saved', as: 'saved'
 
   get '/activities', to: 'static_pages#activities', as: 'activities'
+  get '/activities/event/:id', to: 'static_pages#activity_list'
   
   root 'static_pages#feed'
   # -----

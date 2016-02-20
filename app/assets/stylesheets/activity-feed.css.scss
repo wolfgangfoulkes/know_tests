@@ -1,5 +1,4 @@
 
-
 /* ----- ACTIVITY-FEED ----- */
 .activity-feed.col
 {
@@ -14,17 +13,28 @@
 }
 
 
-.activity-feed .activity-list
+.activity-list
 {
 	border-left: 2px solid rgba(100, 0, 0, 0.5);
 	
 
 	.item {
-		display: inline-flex;
-		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		white-space: nowrap;
+		overflow: hidden;
+
 		> * {
 			white-space: nowrap;
 			overflow: hidden;
+		}
+		> .col
+		{
+			justify-content: center;
+			box-sizing: border-box;
+			> .br 
+			{
+			}
 		}
 		> .title {
 			flex-basis: 0;
@@ -32,34 +42,15 @@
 			margin-left: 2%;
 			text-overflow: ellipsis;
 		}
-	}	
-}
 
-.activity-feed.col > .item.row
-{
-	justify-content: flex-start;
-	align-items: center;
-
-	/*height: $nav-bar-h * $gm;*/
+	}
 
 	&.past 
 	{
 		color: rgba(100, 0, 0, 0.1);
-	}
-
-	> *
-	{
-	}
-
-	> .col
-	{
-		justify-content: center;
-		box-sizing: border-box;
-		> .br 
-		{
-		}
-	}
+	}	
 }
+
 /* --- */
 
 $list_offs_v: 3px;

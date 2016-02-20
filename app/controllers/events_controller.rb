@@ -5,7 +5,8 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @activities = @event.activities
     respond_to do |format|
-      format.html { render :activities, layout: "event", locals: {event: @event} }
+      format.html { render :activities, locals: {event: @event} }
+      format.js { render 'events/activities.js.erb', locals: {event: @event} }
     end
   end
 

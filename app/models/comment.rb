@@ -110,7 +110,7 @@ class Comment < ActiveRecord::Base
 
   # ----- public activity
   def activity_for_create
-    a = create_activity key: "comment", trackable: self, owner: self.root, parameters: {role: self.role}
+    a = create_activity key: "comment", trackable: self, owner: self.root, role: self.role, parameters: {role: self.role}
   end
 
   def activity_for_save
