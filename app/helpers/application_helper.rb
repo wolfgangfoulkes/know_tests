@@ -149,16 +149,8 @@ module ApplicationHelper
 	end
 	# --------
 
-	# ----- helpers for dynamic partial attributes -----
-	def classes2class(hash)
-		_hash = {}
-		hash.each do |key, value|
-			_key = (key == "classes") ? "class" : key
-			_hash[_key] = hash[key]
-		end
-		return _hash
-	end
-
+	# ----- for OPTIONAL LOCAL ATTRIBUTES for PARTIALS and stuff -----
+	# - If local_assigns has a key, return it. If not, return false.
 	def get_local(locals: {}, key: "", alt: false  )
 		_local = alt
 		if locals.has_key?(key.to_sym)
@@ -166,14 +158,11 @@ module ApplicationHelper
 		elsif locals.has_key?(key.to_s)
 			_local = locals[key.to_s]
 		end
-		puts key
-		puts alt
-		puts locals.to_yaml
-		puts _local.to_yaml
 
 		return _local 
 	end
 
+	# - params: {key1: key1deef, key2...}
 	def get_locals(locals: {}, params: {})
 		_locals = {}
 		params.each do |key, value|
@@ -182,12 +171,19 @@ module ApplicationHelper
 		return _locals
 	end
 
+	# - get data, classes, merge with second param if you gotta reason
 	def get_data(locals: {}, data:{})
 		_data = get_local(locals: locals, key: "data", alt: {})
 		_data = _data.merge(data)
 		return _data
 	end
+	def get_classes(locals: {}, classes:{})
+		_classes = get_local(locals: locals, key: "classes", alt: {})
+		_classes = _classes.merge(classes)
+		return _classes
+	end
 
+	# ----- UNUSED
 	def deef_params
 		return {"data" => {}, "class" => [], "id" => []} # href? image? url?
 	end
@@ -196,6 +192,7 @@ module ApplicationHelper
 		return get_locals(locals, deef_params)
 	end
 
+	# --- this seems like it won't get used
 	def deef_locals(locals: {}, add: {})
 		_locals = {}
 		deef = get_locals(locals, deef_params)
@@ -216,6 +213,7 @@ module ApplicationHelper
 		end
 		return _locals.merge(add)
 	end
+	# --------
 
 	# I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 

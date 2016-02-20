@@ -1,0 +1,126 @@
+
+/* ----- ACTIVITY-FEED ----- */
+.activity-feed.col
+{
+	width: 100%;
+}
+
+.activity-list
+{
+	border-left: 2px solid rgba(100, 0, 0, 0.5);
+	&.past 
+	{
+		color: rgba(100, 0, 0, 0.1);
+	}
+}
+
+.activity-list .item 
+{
+	justify-content: flex-start;
+	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
+
+	> * 
+	{
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	> .col
+	{
+		justify-content: center;
+		box-sizing: border-box;
+		> .br 
+		{
+		}
+	}
+	> .title 
+	{
+		flex-basis: 0;
+		flex-grow: 1;
+		margin-left: 2%;
+		text-overflow: ellipsis;
+	}
+
+}
+/* --- */
+
+$list_offs_v: 3px;
+$list_offs_h: -6px;
+.activity-feed.col 
+{ 
+
+		> .item.row 
+		{
+			@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+			{
+			}
+		}
+		> .activity-list
+		{
+			margin-top: 0.25 * -96px + $list_offs_v;
+			margin-left: (96px * 0.5) + (96px * 1.0/3) + $list_offs_h;
+			padding-left: 96px * 0.15;
+		}
+
+	
+	@include mq(0, _bps(2))
+	{
+		> .item.row 
+		{
+			@include events_feed(64px, 1.0/4, 1.0/8, 1.0/8)
+			{
+			}
+		}
+		> .activity-list
+		{
+			margin-top: 0.25 * -64px + $list_offs_v;
+			margin-left: (64px * 0.5) + (64px * 1.0/3) + $list_offs_h;
+			padding-left: 64px * 0.15;
+
+			.item {
+				> .dt {
+					font-size: 0.8em;
+				}
+				> .title {
+					display: block;
+				}
+			}
+		}
+	}
+	 
+	@include mq(_bps(2), _bps(3))
+	{
+		> .item.row
+		{
+			@include events_feed(76px, 1.0/4, 1.0/6, 1.0/6)
+			{		
+			}
+		}
+		> .activity-list
+		{
+			margin-top: 0.25 * -76px + $list_offs_v;
+			margin-left: (76px * 0.5) + (76px * 1.0/3) + $list_offs_h;
+			padding-left: 76px * 0.15;
+
+		}
+	}
+	 
+	@include mq(_bps(3), 0)
+	{
+		> .item.row
+		{
+			@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+			{	
+			}
+		}
+		> .activity-list
+		{
+			margin-top: 0.25 * -96px + $list_offs_v;
+			margin-left: (96px * 0.5) + (96px * 1.0/3) + $list_offs_h;
+			padding-left: 96px * 0.15;
+		}
+	}
+}
+
+/* ----- */

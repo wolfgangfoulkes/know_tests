@@ -16,7 +16,6 @@ svg[data-svgr="270"] {
 	display: none;
 }
 
-
 .nav-bar {
 	>[data-current="true"] {
 		color: rgba(100, 0, 0, 0.5);
@@ -55,7 +54,6 @@ svg[data-svgr="270"] {
 		display: none;
 	}
 }
-
 
 .comment-list.col .item {
 	&[data-fresh=true] {
