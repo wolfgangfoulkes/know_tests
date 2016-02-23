@@ -53,10 +53,15 @@
 			class: "svg-user"
 		%>
 	</a>
-	<div class="item"> 
-		<%= link_to "logout", destroy_user_session_path, method: :delete, 
-		class: 'h2' %>
-	</div>
+	<%= content_tag :a, 
+	href: destroy_user_session_path, 
+	data: { method: :delete },  
+	class: "item svg-link", 
+	rel: "nofollow" do %>
+		<%= inline_svg 'svg/test/exit_2.svg',
+			class: "svg-logout"
+		%>
+	<% end %>
 <% else %>
 <% end %>
 </div>
