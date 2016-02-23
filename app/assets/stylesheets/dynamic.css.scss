@@ -34,7 +34,7 @@ svg[data-svgr="270"] {
 	}
 }
 
-.tabs >[data-sel="snd"] {
+.tabs >[data-sel-snd] {
 	&[data-sel-state='true'] {
 		color: rgba(60, 0, 0, 0.6);
 		background-color: rgba(25, 0, 0, 0.1);
@@ -47,7 +47,7 @@ svg[data-svgr="270"] {
 	}
 }
 
-[data-sel="rcv"] {
+[data-sel-rcv] {
 	width: 100%;
 
 	&[data-sel-state='false'] {
@@ -98,23 +98,23 @@ svg[data-svgr="270"] {
 	position: relative;
 	fill: rgba(100, 0, 0, 0.5);
 	
-	&[data-drop-state="false"] 
+	&[data-state="false"] 
 	{
 		transform: rotate(180deg);
 	}
-	&[data-drop-state="true"] 
+	&[data-state="true"] 
 	{
 		transform: rotate(0);
 	}
 
 }
 
-.activity-feed > .item[data-drop="snd"] {
+.activity-feed > .item[data-drop="toggle"] {
 	.svg-link {
 		box-sizing: border-box;
 	}
 	
-	&[data-drop-state="false"] {
+	&[data-state="false"] {
 		.svg-link
 		{
 			border: 3px solid rgba(100, 0, 0, 0.0);
@@ -139,7 +139,7 @@ svg[data-svgr="270"] {
 		}
 		
 	}
-	&[data-drop-state="true"] {
+	&[data-state="true"] {
 		.svg-link
 		{
 			border: 3px solid rgba(100, 0, 0, 0.5);
@@ -164,33 +164,8 @@ svg[data-svgr="270"] {
 	}
 }
 
-/* same as toggle=true above */
-.activity-feed .item[data-detail="true"]
-{
-	.svg-link 
-	{
-		border: 3px solid rgba(100, 0, 0, 0.5);
-		background: none;
-	}
-
-	.svg-link svg[data-svgid="letterx"]
-	{
-		width: 15px;
-		height: 15px;
-	}
-
-
-	.svg-link svg[data-svgid="arrow_3"]
-	{
-		/*transform: rotate(270deg);*/
-		width: 15px;
-		height: 15px;
-	}
-}
-
-
-.activity-feed .activity-list[data-drop="rcv"] {
-	&[data-drop-state="false"]
+.activity-feed .activity-list[data-drop="target"] {
+	&[data-state="false"]
 	{
 		display: none;
 	}
