@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	load_and_authorize_resource
 
 	def show
-		@events = @user.events.page( params[:page] ).per(2)
+		@events = @user.events.page( params[:page] ).per(8)
 		respond_to do |format|
       	  format.html 
 	      format.js {

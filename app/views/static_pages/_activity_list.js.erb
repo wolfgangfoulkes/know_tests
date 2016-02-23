@@ -3,6 +3,7 @@ var $selected = $("<%= j render partial: 'static_pages/activity_list.html.erb', 
 
 $deselected.addClass("hidden");
 $(".activity-feed").prepend($selected);
+window.location.hash = '<%= "detail" %>'; /* event.id.to_s */
 
 $(document).trigger("scroll:off");
 $(".svg-link").on("click",
@@ -12,6 +13,7 @@ $(".svg-link").on("click",
 		$selected.detach();
 		$deselected.removeClass("hidden");
 		$(document).trigger("scroll:on");
+		window.location.hash = '';
 	}
 );
 

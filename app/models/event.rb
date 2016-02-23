@@ -66,29 +66,25 @@ class Event < ActiveRecord::Base
 		self.filter_combine(filters)
 	end
 
+
 	# works with array or relation
 	# does not retain activities order
 	scope :activity_in, -> (q) {
 		where(id: q.select(:owner_id))
 	}
 
-	scope :freshest, -> {
-		all
-		#following don't work
-		#includes(:activities).order("activities.updated_at DESC")
-		#joins(:activities).order("activities.updated_at DESC")
+	scope :by_newest_activity_by_sort, -> {
+		Event.all.sort_by { |e| e.activities.where("updated_at IS NOT NULL").maximum(:updated_at).to_f || -1 }
+	}
+
+	scope :by_newest_activity_by_map, -> {
+		Event.activities.where("updated_at IS NOT NULL").order("updated_at ASC").pluck(:owner_id).uniq.map{ |id| Event.find(id) }
 	}
 
 	scope :activities, -> {
 		PublicActivity::Activity.where(owner_type: 'Event', owner_id: all)
 		#  										  faster -> owner_id: select(:id))
 	}
-
-	# NOTE TO WOLFGANG: if you come back here, 
-	# learn find_each do
-	# see how it returns
-
-
 
 	#--------
 
