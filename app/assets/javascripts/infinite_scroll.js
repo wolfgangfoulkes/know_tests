@@ -32,9 +32,9 @@ var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
-	if ( is_loading || !url )
+	if ( is_loading || !url)
   {
-    return ( is_loading || !url );
+    return ( is_loading || !url);
   }
 
 	$(more_link).addClass('loading');
@@ -53,14 +53,23 @@ var nextPage = function()
 };
 
 
-var stopScroll = function()
+var scrollOff = function()
+{
+  scrollStop();
+  $(more_link).find('a').attr("href", false);
+  $(document).off("scroll:on");
+  $(document).off("scroll:stop");
+}
+
+var scrollStop = function()
 {
   $(window).off("scroll");
   $(more_link).find('a').off("click");
+
   scrolling = false;
 }
 
-var resetScroll = function()
+var scrollOn = function()
 {
   $(window).on("scroll",
       function()
@@ -96,7 +105,7 @@ var resetScroll = function()
 $(document).on("page:change", function()
 {
   $(document).trigger("scroll:on");
-	content = "[data-scroll-content]"; 	      /* contains content destination (JQ obj) */
+	content = "[data-scroll-content]";        /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
 	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
 	pixels = 500; 									          /* pixels above the page's bottom */
@@ -110,19 +119,25 @@ $(document).on("page:change", function()
   	 	without infinite scrolling taking affect.
   	 */
 
-    $(document).on("scroll:off", 
+     $(document).on("scroll:off", 
       function()
       {
-        stopScroll();
+        scrollOff();
+      }
+    );
+    $(document).on("scroll:stop", 
+      function()
+      {
+        scrollStop();
       }
     );
     $(document).on("scroll:on", 
       function()
       {
-        resetScroll();
+        scrollOn();
       }
     );
 
 
-    resetScroll();
+    scrollOn();
 });

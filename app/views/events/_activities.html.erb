@@ -14,9 +14,10 @@ class: "activity-list col h4",
 data: drop_rcv(event.id) do
 %>
   	<%= render_activities(event.activities.order(:role, :created_at).page(1).per(10), layout: :activity) %>
+  	
   	<% if (event.activities.count > 10) %>
   	<%= 	link_to "#{event.activities.count - 10} more...", 
-  			remote: true, 
+  			remote: true,
   			controller: "static_pages", 
   			action: "activity_list", 
   			id: event.id  	%>

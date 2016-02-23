@@ -5,7 +5,7 @@ $deselected.addClass("hidden");
 $(".activity-feed").prepend($selected);
 window.location.hash = '<%= "detail" %>'; /* event.id.to_s */
 
-$(document).trigger("scroll:off");
+$(document).trigger("scroll:stop");
 $(".svg-link").on("click",
 	function()
 	{
