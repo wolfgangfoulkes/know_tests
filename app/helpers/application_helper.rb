@@ -121,37 +121,37 @@ module ApplicationHelper
 	# -----
 
 	# ----- javascript data params
-	def sel_snd(id, state: false, off: nil, group: nil)
+	def sel_snd(id, state: false, group: nil)
 		_d = {}
-		_d["sel-snd"] = id
+		_d["sel"] = "snd"
+		_d["sel-id"] = id
 		_d["sel-state"] = state
-		_d["sel-off"] = off
 		_d["sel-group"] = group
 		return _d.compact
 	end
 
-	def sel_rcv(id, state: false, off: nil, group: nil)
+	def sel_rcv(id, state: false, group: nil)
 		_d = {}
-		_d["sel-rcv"] = id
+		_d["sel"] = "rcv"
+		_d["sel-id"] = id
 		_d["sel-state"] = state
-		_d["sel-off"] = off
 		_d["sel-group"] = group
 		return _d.compact
 	end
 
 	def drop_snd(id, state: false)
 		_d = {}
-		_d["id"] = id
-		_d["drop"] = "toggle"
-		_d["state"] = state
+		_d["drop"] = "snd"
+		_d["drop-id"] = id
+		_d["drop-state"] = state
 		return _d.compact
 	end
 
 	def drop_rcv(id, state: false)
 		_d = {}
-		_d["id"] = id
-		_d["drop"] = "target"
-		_d["state"] = state
+		_d["drop"] = "rcv"
+		_d["drop-id"] = id
+		_d["drop-state"] = state
 		return _d.compact
 	end
 	# --------
