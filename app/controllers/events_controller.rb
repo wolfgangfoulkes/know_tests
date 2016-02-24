@@ -1,15 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource only: [:show, :edit, :update, :new, :create, :destroy]
 
-  def activities
-    @event = Event.find(params[:id])
-    @activities = @event.activities
-    respond_to do |format|
-      format.html { render :activities, locals: {event: @event} }
-      format.js { render 'events/activities.js.erb', locals: {event: @event} }
-    end
-  end
-
   # DON'T PASS USER_ID THROUGH FORM OR ACCEPT IT IN PARAMS
   # CHANGE THAT
   def index

@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     end
 
     member do #event/:id/ with :id passed in params[:id]
-      get 'activities', to: 'events#activities'
     end
 
     post 'follow', to: 'socializations#follow'

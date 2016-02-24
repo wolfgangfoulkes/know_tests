@@ -29,7 +29,7 @@ class StaticPagesController < ApplicationController
     respond_to do |format|
       format.html { render :activities }
       format.js { 
-        render "static_pages/_feed.js.erb", locals: {item_partial: "events/activities", items: @events}
+        render "static_pages/_feed.js.erb", locals: {item_partial: "static_pages/activity_toggle", items: @events}
       }
     end
 
@@ -47,5 +47,7 @@ class StaticPagesController < ApplicationController
     end
 
   end
+
+  
 
 end

@@ -1,6 +1,6 @@
 <%= content_tag :div, 
   class: ["item", "row"], #+ get_local(locals: local_assigns, key: "classes", alt: []), #this could be data
-  data: { past: "#{event.starts_at <= DateTime.now}" }.merge( get_data( locals: local_assigns ) ) do 
+  data: { past: "#{event.starts_at <= DateTime.now}" }.merge( local_assigns[:data] || {} ) do
 %>
     <div class="image-temp svg-link"> 
       <%= inline_svg get_local(locals: local_assigns, key: "svg_thn", alt: "" ) %> </div>

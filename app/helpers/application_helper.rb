@@ -184,9 +184,10 @@ module ApplicationHelper
 		_data = _data.merge(data)
 		return _data
 	end
-	def get_classes(locals: {}, classes:{})
-		_classes = get_local(locals: locals, key: "classes", alt: {})
-		_classes = _classes.merge(classes)
+
+	def get_classes(locals: {}, classes:[])
+		_classes = get_local(locals: locals, key: "classes", alt: [])
+		_classes = _classes + classes
 		return _classes
 	end
 
@@ -221,6 +222,37 @@ module ApplicationHelper
 		return _locals.merge(add)
 	end
 	# --------
+
+	def dd(partial_snd, partial_rcv, options = {}, &block)
+		ls = {}.merge(options)
+		lr = {}.merge(options)
+		ls[:data] = drop_snd( options[:id] ).merge( options[:data] || {} )
+		lr[:data] = drop_rcv( options[:id] ).merge( options[:data] || {} )
+
+		dd = capture do
+			concat(render(partial: partial_snd, locals: ls ))
+			concat(render(partial: partial_rcv, locals: lr ))
+		end
+		dd
+	end
+
+	def block_to_partial(partial_name, options = {}, &block)
+    	options.merge!(:body => capture(&block)) if block_given?
+    	render(:partial => partial_name, :locals => options)
+	end
+
+	# def block_to_partial(partial_name, options = {}, &block)
+ #    	options.merge!(:body => capture(&block))
+ #    	concat(render(:partial => partial_name, :locals => options), block.binding)
+ #  	end
+
+	# def link_to(*args,&block)
+ #  		if block_given?
+ #    		concat(super(capture(&block), *args), block.binding)
+ #  		else
+ #   			super(*args)
+ #  		end
+	# end
 
 	# I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 

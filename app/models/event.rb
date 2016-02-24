@@ -136,6 +136,7 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
+
 	#-----
 	#--- filters
 
