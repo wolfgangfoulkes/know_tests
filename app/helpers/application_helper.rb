@@ -3,20 +3,20 @@ module ApplicationHelper
 	# --- can be referenced in controller via ApplicationHelper.method
 	# --- can't reference other helper methods that aren't class-methods
 	# --- consider move to specific 'universal' helper
-	def self.isa?(o_, class_)
+	def self.isa?(o_, class_) # -		-	-	-	-	-	-	-	-	- USED HERE
 		o_.class.name == class_
 	end
 
-	def self.timestamps?(o_)
+	def self.timestamps?(o_) # -		-	-	-	-	-	-	-	-	- USED HERE
 		!(defined?(o_.created_at).nil? || defined?(o_.created_at).nil?)
 	end
 
-	def self.fresh_after?(o_, dt_)
+	def self.fresh_after?(o_, dt_) # -		-	-	-	-	-	-	-	- USED HERE
 		(o_.created_at.to_f >= dt_.to_f) ||
 		(o_.updated_at.to_f >= dt_.to_f)
 	end
 
-	def self.fresh_for_user?(o_, user_)
+	def self.fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	- USED HERE, CONTROLLER
 		return false unless ( timestamps?(o_) && isa?(user_, "User") )
 		# in the future avoid above unless we expect different behavior for each scenario
 		# like if we sometimes give it a var that returns false, so we can test that too
@@ -26,12 +26,6 @@ module ApplicationHelper
 		fresh_after?(o_, user_.last_sign_in_at)
 	end
 
-	# array of objects to relation
-	def self.to_ar(a_)
-		a_.take(1).class.where(id: a_)
-	end
-
-
 	# ----------
 
 	# ----- HELPER METHODS -----
@@ -39,23 +33,24 @@ module ApplicationHelper
 	# - non-class methods will be overriden by helpers with alphabetically later names
 
 	# ----- from class methods
-	def isa?(o_, class_)
+	def isa?(o_, class_) # -		-	-	-	-	-	-	-	-	-	- USED HERE
 		ApplicationHelper.isa?(o_, class_)
 	end
 
-	def timestamps?(o_)
+	def timestamps?(o_) # -		-	-	-	-	-	-	-	-	-	-	- USED HERE
 		ApplicationHelper.timestamps?(o_)
 	end
 
-	def fresh_after?(o_, dt_)
+	def fresh_after?(o_, dt_) # -		-	-	-	-	-	-	-	-	- USED HERE
 		ApplicationHelper.fresh_after?(o_, dt_)
 	end
 
-	def fresh_for_user?(o_, user_)
+	def fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	-	- USED HERE, CONTROLLER
 		ApplicationHelper.fresh_for_user?(o_, user_)
 	end
 	# -----
 	
+	# ---- filesystem utility methods
 	def asset_exists?(subdirectory, filename)
 	  File.exists?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
 	end
@@ -77,8 +72,10 @@ module ApplicationHelper
 	    truth || asset_exists?('stylesheets', "#{stylesheet}.css#{extension}")
 	  end
 	end
+	# -----
 
-	# ----- activities, return hashes with result as key
+	# ----- activities, return hashes with result as key 	-	-	-	- UNUSED
+
 	def activities_by_date(a_)
 		_a = a_.order(:created_at).group_by{ |i| i.created_at.to_date.to_s }
 		_a
@@ -93,11 +90,11 @@ module ApplicationHelper
 	# -----
 
 	# ----- style
-	def uniq_date(dt_, dts_)
+	def uniq_date(dt_, dts_) # -	-	-	-	-	-	-	-	-	- UNUSED
 		dts_.include(dt_.strftime("%m%d%y"))
 	end
 
-	def date_style(date)
+	def date_style(date) # -	-	-	-	-	-	-	-	-	- 	- USED
 		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
 		_output = content_tag(:span, :class => "dt") do
 			_d = content_tag(:span, class: "d") do
@@ -120,7 +117,7 @@ module ApplicationHelper
 	end
 	# -----
 
-	# ----- javascript data params
+	# ----- javascript data params # - 	-	-	-	-	-	-	-	- USED
 	def sel_snd(id, state: false, group: nil)
 		_d = {}
 		_d["sel"] = "snd"
@@ -158,6 +155,7 @@ module ApplicationHelper
 
 	# ----- for OPTIONAL LOCAL ATTRIBUTES for PARTIALS and stuff -----
 	# - If local_assigns has a key, return it. If not, return false.
+	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
 	def get_local(locals: {}, key: "", alt: false  )
 		_local = alt
 		if locals.has_key?(key.to_sym)
@@ -178,8 +176,10 @@ module ApplicationHelper
 		return _locals
 	end
 
+	
 	# - get data, classes, merge with second param if you gotta reason
-	def get_data(locals: {}, data:{})
+	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
+	def get_data(locals: {}, data:{}) 
 		_data = get_local(locals: locals, key: "data", alt: {})
 		_data = _data.merge(data)
 		return _data
@@ -191,7 +191,7 @@ module ApplicationHelper
 		return _classes
 	end
 
-	# ----- UNUSED
+	# - 	-	- 	-	-	-	-	-	-	-	-	-	-	-	-	- UNUSED
 	def deef_params
 		return {"data" => {}, "class" => [], "id" => []} # href? image? url?
 	end
@@ -200,7 +200,7 @@ module ApplicationHelper
 		return get_locals(locals, deef_params)
 	end
 
-	# --- this seems like it won't get used
+	# --- this especially seems like it won't get used
 	def deef_locals(locals: {}, add: {})
 		_locals = {}
 		deef = get_locals(locals, deef_params)
@@ -221,9 +221,21 @@ module ApplicationHelper
 		end
 		return _locals.merge(add)
 	end
-	# --------
+	# ---
+	# -----
+
+	# ----- PROGRAMMATIC VIEWS # -	-	-	-	-	-	-	-	- UNUSED
+	# options = {} is a catch-all hash for named args
+	# options : {} is a hash arg named options with a default
+	def block_to_partial(partial_name, options = {}, &block)
+    	options.merge!(:body => capture(&block)) if block_given?
+    	render(:partial => partial_name, :locals => options)
+	end
 
 	def dd(partial_snd, partial_rcv, options = {}, &block)
+	# dropdown from two partials
+	# options = {} is a catch-all hash for named args
+	# options : {} is a hash arg named options with a default
 		ls = {}.merge(options)
 		lr = {}.merge(options)
 		ls[:data] = drop_snd( options[:id] ).merge( options[:data] || {} )
@@ -235,11 +247,7 @@ module ApplicationHelper
 		end
 		dd
 	end
-
-	def block_to_partial(partial_name, options = {}, &block)
-    	options.merge!(:body => capture(&block)) if block_given?
-    	render(:partial => partial_name, :locals => options)
-	end
+	# -----
 
 	# def block_to_partial(partial_name, options = {}, &block)
  #    	options.merge!(:body => capture(&block))
@@ -271,8 +279,8 @@ module ApplicationHelper
 	# --------
 
 	# ----- MISC
-		def defdAElseB(a_, b_)
-		defined?(a_) ? a_ : b_
-		end
+	#	def defdAElseB(a_, b_)
+	#	defined?(a_) ? a_ : b_
+	#	end
 	# --------
 end
