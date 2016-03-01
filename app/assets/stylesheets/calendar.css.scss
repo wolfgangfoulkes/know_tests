@@ -19,10 +19,8 @@
 
 
 $fc-font-i: 4;
-$month-row-height: 4em;
-
+$fc-month-row-height: 4em;
 $fc-bar-h: $nav-bar-h * 0.8;
-
 $fc-agenda-hmin: 1.5em;
 
 [data-fc-view="month"]
@@ -101,7 +99,7 @@ $fc-agenda-hmin: 1.5em;
 
 #calendar[data-fc-view="month"] .fc-row.fc-week 
 {
-	height: $month-row-height;
+	height: $fc-month-row-height;
 	overflow: hidden;
 }
 
@@ -565,96 +563,6 @@ $fc-agenda-hmin: 1.5em;
 	}
 }
 
-/* --- MONTH view --- */
-#calendar[data-fc-view="month"] .know-fcevent
-{
-	font-size: 1.0em;
-	line-height: 1.0;
-	height: auto;
-	border: none;
-	margin-bottom: 1px;
-
-	.fc-content
-	{
-		display: inline-flex;
-		align-items: flex-end;
-		width: 100%;
-	}
-	.fc-content .fc-time
-	{
-		flex-basis: 3em;
-		flex-grow: 0;
-		flex-shrink: 0;
-		font-size: 0.65em;
-	}
-	.fc-content .fc-title
-	{
-		margin-left: 3px;
-		flex-grow: 1;
-		font-size: 0.65em;
-		text-overflow: ellipsis;
-	}
-}
-#calendar[data-fc-view="month"] .know-fcevent
-{
-	@include mq(0, 				nth($bps, 3)) 
-	{
-		.fc-content .fc-time
-		{
-			display: block;
-			box-sizing: border-box;
-
-			border-top-left-radius: 3px;
-			border-top-right-radius: 3px;
-			
-			padding: 1px 3px;
-
-			white-space: nowrap;
-		}
-		.fc-content .fc-title
-		{
-			display: block;
-			box-sizing: border-box;
-
-			padding-top: 2px;
-			padding-bottom: 3px;
-
-			white-space: nowrap;
-		}
-
-		&.know-user
-		{
-			.fc-content > .fc-time 
-			{
-				/*background: rgba(100, 0, 0, 0.8);*/
-				border-bottom: 2px solid rgba(0, 0, 0, 0.8);
-			}
-		}
-		&.know-cuser
-		{
-			.fc-content > .fc-time 
-			{
-				border-bottom: 2px solid rgba(120, 0, 0, 0.6);
-			}
-		}
-	}
-	@include mq(nth($bps, 3), 				0) 
-	{
-		border: 1px solid rgba(100, 0, 0, 0.01);
-
-		&.know-user 
-		{
-			border-width: 0 0 1px 0;
-
-		}
-		&.know-cuser
-		{
-			border-width: 0 0 1px 0;
-		}
-	}
-}
-
-
 #calendar[data-fc-view="month"]	.know-fcevent.know-user
 {
 	background-color: rgba(100, 0, 0, 0.01);
@@ -689,5 +597,96 @@ $fc-agenda-hmin: 1.5em;
 	{
 		color: rgba(50, 0, 0, 0.6);
 	}
+}
+
+/* --- MONTH view --- */
+#calendar[data-fc-view="month"] .know-fcevent
+{
+	font-size: 1.0em;
+	line-height: 1.0;
+	height: auto;
+	border: none;
+	margin-bottom: 1px;
+
+	.fc-content
+	{
+		display: inline-flex;
+		align-items: flex-end;
+		width: 100%;
+	}
+	.fc-content .fc-time
+	{
+		flex-basis: 3em;
+		flex-grow: 0;
+		flex-shrink: 0;
+		font-size: 0.65em;
+	}
+	.fc-content .fc-title
+	{
+		margin-left: 3px;
+		flex-grow: 1;
+		font-size: 0.65em;
+		text-overflow: ellipsis;
+	}
+}
+#calendar[data-fc-view="month"] .know-fcevent
+{
+
+	@include mq(0, 				nth($bps, 3)) 
+	{
+			.fc-content .fc-time
+			{
+				display: block;
+				box-sizing: border-box;
+
+				border-top-left-radius: 3px;
+				border-top-right-radius: 3px;
+				
+				padding: 1px 3px;
+
+				white-space: nowrap;
+			}
+			.fc-content .fc-title
+			{
+				display: block;
+				box-sizing: border-box;
+
+				padding-top: 2px;
+				padding-bottom: 3px;
+
+				white-space: nowrap;
+			}
+
+			&.know-user
+			{
+				.fc-content > .fc-time 
+				{
+					/*background: rgba(100, 0, 0, 0.8);*/
+					border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+				}
+			}
+			&.know-cuser
+			{
+				.fc-content > .fc-time 
+				{
+					border-bottom: 2px solid rgba(120, 0, 0, 0.6);
+				}
+			}
+	}
+	@include mq(nth($bps, 3), 				0) 
+	{
+			border: 1px solid rgba(100, 0, 0, 0.01);
+
+			&.know-user 
+			{
+				border-width: 0 0 1px 0;
+
+			}
+			&.know-cuser
+			{
+				border-width: 0 0 1px 0;
+			}
+	}
+
 }
 /* ----- */

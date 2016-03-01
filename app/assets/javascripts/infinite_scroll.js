@@ -64,7 +64,7 @@ var scrollOff = function()
 var scrollStop = function()
 {
   $(window).off("scroll");
-  $(more_link).find('a').off("click");
+  $(more_link).hide();
 
   scrolling = false;
 }
@@ -81,13 +81,9 @@ var scrollOn = function()
       }
     );
 
-    $(more_link).find('a').on("click",
-      function(e)
-      {
-         nextPage();
-         e.preventDefault();
-      }
-    );
+  $(more_link).show();
+
+    
 
     scrolling = true;
 }
@@ -118,6 +114,13 @@ $(document).on("page:change", function()
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
   	 */
+     $(more_link).find('a').on("click",
+      function(e)
+      {
+        e.preventDefault();
+        nextPage();
+      }
+    );
 
      $(document).on("scroll:off", 
       function()
@@ -137,7 +140,6 @@ $(document).on("page:change", function()
         scrollOn();
       }
     );
-
 
     scrollOn();
 });
