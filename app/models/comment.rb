@@ -41,12 +41,6 @@ class Comment < ActiveRecord::Base
     self.commentable.comments.where(role: self.role)
   end
   # -----
-  
-  # unused currently
-  # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  # scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  # scope :public_comments, -> (root) { where(role: "public", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
-  # scope :reply_comments, -> (commentable) { where(role: "owner", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
 
   after_create do
     setup_params
@@ -70,12 +64,8 @@ class Comment < ActiveRecord::Base
       self.public = true
       self.root = self.commentable.root
     else
-      throw "bad role"
+      throw "bad role for comment"
     end
-  end
-
-  def is_nested?
-    (self.commentable_type == "Comment")
   end
 
   def owner_id
@@ -108,6 +98,10 @@ class Comment < ActiveRecord::Base
     ( !self.is_nested? )
   end
 
+  def is_nested?
+    (self.commentable_type == "Comment")
+  end
+
   # ----- public activity
   def activity_for_create
     a = create_activity key: "comment", trackable: self, owner: self.root, role: self.role, parameters: {role: self.role}
@@ -118,4 +112,54 @@ class Comment < ActiveRecord::Base
   end
   # -----
 
+  # ----- unused currently
+  # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :default_comments, -> (root) { where(role: "default", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :private_comments, -> (root) { where(role: "default", public: false, root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :public_comments, -> (root) { where(role: "default", public: true, root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
+  # scope :reply_comments, -> (commentable) { where(role: "default", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
+  # 
+  # def public_comment?
+  #   # actually, replies are also role == "default"
+  #   role == "default"             &&
+  #   public == true                &&
+  #   root == commentable           &&
+  #   root_type == "Event"          &&
+  #   commentable_type == "Event"   &&
+  # end
+  #
+  # def public_comment?
+  #   # actually, replies are also role == "default"
+  #   return false unless role == "default"
+  #   return false unless public == true
+  #   return false unless root == commentable
+  #   return false unless root_type == "Event"
+  #   return false unless commentable_type == "Event"
+  #   return true
+  # end
+  #
+  # def valid_role?
+  #   # actually, replies are also role == "default"
+  #   if role == "default"
+  #     if public == true
+  #       if public_comment?
+  #         return
+  #       end
+  #     end
+  #     elsif public == false
+  #       if private_comment?
+  #         return
+  #       end
+  #     end
+  #   end
+  #   elsif role == "owner"
+  #     if owner_comment?
+  #       return
+  #     end
+  #   end
+  # end
+  #
+  #   errors[:base] << "can't add comment to this model!"
+  # end
+  # -----
 end

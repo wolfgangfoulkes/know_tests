@@ -42,9 +42,9 @@ kn_sc[:e_n].times do |i|
 
 	event = Event.create(e)
 	if (event.save!)
-		puts "event: #{i} / #{Comment.count} \t---\t saved!"
+		puts "event: #{i}/#{Event.count} \t---\t saved!"
 	else
-		puts "event: #{i} / #{Comment.count} \t---\t not saved!"
+		puts "event: #{i}/#{Event.count} \t---\t not saved!"
 	end
 end
 puts "--------"
