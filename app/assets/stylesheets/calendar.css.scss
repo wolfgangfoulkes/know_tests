@@ -21,7 +21,7 @@
 $fc-font-i: 4;
 $fc-month-row-height: 4em;
 $fc-bar-h: $nav-bar-h * 0.8;
-$fc-agenda-hmin: 1.5em;
+$fc-agenda-hmin: 3em;
 
 [data-fc-view="month"]
 {
@@ -387,7 +387,7 @@ $fc-agenda-hmin: 1.5em;
 /* ----- */
 
 /* SOME OVERRIDES */
-.know-fcevent .fc-time
+.know-fcevent .fc-content .fc-time
 {
 	> *
 	{
@@ -403,6 +403,7 @@ $fc-agenda-hmin: 1.5em;
 #calendar .know-fcevent 
 {
 	overflow: hidden;
+	box-sizing: border-box;
 
 	.fc-content 
 	{
@@ -442,25 +443,28 @@ $fc-agenda-hmin: 1.5em;
 	padding: 10px 8px;
 	margin: 0px 0;
 
-	.fc-content
+	
+	.fc-bg
 	{
-		.fc-time 
-		{
-			display: block;
-			margin: 0 6px;
-			padding-bottom: 2px;
-		}
-		.fc-title 
-		{
-			display: block;
-			font-weight: lighter;
-			padding: 0 4px;
-			padding-top: 5px;
-			font-size: 1.0em;
 
-			white-space: normal;
-		}
 	}
+	.fc-content .fc-time
+	{
+		display: block;
+		margin: 0 6px;
+		padding-bottom: 2px;
+	}
+	.fc-content .fc-title 
+	{
+		display: block;
+		font-weight: lighter;
+		padding: 0 4px;
+		padding-top: 5px;
+		font-size: 1.0em;
+
+		white-space: normal;
+	}
+
 
 	
 
@@ -472,18 +476,17 @@ $fc-agenda-hmin: 1.5em;
 		border-width: 0px;
 		
 
-		.fc-bg {
-		/*	opacity: 1.0;
-			background-color: rgba(255, 255, 255, 0.1);
-			top: 1.4em;
-			border-top: 1px solid rgba(0, 0, 0, 0.1);*/
-
+		.fc-bg 
+		{
 		}
-		.fc-time 
+		.fc-content .fc-time 
 		{
 			margin: 0 0;
 			padding: 0 0;
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+		.fc-content .fc-title 
+		{
 		}
 
 	}
@@ -494,31 +497,39 @@ $fc-agenda-hmin: 1.5em;
 		border-width: 3px 1px 3px 1px;
 		color: rgba(100, 80, 80, 1.0);
 
-		.fc-time 
+		.fc-bg 
+		{
+		}
+		.fc-content .fc-time 
 		{
 			border-bottom: 1px solid rgba(100, 0, 0, 0.2);
 		}
+		.fc-content .fc-title 
+		{
+		}
 
 
 	}
-	&.know-user.fc-not-end
+
+	&.fc-not-end 
 	{
-		.fc-bg {
-			opacity: 1.0;
-			background: rgba(245, 255, 255, 0.5);
-			border-top: 0.15em solid rgba(0, 0, 0, 0.25);
-			
+		&.know-user 
+		{
+		}
+		&.know-cuser 
+		{
 		}
 	}
-	&.know-user.fc-not-start
+	&.fc-not-start 
 	{
-		.fc-bg {
-			opacity: 1.0;
-			background: rgba(245, 255, 255, 0.5);
-			border-bottom: 0.15em solid rgba(0, 0, 0, 0.25);
-
+		&.know-user 
+		{
+		}
+		&.know-cuser 
+		{
 		}
 	}
+	
 	&.know-time-min {
 		height: $fc-agenda-hmin;
 
