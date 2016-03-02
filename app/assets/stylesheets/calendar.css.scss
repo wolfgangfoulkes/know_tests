@@ -387,6 +387,28 @@ $fc-agenda-hmin: 3em;
 	}
 }
 
+
+/* ----- */
+
+
+#calendar .fc-today
+{
+	/* - overrides - */
+	background-color: initial;
+	border-style: initial;
+	/* ----- */
+
+	background-color: rgba(100, 0, 0, 0.02);
+}
+
+/* - AGENDA label temporarily removed - */
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+	.fc-axis {
+		display: none;
+	}
+}
+
+
 /* --- AGENDA view overrides ----- */
 [data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
 	table {
@@ -405,32 +427,6 @@ $fc-agenda-hmin: 3em;
 		vertical-align: top !important;
 	}		
 }	
-
-/* ----- */
-
-
-
-
-
-#calendar .fc-today
-{
-	/* - overrides - */
-	background-color: initial;
-	border-style: initial;
-	/* ----- */
-
-	background-color: rgba(100, 0, 0, 0.02);
-}
-
-/* --- AGENDA view label style CLEAN THIS UP--- */
-
-/* - temporarily removed - */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-	.fc-axis {
-		display: none;
-	}
-}
-
 /* ----- */
 
 
