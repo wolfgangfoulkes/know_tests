@@ -387,6 +387,25 @@ $fc-agenda-hmin: 3em;
 	}
 }
 
+/* --- AGENDA view overrides ----- */
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+	table {
+		height: 100% !important;
+	}
+
+	.fc-time-grid {
+		overflow: scroll;
+		height: 100% !important;
+		.fc-slats {
+			height: 100% !important;
+		}
+	}
+
+	.fc-axis {
+		vertical-align: top !important;
+	}		
+}	
+
 /* ----- */
 
 
