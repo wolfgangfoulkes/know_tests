@@ -16,71 +16,139 @@
 	}
 */
 
-
+/*
+	weights: 200 - 800;
+*/
 
 $fc-font-i: 4;
 $fc-month-row-height: 4em;
 $fc-bar-h: $nav-bar-h * 0.8;
 $fc-agenda-hmin: 3em;
 
-[data-fc-view="month"]
+@mixin FCEvent($fc_view, $fsize)
 {
-	@include mq(0, 				nth($bps, 2))
-	{
+	padding: 2px 0px;
+	padding-bottom: $fsize * 0.22222;
+	line-height: 1.2;
 
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
+	.fc-content
 	{
+	}
+	.fc-content > *
+	{
+	}
+	.fc-content > .fc-time
+	{
+	}
+	.fc-content > .fc-title
+	{
+	}
 
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-
-	}
-	
-}
-[data-fc-view="basicWeek"]
-{
-	@include mq(0, 				nth($bps, 2))
-	{
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
-	{
-
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-		
-	}
-}
-[data-fc-view="agendaDay"]
-{
-	@include mq(0, 				nth($bps, 2))
-	{
-
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
-	{
-
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-		
-	}
 }
 
+@mixin FCEventColorEZE(
+	$border: null, 
+	$brunderline: null,
+	$bg: null, 
+	$c0: null,
+	$c1: null
+)
+{
+	$br: 			iff( $brwidth, 		1px solid rgba(0, 0, 0, 0.1)	);
+	$brunderline: 	iff( $brunderline,	1px solid rgba(100, 0, 0, 0.1) 	);
+	$bg: 			iff( $bg, 			rgba(255, 255, 255, 1.0) 		);
+	$c0: 			iff( $c0, 			rgba(0, 0, 0, 1.0) 				);
+	$c1: 			iff( $c1, 			inherit 						);
+
+	background: $bg;
+	border-style: $brstyle;
+	border-color: $brcolor;
+	border-width: $brwidth;
+
+	.fc-bg 
+	{
+		background: $bg;
+		border-style: inherit;
+		border-color: inherit;
+		border-width: inherit;
+		color: none;
+	}
+	.fc-content
+	{
+		color: $c0;
+	}
+	.fc-content > *
+	{
+		color: inherit;
+	}
+	.fc-content > .fc-time
+	{
+		border-bottom: $brunderline;
+	}
+	.fc-content > .fc-title
+	{
+		color: $c1;
+	}
+}
+
+@mixin FCEventColor(
+	$brwidth: null,
+	$brstyle: null, 
+	$brcolor: null,
+	$brunderline: null,
+	$bg: null, 
+	$c0: null,
+	$c1: null
+)
+{
+	$brwidth: 		iff( $brwidth, 		0px 							);
+	$brstyle: 		iff( $brstyle, 		solid 							);
+	$brcolor: 		iff( $brcolor, 		rgba(100, 0, 0, 0.5) 			);
+	$brunderline: 	iff( $brunderline,	1px solid rgba(100, 0, 0, 0.1) 	);
+	$bg: 			iff( $bg, 			rgba(255, 255, 255, 1.0) 		);
+	$c0: 			iff( $c0, 			rgba(0, 0, 0, 1.0) 				);
+	$c1: 			iff( $c1, 			inherit 						);
+
+	background: $bg;
+	border-style: $brstyle;
+	border-color: $brcolor;
+	border-width: $brwidth;
+
+	.fc-bg 
+	{
+		background: $bg;
+		border-style: inherit;
+		border-color: inherit;
+		border-width: inherit;
+		color: none;
+	}
+	.fc-content
+	{
+		color: $c0;
+
+		> *
+		{
+			color: inherit;
+		}
+		> .fc-time
+		{
+			border-bottom: $brunderline;
+		}
+		> .fc-title
+		{
+			color: $c1;
+		}
+	}
+}
+
+
+/*.fc-bg 
+	{
+		opacity: 1.0;
+		background: none;
+		border: none;
+		color: none;
+	}*/
 
 #calendar
 {
@@ -95,169 +163,6 @@ $fc-agenda-hmin: 3em;
 	padding-top: inherit; /* --- from page --- */
 	margin: 0 auto;
 }
-
-
-#calendar[data-fc-view="month"] .fc-row.fc-week 
-{
-	height: $fc-month-row-height;
-	overflow: hidden;
-}
-
-/*#calendar:before {
-		display: block;
-		content: "";
-		height: $vmn;
-	};*/
-
-#calendar .fc-day-header 
-{
-	@include sizes(4, "font-size");
-	padding: .8em 0 !important;
-	
-	&.fc-sun, &.fc-mon
-	{
-	}
-}
-
-#calendar .fc-today 
-{
-	/* - overrides - */
-	background-color: initial;
-	border-style: initial;
-	/* ----- */
-
-	background-color: rgba(100, 0, 0, 0.02);
-}
-
-
-/* ----- RESPONSIVE SIZES ----- */
-#calendar 
-{
-	&[data-fc-view="month"]
-	{
-		/*font-size: ; should be less when it gets small */
-		max-height: 133.3vw;
-	}
-	
-	@include mq(0, nth($bps, 2))
-	{
-		top: 0;
-		&[data-fc-view="agendaDay"]
-		{
-			max-width: none;
-			max-height: none;
-			padding-bottom: 0;
-
-		}
-		&[data-fc-view="month"]
-		{
-			max-height: none;
-		}
-	}
-
-	@include mq(nth($bps, 3) + 1, nth($bps, 4)) 
-	{
-		max-width: 800px;
-		max-height: none;
-		padding-bottom: 49px;
-		&[data-fc-view="basicDay"]
-		{
-			
-		}
-		&[data-fc-view="agendaDay"]
-		{
-			
-		}
-		&[data-fc-view="month"] 
-		{
-		}
-	}
-	@include mq(nth($bps, 4) + 1, 0) 
-	{
-		max-width: 960px;
-		padding-bottom: 59px;
-		/*max-height: 590px;*/
-		&[data-fc-view="agendaDay"]
-		{
-		}	
-		&[data-fc-view="basicDay"]
-		{
-		}	
-		
-	}
-}
-
-/* --- AGENDA view overrides ----- */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-	table {
-		height: 100% !important;
-	}
-
-	.fc-time-grid {
-		overflow: scroll;
-		height: 100% !important;
-		.fc-slats {
-			height: 100% !important;
-		}
-	}
-
-	.fc-axis {
-		vertical-align: top !important;
-	}		
-}	
-
-/* --- AGENDA view label style CLEAN THIS UP--- */
-
-/* - temporarily removed - */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-	.fc-axis {
-		display: none;
-	}
-}
-
-/* - filler - */
-/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-
-	.fc-axis {
-		overflow: hidden;
-		padding: 0 3px;
-
-		font-size: 1.5em;
-		font-weight: normal;
-		> span {
-			color: rgba(80, 0, 0, 0.4);
-			position: relative;
-			top: -0.3em;
-			right: -2px;
-		}
-	}
-}*/
-
-/* - better but incomplete - */
-/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-
-	.fc-widget-content {
-		border-left: none;
-	}
-	.fc-axis {
-		overflow: visible;
-		padding: 0 3px;
-
-		font-size: 16px;
-		font-weight: normal;
-		border: none;
-		> span {
-			color: rgba(100, 0, 0, 0.1);
-			position: relative;
-			top: -0.5em;
-			right: 0;
-		}
-	}
-}*/
-
-/* ----- */
-
-
 
 #calendar-title {
 	font-size: $nav-bar-h;
@@ -275,6 +180,15 @@ $fc-agenda-hmin: 3em;
 	align-items: center;
 }
 
+#calendar .fc-day-header 
+{
+	@include sizes(4, "font-size");
+	padding: .8em 0 !important;
+	
+	&.fc-sun, &.fc-mon
+	{
+	}
+}
 
 /* -------- UI
 *
@@ -347,25 +261,80 @@ $fc-agenda-hmin: 3em;
 *
 * -------- */
 
-@mixin FCEvent($fc_view, $fsize)
+
+/* ----- RESPONSIVE SIZES ----- */
+#calendar 
 {
-	padding: 2px 0px;
-	padding-bottom: $fsize * 0.22222;
-	line-height: 1.2;
+	&[data-fc-view="basicWeek"]
+	{
+		
+	}
+	&[data-fc-view="agendaDay"]
+	{
+		
+	}
+	&[data-fc-view="month"]
+	{
+		/*font-size: ; should be less when it gets small */
+		max-height: 133.3vw;
+	}
+	
+	@include mq(0, nth($bps, 2))
+	{
+		top: 0;
 
-	.fc-content
-	{
-	}
-	.fc-content > *
-	{
-	}
-	.fc-content > .fc-time
-	{
-	}
-	.fc-content > .fc-title
-	{
+		&[data-fc-view="basicWeek"]
+		{
+			
+		}
+		&[data-fc-view="agendaDay"]
+		{
+			max-width: none;
+			max-height: none;
+			padding-bottom: 0;
+
+		}
+		&[data-fc-view="month"]
+		{
+			max-height: none;
+		}
 	}
 
+	@include mq(nth($bps, 3) + 1, nth($bps, 4)) 
+	{
+		max-width: 800px;
+		max-height: none;
+		padding-bottom: 49px;
+
+		&[data-fc-view="basicWeek"]
+		{
+			
+		}
+		&[data-fc-view="agendaDay"]
+		{
+			
+		}
+		&[data-fc-view="month"] 
+		{
+		}
+	}
+	@include mq(nth($bps, 4) + 1, 0) 
+	{
+		max-width: 960px;
+		padding-bottom: 59px;
+		/*max-height: 590px;*/
+
+		&[data-fc-view="basicWeek"]
+		{
+		}
+		&[data-fc-view="agendaDay"]
+		{
+		}	
+		&[data-fc-view="month"]
+		{
+		}	
+		
+	}
 }
 
 /* ----- EVENT STYLE
@@ -416,21 +385,34 @@ $fc-agenda-hmin: 3em;
 			display: inline-block;
 		}
 	}
-
-	&.know-user {
-		background-color: rgba(100, 0, 0, 0.5);
-		border-color: rgba(0, 0, 0, 0.0);
-		color: white;
-	}
-
-	&.know-cuser {
-		background-color: rgba(0, 0, 0, 0.0);
-		border-color: rgba(100, 0, 0, 0.8);
-		color: rgba(100, 80, 80, 1.0);
-	}
-
-	
 }
+
+/* ----- */
+
+
+
+
+
+#calendar .fc-today
+{
+	/* - overrides - */
+	background-color: initial;
+	border-style: initial;
+	/* ----- */
+
+	background-color: rgba(100, 0, 0, 0.02);
+}
+
+/* --- AGENDA view label style CLEAN THIS UP--- */
+
+/* - temporarily removed - */
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+	.fc-axis {
+		display: none;
+	}
+}
+
+/* ----- */
 
 
 /* change these colors maybe */
@@ -457,7 +439,7 @@ $fc-agenda-hmin: 3em;
 	.fc-content .fc-title 
 	{
 		display: block;
-		font-weight: lighter;
+		font-weight: 200;
 		padding: 0 4px;
 		padding-top: 5px;
 		font-size: 1.0em;
@@ -472,10 +454,10 @@ $fc-agenda-hmin: 3em;
 		background-color: rgba(150, 90, 90, 1.0);
 		color: white;
 		
-		border-color: rgba(255, 255, 255, 1.0);
 		border-width: 0px;
+		border-color: rgba(255, 255, 255, 1.0);
 		
-
+		
 		.fc-bg 
 		{
 		}
@@ -493,10 +475,12 @@ $fc-agenda-hmin: 3em;
 
 	&.know-cuser {
 		background-color: rgba(255, 255, 255, 1.0);
-		border-color: rgba(100, 0, 0, 0.35);
-		border-width: 3px 1px 3px 1px;
 		color: rgba(100, 80, 80, 1.0);
 
+		border-width: 3px 1px 3px 1px;
+		border-color: rgba(100, 0, 0, 0.35);
+		
+		
 		.fc-bg 
 		{
 		}
@@ -530,7 +514,7 @@ $fc-agenda-hmin: 3em;
 		}
 	}
 	
-	&.know-time-min {
+	&.know-time-min, &.fc-not-start, &.fc-not-end {
 		height: $fc-agenda-hmin;
 
 		&.know-user 
@@ -553,151 +537,167 @@ $fc-agenda-hmin: 3em;
 	padding: 2px 0px;
 	padding-bottom: 1em;
 
-	.fc-content
+	.fc-content 
 	{
-		.fc-time
-		{
-			display: block;
-			margin: 0px 2px;
-			border-bottom: 1px solid rgba(100, 0, 0, 0.1);
 
-		}
-		.fc-title
-		{
-			display: block;
-			margin: 0 4px;
-			margin-top: 2px;
-			font-size: 1.1em;
-
-			white-space: normal;
-		}
 	}
-}
-
-#calendar[data-fc-view="month"]	.know-fcevent.know-user
-{
-	background-color: rgba(100, 0, 0, 0.01);
-	border-color: rgba(0, 0, 0, 0.5);
-
 	.fc-content .fc-time
 	{
-		/*color: rgba(130, 0, 0, 1.0);*/
-		color: rgba(0, 0, 0, 1.0);
-		font-weight: medium;
-		
+		display: block;
+		margin: 0px 2px;
+		border-bottom: 1px solid rgba(100, 0, 0, 0.1);
 
 	}
-	.fc-content .fc-title 
+	.fc-content .fc-title
 	{
-		color: rgba(0, 0, 0, 1.0);
+		display: block;
+		margin: 0 4px;
+		margin-top: 2px;
+		font-size: 1.1em;
+
+		white-space: normal;
+	}
+
+	&.know-user {
+		background-color: rgba(100, 0, 0, 0.5);
+		border-color: rgba(0, 0, 0, 0.0);
+		color: white;
+	}
+
+	&.know-cuser {
+		background-color: rgba(0, 0, 0, 0.0);
+		border-color: rgba(100, 0, 0, 0.8);
+		color: rgba(100, 80, 80, 1.0);
 	}
 }
 
-#calendar[data-fc-view="month"] .know-fcevent.know-cuser
+#calendar[data-fc-view="month"] .fc-row.fc-week 
 {
-	background-color: rgba(0, 0, 0, 0.0);
-	border-color: rgba(100, 0, 0, 0.3);
-
-	.fc-content .fc-time 
-	{
-		color: rgba(120, 0, 0, 0.7);
-		font-weight: medium;
-
-	}
-	.fc-content .fc-title 
-	{
-		color: rgba(50, 0, 0, 0.6);
-	}
+	height: $fc-month-row-height;
+	overflow: hidden;
 }
 
 /* --- MONTH view --- */
 #calendar[data-fc-view="month"] .know-fcevent
 {
-	font-size: 1.0em;
-	line-height: 1.0;
-	height: auto;
-	border: none;
-	margin-bottom: 1px;
+		height: auto;
+		margin-bottom: 1px;
 
-	.fc-content
-	{
-		display: inline-flex;
-		align-items: flex-end;
-		width: 100%;
-	}
-	.fc-content .fc-time
-	{
-		flex-basis: 3em;
-		flex-grow: 0;
-		flex-shrink: 0;
-		font-size: 0.65em;
-	}
-	.fc-content .fc-title
-	{
-		margin-left: 3px;
-		flex-grow: 1;
-		font-size: 0.65em;
-		text-overflow: ellipsis;
-	}
+		font-size: 1.0em;
+		line-height: 1.0;
+
+		.fc-content
+		{
+			display: inline-flex;
+			align-items: flex-end;
+			width: 100%;
+		}
+		.fc-content .fc-time
+		{
+			flex-basis: 3em;
+			flex-grow: 0;
+			flex-shrink: 0;
+
+			box-sizing: border-box;
+
+			font-size: 0.65em;
+			white-space: nowrap;
+		}
+		.fc-content .fc-title
+		{
+			flex-grow: 1;
+
+			box-sizing: border-box;
+			margin-left: 3px;
+
+			font-size: 0.65em;
+			white-space: nowrap;
+			
+			text-overflow: ellipsis;
+		}	
 }
+
+/* ---- WITH BORDER/BACKGROUND ----- */
+/*#calendar[data-fc-view="month"] .know-fcevent
+{
+	border-style: solid;
+	border-width: 1px;
+
+	&.know-user
+	{
+		background-color: rgba(100, 0, 0, 0.5);
+		border-color: rgba(0, 0, 0, 0.0);
+
+		.fc-content .fc-time 
+		{
+			font-weight: 700;
+			color: rgba(0, 0, 0, 1.0);
+		}
+
+		.fc-content .fc-title 
+		{
+			font-weight: 500;
+			color: rgba(255, 255, 255, 1.0);
+		}
+	}
+	&.know-cuser
+	{
+		background-color: rgba(0, 0, 0, 0.0);
+		border-color: rgba(80, 0, 0, 0.6);
+
+		.fc-content .fc-time 
+		{
+			font-weight: 700;
+			color: rgba(0, 0, 0, 1.0);
+		}
+
+		.fc-content .fc-title 
+		{
+			font-weight: 500;
+			color: rgba(100, 80, 80, 1.0);
+		}
+	}
+}*/
+
+/* ----- NO BORDER/BACKGROUND ----- */
 #calendar[data-fc-view="month"] .know-fcevent
 {
+	border: none;
+	background: none;
 
-	@include mq(0, 				nth($bps, 3)) 
+	.fc-content > *
 	{
-			.fc-content .fc-time
-			{
-				display: block;
-				box-sizing: border-box;
-
-				border-top-left-radius: 3px;
-				border-top-right-radius: 3px;
-				
-				padding: 1px 3px;
-
-				white-space: nowrap;
-			}
-			.fc-content .fc-title
-			{
-				display: block;
-				box-sizing: border-box;
-
-				padding-top: 2px;
-				padding-bottom: 3px;
-
-				white-space: nowrap;
-			}
-
-			&.know-user
-			{
-				.fc-content > .fc-time 
-				{
-					/*background: rgba(100, 0, 0, 0.8);*/
-					border-bottom: 2px solid rgba(0, 0, 0, 0.8);
-				}
-			}
-			&.know-cuser
-			{
-				.fc-content > .fc-time 
-				{
-					border-bottom: 2px solid rgba(120, 0, 0, 0.6);
-				}
-			}
+		color: rgba(0, 0, 0, 1.0);
 	}
-	@include mq(nth($bps, 3), 				0) 
+	.fc-content > .fc-time
 	{
-			border: 1px solid rgba(100, 0, 0, 0.01);
-
-			&.know-user 
-			{
-				border-width: 0 0 1px 0;
-
-			}
-			&.know-cuser
-			{
-				border-width: 0 0 1px 0;
-			}
+		font-weight: 700;
+	}
+	.fc-content > .fc-title
+	{
+		font-weight: 500;
 	}
 
+	&.know-user
+	{
+		.fc-content > .fc-time 
+		{
+			border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+		}
+		.fc-content > .fc-title
+		{
+		}
+	}
+	&.know-cuser
+	{
+		.fc-content > .fc-time 
+		{
+			border-bottom: 2px solid rgba(120, 0, 0, 0.6);
+		}
+		.fc-content > .fc-title
+		{
+		}
+	}
 }
-/* ----- */
+
+/* --- */
