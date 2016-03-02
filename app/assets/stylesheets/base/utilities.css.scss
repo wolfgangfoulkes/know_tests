@@ -5,6 +5,27 @@ $gm: 1.61803398875;
 
 /*** FUNCTIONS *****/
 
+/*
+* 	replace broken ternary conditional
+* 	if given two args, it's like ||=
+*/
+@function iff($t, $f, $condition: null)
+{
+	@if $condition == null
+	{
+		$condition: $t;
+	}
+	
+	@if $condition 
+	{
+		@return $t
+	}
+	@else
+	{
+		@return $f
+	}
+}
+
 /* 
 * generate media query
 * 0, n will give you media < n
