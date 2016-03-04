@@ -153,7 +153,7 @@ class Event < ActiveRecord::Base
 
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
-			d = self.arel_table[:name].matches(false)
+			d = self.arel_table[:name].matches(nil)
 		elsif q.length <= 5
 			n = self.arel_table[:name].matches("#{q}%")
 			d = self.arel_table[:description].matches("#{q}%")

@@ -26,8 +26,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.js { 
           render 'shared/events_search.js.erb',
-          locals: 
-          { 
+          locals: { 
             partial: partial,
             collection: EventsHelper.pagi( events, page: params[:page] ),
             local: local

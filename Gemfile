@@ -82,4 +82,4 @@ gem 'kaminari'
 gem 'faker'
 
 # ez queries
-gem 'squeel'
+# gem 'squeel'
