@@ -1,9 +1,17 @@
+<% comments = comments.page(1).per(6) %>
+<%= render partial: "layouts/paginate", 
+	locals: {
+		items: comments, target: comments.type, 
+		params: {controller: "comments", action: "paginate", role: comments.role}
+	}
+%>
 <%= content_tag :div, 
 	class: ["comment-list", "col"],
-	data: {refresh: comments.type} do
+	data: {refresh: comments.type, scroll_target: comments.type } do
 -%>
 	<%= render comments.deef %>
 <% end -%>
+
 <%= render partial: 'comments/form',
 	locals: 
 	{
