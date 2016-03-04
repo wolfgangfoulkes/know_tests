@@ -3,35 +3,37 @@ class EventsController < ApplicationController
 
   # DON'T PASS USER_ID THROUGH FORM OR ACCEPT IT IN PARAMS
   # CHANGE THAT
-  def index
-    puts params.to_yaml
+
+  def index # unused, but still useful for tests
     @events = Event.filter(filtering_params)
+  end
+
+  def refresh_follow
+    render partial: "follow_button"
   end
 
   def search
     if params[:target] == "activities"
-      partial = "events/activities"
+      partial = "static_pages/activity_toggle"
       events = Event.where(id: params[:items].split(",")).search(params[:search])
       local = :event
     else
       partial = "events/event"
-      events = Event.where(id: params[:items].split(",")).search(params[:search])
+      events = Event.where(id: params[:items].split(",")).search(params[:search]).deef
+      #events = Event.find_by_sql( params[:filter] ).search( params[:search] )
       local = :event
     end
-
-    
     respond_to do |format|
-      format.js { render 'shared/events_search.js.erb', locals: {partial: partial, collection: events, local: local} }
+      format.js { 
+          render 'shared/events_search.js.erb',
+          locals: 
+          { 
+            partial: partial,
+            collection: EventsHelper.pagi( events, page: params[:page] ),
+            local: local
+          }
+      }
     end
-  end
-
-  def show
-  end
-
-  def edit
-  end
-
-  def new
   end
 
   def create
@@ -67,8 +69,13 @@ class EventsController < ApplicationController
     end
   end
 
-  def refresh_follow
-    render partial: "follow_button"
+  def show
+  end
+
+  def edit
+  end
+
+  def new
   end
 
   private
@@ -77,7 +84,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :starts_at, :ends_at, :description, :user_id, :tag_list)
     end
 
-    def filtering_params
+    def filtering_params #unused currently
       params.permit(:starts_after, :order, :search, :name_starts_with, :name_contains)
     end
 end

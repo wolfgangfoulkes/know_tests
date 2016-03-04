@@ -1,9 +1,11 @@
 <%= form_tag url_for(controller: 'events', action: 'search'), remote: true, class: 'events search row h2' do %>
-	<%= hidden_field_tag :items, @events.pluck(:id).join(',') %>
+	<%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
+	<%= hidden_field_tag :filter, params[:filter] %>
 	<%= text_field_tag :search, params[:search], placeholder: 'search' %>
 	<%= submit_tag '>>' %>
 <% end %>
 <div class="events feed col" data-search-target="1" data-scroll-content="1">
 	<%= render @events %>
 </div>
+
 
