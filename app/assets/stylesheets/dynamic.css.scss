@@ -1,3 +1,56 @@
+/* ----- PAGINATOR ----- */
+.h5[data-pagi-link]
+{
+	width: 100%;
+	.pagination
+	{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 50%;
+		margin: 0 auto;
+
+		> *
+		{
+		}
+
+		.first, .last
+		{
+			display: none;
+		}
+
+		.prev, .next {
+			flex-basis: 10%;
+		}
+
+		.page.current 
+		{
+			color: rgba(120, 0, 0, 0.5);
+		}
+		
+	}
+
+	&[data-first="true"]
+	{	
+		.pagination::before
+		{
+			content: "";
+			display: block;
+			flex-basis: 10%;
+		}
+	}
+	&[data-last="true"]
+	{
+		.pagination::after
+		{
+			content: "";
+			display: block;
+			flex-basis: 10%;
+		}
+	}
+}
+/* -------- */
+
 svg[data-svgr="0"] {
 	transform: rotate(0deg);
 }

@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-	load_resource
+	load_resource :only => [:create, :destroy, :set_public, :set_default, :show]
 	authorize_resource :only => [:create, :destroy, :show]
 	before_action :set_collection, only: [:create, :destroy, :set_public, :set_default]
 
@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
 			}
 		end
 	end
+
 
 	def show
 	end
@@ -57,6 +58,13 @@ class CommentsController < ApplicationController
 				format.html { redirect_to @comment.commentable, notice: @comment.errors.full_messages.join(", ") }
 			end
 		end
+	end
+
+	def paginate 
+		role = params[:role]
+		@comments = Comment.where(commentable_id: params[:id], role: params[:role])
+		parameters = {controller: "comments", action: "paginate", role: role}
+	    render "shared/paginate2.js.erb", locals: {target: @comments.type, items: @comments.page(params[:page]).per(6), parameters: parameters }
 	end
 
 	private

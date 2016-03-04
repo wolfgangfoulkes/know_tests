@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'comments#paginate', controller: "comments", action: "paginate"
+
   
 
   #post ':controller(/filtered)', action: 'filtered'
