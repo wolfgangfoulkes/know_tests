@@ -75,7 +75,8 @@ module ApplicationHelper
 	# -----
 
 	# ----- activities, return hashes with result as key 	-	-	-	- UNUSED
-
+	# - 	-	- 	-	-	-	-	-	-	-	-	-
+	# - 	-	- 	-	-	-
 	def activities_by_date(a_)
 		_a = a_.order(:created_at).group_by{ |i| i.created_at.to_date.to_s }
 		_a
@@ -85,8 +86,6 @@ module ApplicationHelper
 		_a = a_all.group_by{ |i| i.created_at.to_f }
 		_a
 	end
-
-	# Event.all.group_by{|i| i.activities.order(:updated_at).pluck(:updated_at).last.to_f}
 	# -----
 
 	# ----- style
@@ -118,6 +117,8 @@ module ApplicationHelper
 	# -----
 
 	# ----- javascript data params # - 	-	-	-	-	-	-	-	- USED
+	# - 	-	- 	-	-	-	-	-	-	-	-	-
+	# - 	-	- 	-	-	-
 	def sel_snd(id, state: false, group: nil)
 		_d = {}
 		_d["sel"] = "snd"
@@ -153,10 +154,16 @@ module ApplicationHelper
 	end
 	# --------
 
+	
+	# NOTE FOR GET_LOCAL(S): 
+	# PROBABLY WANT TO NOT-NAME THE 'LOCALS' INPUT IN THE FUTURE, SO IT REQUIRES LOCAL_ASSIGNS
+
 	# ----- for OPTIONAL LOCAL ATTRIBUTES for PARTIALS and stuff -----
 	# - If local_assigns has a key, return it. If not, return false.
 	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
-	def get_local(locals: {}, key: "", alt: false  )
+	# - 	-	- 	-	-	-	-	-	-	-	-	-
+	# - 	-	- 	-	-	-
+	def get_local(locals: {}, key: "", alt: false  ) 
 		_local = alt
 		if locals.has_key?(key.to_sym)
 			_local = locals[key.to_sym]
@@ -166,6 +173,8 @@ module ApplicationHelper
 
 		return _local 
 	end
+
+	
 
 	# - params: {key1: key1deef, key2...}
 	def get_locals(locals: {}, params: {})
@@ -179,6 +188,8 @@ module ApplicationHelper
 	
 	# - get data, classes, merge with second param if you gotta reason
 	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
+	# - 	-	- 	-	-	-	-	-	-	-	-	-
+	# - 	-	- 	-	-	-
 	def get_data(locals: {}, data:{}) 
 		_data = get_local(locals: locals, key: "data", alt: {})
 		_data = _data.merge(data)
@@ -191,40 +202,9 @@ module ApplicationHelper
 		return _classes
 	end
 
-	# - 	-	- 	-	-	-	-	-	-	-	-	-	-	-	-	- UNUSED
-	def deef_params
-		return {"data" => {}, "class" => [], "id" => []} # href? image? url?
-	end
-
-	def deef_locals(locals: {})
-		return get_locals(locals, deef_params)
-	end
-
-	# --- this especially seems like it won't get used
-	def deef_locals(locals: {}, add: {})
-		_locals = {}
-		deef = get_locals(locals, deef_params)
-
-		deef.each do |key, value|
-
-			_locals[key] = value
-
-			if add.has_key?(key)
-				if ["class", "id"].include?(key)
-						_locals[key] = _locals[key] + add[key]
-
-				elsif ["data"].include?(key)
-						_locals[key] = _locals[key].merge( add[key] )
-
-				end
-			end
-		end
-		return _locals.merge(add)
-	end
-	# ---
-	# -----
-
 	# ----- PROGRAMMATIC VIEWS # -	-	-	-	-	-	-	-	- UNUSED
+	# - 	-	- 	-	-	-	-	-	-	-	-	-
+	# - 	-	- 	-	-	-
 	# options = {} is a catch-all hash for named args
 	# options : {} is a hash arg named options with a default
 	def block_to_partial(partial_name, options = {}, &block)
@@ -249,38 +229,20 @@ module ApplicationHelper
 	end
 	# -----
 
-	# def block_to_partial(partial_name, options = {}, &block)
- #    	options.merge!(:body => capture(&block))
- #    	concat(render(:partial => partial_name, :locals => options), block.binding)
- #  	end
+	# ----- FROM SOMEWHERE ONLINE:
+	# || I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 
-	# def link_to(*args,&block)
- #  		if block_given?
- #    		concat(super(capture(&block), *args), block.binding)
- #  		else
- #   			super(*args)
- #  		end
-	# end
+	# || def concat( content = nil, &block )
+	# || output_buffer << ( block_given? ? capture( &block ) : content )
+	# || end
 
-	# I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
+	# || And then you can do this:
 
-	# def concat( content = nil, &block )
-	# output_buffer << ( block_given? ? capture( &block ) : content )
-	# end
-
-	# And then you can do this:
-
-	# concat do
-	# content_tag( something ) do
-	# concat something
-	# concat something
-	# end
-	# end
-	# --------
-
-	# ----- MISC
-	#	def defdAElseB(a_, b_)
-	#	defined?(a_) ? a_ : b_
-	#	end
+	# || concat do
+	# || content_tag( something ) do
+	# || concat something
+	# || concat something
+	# || end
+	# || end
 	# --------
 end

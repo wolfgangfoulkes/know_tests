@@ -6,10 +6,14 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
-  has_many :comments, -> (comment) { where(role: "reply", root: comment.root) }, 
+  has_many :comments, -> (comment) { where(role: "reply", root: comment.root) },
     as: :commentable,
     dependent: :destroy
-  has_many :activities, as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
+    
+  has_many :activities, 
+    as: :trackable, 
+    class_name: 'PublicActivity::Activity', 
+    dependent: :destroy
 
   validate :commentable_valid?
   validates :user_id, presence: true
@@ -18,11 +22,24 @@ class Comment < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 60 }
   validates :comment, presence: true, length: { maximum: 240 }
 
+  # ----- keep this scope
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
 
   # ----- simplifies ajax
   scope :same_type?, ->  { (pluck(:role).uniq.size == 1) }
-  
+
+  # ----- should be class methods? do scopes assure Relation return?
+  scope :collection, -> (role) { where(role: role) }
+  # --- should be class methods
+  scope :role, -> {
+    c = pluck(:role).uniq
+    if c.size == 1
+      "#{c[0]}"
+    else
+      ""
+    end
+  }
+
   scope :type, -> { 
     c = pluck(:role).uniq
     if c.size == 1
@@ -31,17 +48,31 @@ class Comment < ActiveRecord::Base
       "comments"
     end
   }
-  scope :collection, -> (role) {
-    where(role: role)
-  }
+  # ----
+  # -----
+
+
+
+# ----- IMPORTANT ----- #
+  # ----- fake OOP
   def type
     "#{self.role}_comments"
   end
+
   def collection
     self.commentable.comments.where(role: self.role)
   end
+
+  def owner_id
+    self.root.user_id
+  end
+
+  def owner?(owner)
+    (owner.id == self.owner_id)
+  end
   # -----
 
+  # ----- life cycle
   after_create do
     setup_params
     activity_for_create
@@ -67,42 +98,46 @@ class Comment < ActiveRecord::Base
       throw "bad role for comment"
     end
   end
+  # -----
 
-  def owner_id
-    self.root.user_id
-  end
 
-  def owner?(owner)
-    (owner.id == self.owner_id)
-  end
-
+# ----- validation ----- #
+  # --- validation method
   def commentable_valid?
     if Comment.can_add_comment_to(commentable)
     else
       errors[:base] << "can't add comment to this model!"
     end
   end
+  # ---
 
+  # --- used in ^^^
   def self.can_add_comment_to(commentable)
     if commentable.class.name == "Comment"
       commentable.can_add_comment?
     elsif commentable.class.name == "Event"
       true
     else
-      false
+      false # if a nested comment with role 'default'
     end
   end
+  # ---
 
-  def can_add_comment?
+  # --- used in ^^^
+  def can_add_comment? 
     ( ["default"].include?(self.role) ) &&
     ( !self.is_nested? )
   end
+  # ---
 
+  # --- used in ^^^
   def is_nested?
     (self.commentable_type == "Comment")
   end
+  # ---
+# -------- #
 
-  # ----- public activity
+# ----- public activity ----- #
   def activity_for_create
     a = create_activity key: "comment", trackable: self, owner: self.root, role: self.role, parameters: {role: self.role}
   end
@@ -110,7 +145,7 @@ class Comment < ActiveRecord::Base
   def activity_for_save
     # owner.updated_at = a.updated_at
   end
-  # -----
+# ----- #
 
   # ----- unused currently
   # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
