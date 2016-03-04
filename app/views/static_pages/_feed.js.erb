@@ -1,4 +1,5 @@
 $('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+
 $('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
 $('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
 
