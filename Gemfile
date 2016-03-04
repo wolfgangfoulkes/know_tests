@@ -80,3 +80,6 @@ gem 'kaminari'
 
 # generate test data
 gem 'faker'
+
+# ez queries
+gem 'squeel'
