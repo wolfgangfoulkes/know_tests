@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
 	include Filterable
 	include PublicActivity::Common
-	#----- relationships -----
+	
+#----- relationships -----
 	#--- socialization
 	acts_as_followable
 	#-----
@@ -25,33 +26,63 @@ class Event < ActiveRecord::Base
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
-	#--------
+#-----#
 
-	#----- validations -----
+#----- validations -----
 	validates :user_id, presence: true
 	validates :name, presence: true
 	# by default the date validator checks for a valid date
 	validates :starts_at, presence: true
 	validates :ends_at, presence: true
 	validates :ends_at, date: { after: :starts_at } 
-	#--------
+#-----#
 
-	#----- callbacks -----
+#----- callbacks -----
 	after_save :remove_orphaned_tags
 	after_save(on: :update) do
 		# called twice
 		# do with 'notify_users checkbox'
 	end
 	after_destroy :remove_orphaned_tags
-	#--------
+#-----#
 
-	#----- scopes ----- 
-	# to chain them, I must return an active_record object, and right now
-	# that is easiest with "where"
+#----- scopes ----- 
 	scope :deef, -> { order("starts_at ASC") }
+#-----#
 
-#-------- class methods (just like scope, return RELATION) --------#
-#----- time
+#----- some arel utility functions -----#
+#- I haven't extensively tested them
+#---
+	def self.s_to_arel(q)
+		Arel::Nodes::SqlLiteral.new(q)
+	end
+	# for ActiveRecord Relations based on string conditions
+	# e.g. Event.where("name ILIKE '%b'")
+	def self.q_to_arel(q)
+		q.where_values.map{ |v| v.class.name == "String" ? self.s_to_arel(v) : v }.reduce(:or)
+	end
+	def self.to_arel(q)
+		if q.class.name == "String"
+			self.s_to_arel(q)
+		elsif q.class.name == "ActiveRecord::Relation"
+			self.q_to_arel(q)
+		else
+			nil
+		end
+	end
+
+	# second part works only with ActiveRecord hash queries or Arel queries:
+	# e.g. {name: }
+	def self.hor(q)
+		self.where_values.reduce(:or)
+	end
+#-----#
+
+#-------- class methods --------#
+#- def method_ 	(return AREL object)
+#- def method 	(just like scope, return RELATION)
+#---
+	#----- time
 	def self.starts_after_(q)
 		self.arel_table[:starts_at].gt(q)
 	end
@@ -110,7 +141,7 @@ class Event < ActiveRecord::Base
 		sa = self.starts_at >= q
 		ea = self.ends_at <= q
 	end
-#----- string pattern matching
+	#----- string pattern matching
 	def self.name_starts_with_(q)
 		self.arel_table[:name].matches("#{q.downcase}%")
 	end
@@ -147,10 +178,12 @@ class Event < ActiveRecord::Base
 		self.where( "#{k} ilike any (array[?])", vs )
 	end
 
-#----- INTERFACE METHODS
+	#----- INTERFACE METHODS
+	#- for the application's specific uses of the above class methods
+	#---
+
 	# order determines final order
 	def self.search_(q)
-
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
 			d = self.arel_table[:name].matches(nil)
@@ -168,15 +201,18 @@ class Event < ActiveRecord::Base
 	def self.search(q)
 		self.where( self.search_(q) )
 	end
-#-----
+	#-----
 
-#----- COMMENTS -----
+#--------#
+
+#----- COMMENTS -----#
 	def setup_comment(comment)
 		if comment.role == "owner"
 			comment.public = true
 		end
 	end
-#-----
+#-----#
+
 
 #----- ACTIVITIES
 	def fresh_for(user)
@@ -207,7 +243,7 @@ class Event < ActiveRecord::Base
 		#  										  faster -> owner_id: select(:id))
 	}
 	#---
-	#-----
+#-----#
 
 #----- TAGS 
 	def tag_list=(names)
@@ -230,6 +266,6 @@ class Event < ActiveRecord::Base
 	    tag.destroy if tag.events.empty?
 	  end
 	end
-#-----
+#-----#
 
 end

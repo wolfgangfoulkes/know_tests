@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   # modify to set yr own custom error
   rescue_from CanCan::AccessDenied do |exception|
-	redirect_to access_error_url
+	 redirect_to access_error_url
   end
 
   def fresh?(o_)

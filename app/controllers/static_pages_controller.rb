@@ -1,6 +1,8 @@
 class StaticPagesController < ApplicationController
+  before_action :set_events, only: [:feed, :saved, :activities]
+
   def saved
-  	@events = Event.where(id: (current_user.followees(Event) | current_user.events)).page( params[:page] ).per(8).deef
+  	@events = @events.where(id: (current_user.followees(Event) | current_user.events)).deef
 
     respond_to do |format|
       format.html { 
@@ -10,6 +12,7 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb", 
           locals: 
           {
+              replace: @replace,
               item_partial: "events/event",
               items: @events
           } 
@@ -19,23 +22,19 @@ class StaticPagesController < ApplicationController
   end
 
   def feed
-    _events = Event.starts_after(DateTime.now).deef
-
-    params[:filter] = _events.where_sql
-
-    # good application of a decorator or something
-    @events = EventsHelper.pagi(_events, page: params[:page])
+    @events = @events.starts_after(DateTime.now).deef
 
     respond_to do |format|
       format.html { 
-          render "static_pages/feed" 
+          render "static_pages/feed"
       }
       format.js { 
-          render "static_pages/_feed.js.erb", 
+          render "static_pages/_feed.js.erb",
           locals: 
           {
+              replace: @replace,
               item_partial: "events/event",
-              items: @events 
+              items: @events
           }
       }
     end
@@ -43,7 +42,7 @@ class StaticPagesController < ApplicationController
 
   def activities
     activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
-    @events = Event.where(id: activities.order("created_at ASC", "role ASC").pluck("owner_id") ).page( params[:page] ).per(6)
+    @events = @events.where(id: activities.order("created_at ASC", "role ASC").pluck("owner_id") )
 
     respond_to do |format|
       format.html { 
@@ -53,6 +52,7 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb",  
           locals: 
           {
+              replace: @replace,
               item_partial: "static_pages/activity_toggle",
               items: @events
           }
@@ -86,6 +86,19 @@ class StaticPagesController < ApplicationController
 
   end
 
-  
+  private
 
+    def set_events
+      @events = Event.where(nil)
+      @replace = false
+      if params.include?(:search)
+        @events = @events.search(params[:search])
+        @replace = true
+      end
+      if params.include?(:page)
+        @events = @events.page(params[:page]).per(8)
+      else
+        @events = @events.page(1).per(8)
+      end
+    end
 end

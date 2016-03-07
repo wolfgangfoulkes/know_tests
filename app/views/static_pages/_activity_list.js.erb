@@ -12,7 +12,7 @@ $(".svg-link").on("click",
 		$(".svg-link").off("click");
 		$selected.detach();
 		$deselected.removeClass("hidden");
-		$(document).trigger("scroll:on");
+		$(document).trigger("scroll:start");
 		window.location.hash = '';
 	}
 );

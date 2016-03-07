@@ -1,10 +1,15 @@
-$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+<% if replace %>
+	$('[data-scroll-content]').html("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>")
+	$(document).trigger("callbacks:reset");
+	$(document).trigger("scroll:on");
+<% else %>
+	$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+<% end %>
 
 $('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
 $('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
 
-<% if (items.current_page == items.total_pages) %>
-  $('[data-scroll-link]').hide();
+<% if (items.current_page >= items.total_pages) %>
   $(document).trigger("scroll:off");
 <% else %>
   $('[data-scroll-link] a').attr('href', '<%= url_for(page: items.current_page + 1) %>');

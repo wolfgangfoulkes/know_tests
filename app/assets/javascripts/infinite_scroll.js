@@ -1,6 +1,6 @@
-var waitedLongEnoughBetweenPages = function()
+var nextPageExists = function()
 {
-  return ( last_load_at == null || new Date() - last_load_at > min_ms );
+  return ( $(more_link).attr("data-scroll-link") == 1 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -19,28 +19,27 @@ var onLoadSuccess = function()
 	$(more_link).removeClass('loading');
   is_loading = false;
   last_load_at = new Date();
-  $(document).trigger("callbacks:reset")
+  $(document).trigger("callbacks:reset");
 };
 
 var onLoadComplete = function(jqxhr_, textStatus_ )
 {
-  // console.log(jqxhr_); 
-  // console.log(textStatus_);
+  console.log(jqxhr_); 
+  console.log(textStatus_);
 };
 
 var nextPage = function()
 {
 	url = $(more_link).find('a').attr('href');
 
-	if ( is_loading || !url)
+	if ( is_loading || !url )
   {
-    return ( is_loading || !url);
+    return ( is_loading || !url );
   }
 
 	$(more_link).addClass('loading');
 	is_loading = true;
 	last_load_at = new Date();
-
 
   $.ajax
   ({
@@ -52,42 +51,41 @@ var nextPage = function()
   });
 };
 
-
-var scrollOff = function()
+var scrollStart = function()
 {
-  scrollStop();
-  $(more_link).find('a').attr("href", false);
-  $(document).off("scroll:on");
-  $(document).off("scroll:stop");
+  if (!nextPageExists())
+  {
+    return;
+  }
+  $(window).on("scroll",
+    function()
+    {
+      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
+      {
+          nextPage();
+      }
+    }
+  );
 }
 
 var scrollStop = function()
 {
   $(window).off("scroll");
-  $(more_link).hide();
+}
 
-  scrolling = false;
+var scrollOff = function()
+{
+  scrollStop();
+  $(content).attr("data-scroll-content", 0);
+  $(more_link).attr("data-scroll-link", 0);
 }
 
 var scrollOn = function()
 {
-  $(window).on("scroll",
-      function()
-      {
-        if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
-        {
-            nextPage();
-        }
-      }
-    );
-
-  $(more_link).show();
-
-    
-
-    scrolling = true;
+  $(content).attr("data-scroll-content", 1);
+  $(more_link).attr("data-scroll-link", 1);
+  scrollStart();
 }
-
 
 /*
   on scrolling in either direction
@@ -108,8 +106,6 @@ $(document).on("page:change", function()
 
 	is_loading = false;   							      /* keep from loading two pages at once */
   last_load_at = null;       						    /* when you loaded the last page */
-
-  scrolling: true;
   	/* 
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
@@ -128,16 +124,22 @@ $(document).on("page:change", function()
         scrollOff();
       }
     );
+    $(document).on("scroll:on", 
+      function()
+      {
+        scrollOn();
+      }
+    );
     $(document).on("scroll:stop", 
       function()
       {
         scrollStop();
       }
     );
-    $(document).on("scroll:on", 
+    $(document).on("scroll:start", 
       function()
       {
-        scrollOn();
+        scrollStart();
       }
     );
 

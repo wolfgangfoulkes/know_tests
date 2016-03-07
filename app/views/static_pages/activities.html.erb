@@ -1,6 +1,6 @@
-<%= form_tag url_for(controller: 'events', action: 'search', target: 'activities'), remote: true, 
+<%= form_tag url_for(controller: 'static_pages', action: 'activities'), remote: true, 
 	class: 'activity search row h2' do %>
-  <%= hidden_field_tag :items, @events.pluck(:id).join(',') %>
+  <%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
   <%= text_field_tag :search, params[:search], 
   placeholder: "search" %>
   <%= submit_tag '>>' %>

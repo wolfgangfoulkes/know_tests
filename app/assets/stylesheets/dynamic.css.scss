@@ -249,13 +249,17 @@ svg[data-svgr="270"] {
 	}
 }
 
-[data-scroll-link]
+[data-scroll-link="1"]
 {
-	&.loading
-	{
-		
-	}
-	&.loading > a 
+}
+[data-scroll-link="0"]
+{
+	display: none;
+}
+
+[data-scroll-link].loading
+{
+	> a 
 	{
 		color: rgba(30, 0, 0, 0.5);
 	}
