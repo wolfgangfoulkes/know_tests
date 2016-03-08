@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
 		role = params[:role]
 		@comments = Comment.where(commentable_id: params[:id], role: params[:role])
 		parameters = {controller: "comments", action: "paginate", role: role}
-	    render "shared/paginate2.js.erb", locals: {target: @comments.type, items: @comments.page(params[:page]).per(6), parameters: parameters }
+	    render "shared/paginate2.js.erb", locals: {target: @comments.type, items: CommentsHelper.pagi( @comments, page: params[:page] ).deef, parameters: parameters }
 	end
 
 	private

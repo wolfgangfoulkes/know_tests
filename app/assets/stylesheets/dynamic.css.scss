@@ -1,4 +1,5 @@
 /* ----- PAGINATOR ----- */
+$pagi-nav-to-page-w: 50%;
 .h5[data-pagi-link]
 {
 	width: 100%;
@@ -7,46 +8,33 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		width: 50%;
+		width: $pagi-nav-to-page-w;
 		margin: 0 auto;
 
 		> *
 		{
 		}
 
-		.first, .last
+		.first, 
+		.last
 		{
 			display: none;
 		}
 
-		.prev, .next {
-			flex-basis: 10%;
+		.prev, 
+		.next {
 		}
 
-		.page.current 
+		.page.current
 		{
 			color: rgba(120, 0, 0, 0.5);
 		}
-		
 	}
 
-	&[data-first="true"]
-	{	
-		.pagination::before
-		{
-			content: "";
-			display: block;
-			flex-basis: 10%;
-		}
-	}
-	&[data-last="true"]
+	&[data-first="true"] .prev, 
+	&[data-last="true"] .next
 	{
-		.pagination::after
-		{
-			content: "";
-			display: block;
-			flex-basis: 10%;
-		}
+		opacity: 0.25;
 	}
 }
 /* -------- */

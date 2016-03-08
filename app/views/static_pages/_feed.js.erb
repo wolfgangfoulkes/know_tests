@@ -1,3 +1,9 @@
+/*
+	if you wanted to break this into two:
+	1. separate scroll partial from js
+	2. reload entire scroll partial for search
+	3. js checks the on/off parameter set by loading the partial
+*/
 <% if replace %>
 	$('[data-scroll-content]').html("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>")
 	$(document).trigger("callbacks:reset");
