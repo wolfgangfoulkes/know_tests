@@ -1,6 +1,6 @@
 var nextPageExists = function()
 {
-  return ( $(more_link).attr("data-scroll-link") == 1 );
+  return ( $(more_link).attr("data-scroll-link") != 0 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -24,8 +24,8 @@ var onLoadSuccess = function()
 
 var onLoadComplete = function(jqxhr_, textStatus_ )
 {
-  console.log(jqxhr_); 
-  console.log(textStatus_);
+  // console.log(jqxhr_); 
+  // console.log(textStatus_);
 };
 
 var nextPage = function()
@@ -57,6 +57,10 @@ var scrollStart = function()
   {
     return;
   }
+  else
+  {
+    $(more_link).attr("data-scroll-link", 1);
+  }
   $(window).on("scroll",
     function()
     {
@@ -71,18 +75,17 @@ var scrollStart = function()
 var scrollStop = function()
 {
   $(window).off("scroll");
+  $(more_link).attr("data-scroll-link", 2);
 }
 
 var scrollOff = function()
 {
   scrollStop();
-  $(content).attr("data-scroll-content", 0);
   $(more_link).attr("data-scroll-link", 0);
 }
 
 var scrollOn = function()
 {
-  $(content).attr("data-scroll-content", 1);
   $(more_link).attr("data-scroll-link", 1);
   scrollStart();
 }
@@ -98,7 +101,6 @@ var scrollOn = function()
 */
 $(document).on("page:change", function()
 {
-  $(document).trigger("scroll:on");
 	content = "[data-scroll-content]";        /* contains content destination (JQ obj) */
 	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
 	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
@@ -143,5 +145,5 @@ $(document).on("page:change", function()
       }
     );
 
-    scrollOn();
+    $(document).trigger("scroll:on");
 });

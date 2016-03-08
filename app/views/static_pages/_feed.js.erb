@@ -6,8 +6,8 @@
 	$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
 <% end %>
 
-$('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
-$('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
+//$('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
+//$('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
 
 <% if (items.current_page >= items.total_pages) %>
   $(document).trigger("scroll:off");

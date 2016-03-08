@@ -13,5 +13,6 @@ content_tag :div,
 class: "activity-list col h4", 
 data: drop_rcv(event.id) do
 %>
-  	<%= render partial: 'activities/list', locals: {activities: event.activities.page(1).per(10) } %>
+  	<%= render partial: 'activities/list', 
+  	locals: {activities: ActivitiesHelper.pagi(event.activities) } %>
 <% end %>

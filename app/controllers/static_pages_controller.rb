@@ -96,9 +96,9 @@ class StaticPagesController < ApplicationController
         @replace = true
       end
       if params.include?(:page)
-        @events = @events.page(params[:page]).per(8)
+        @events = EventsHelper.pagi(@events, page: params[:page])
       else
-        @events = @events.page(1).per(8)
+        @events = EventsHelper.pagi(@events, page: 1)
       end
     end
 end

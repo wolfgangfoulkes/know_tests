@@ -152,6 +152,12 @@ module ApplicationHelper
 		_d["drop-state"] = state
 		return _d.compact
 	end
+
+	def scroll_snd
+	end
+
+	def scroll_rcv
+	end
 	# --------
 
 	
