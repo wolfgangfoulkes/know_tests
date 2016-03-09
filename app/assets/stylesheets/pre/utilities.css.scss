@@ -1,10 +1,12 @@
+/*** UTILITY CONSTANTS ***/
 /*** golden mean 
 */
-$gm: 1.61803398875;
+$gm: 	0.61803398875;
+$gm_i: 	1.61803398875;
+$gmd: 	0.5 * $gm_i; 
+$gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 
-
-/*** FUNCTIONS *****/
-
+/*** UTILITY FUNCTIONS *****/
 /*
 * 	replace broken ternary conditional
 * 	if given two args, it's like ||=

@@ -221,6 +221,12 @@
 
 /* ----- */
 
+/* remove this when sizes are fixed */
+$namespace: "know";
+.#{$namespace} {
+	font-size: 36px;
+}
+
 /* ----- MISC ----- */
 /* 
 *	- used only in nav currently, could be reused
@@ -240,18 +246,5 @@
 	}
 }
 /* ----- */
-
-
-/* --- STUFF I DON'T WANNA FUCK UP --- */
-$namespace: "know";
-
-.#{$namespace} {
-	font-size: 36px;
-}
-section {
-	width: 100%;
-}
-/* --- */
-
 
 

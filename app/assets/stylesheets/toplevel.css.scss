@@ -1,0 +1,77 @@
+/* ----- FLEX ----- */
+.row {
+	display: inline-flex;
+	flex-direction: row;
+}
+
+.col {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.row > .br, .col > .br
+{
+	flex-basis: 0;
+	flex-grow: 1;
+}
+
+/* ----- FONTS ----- */
+
+.h1 { 	/* change to .f1, etc. */
+	font-size: size_at(1, 4);
+
+	@include sizes(1, "font-size");
+}
+.h2 {
+	font-size: size_at(2, 4);
+
+	@include sizes(2, "font-size");
+}
+.h3 {
+	font-size: size_at(3, 4);
+
+	@include sizes(3, "font-size");
+
+}
+.h4 {
+	font-size: size_at(4, 4);
+
+	@include sizes(4, "font-size");
+}
+.h5 {
+	font-size: size_at(5, 4);
+
+	@include sizes(5, "font-size");
+}
+/* ----- */
+
+/* ----- LAYOUT ----- */
+
+/* section should be the invisible container */
+section {
+	width: 100%;
+}
+
+.vmn {
+	height: $vmn;
+	/* margins r-l */
+}
+
+.know-page {
+	position: relative;
+	box-sizing: border-box;
+
+	width: 100vw;
+	max-width: $max-width;
+	min-height: 100vh;
+
+	margin: 0 auto;
+	padding: $nav-bar-h $margins-rl;
+	padding-bottom: $nav-bar-h*2;
+	
+	@include mq(0, _bps(2)) {
+		padding: $nav-bar-h $margins-rl*0.25;
+	}
+}
+/* ----- */
+
