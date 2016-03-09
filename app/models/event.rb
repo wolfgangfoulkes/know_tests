@@ -103,6 +103,10 @@ class Event < ActiveRecord::Base
 		self.where( self.starts_between_(l, h) )
 	end
 
+	# def self.starts_between_(l, h)
+	# 	self.where(starts_at: l..h) #arel where values
+	# end
+
 	def self.ends_in_(l, h)
 		tbl = Event.arel_table
 		ll = tbl[:ends_at].gt(l)
@@ -141,7 +145,8 @@ class Event < ActiveRecord::Base
 		sa = self.starts_at >= q
 		ea = self.ends_at <= q
 	end
-	#----- string pattern matching
+
+	#----- string pattern matching -----#
 	def self.name_starts_with_(q)
 		self.arel_table[:name].matches("#{q.downcase}%")
 	end
@@ -178,6 +183,40 @@ class Event < ActiveRecord::Base
 		self.where( "#{k} ilike any (array[?])", vs )
 	end
 
+	#--- match first letter after word-break
+	#-	\m in pgsql is equivalent to \w in regexp. 
+	#- the backslash must be escaped of course
+	#--
+	#
+	def self.in_name_starts_with(q)
+		self.where("name ~* ?", "\\m#{q}")
+	end
+	def self.in_name_starts_with_(q)
+		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+	end
+	def self.in_description_starts_with(q)
+		self.where("description ~* ?", "\\m#{q}")
+	end
+	def self.in_description_starts_with_(q)
+		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+	end
+	#----- metaprogramming alts
+	#		[:name, :description].each do |p|
+	#			self.class.send :define_method, "in_#{p}_starts_with" do |q|
+	#				self.where("#{p} ~* ?", "\\m#{q}")
+	#			end
+	#			self.class.send :define_method, "in_#{p}_starts_with" do |q|
+	#				self.where("#{self.arel_table[p].name} ~* ?", "\\m#{q}")
+	#			end
+	#		  self.class.send :define_method, "in_#{p}_starts_with" do |q|
+	#				self.where("#{self.arel_table[p].name} ~* ?", "\\m#{q}")
+	#			end
+	#		  self.class.send :define_method, "in_#{p}_starts_with_" do |q|
+	#				self.where("#{p} ~* ?", "\\m#{q}").where_sql
+	#			end
+	#		end
+	#-----
+
 	#----- INTERFACE METHODS
 	#- for the application's specific uses of the above class methods
 	#---
@@ -186,15 +225,21 @@ class Event < ActiveRecord::Base
 	def self.search_(q)
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
-			d = self.arel_table[:name].matches(nil)
+			d = nil
+			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+			di = nil
 		elsif q.length <= 5
 			n = self.arel_table[:name].matches("#{q}%")
 			d = self.arel_table[:description].matches("#{q}%")
+			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+			di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
 		else
 			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
 			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
+			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+			di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
 		end
-		n.or(d)
+		n.or(d).or(ni).or(di) 	# ni and di must follow n or d
 	end
 
 	# order determines final order
@@ -215,6 +260,12 @@ class Event < ActiveRecord::Base
 
 
 #----- ACTIVITIES
+
+	def self.activities
+		PublicActivity::Activity.where(owner_type: 'Event', owner_id: self.all)
+		#  										  faster -> owner_id: select(:id))
+	end
+
 	def fresh_for(user)
 		self.activities.where("updated_at > ?", user.last_sign_in_at).order("updated_at DESC")
 	end
@@ -223,25 +274,39 @@ class Event < ActiveRecord::Base
 		self.activities.where("updated_at > ?", user.last_sign_in_at).any?
 	end
 
+	# def fresh_by_type(user)
+	# 	f = self.activities.fresh_for(user)
+	# 	f.order("activities.role").group("activities.role", "activities.id")
+	# end
+
 	#--- ACTIVITY QUERY?
 	# works with array or relation
 	# does not retain activities order
-	scope :activity_in, -> (q) {
+	def self.activity_in(q)
 		where(id: q.select(:owner_id))
-	}
+	end
 
-	scope :by_newest_activity_by_sort, -> {
-		Event.all.sort_by { |e| e.activities.where("updated_at IS NOT NULL").maximum(:updated_at).to_f || -1 }
-	}
+	def self.by_newest_activity_by_sort 
+		self.all.sort_by { |e| e.activities.where("activities.created_at IS NOT NULL").maximum(:created_at).to_f || -1 }
+	end
 
-	scope :by_newest_activity_by_map, -> {
-		Event.activities.where("updated_at IS NOT NULL").order("updated_at ASC").pluck(:owner_id).uniq.map{ |id| Event.find(id) }
-	}
+	def self.by_newest_activity_by_map
+		self.activities.where("activities.created_at IS NOT NULL").order("activities.created_at DESC").pluck(:owner_id).uniq.map{ |id| self.find(id) }
+	end
 
-	scope :activities, -> {
-		PublicActivity::Activity.where(owner_type: 'Event', owner_id: all)
-		#  										  faster -> owner_id: select(:id))
-	}
+	# def self.by_newest_activity_by_map(q)
+	# 	q.where("activities.created_at IS NOT NULL").order("activities.created_at DESC").pluck(:owner_id).uniq.map{ |id| self.find(id) }
+	# end
+	
+	def self.by_newest_activity_by_joins
+		self.joins(:activities).where("activities.created_at IS NOT NULL").select("events.*", "activities.created_at").order("activities.created_at DESC").pluck("events.*").uniq
+	end
+
+	#def self.by_newest_activity_by_joins, -> (q) {
+	#	Event.joins(:activities).select("events.*", "activities.created_at").where("activities.id IN ?", q).where("activities.created_at IS NOT NULL").order("activities.created_at").pluck("events.*").uniq
+	#}
+
+	
 	#---
 #-----#
 
