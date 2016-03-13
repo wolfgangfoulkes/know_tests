@@ -1,5 +1,10 @@
 module Filterable
-  extend ActiveSupport::Concern
+  def self.included(base)
+    base.extend ClassMethods
+    base.class_eval do
+      scope :disabled, -> { where(disabled: true) }
+    end
+  end
 
   module ClassMethods
     def filter(filtering_params)
@@ -22,6 +27,8 @@ module Filterable
 
     def ARORfilter(query)
       self.where( query.where_values.reduce(:or) )
+      #self.where(self.filter(filtering_params).where_values.reduce(:or))
+      #hash params always arel
     end
 
     def rel2arel(rel)
