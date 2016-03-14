@@ -3,7 +3,8 @@
   data: { past: "#{event.starts_at <= DateTime.now}" }.merge( local_assigns[:data] || {} ) do
 %>
     <div class="image-temp svg-link"> 
-      <%= inline_svg get_local(locals: local_assigns, key: "svg_thn", alt: "" ) %> </div>
+      <%= inline_svg get_local(locals: local_assigns, key: "svg_thn", alt: "" ) %> 
+    </div>
     <div class= "col">
 
         <span class="h5"> <%= date_style(event.starts_at) %> </span>

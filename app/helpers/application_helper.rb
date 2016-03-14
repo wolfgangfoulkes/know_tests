@@ -77,13 +77,19 @@ module ApplicationHelper
 	# ----- activities, return hashes with result as key 	-	-	-	- UNUSED
 	# - 	-	- 	-	-	-	-	-	-	-	-	-
 	# - 	-	- 	-	-	-
+
+	# this works
+	# Activity.all.order("created_at DESC").group_by{ |i| i.owner_id }
+	# Activity.where("date(created_at) = ?",  PublicActivity::Activity.maximum(:created_at).to_date)
+
+
 	def activities_by_date(a_)
-		_a = a_.order(:created_at).group_by{ |i| i.created_at.to_date.to_s }
+		_a = a_.order(:created_at,).group_by{ |i| i.created_at.to_date.to_s }
 		_a
 	end
 
 	def activities_by_f(a_)
-		_a = a_all.group_by{ |i| i.created_at.to_f }
+		_a = a_.all.group_by{ |i| i.created_at.to_f }
 		_a
 	end
 	# -----

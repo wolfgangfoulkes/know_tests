@@ -223,6 +223,7 @@ class Event < ActiveRecord::Base
 	#---
 
 	# order determines final order
+	# so this is the easiest way to do relevance
 	def self.search_(q)
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
@@ -241,6 +242,7 @@ class Event < ActiveRecord::Base
 			di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
 		end
 		n.or(d).or(ni).or(di) 	# ni and di must follow n or d
+		#n.or(ni).or(d).or(di)
 	end
 
 	# order determines final order
@@ -253,15 +255,15 @@ class Event < ActiveRecord::Base
 
 #----- COMMENTS -----#
 	def setup_comment(comment)
-		if comment.role == "owner"
-			comment.public = true
-		end
+		comment.setup_params
+		# if comment.role == "owner"
+		# 	comment.public = true
+		# end
 	end
 #-----#
 
 
 #----- ACTIVITIES
-
 	def self.activities
 		PublicActivity::Activity.where(owner_type: 'Event', owner_id: self.all)
 		#  										  faster -> owner_id: select(:id))
@@ -307,6 +309,10 @@ class Event < ActiveRecord::Base
 	#	Event.joins(:activities).select("events.*", "activities.created_at").where("activities.id IN ?", q).where("activities.created_at IS NOT NULL").order("activities.created_at").pluck("events.*").uniq
 	#}
 
+	# produces duplicate events
+	def self.by_newest_activity_by_order
+		self.joins(:activities).where("activities.created_at IS NOT NULL").order("activities.created_at DESC", "events.id DESC")
+	end
 	
 	#---
 #-----#

@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
     
   has_many :activities, 
     as: :trackable, 
-    class_name: 'PublicActivity::Activity', 
+    class_name: 'PublicActivity::Activity',
     dependent: :destroy
 
   validate :commentable_valid?
@@ -26,60 +26,21 @@ class Comment < ActiveRecord::Base
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
 
   # ----- simplifies ajax
-  scope :same_type?, ->  { (pluck(:role).uniq.size == 1) }
 
-  # ----- should be class methods? do scopes assure Relation return?
-  scope :collection, -> (role) { where(role: role) }
-  # --- should be class methods
-  scope :role, -> {
-    c = pluck(:role).uniq
-    if c.size == 1
-      "#{c[0]}"
-    else
-      ""
-    end
-  }
+  scope :freshest_by_commentable, -> { order("created_at DESC", "commentable_id DESC") }
+  scope :freshest_by_root, -> { order("created_at DESC", "root_id DESC") }
 
-  scope :type, -> { 
-    c = pluck(:role).uniq
-    if c.size == 1
-      "#{c[0]}_comments"
-    else
-      "comments"
-    end
-  }
   # ----
   # -----
 
-
-
-# ----- IMPORTANT ----- #
-  # ----- fake OOP
-  def type
-    "#{self.role}_comments"
-  end
-
-  def collection
-    self.commentable.comments.where(role: self.role)
-  end
-
-  def owner_id
-    self.root.user_id
-  end
-
-  def owner?(owner)
-    (owner.id == self.owner_id)
-  end
-  # -----
-
-  # ----- life cycle
+# ----- life cycle
   after_create do
     setup_params
     activity_for_create
   end
 
   after_save do 
-  	activity_for_save
+    activity_for_save
   end
 
   before_destroy do
@@ -97,6 +58,82 @@ class Comment < ActiveRecord::Base
     else
       throw "bad role for comment"
     end
+  end
+# -----
+
+
+
+# ----- IMPORTANT ----- #
+  # ----- fake OOP
+
+  #- unused
+  def self.roles
+    c = pluck(:role).uniq
+  end
+
+  def self.role
+    c = pluck(:role).uniq
+    if c.size == 1
+      "#{c[0]}"
+    else
+      "" #false
+    end
+  end
+
+  #- unused
+  def self.same_role?
+    (self.pluck(:role).uniq.size == 1)
+  end
+
+
+
+  #- unused?
+  def self.types
+    c = self.pluck(:role).uniq.map{|r| "#{r}_comments"}
+  end
+
+  def self.type
+    c = self.pluck(:role).uniq
+    if c.size == 1
+      "#{c[0]}_comments"
+    else
+      "comments" #false
+    end
+  end
+
+  def type
+    "#{self.role}_comments"
+  end
+
+  #- unused
+  def self.same_type?
+    (self.same_role?)
+  end
+
+
+  #- unused?
+  def self.collection(roles = nil)
+    roles ||= self.pluck(:role).uniq
+    Comment.where(role: roles)
+  end
+
+  #- unused?
+  def collection
+    self.commentable.comments.where(role: self.role)
+  end
+
+
+
+  def owner_id
+    self.root.user_id
+  end
+
+  def owner
+    self.root
+  end
+
+  def owner?(owner)
+    (owner.id == self.owner_id)
   end
   # -----
 
@@ -143,6 +180,7 @@ class Comment < ActiveRecord::Base
   end
 
   def activity_for_save
+    #--- right now there's no reason not to use this
     # owner.updated_at = a.updated_at
   end
 # ----- #
