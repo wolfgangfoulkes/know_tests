@@ -1,6 +1,7 @@
 var nextPageExists = function()
 {
-  return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
+  //return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
+  return ( $(more_link).attr("data-scroll-link") > 0 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -52,15 +53,6 @@ var nextPage = function()
 
 var scrollStart = function()
 {
-  if ( !nextPageExists() )
-  {
-    return;
-  }
-  scrollOn();
-}
-
-var scrollOn = function()
-{
   $(window).on("scroll",
     function()
     {
@@ -73,15 +65,6 @@ var scrollOn = function()
 }
 
 var scrollStop = function()
-{
-  if ( !nextPageExists() )
-  {
-    return;
-  }
-  scrollOff();
-}
-
-var scrollOff = function()
 {
   $(window).off("scroll");
 }
@@ -116,7 +99,7 @@ $(document).on("page:change", function()
       }
     );
 
-    $(document).on("callbacks:reset", 
+    $(document).on("callbacks:reset",
       function()
       {
 
@@ -125,16 +108,23 @@ $(document).on("page:change", function()
     $(document).on("scroll:start", 
       function()
       {
+        if ( !nextPageExists() )
+        {
+          return;
+        }
         scrollStart();
       }
     );
     $(document).on("scroll:stop", 
       function()
       {
+        if ( !nextPageExists() )
+        {
+          return;
+        }
         scrollStop();
       }
     );
     
-
     $(document).trigger("scroll:start");
 });
