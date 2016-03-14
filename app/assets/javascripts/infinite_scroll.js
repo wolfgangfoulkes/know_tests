@@ -69,6 +69,12 @@ var scrollStop = function()
   $(window).off("scroll");
 }
 
+
+var scrollSet = function(val_)
+{
+  $('[data-scroll-link]').attr('data-scroll-link', val_);
+}
+
 /*
   on scrolling in either direction
     if bottom of view is < pixels from bottom of page
@@ -125,6 +131,21 @@ $(document).on("page:change", function()
         scrollStop();
       }
     );
+    
+    // $(document).on("scroll:off",
+    //   function()
+    //   {
+    //     scrollSet(0);
+    //     scrollStop();
+    //   }
+    // );
+    // $(document).on("scroll:on",
+    //   function()
+    //   {
+    //     scrollSet(1);
+    //     scrollStart();
+    //   }
+    // );
     
     $(document).trigger("scroll:start");
 });
