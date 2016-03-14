@@ -1,6 +1,6 @@
 var nextPageExists = function()
 {
-  return ( $(more_link).attr("data-scroll-link") != 0 );
+  return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -11,7 +11,6 @@ var waitedLongEnoughBetweenPages = function()
 var approachingBottomOfPage = function()
 {
 	return ( ( $(window).height() + $(document).scrollTop() ) > ( $(document).height() - pixels ) );
-
 };
 
 var onLoadSuccess = function()
@@ -53,18 +52,19 @@ var nextPage = function()
 
 var scrollStart = function()
 {
-  if (!nextPageExists())
+  if ( !nextPageExists() )
   {
     return;
   }
-  else
-  {
-    $(more_link).attr("data-scroll-link", 1);
-  }
+  scrollOn();
+}
+
+var scrollOn = function()
+{
   $(window).on("scroll",
     function()
     {
-      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
+      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() )
       {
           nextPage();
       }
@@ -74,20 +74,16 @@ var scrollStart = function()
 
 var scrollStop = function()
 {
-  $(window).off("scroll");
-  $(more_link).attr("data-scroll-link", 2);
+  if ( !nextPageExists() )
+  {
+    return;
+  }
+  scrollOff();
 }
 
 var scrollOff = function()
 {
-  scrollStop();
-  $(more_link).attr("data-scroll-link", 0);
-}
-
-var scrollOn = function()
-{
-  $(more_link).attr("data-scroll-link", 1);
-  scrollStart();
+  $(window).off("scroll");
 }
 
 /*
@@ -120,22 +116,10 @@ $(document).on("page:change", function()
       }
     );
 
-     $(document).on("scroll:off", 
+    $(document).on("callbacks:reset", 
       function()
       {
-        scrollOff();
-      }
-    );
-    $(document).on("scroll:on", 
-      function()
-      {
-        scrollOn();
-      }
-    );
-    $(document).on("scroll:stop", 
-      function()
-      {
-        scrollStop();
+
       }
     );
     $(document).on("scroll:start", 
@@ -144,6 +128,13 @@ $(document).on("page:change", function()
         scrollStart();
       }
     );
+    $(document).on("scroll:stop", 
+      function()
+      {
+        scrollStop();
+      }
+    );
+    
 
-    $(document).trigger("scroll:on");
+    $(document).trigger("scroll:start");
 });
