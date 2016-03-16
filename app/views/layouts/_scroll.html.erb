@@ -2,6 +2,7 @@
 	<%= javascript_include_tag "infinite_scroll" %>
 <% end %>
 
+
 <%= content_tag :div, data: { 
 	scroll_link: (items.current_page < items.total_pages) ? "1" : "0",
 	current: items.current_page, 

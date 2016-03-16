@@ -67,7 +67,7 @@ class StaticPagesController < ApplicationController
 
     respond_to do |format|
       format.html { 
-          render "static_pages/activity_list", 
+          render "static_pages/activity_list",
           locals:
           {
               event: event,
