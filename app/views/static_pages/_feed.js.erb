@@ -5,19 +5,10 @@
 	3. js checks the on/off parameter set by loading the partial
 */
 <% if replace %>
-	$('[data-scroll-content]').html("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+	$('[data-scroll-content]').html("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
 	$(document).trigger("callbacks:reset");
 <% else %>
-	$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+	$('[data-scroll-content]').append("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
 <% end %>
 
-$('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
-$('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
-//$('[data-scroll-link]').attr('data-scroll-link', "<%= (items.current_page < items.total_pages) ? '1' : '0' %>");
-
-<% if (items.current_page >= items.total_pages) %>
-	$('[data-scroll-link]').attr('data-scroll-link', "0");
-<% else %>
-	$('[data-scroll-link]').attr('data-scroll-link', "1");
-	$('[data-scroll-link] a').attr('href', '<%= url_for(page: items.current_page + 1) %>');
-<% end %>
+$('[data-scroll-link]').replaceWith("<%= j scroll_link(items) %>")

@@ -131,21 +131,7 @@ $(document).on("page:change", function()
         scrollStop();
       }
     );
-    
-    // $(document).on("scroll:off",
-    //   function()
-    //   {
-    //     scrollSet(0);
-    //     scrollStop();
-    //   }
-    // );
-    // $(document).on("scroll:on",
-    //   function()
-    //   {
-    //     scrollSet(1);
-    //     scrollStart();
-    //   }
-    // );
+  
     
     $(document).trigger("scroll:start");
 });
