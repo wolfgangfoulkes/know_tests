@@ -200,22 +200,44 @@ class Event < ActiveRecord::Base
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
 			d = nil
-			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
 			di = nil
 		elsif q.length <= 5
 			n = self.arel_table[:name].matches("#{q}%")
 			d = self.arel_table[:description].matches("#{q}%")
-			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
-			di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 		else
 			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
 			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
-			ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
-			di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 		end
-		n.or(d).or(ni).or(di) 	# ni and di must follow n or d
-		#n.or(ni).or(d).or(di)
+		n.or(d).or(ni).or(di) 
 	end
+
+	# prev version using sql literals for some values
+	#
+	# def self.search_(q)
+	# 	if q.length <= 3
+	# 		n = self.arel_table[:name].matches("#{q}%")
+	# 		d = nil
+	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+	# 		di = nil
+	# 	elsif q.length <= 5
+	# 		n = self.arel_table[:name].matches("#{q}%")
+	# 		d = self.arel_table[:description].matches("#{q}%")
+	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+	# 		di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
+	# 	else
+	# 		n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
+	# 		d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
+	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
+	# 		di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
+	# 	end
+	# 	n.or(d).or(ni).or(di) 	# ni and di must follow n or d
+	# 	#n.or(ni).or(d).or(di)
+	# end
 
 	# order determines final order
 	def self.search(q)
