@@ -5,6 +5,7 @@
 	3. js checks the on/off parameter set by loading the partial
 */
 <% if replace %>
+	/* THIS COULD BE IN SEARCH/RETURN OR REPLACE_PARTIAL OR SOMETHING */
 	$('[data-scroll-content]').html("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
 	$(document).trigger("callbacks:reset");
 <% else %>

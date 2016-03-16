@@ -51,34 +51,6 @@ class Event < ActiveRecord::Base
 	scope :deef, -> { order("starts_at ASC") }
 #-----#
 
-#----- some arel utility functions -----#
-#- I haven't extensively tested them
-#---
-	def self.s_to_arel(q)
-		Arel::Nodes::SqlLiteral.new(q)
-	end
-	# for ActiveRecord Relations based on string conditions
-	# e.g. Event.where("name ILIKE '%b'")
-	def self.q_to_arel(q)
-		q.where_values.map{ |v| v.class.name == "String" ? self.s_to_arel(v) : v }.reduce(:or)
-	end
-	def self.to_arel(q)
-		if q.class.name == "String"
-			self.s_to_arel(q)
-		elsif q.class.name == "ActiveRecord::Relation"
-			self.q_to_arel(q)
-		else
-			nil
-		end
-	end
-
-	# second part works only with ActiveRecord hash queries or Arel queries:
-	# e.g. {name: }
-	def self.hor(q)
-		self.where_values.reduce(:or)
-	end
-#-----#
-
 #-------- class methods --------#
 #- def method_ 	(return AREL object)
 #- def method 	(just like scope, return RELATION)
