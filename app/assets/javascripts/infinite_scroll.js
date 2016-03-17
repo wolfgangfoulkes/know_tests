@@ -86,13 +86,13 @@ var scrollSet = function(val_)
 */
 $(document).on("page:change", function()
 {
-	content = "[data-scroll-content]";        /* contains content destination (JQ obj) */
-	more_link = "[data-scroll-link]";			    /* contains link to "View More" (JQ obj)  */
-	min_ms = 500;					   			            /* milliseconds to wait between loading pages */
-	pixels = 500; 									          /* pixels above the page's bottom */
+	content = "[data-scroll-content]";          /* contains content destination (JQ obj) */
+	more_link = "[data-scroll-link]";			      /* contains link to "View More" (JQ obj)  */
+  pixels = $(window).height() * 1.1;          /* pixels above the page's bottom */
+	min_ms = 500;					   			              /* milliseconds to wait between loading pages */
 
-	is_loading = false;   							      /* keep from loading two pages at once */
-  last_load_at = null;       						    /* when you loaded the last page */
+	is_loading = false;   							        /* keep from loading two pages at once */
+  last_load_at = null;       						      /* when you loaded the last page */
   	/* 
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
