@@ -17,7 +17,6 @@ module ApplicationHelper
 	end
 
 	def self.fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	- USED HERE, CONTROLLER
-		puts fresh_after?(o_, user_.last_sign_in_at)
 		fresh_after?(o_, user_.last_sign_in_at)
 	end
 
@@ -28,23 +27,26 @@ module ApplicationHelper
 	# - non-class methods will be overriden by helpers with alphabetically later names
 
 	# ----- from class methods
-	def isa?(o_, class_) # -		-	-	-	-	-	-	-	-	-	- USED HERE
+	def isa?(o_, class_) # -		-	-	-	-	-	-	-	-	-	- UNUSED, PREV USED HERE
 		ApplicationHelper.isa?(o_, class_)
 	end
 
-	def timestamps?(o_) # -		-	-	-	-	-	-	-	-	-	-	- USED HERE
+	def timestamps?(o_) # -		-	-	-	-	-	-	-	-	-	-	- UNUSED, PREV USED HERE
 		ApplicationHelper.timestamps?(o_)
 	end
 
-	def fresh_after?(o_, dt_) # -		-	-	-	-	-	-	-	-	- USED HERE
+	def fresh_after?(o_, dt_) # -		-	-	-	-	-	-	-	-	- USED IN FRESH_FOR_USER
 		ApplicationHelper.fresh_after?(o_, dt_)
 	end
 
-	def fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	-	- USED HERE, CONTROLLER
-		ApplicationHelper.fresh_for_user?(o_, user_)
+	def fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	-	- 	USED HERE, APPLICATION CONTROLLER
+		ApplicationHelper.fresh_for_user?(o_, user_) # -	-	-	-	-	BC IT'S DELICIOUS	
 	end
 	# -----
 	
+
+
+
 	# ---- filesystem utility methods
 	def asset_exists?(subdirectory, filename)
 	  File.exists?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
