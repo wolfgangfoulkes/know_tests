@@ -41,8 +41,7 @@ class StaticPagesController < ApplicationController
   end
 
   def activities
-    activities = PublicActivity::Activity.where(owner: (current_user.followees(Event) | current_user.events) )
-    @events = @events.where(id: activities.order("created_at ASC", "role ASC").pluck("owner_id") )
+    @events = @events.where(id: (current_user.followees(Event) | current_user.events))
 
     respond_to do |format|
       format.html { 
