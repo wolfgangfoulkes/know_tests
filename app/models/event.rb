@@ -26,7 +26,10 @@ class Event < ActiveRecord::Base
 	belongs_to :user
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
-	has_many :activities, as: :owner, class_name: 'PublicActivity::Activity', dependent: :destroy
+	has_many :activities, -> { order("created_at DESC") },
+		as: :owner, 
+		class_name: 'PublicActivity::Activity', 
+		dependent: :destroy
 #-----#
 
 #----- validations -----
@@ -261,8 +264,8 @@ class Event < ActiveRecord::Base
 
 
 #----- ACTIVITIES
-	def self.activities
-		PublicActivity::Activity.where(owner_type: 'Event', owner_id: self.all)
+	def self.activities(deef: "created_at DESC")
+		PublicActivity::Activity.where(owner_type: 'Event', owner_id: self.all).order(deef)
 		#  										  faster -> owner_id: select(:id))
 	end
 
@@ -279,36 +282,14 @@ class Event < ActiveRecord::Base
 	# 	f.order("activities.role").group("activities.role", "activities.id")
 	# end
 
-	#--- ACTIVITY QUERY?
-	# works with array or relation
-	# does not retain activities order
-	def self.activity_in(q)
-		where(id: q.select(:owner_id))
-	end
-
-	def self.by_newest_activity_by_sort 
-		self.all.sort_by { |e| e.activities.where("activities.created_at IS NOT NULL").maximum(:created_at).to_f || -1 }
-	end
-
-	def self.by_newest_activity_by_map
-		self.activities.where("activities.created_at IS NOT NULL").order("activities.created_at DESC").pluck(:owner_id).uniq.map{ |id| self.find(id) }
-	end
-
-	# def self.by_newest_activity_by_map(q)
-	# 	q.where("activities.created_at IS NOT NULL").order("activities.created_at DESC").pluck(:owner_id).uniq.map{ |id| self.find(id) }
-	# end
-	
-	def self.by_newest_activity_by_joins
-		self.joins(:activities).where("activities.created_at IS NOT NULL").select("events.*", "activities.created_at").order("activities.created_at DESC").pluck("events.*").uniq
-	end
-
-	#def self.by_newest_activity_by_joins, -> (q) {
-	#	Event.joins(:activities).select("events.*", "activities.created_at").where("activities.id IN ?", q).where("activities.created_at IS NOT NULL").order("activities.created_at").pluck("events.*").uniq
-	#}
-
-	# produces duplicate events
-	def self.by_newest_activity_by_order
-		self.joins(:activities).where("activities.created_at IS NOT NULL").order("activities.created_at DESC", "events.id DESC")
+	# Grab events
+	# Join them with activities
+	# Group by the event ('s id)
+	# Now we can use max(activities.created_at) which is the newest activity.created_at for each Event
+	# Then sort Events by the most recent activity.created_at in descending order
+	# later, perhaps add an optional parameter to change order between DESC and ASC
+	def self.by_newest_activity
+		self.joins(:activities).group("events.id").order("max(activities.created_at) DESC") 
 	end
 	
 	#---

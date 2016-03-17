@@ -41,7 +41,7 @@ class StaticPagesController < ApplicationController
   end
 
   def activities
-    @events = @events.where(id: (current_user.followees(Event) | current_user.events))
+    @events = @events.where(id: (current_user.followees(Event) | current_user.events)).by_newest_activity
 
     respond_to do |format|
       format.html { 
@@ -62,7 +62,7 @@ class StaticPagesController < ApplicationController
 
   def activity_list
     event = Event.find(params[:id])
-    activities = PublicActivity::Activity.where(owner: event ).order("created_at ASC", "role ASC")
+    activities = PublicActivity::Activity.where(owner: event ).order("created_at DESC")
 
     respond_to do |format|
       format.html { 
@@ -89,7 +89,8 @@ class StaticPagesController < ApplicationController
 
     def set_events
       @events = Event.where(nil)
-      @replace = false
+      #a better name for this might be "search return" or something
+      @replace = false            
       if params.include?(:search)
         @events = @events.search(params[:search])
         @replace = true
