@@ -166,12 +166,14 @@ class Event < ActiveRecord::Base
 	end
 	def self.in_name_starts_with_(q)
 		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+		# pref: self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
 	end
 	def self.in_description_starts_with(q)
 		self.where("description ~* ?", "\\m#{q}")
 	end
 	def self.in_description_starts_with_(q)
 		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+		# pref: self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 	end
 	#----- metaprogramming alts
 	#		[:name, :description].each do |p|
@@ -194,29 +196,7 @@ class Event < ActiveRecord::Base
 	#- for the application's specific uses of the above class methods
 	#---
 
-	# order determines final order
-	# so this is the easiest way to do relevance
-	def self.search_(q)
-		if q.length <= 3
-			n = self.arel_table[:name].matches("#{q}%")
-			d = nil
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = nil
-		elsif q.length <= 5
-			n = self.arel_table[:name].matches("#{q}%")
-			d = self.arel_table[:description].matches("#{q}%")
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
-		else
-			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
-			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
-		end
-		n.or(d).or(ni).or(di) 
-	end
-
-	# prev version using sql literals for some values
+	# prev search version using sql literals for some values
 	#
 	# def self.search_(q)
 	# 	if q.length <= 3
@@ -238,6 +218,29 @@ class Event < ActiveRecord::Base
 	# 	n.or(d).or(ni).or(di) 	# ni and di must follow n or d
 	# 	#n.or(ni).or(d).or(di)
 	# end
+
+	# order determines final order
+	# so this is the easiest way to do relevance
+	def self.search_(q)
+		if q.length <= 3
+			n = self.arel_table[:name].matches("#{q}%")
+			d = nil
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = nil
+		elsif q.length <= 5
+			n = self.arel_table[:name].matches("#{q}%")
+			d = self.arel_table[:description].matches("#{q}%")
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		else
+			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
+			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		end
+		n.or(d).or(ni).or(di)
+		#n.or(ni).or(d).or(di) #if this works, it's more relevant.
+	end
 
 	# order determines final order
 	def self.search(q)
@@ -264,11 +267,11 @@ class Event < ActiveRecord::Base
 	end
 
 	def fresh_for(user)
-		self.activities.where("updated_at > ?", user.last_sign_in_at).order("updated_at DESC")
+		self.activities.where("created_at > ?", user.last_sign_in_at).order("created_at DESC")
 	end
 
 	def fresh_for?(user)
-		self.activities.where("updated_at > ?", user.last_sign_in_at).any?
+		self.activities.where("created_at > ?", user.last_sign_in_at).any?
 	end
 
 	# def fresh_by_type(user)
