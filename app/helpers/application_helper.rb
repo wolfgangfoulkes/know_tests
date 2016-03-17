@@ -17,12 +17,7 @@ module ApplicationHelper
 	end
 
 	def self.fresh_for_user?(o_, user_) # -		-	-	-	-	-	-	- USED HERE, CONTROLLER
-		return false unless ( timestamps?(o_) && isa?(user_, "User") )
-		# in the future avoid above unless we expect different behavior for each scenario
-		# like if we sometimes give it a var that returns false, so we can test that too
-		# or we don't want to throw an exception but it's hard to avoid the cause
-		# otherwise, it's like overriding "+" to avoid passing incompatible objects
-
+		puts fresh_after?(o_, user_.last_sign_in_at)
 		fresh_after?(o_, user_.last_sign_in_at)
 	end
 
