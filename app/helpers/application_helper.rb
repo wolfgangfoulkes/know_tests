@@ -238,6 +238,33 @@ module ApplicationHelper
 	end
 	# -----
 
+	def tabbed(hash_, layout: "", classes: "")
+		tabs = capture do
+			hash_.keys.each_with_index do |key, i|
+				concat(
+						content_tag :a, 
+						"#{key}", 
+						data: sel_snd( i, group: 0, state: (i == 0) ) 
+					)
+			end
+		end
+		tabbed = capture do
+			hash_.values.each_with_index do |value, i|
+				concat( 
+						content_tag :div, 
+						render(value),
+						data: sel_rcv( i, group: 0, state: (i == 0) ), 
+						class: "col tabbed"
+					)
+			end
+		end
+		_content = capture do
+			concat( content_tag :div, tabs, class: "row tabs" + classes )
+			concat( tabbed )
+		end
+		_content
+	end
+
 	def scroll_link(items)
 		is_max = (items.current_page >= items.total_pages)
 		url = (is_max) ? "" : url_for(page: items.current_page + 1)
