@@ -168,15 +168,15 @@ class Event < ActiveRecord::Base
 		self.where("name ~* ?", "\\m#{q}")
 	end
 	def self.in_name_starts_with_(q)
-		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
-		# pref: self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+		# arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+		self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
 	end
 	def self.in_description_starts_with(q)
 		self.where("description ~* ?", "\\m#{q}")
 	end
 	def self.in_description_starts_with_(q)
-		Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
-		# pref: self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		# arel sql literal: Arel.sql(self.in_description_starts_with(q.to_s).where_values.reduce(:&))
+		self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 	end
 	#----- metaprogramming alts
 	#		[:name, :description].each do |p|
@@ -193,6 +193,12 @@ class Event < ActiveRecord::Base
 	#				self.where("#{p} ~* ?", "\\m#{q}").where_sql
 	#			end
 	#		end
+	#
+	# 		get all string/text columns to perform above
+	# 		a = []
+	# 		self.columns.each do |c|
+	# 			a << c if c.type == :string || c.type == :text
+	# 		end
 	#-----
 
 	#----- INTERFACE METHODS
@@ -241,8 +247,7 @@ class Event < ActiveRecord::Base
 			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
 			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 		end
-		n.or(d).or(ni).or(di)
-		#n.or(ni).or(d).or(di) #if this works, it's more relevant.
+		n.or(ni).or(d).or(di)
 	end
 
 	# order determines final order
@@ -256,9 +261,6 @@ class Event < ActiveRecord::Base
 #----- COMMENTS -----#
 	def setup_comment(comment)
 		comment.setup_params
-		# if comment.role == "owner"
-		# 	comment.public = true
-		# end
 	end
 #-----#
 
