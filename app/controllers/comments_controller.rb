@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
 	load_resource :only => [:create, :destroy, :set_public, :set_default, :show]
 	authorize_resource :only => [:create, :destroy, :show]
 	before_action :set_collection, only: [:create, :destroy, :set_public, :set_default]
+	
 
 	def create
 		respond_to do |format|
