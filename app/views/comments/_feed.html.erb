@@ -7,7 +7,7 @@
 %>
 <%= content_tag :div, 
 	class: ["comment-list", "col"],
-	data: {refresh: comments.type, pagi_target: comments.type } do
+	data: {refresh: comments.build.type, pagi_target: comments.build.type } do
 -%>
 	<%= render comments.deef %>
 <% end -%>
