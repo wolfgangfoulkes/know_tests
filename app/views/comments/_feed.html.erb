@@ -1,13 +1,13 @@
 <% comments = CommentsHelper.pagi(comments, page: params[:page]) %>
 <%= render partial: "layouts/paginate", 
 	locals: {
-		items: comments, target: comments.type,
+		items: comments, target: comments.role,
 		params: {controller: "comments", action: "paginate", role: comments.role}
 	}
 %>
 <%= content_tag :div, 
 	class: ["comment-list", "col"],
-	data: {refresh: comments.build.type, pagi_target: comments.build.type } do
+	data: {refresh: comments.build.role, pagi_target: comments.build.role } do
 -%>
 	<%= render comments.deef %>
 <% end -%>

@@ -80,36 +80,6 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  #- unused
-  def self.same_role?
-    (self.pluck(:role).uniq.size == 1)
-  end
-
-
-
-  #- unused?
-  def self.types
-    c = self.pluck(:role).uniq.map{|r| "#{r}_comments"}
-  end
-
-  def self.type
-    c = self.pluck(:role).uniq
-    if c.size == 1
-      "#{c[0]}_comments"
-    else
-      "comments" #false
-    end
-  end
-
-  def type
-    "#{self.role}_comments"
-  end
-
-  #- unused
-  def self.same_type?
-    (self.same_role?)
-  end
-
 
   #- unused?
   def self.collection(roles = nil)

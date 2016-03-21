@@ -15,7 +15,7 @@
           <%= link_to_unless  (link == false),  event.name,    link %> 
         </div>
         <span class="h5 username user"> <%= event.user.name %> </span>
-        <span class="tags h4"> 
+        <span class="h4 tags"> 
 
             <% event.tags.first(10).each do |tag| %>
               <%= "#{tag.name}" %>

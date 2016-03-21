@@ -22,7 +22,7 @@ class StaticPagesController < ApplicationController
   end
 
   def feed
-    @events = @events.starts_after(DateTime.now).deef
+    @events = @events.starts_after(DateTime.now.to_date).deef
 
     respond_to do |format|
       format.html { 
