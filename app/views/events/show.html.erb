@@ -73,7 +73,7 @@
 
 	<%= content_tag :div,
 	class: ["col"], 
-	data: sel_rcv(1, group: 0, state: false).merge({scroll_content: '1'}) do
+	data: sel_rcv(1, group: 0, state: false) do
 	%>
 
 		<%= render partial: 'comments/feed', locals: {comments: @event.feed_comments} %>
