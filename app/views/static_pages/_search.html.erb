@@ -1,0 +1,6 @@
+<%= form_tag url, remote: true, class: 'search row h2' do %>
+  <%= text_field_tag :search, params[:search], placeholder: "search" %>
+  <%= hidden_field_tag :items, local_assigns[:items] || "" %>
+  <%= yield if block_given? %>
+  <%= submit_tag '>>' %>
+<% end %>

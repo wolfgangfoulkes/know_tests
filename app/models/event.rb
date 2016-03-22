@@ -153,7 +153,7 @@ class Event < ActiveRecord::Base
 
 	def self.match_any_(k, vs)
 		#Arel::Nodes::SqlLiteral.new()
-		self.match_any(k, s).where_sql
+		self.match_any(k, vs).where_sql
 	end
 	def self.match_any(k, vs)
 		self.where( "#{k} ilike any (array[?])", vs )

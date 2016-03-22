@@ -1,12 +1,11 @@
 <%= form_tag url_for(controller: 'static_pages', action: 'activities'), remote: true, 
 	class: 'activity search row h2' do %>
   <%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
-  <%= text_field_tag :search, params[:search], 
-  placeholder: "search" %>
+  <%= text_field_tag :search, params[:search], placeholder: "search" %>
   <%= submit_tag '>>' %>
 <% end %>
 
-<div class="activity-feed feed col" data-search-target="1" data-scroll-content="1">
+<div class="activity-feed feed col" data-scroll-content="1">
 		<%= render partial: 'static_pages/activity_toggle',
 		collection: @events, as: :event %>
 </div>

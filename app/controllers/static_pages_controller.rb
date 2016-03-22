@@ -12,7 +12,6 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb", 
           locals: 
           {
-              replace: @replace,
               item_partial: "events/event",
               items: @events
           } 
@@ -32,7 +31,6 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb",
           locals: 
           {
-              replace: @replace,
               item_partial: "events/event",
               items: @events
           }
@@ -51,7 +49,6 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb",  
           locals: 
           {
-              replace: @replace,
               item_partial: "static_pages/activity_toggle",
               items: @events
           }
@@ -89,12 +86,13 @@ class StaticPagesController < ApplicationController
 
     def set_events
       @events = Event.where(nil)
-      #a better name for this might be "search return" or something
-      @replace = false            
+      params[:search_return] = nil
+
       if params.include?(:search)
         @events = @events.search(params[:search])
-        @replace = true
+        params[:search_return] = params[:search]
       end
+
       if params.include?(:page)
         @events = EventsHelper.pagi(@events, page: params[:page])
       else
