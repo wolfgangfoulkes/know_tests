@@ -23,7 +23,7 @@
 $fc-font-i: 4;
 $fc-month-row-height: 4em;
 $fc-bar-h: $nav-bar-h * 0.8;
-$fc-agenda-hmin: 3em;
+$fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 
 @mixin FCEvent($fc_view, $fsize)
 {
@@ -402,7 +402,10 @@ $fc-agenda-hmin: 3em;
 }
 
 /* - AGENDA label temporarily removed - */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+/* 
+[data-fc-view*="agenda"]
+*/
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] { 
 	.fc-axis {
 		display: none;
 	}
@@ -433,8 +436,9 @@ $fc-agenda-hmin: 3em;
 /* change these colors maybe */
 #calendar[data-fc-view="agendaDay"] .know-fcevent
 {
+	box-sizing: border-box;
 	height: auto;
-	font-size: 1.5em; /* THIS SHOULD BE A LOT SMALLER */
+	font-size: 1.25em; /* THIS SHOULD BE A LOT SMALLER */
 	line-height: 1.2;
 
 	padding: 10px 8px;
@@ -537,9 +541,16 @@ $fc-agenda-hmin: 3em;
 		}
 		&.know-cuser 
 		{
-			border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
-			border-left: 1px dashed rgba(0, 0, 0, 0.2);
-			border-right: 1px dashed rgba(0, 0, 0, 0.2);
+			/*border-color: rgba(50, 0, 0, 0.2);*/
+			border: 1px solid rgba(50, 0, 0, 0.115);
+			background: rgba(255, 255, 255, 0.85);
+
+			.fc-title
+			{
+				white-space: nowrap;
+				background: rgba(255, 255, 255, 0.95);
+				text-overflow: ellipsis;
+			}
 		}
 			
 	}
