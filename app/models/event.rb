@@ -95,17 +95,32 @@ class Event < ActiveRecord::Base
 
 #--------#
 
+#----- TAGS 
+	def self.tagged_with(name)
+		Tag.find_by_name!(name).entries
+	end
+#-----#
+
 #----- COMMENTS -----#
 	def setup_comment(comment)
 		comment.setup_params
 	end
 #-----#
 
-
 #----- ACTIVITIES
 	def self.activities(deef: "created_at DESC")
 		PublicActivity::Activity.where(owner_type: 'Event', owner_id: self.all).order(deef)
 		#  										  faster -> owner_id: select(:id))
+	end
+
+	# Grab events
+	# Join them with activities
+	# Group by the event ('s id)
+	# Now we can use max(activities.created_at) which is the newest activity.created_at for each Event
+	# Then sort Events by the most recent activity.created_at in descending order
+	# later, perhaps add an optional parameter to change order between DESC and ASC
+	def self.by_newest_activity
+		self.joins(:activities).group("events.id").order("max(activities.created_at) DESC") 
 	end
 
 	def fresh_for(user)
@@ -120,24 +135,8 @@ class Event < ActiveRecord::Base
 	# 	f = self.activities.fresh_for(user)
 	# 	f.order("activities.role").group("activities.role", "activities.id")
 	# end
-
-	# Grab events
-	# Join them with activities
-	# Group by the event ('s id)
-	# Now we can use max(activities.created_at) which is the newest activity.created_at for each Event
-	# Then sort Events by the most recent activity.created_at in descending order
-	# later, perhaps add an optional parameter to change order between DESC and ASC
-	def self.by_newest_activity
-		self.joins(:activities).group("events.id").order("max(activities.created_at) DESC") 
-	end
-	
-	#---
 #-----#
 
-#----- TAGS 
-	def self.tagged_with(name)
-		Tag.find_by_name!(name).entries
-	end
-#-----#
+
 
 end
