@@ -24,6 +24,7 @@ module Auth
     config.autoload_paths += %W["#{config.root}/app/validators/"]
     config.autoload_paths += %W["#{config.root}/app/models/comment/"]
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths += Dir[Rails.root.join('lib','{**}')]
 
     #this for js
     config.action_view.embed_authenticity_token_in_remote_forms = true

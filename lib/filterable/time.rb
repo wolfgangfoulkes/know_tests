@@ -1,10 +1,10 @@
 module Filterable
   module Time
-      # def included(base)
-      #   base.extend ClassMethods
-      #   base.class_eval do
-      #   end
-      # end
+      def self.included(base)
+        base.extend ClassMethods 
+        base.class_eval do
+        end
+      end
 
       def overlaps?(l, h)
           sa = (self.starts_at > l && self.starts_at < h)
@@ -51,11 +51,32 @@ module Filterable
       #   self.today? && self.upcoming?
       # end
 
+      def starts_after_(q)
+        self.arel_table[:starts_at].gt(q)
+      end
+      def starts_after(q)
+        self.where(self.starts_after_(q))
+      end
+
+      def self.starts_after_(q)
+        self.arel_table[:starts_at].gt(q)
+      end
+      def self.starts_after(q)
+        self.where(self.starts_after_(q))
+      end
+
       module ClassMethods
           def starts_after_(q)
             self.arel_table[:starts_at].gt(q)
           end
           def starts_after(q)
+            self.where(self.starts_after_(q))
+          end
+
+          def self.starts_after_(q)
+            self.arel_table[:starts_at].gt(q)
+          end
+          def self.starts_after(q)
             self.where(self.starts_after_(q))
           end
         
