@@ -26,10 +26,6 @@ class EventPresenter
   	def pagi(page: 1, per: 8)
     	page(page).per(per)
   	end
-
-  	def activities_feed(user)
-    	saved_for(by_newest_activity.pagi
-  	end
 end
 
 
