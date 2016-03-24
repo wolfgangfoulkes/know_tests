@@ -75,6 +75,9 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
+<% if flash[:dbug] %>
+  <p class="alert alert-debug"><%= flash[:dbug] %></p>
+<% end %>
 
 <div class="know-page">
 	<div class="vmn"> </div>

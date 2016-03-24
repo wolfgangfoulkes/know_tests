@@ -27,6 +27,15 @@ $trcrimsrown: rgba(60, 0, 0, 0.6);
 	display: none !important;
 }
 
+.alert
+{
+	position: fixed;
+	top: $nav-bar-h * 0.25;
+	left: $nav-bar-h * 0.25;
+	z-index: 101;
+	opacity: 0.5;
+}
+
 /* could be function or mixin or loop or something */
 svg[data-svgr="0"] {
 	transform: rotate(0deg);
