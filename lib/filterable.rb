@@ -1,8 +1,8 @@
 module Filterable
   def self.included(base)
-    base.extend ClassMethods
+    base.extend ClassMethods #this is necc to define ClassMethods below
     base.class_eval do
-      scope :disabled, -> { where(disabled: true) }
+        scope :disabled, -> { where(disabled: true) }
     end
   end
 

@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
 	include Filterable
 	include Filterable::Time
+	include Filterable::Basic
 	include Taggable
 	include PublicActivity::Common
 	
@@ -96,21 +97,22 @@ class Event < ActiveRecord::Base
 	#--- match first letter after word-break
 	#-	\m in pgsql is equivalent to \w in regexp. 
 	#- the backslash must be escaped of course
+	#-
+	#- defined metaprogrammically in Filterable::Basic
 	#--
 	#
-
-	#UNSAFE? maybe fine
+	# #UNSAFE? maybe fine
 	def self.in_name_starts_with(q)
 		self.where("name ~* ?", "\\m#{q}")
 	end
 
-	# simple sql literal Filterable.s2arel("name ~* \\m#{q}") but is it unsafe?
-	# arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
+	# # simple sql literal Filterable.s2arel("name ~* \\m#{q}") but is it unsafe?
+	# # arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
 	def self.in_name_starts_with_(q)
 		self.in_name_starts_with(q).arel.constraints.reduce(:and)
 	end
 	
-	#UNSAFE? maybe fine
+	# # #UNSAFE? maybe fine
 	def self.in_description_starts_with(q)
 		self.where("description ~* ?", "\\m#{q}")
 	end
@@ -118,28 +120,6 @@ class Event < ActiveRecord::Base
 		# arel sql literal: Arel.sql(self.in_description_starts_with(q.to_s).where_values.reduce(:&))
 		self.in_description_starts_with(q).arel.constraints.reduce(:and)
 	end
-	#----- metaprogramming alts
-	#		[:name, :description].each do |p|
-	#			self.class.send :define_method, "in_#{p}_starts_with" do |q|
-	#				self.where("#{p} ~* ?", "\\m#{q}")
-	#			end
-	#			self.class.send :define_method, "in_#{p}_starts_with" do |q|
-	#				self.where("#{self.arel_table[p].name} ~* ?", "\\m#{q}")
-	#			end
-	#		  self.class.send :define_method, "in_#{p}_starts_with" do |q|
-	#				self.where("#{self.arel_table[p].name} ~* ?", "\\m#{q}")
-	#			end
-	#		  self.class.send :define_method, "in_#{p}_starts_with_" do |q|
-	#				self.where("#{p} ~* ?", "\\m#{q}").where_sql
-	#			end
-	#		end
-	#
-	# 		get all string/text columns to perform above
-	# 		a = []
-	# 		self.columns.each do |c|
-	# 			a << c if c.type == :string || c.type == :text
-	# 		end
-	#-----
 
 	#----- INTERFACE METHODS
 	#- for the application's specific uses of the above class methods
