@@ -1,0 +1,3 @@
+var result = "*[data-search-target]";
+$(result).html("<%= j render partial: partial, collection: collection, as: local %>");
+/* same as .empty().append() */

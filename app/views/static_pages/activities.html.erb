@@ -1,9 +1,13 @@
-<%= form_tag url_for(controller: 'events', action: 'search', target: 'activities'), remote: true, class: 'activity search row h2' do %>
-  <%= hidden_field_tag :items, @events.pluck(:id).join(',') %>
-  <%= text_field_tag :search, params[:search], placeholder: 'search' %>
+<%= form_tag url_for(controller: 'static_pages', action: 'activities'), remote: true, 
+	class: 'activity search row h2' do %>
+  <%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
+  <%= text_field_tag :search, params[:search], placeholder: "search" %>
   <%= submit_tag '>>' %>
 <% end %>
-<div class="activity-feed feed col" data-search-target="1">
-    <!-- render partial: @events, spacer_template: "activity" -->
-		<%= render partial: "events/activities", collection: @events, as: :event %>
+
+<div class="activity-feed feed col" data-scroll-content="1" data-search-target="1">
+		<%= render partial: 'static_pages/activity_toggle',
+		collection: @events, as: :event %>
 </div>
+
+<%= render partial: "shared/scroll", locals: {items: @events} %>

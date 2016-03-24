@@ -1,0 +1,11 @@
+<%= content_tag :div, class: "h5",
+	data: {
+		pagi_link: target,
+		current: items.current_page, 
+		total: items.total_pages, 
+		first: "#{items.current_page == 1}",
+		last: "#{items.current_page == items.total_pages}"
+		} do %>
+	<%= paginate items, remote: true, params: params %>
+
+<% end %>

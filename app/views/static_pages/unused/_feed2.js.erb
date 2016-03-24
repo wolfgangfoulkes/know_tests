@@ -1,0 +1,13 @@
+<% items.each do |item| %>
+	$('[data-scroll-content]').append("<%=j render partial: partial, locals: {item.class.name.downcase.to_sym => item} %>");
+<% end %>
+
+$('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
+$('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
+
+<% if (items.current_page == items.total_pages) %>
+  $('[data-scroll-link]').hide();
+  $(document).trigger("scroll:off");
+<% else %>
+  $('[data-scroll-link] a').attr('href', '<%= url_for(page: items.current_page + 1) %>');
+<% end %>

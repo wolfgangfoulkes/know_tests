@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'comments#paginate', controller: "comments", action: "paginate"
+
   
 
   #post ':controller(/filtered)', action: 'filtered'
@@ -45,10 +47,10 @@ Rails.application.routes.draw do
 
   # ----- static_pages
   # these could easily be replaced with a url query 
-  get '/feed', to: 'static_pages#feed', as: 'feed'
-  get '/saved', to: 'static_pages#saved', as: 'saved'
-
-  get '/activities', to: 'static_pages#activities', as: 'activities'
+  match '/feed',       controller: 'static_pages', action: 'feed',        via: [:get, :post], as: 'feed'
+  match '/saved',      controller: 'static_pages', action: 'saved',       via: [:get, :post], as: 'saved'
+  match '/activities', controller: 'static_pages', action: 'activities',  via: [:get, :post], as: 'activities'
+  get '/activities/event/:id', to: 'static_pages#activity_list'
   
   root 'static_pages#feed'
   # -----

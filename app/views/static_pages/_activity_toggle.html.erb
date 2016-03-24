@@ -1,0 +1,18 @@
+<%= render partial: 'events/event', 
+	locals: 
+	{ 
+		event: event,
+		svg_thn: 'svg/test/arrow_3.svg',
+		link: false,
+		classes: "drop-event",
+		data: drop_snd(event.id).merge({id: event.id})
+	} 
+%>
+<%= 
+content_tag :div,
+class: "activity-list col h4", 
+data: drop_rcv(event.id) do
+%>
+  	<%= render partial: 'activities/list', 
+  	locals: {activities: ActivitiesHelper.pagi(event.activities) } %>
+<% end %>

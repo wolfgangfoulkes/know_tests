@@ -10,6 +10,10 @@
 
 <div class="vmn"> </div>
 
-<section>
+<section class="col" style="height: 30vh">
 	<%= render 'events/feed' %>
+	<div class="br"></div>
+	<%= content_tag :div, class: "h5 row", data: {pagi_link: "events"} do %>
+		<%= paginate @events, remote: true %>
+	<% end %>
 </section>

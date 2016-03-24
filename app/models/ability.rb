@@ -10,6 +10,8 @@ class Ability
     # all owned events for user
     owner_events = user.events.pluck(:id)
 
+
+    # --- Comments
     # override :read, :all
     cannot [:read], Comment, { public: false }
 
@@ -55,10 +57,12 @@ class Ability
         role: ["default"]
     }
 
+    # custom ability
     can [:comment_on], Comment do |comment|
         (comment.role == "default") &&
         (!comment.is_nested?)
     end
+    # -----
 
     # Define abilities for the passed in user here. For example:
     #

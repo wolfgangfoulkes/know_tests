@@ -1,0 +1,2 @@
+$("[data-scroll-target=<%= comments.role %>]").empty().append("<%= j render comments %>");
+$("[data-pagi-link=<%= comments.role %>]").empty().append("<%= j paginate comments, remote: true, params: {controller: 'comments', action: 'paginate', role: comments.role} %>");

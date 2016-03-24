@@ -17,8 +17,14 @@
     <%= f.hidden_field :root_type %>
     <%= f.hidden_field :commentable_id %>
     <%= f.hidden_field :commentable_type %>
-    <!-- here for cancancan's load_and_authorize -->
-    <!-- remove for safety -->
+
+    <span id="IMPORTANT-NOTE" style="display: none"> 
+      # here for cancancan's load_and_authorize
+      # remove for safety, and elsewhere in the app
+      # set this param with current_user in the controller
+      # THEN authorize via CanCanCan
+    </span>
     <%= f.hidden_field :user_id %>
+
   <% end %>
 <% end %>

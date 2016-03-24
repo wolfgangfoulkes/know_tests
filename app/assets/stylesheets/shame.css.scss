@@ -28,25 +28,30 @@
 		font-family: 'Helvetica', sans-serif;
 	}
 
-	.events.feed .h2 {
+	.events.feed .h2 
+	{
 		/*font-variant: small-caps; do this in Ruby. sizes are still diff otherwise*/
 		/*font-family: 'Avenir Next';*/
 		font-family: 'Helvetica';
 	}
 
-	.events.feed .dt {
+	.events.feed .dt 
+	{
 		/*font-family: 'Avenir Next Condensed';*/
 		font-family: 'Avenir Next'; 
 		font-weight: initial;
 	}
 
-	.events.feed .title {
-	}
-
-	.events.feed .username {
+	.events.feed .username 
+	{
 		font-family: "Avenir Next";
 		font-weight: lighter;
 	}
+
+	.events.feed .title 
+	{
+	}
+
 
 	.activity-feed.feed .h5 {
 		font-weight: lighter;
@@ -216,6 +221,12 @@
 
 /* ----- */
 
+/* remove this when sizes are fixed */
+$namespace: "know";
+.#{$namespace} {
+	font-size: 36px;
+}
+
 /* ----- MISC ----- */
 /* 
 *	- used only in nav currently, could be reused
@@ -235,18 +246,5 @@
 	}
 }
 /* ----- */
-
-
-/* --- STUFF I DON'T WANNA FUCK UP --- */
-$namespace: "know";
-
-.#{$namespace} {
-	font-size: 36px;
-}
-section {
-	width: 100%;
-}
-/* --- */
-
 
 

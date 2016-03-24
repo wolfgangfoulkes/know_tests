@@ -1,0 +1,130 @@
+/*** UTILITY CONSTANTS ***/
+/*** golden mean 
+*/
+$gm: 	0.61803398875;
+$gm_i: 	1.61803398875;
+$gmd: 	0.5 * $gm_i; 
+$gmd_i: 2.0 * $gm; /* 1.23606797749971 */
+
+/*** UTILITY FUNCTIONS *****/
+/*
+* 	replace broken ternary conditional
+* 	if given two args, it's like ||=
+*/
+@function iff($t, $f, $condition: null)
+{
+	@if $condition == null
+	{
+		$condition: $t;
+	}
+	
+	@if $condition 
+	{
+		@return $t
+	}
+	@else
+	{
+		@return $f
+	}
+}
+
+/* 
+* generate media query
+* 0, n will give you media < n
+* n, 0 will give you media > n
+*/
+@mixin mq($min_, $max_) {
+	@if $min_ == 0 {
+		@media only screen and (max-width: "#{$max_}")
+		{ @content; }
+	}
+	@else if $max_ == 0 {
+		@media only screen and (min-width: "#{$min_}")
+		{ @content; }
+	}
+	@else {
+		@media only screen and (min-width: "#{$min_}") and (max-width: "#{$max_}")
+		{ @content; }
+	}
+}
+
+
+/** Typography ***/
+
+/*
+* find em, for proportion of $px_ / $ctx_
+*/
+@function calc-em($px_, $ctx_) {
+  @return ($px_ / $ctx_) * 1em;
+}
+
+/***/
+
+/* size ***/
+@function pow($ls_, $rs_) {
+	$_r: 1.0;
+	@for $i from 0 to $rs_ {
+		$_r: $_r * $ls_;
+	}
+	@return $_r;
+}
+
+@function scale($base_, $coeff_, $i_) {
+	$coeff: pow($coeff_, $i_);
+	@return $base_ * $coeff;
+}
+
+@function sig_figs($base_, $n_) {
+	$coeff: pow(10, $n_);
+	@return round($base_ * $coeff)/$coeff;
+}
+/***/
+
+/* 
+color ***/
+@function a_bl($fg, $bg, $a) {
+	@return rgb(
+	$a * red($fg) 	+ 	(1-$a) * red($bg),
+	$a * blue($fg) 	+ 	(1-$a) * blue($bg),
+	$a * green($fg) + 	(1-$a) * green($bg)
+	);
+}
+
+@function rgba2rgb($c, $a) {
+	@return a_bl($c, rgb(255.0, 255.0, 255.0), $a);
+}
+
+@function w_bl($c, $a) {
+	@return rgba2rgb($c, $a);
+}
+
+@function rgb2rgba($c, $a) {
+	$w: 255.0 * (1.0-$a);
+	@return rgba(
+		( red($c) - $w  ) / $a,
+		( blue($c) - $w ) / $a,
+		( green($c) - $w) / $a,
+		$a
+	);
+}
+/***/
+
+/* UNUSED: ***/
+
+/*
+* return last item if array is indexed higher than size
+*/
+@function nth_if($map_, $i_)
+{
+	$max: length($map_);
+	@if ($i_ > $max) {
+		@return nth($map_, $max);
+	}
+	@if ($i_ < 1) {
+		@return nth($map_, 1);
+	}
+	@return nth($map_, $i_);
+}
+/***/
+
+/*****/

@@ -48,6 +48,7 @@ $spacer_margin: 8px;
 		}
 		.content {
 			opacity: 0.4;
+			max-width: 75%;
 		}
 		.options {
 		}
@@ -79,3 +80,4 @@ form.new_comment #comment_title {
 form.new_comment input {
 	border: 1px solid black;
 }
+

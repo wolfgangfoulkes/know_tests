@@ -1,0 +1,2 @@
+$("[data-pagi-link=<%= target %>]").replaceWith("<%= j render partial: 'layouts/paginate', locals: { items: items, target: target, params: params } %>");
+$("[data-pagi-target=<%= target %>]").html("<%= j render items %>");

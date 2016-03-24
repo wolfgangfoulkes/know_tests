@@ -21,7 +21,7 @@
         <%= link_to 'reply', comment_path(comment),  class: "h4" %>
       <% end %>
     	<% if can? :destroy, comment %>
-  	  	<%= link_to 'destroy', [comment, :refresh => comment.type ], method: :delete, remote: true, class: "h4" %>
+  	  	<%= link_to 'destroy', [comment, :refresh => comment.role ], method: :delete, remote: true, class: "h4" %>
     	<% end %>
     </div>
   <% end %>

@@ -16,69 +16,139 @@
 	}
 */
 
-
+/*
+	weights: 200 - 800;
+*/
 
 $fc-font-i: 4;
-$month-row-height: 4em;
+$fc-month-row-height: 4em;
+$fc-bar-h: $nav-bar-h * 0.8;
+$fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 
-[data-fc-view="month"]
+@mixin FCEvent($fc_view, $fsize)
 {
-	@include mq(0, 				nth($bps, 2))
-	{
+	padding: 2px 0px;
+	padding-bottom: $fsize * 0.22222;
+	line-height: 1.2;
 
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
+	.fc-content
 	{
+	}
+	.fc-content > *
+	{
+	}
+	.fc-content > .fc-time
+	{
+	}
+	.fc-content > .fc-title
+	{
+	}
 
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-
-	}
-	
-}
-[data-fc-view="basicWeek"]
-{
-	@include mq(0, 				nth($bps, 2))
-	{
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
-	{
-
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-		
-	}
-}
-[data-fc-view="agendaDay"]
-{
-	@include mq(0, 				nth($bps, 2))
-	{
-
-	}
-	@include mq(nth($bps, 2), 	nth($bps, 3))
-	{
-
-	}
-	@include mq(nth($bps, 3), 	nth($bps, 4))
-	{
-
-	}
-	@include mq(nth($bps, 4), 	0)
-	{
-		
-	}
 }
 
+@mixin FCEventColorEZE(
+	$border: null, 
+	$brunderline: null,
+	$bg: null, 
+	$c0: null,
+	$c1: null
+)
+{
+	$br: 			iff( $brwidth, 		1px solid rgba(0, 0, 0, 0.1)	);
+	$brunderline: 	iff( $brunderline,	1px solid rgba(100, 0, 0, 0.1) 	);
+	$bg: 			iff( $bg, 			rgba(255, 255, 255, 1.0) 		);
+	$c0: 			iff( $c0, 			rgba(0, 0, 0, 1.0) 				);
+	$c1: 			iff( $c1, 			inherit 						);
+
+	background: $bg;
+	border-style: $brstyle;
+	border-color: $brcolor;
+	border-width: $brwidth;
+
+	.fc-bg 
+	{
+		background: $bg;
+		border-style: inherit;
+		border-color: inherit;
+		border-width: inherit;
+		color: none;
+	}
+	.fc-content
+	{
+		color: $c0;
+	}
+	.fc-content > *
+	{
+		color: inherit;
+	}
+	.fc-content > .fc-time
+	{
+		border-bottom: $brunderline;
+	}
+	.fc-content > .fc-title
+	{
+		color: $c1;
+	}
+}
+
+@mixin FCEventColor(
+	$brwidth: null,
+	$brstyle: null, 
+	$brcolor: null,
+	$brunderline: null,
+	$bg: null, 
+	$c0: null,
+	$c1: null
+)
+{
+	$brwidth: 		iff( $brwidth, 		0px 							);
+	$brstyle: 		iff( $brstyle, 		solid 							);
+	$brcolor: 		iff( $brcolor, 		rgba(100, 0, 0, 0.5) 			);
+	$brunderline: 	iff( $brunderline,	1px solid rgba(100, 0, 0, 0.1) 	);
+	$bg: 			iff( $bg, 			rgba(255, 255, 255, 1.0) 		);
+	$c0: 			iff( $c0, 			rgba(0, 0, 0, 1.0) 				);
+	$c1: 			iff( $c1, 			inherit 						);
+
+	background: $bg;
+	border-style: $brstyle;
+	border-color: $brcolor;
+	border-width: $brwidth;
+
+	.fc-bg 
+	{
+		background: $bg;
+		border-style: inherit;
+		border-color: inherit;
+		border-width: inherit;
+		color: none;
+	}
+	.fc-content
+	{
+		color: $c0;
+
+		> *
+		{
+			color: inherit;
+		}
+		> .fc-time
+		{
+			border-bottom: $brunderline;
+		}
+		> .fc-title
+		{
+			color: $c1;
+		}
+	}
+}
+
+
+/*.fc-bg 
+	{
+		opacity: 1.0;
+		background: none;
+		border: none;
+		color: none;
+	}*/
 
 #calendar
 {
@@ -93,167 +163,6 @@ $month-row-height: 4em;
 	padding-top: inherit; /* --- from page --- */
 	margin: 0 auto;
 }
-
-
-#calendar[data-fc-view="month"] .fc-row.fc-week 
-{
-	height: $month-row-height;
-}
-
-/*#calendar:before {
-		display: block;
-		content: "";
-		height: $vmn;
-	};*/
-
-#calendar .fc-day-header 
-{
-	@include sizes(4, "font-size");
-	padding: .8em 0 !important;
-	
-	&.fc-sun, &.fc-mon
-	{
-	}
-}
-
-#calendar .fc-today 
-{
-	/* - overrides - */
-	background-color: initial;
-	border-style: initial;
-	/* ----- */
-
-	background-color: rgba(100, 0, 0, 0.02);
-}
-
-
-/* ----- RESPONSIVE SIZES ----- */
-#calendar 
-{
-	&[data-fc-view="month"]
-	{
-		/*font-size: ; should be less when it gets small */
-		max-height: 133.3vw;
-	}
-	
-	@include mq(0, nth($bps, 2))
-	{
-		top: 0;
-		&[data-fc-view="agendaDay"]
-		{
-			max-width: none;
-			max-height: none;
-			padding-bottom: 0;
-
-		}
-		&[data-fc-view="month"]
-		{
-			max-height: none;
-		}
-	}
-
-	@include mq(nth($bps, 3) + 1, nth($bps, 4)) 
-	{
-		max-width: 800px;
-		max-height: none;
-		padding-bottom: 49px;
-		&[data-fc-view="basicDay"]
-		{
-			
-		}
-		&[data-fc-view="agendaDay"]
-		{
-			
-		}
-		&[data-fc-view="month"] 
-		{
-		}
-	}
-	@include mq(nth($bps, 4) + 1, 0) 
-	{
-		max-width: 960px;
-		padding-bottom: 59px;
-		/*max-height: 590px;*/
-		&[data-fc-view="agendaDay"]
-		{
-		}	
-		&[data-fc-view="basicDay"]
-		{
-		}	
-		
-	}
-}
-
-/* --- AGENDA view overrides ----- */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-	table {
-		height: 100% !important;
-	}
-
-	.fc-time-grid {
-		height: 100% !important;
-		.fc-slats {
-			height: 100% !important;
-		}
-	}
-
-	.fc-axis {
-		vertical-align: top !important;
-	}		
-}	
-
-/* --- AGENDA view label style CLEAN THIS UP--- */
-
-/* - temporarily removed - */
-[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-	.fc-axis {
-		display: none;
-	}
-}
-
-/* - filler - */
-/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-
-	.fc-axis {
-		overflow: hidden;
-		padding: 0 3px;
-
-		font-size: 1.5em;
-		font-weight: normal;
-		> span {
-			color: rgba(80, 0, 0, 0.4);
-			position: relative;
-			top: -0.3em;
-			right: -2px;
-		}
-	}
-}*/
-
-/* - better but incomplete - */
-/*[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
-
-	.fc-widget-content {
-		border-left: none;
-	}
-	.fc-axis {
-		overflow: visible;
-		padding: 0 3px;
-
-		font-size: 16px;
-		font-weight: normal;
-		border: none;
-		> span {
-			color: rgba(100, 0, 0, 0.1);
-			position: relative;
-			top: -0.5em;
-			right: 0;
-		}
-	}
-}*/
-
-/* ----- */
-
-
 
 #calendar-title {
 	font-size: $nav-bar-h;
@@ -271,6 +180,15 @@ $month-row-height: 4em;
 	align-items: center;
 }
 
+#calendar .fc-day-header 
+{
+	@include sizes(4, "font-size");
+	padding: .8em 0 !important;
+	
+	&.fc-sun, &.fc-mon
+	{
+	}
+}
 
 /* -------- UI
 *
@@ -290,8 +208,6 @@ $month-row-height: 4em;
 	}
 	/* ----- */
 }
-
-$fc-bar-h: $nav-bar-h * 0.8;
 #calendar > .fc-toolbar 
 {
 	position: fixed;
@@ -345,25 +261,80 @@ $fc-bar-h: $nav-bar-h * 0.8;
 *
 * -------- */
 
-@mixin FCEvent($fc_view, $fsize)
+
+/* ----- RESPONSIVE SIZES ----- */
+#calendar 
 {
-	padding: 2px 0px;
-	padding-bottom: $fsize * 0.22222;
-	line-height: 1.2;
+	&[data-fc-view="basicWeek"]
+	{
+		
+	}
+	&[data-fc-view="agendaDay"]
+	{
+		
+	}
+	&[data-fc-view="month"]
+	{
+		/*font-size: ; should be less when it gets small */
+		max-height: 133.3vw;
+	}
+	
+	@include mq(0, nth($bps, 2))
+	{
+		top: 0;
 
-	.fc-content
-	{
-	}
-	.fc-content span
-	{
-	}
-	.fc-content span.fc-time
-	{
-	}
-	.fc-content span.fc-title
-	{
+		&[data-fc-view="basicWeek"]
+		{
+			
+		}
+		&[data-fc-view="agendaDay"]
+		{
+			max-width: none;
+			max-height: none;
+			padding-bottom: 0;
+
+		}
+		&[data-fc-view="month"]
+		{
+			max-height: none;
+		}
 	}
 
+	@include mq(nth($bps, 3) + 1, nth($bps, 4)) 
+	{
+		max-width: 800px;
+		max-height: none;
+		padding-bottom: 49px;
+
+		&[data-fc-view="basicWeek"]
+		{
+			
+		}
+		&[data-fc-view="agendaDay"]
+		{
+			
+		}
+		&[data-fc-view="month"] 
+		{
+		}
+	}
+	@include mq(nth($bps, 4) + 1, 0) 
+	{
+		max-width: 960px;
+		padding-bottom: 59px;
+		/*max-height: 590px;*/
+
+		&[data-fc-view="basicWeek"]
+		{
+		}
+		&[data-fc-view="agendaDay"]
+		{
+		}	
+		&[data-fc-view="month"]
+		{
+		}	
+		
+	}
 }
 
 /* ----- EVENT STYLE
@@ -384,22 +355,233 @@ $fc-bar-h: $nav-bar-h * 0.8;
 }
 /* ----- */
 
+/* SOME OVERRIDES */
+.know-fcevent .fc-content .fc-time
+{
+	> *
+	{
+		display: initial !important;
+	}
+	&:before, &:after 
+	{
+		display: none !important;
+	}
+}
+
+
 #calendar .know-fcevent 
 {
 	overflow: hidden;
+	box-sizing: border-box;
 
 	.fc-content 
 	{
-		span 
+		.fc-time
 		{
 			display: inline-block;
 		}
-		span.fc-time 
+		.fc-title 
+		{
+			display: inline-block;
+		}
+	}
+}
+
+
+/* ----- */
+
+
+#calendar .fc-today
+{
+	/* - overrides - */
+	background-color: initial;
+	border-style: initial;
+	/* ----- */
+
+	background-color: rgba(100, 0, 0, 0.02);
+}
+
+/* - AGENDA label temporarily removed - */
+/* 
+[data-fc-view*="agenda"]
+*/
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] { 
+	.fc-axis {
+		display: none;
+	}
+}
+
+
+/* --- AGENDA view overrides ----- */
+[data-fc-view="agendaDay"], [data-fc-view="agendaWeek"] {
+	table {
+		height: 100% !important;
+	}
+
+	.fc-time-grid {
+		overflow: scroll;
+		height: 100% !important;
+		.fc-slats {
+			height: 100% !important;
+		}
+	}
+
+	.fc-axis {
+		vertical-align: top !important;
+	}		
+}	
+/* ----- */
+
+
+/* change these colors maybe */
+#calendar[data-fc-view="agendaDay"] .know-fcevent
+{
+	box-sizing: border-box;
+	height: auto;
+	font-size: 1.25em; /* THIS SHOULD BE A LOT SMALLER */
+	line-height: 1.2;
+
+	padding: 10px 8px;
+	margin: 0px 0;
+
+	
+	.fc-bg
+	{
+
+	}
+	.fc-content .fc-time
+	{
+		display: block;
+		margin: 0 6px;
+		padding-bottom: 2px;
+	}
+	.fc-content .fc-title 
+	{
+		display: block;
+		font-weight: 200;
+		padding: 0 4px;
+		padding-top: 5px;
+		font-size: 1.0em;
+
+		white-space: normal;
+	}
+
+
+	
+
+	&.know-user {
+		background-color: rgba(150, 90, 90, 1.0);
+		color: white;
+		
+		border-width: 0px;
+		border-color: rgba(255, 255, 255, 1.0);
+		
+		
+		.fc-bg 
 		{
 		}
-		span.fc-title 
+		.fc-content .fc-time 
+		{
+			margin: 0 0;
+			padding: 0 0;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+		.fc-content .fc-title 
 		{
 		}
+
+	}
+
+	&.know-cuser {
+		background-color: rgba(255, 255, 255, 1.0);
+		color: rgba(100, 80, 80, 1.0);
+
+		border-width: 3px 1px 3px 1px;
+		border-color: rgba(100, 0, 0, 0.35);
+		
+		
+		.fc-bg 
+		{
+		}
+		.fc-content .fc-time 
+		{
+			border-bottom: 1px solid rgba(100, 0, 0, 0.2);
+		}
+		.fc-content .fc-title 
+		{
+		}
+
+
+	}
+
+	&.fc-not-end 
+	{
+		&.know-user 
+		{
+		}
+		&.know-cuser 
+		{
+		}
+	}
+	&.fc-not-start 
+	{
+		&.know-user 
+		{
+		}
+		&.know-cuser 
+		{
+		}
+	}
+	
+	&.know-time-min, &.fc-not-start, &.fc-not-end {
+		height: $fc-agenda-hmin;
+
+		&.know-user 
+		{
+		}
+		&.know-cuser 
+		{
+			/*border-color: rgba(50, 0, 0, 0.2);*/
+			border: 1px solid rgba(50, 0, 0, 0.115);
+			background: rgba(255, 255, 255, 0.85);
+
+			.fc-title
+			{
+				white-space: nowrap;
+				background: rgba(255, 255, 255, 0.95);
+				text-overflow: ellipsis;
+			}
+		}
+			
+	}
+}
+#calendar[data-fc-view="basicWeek"] .know-fcevent
+{
+	height: 8em;
+	font-size: 0.6em;
+	line-height: 1.2;
+	padding: 2px 0px;
+	padding-bottom: 1em;
+
+	.fc-content 
+	{
+
+	}
+	.fc-content .fc-time
+	{
+		display: block;
+		margin: 0px 2px;
+		border-bottom: 1px solid rgba(100, 0, 0, 0.1);
+
+	}
+	.fc-content .fc-title
+	{
+		display: block;
+		margin: 0 4px;
+		margin-top: 2px;
+		font-size: 1.1em;
+
+		white-space: normal;
 	}
 
 	&.know-user {
@@ -413,250 +595,135 @@ $fc-bar-h: $nav-bar-h * 0.8;
 		border-color: rgba(100, 0, 0, 0.8);
 		color: rgba(100, 80, 80, 1.0);
 	}
-
-	
 }
 
-
-
-/* change these colors maybe */
-#calendar[data-fc-view="agendaDay"] .know-fcevent
+#calendar[data-fc-view="month"] .fc-row.fc-week 
 {
-	height: auto;
-	font-size: 1.5em;
-	line-height: 1.2;
-
-	padding: 10px 8px;
-	margin: 0px 0;
-
-
-	.fc-content
-	{
-		span 
-		{
-			display: block;
-		}
-		.fc-time 
-		{
-			margin: 0 6px;
-			padding-bottom: 2px;
-		}
-		.fc-title 
-		{
-			font-weight: lighter;
-			padding: 0 4px;
-			padding-top: 5px;
-			font-size: 1.0em;
-
-			white-space: normal;
-		}
-	}
-
-	&.know-user {
-		background-color: rgba(150, 90, 90, 1.0);
-		color: white;
-		
-		border-color: rgba(255, 255, 255, 1.0);
-		border-width: 6px;
-		
-
-		.fc-bg {
-		/*	opacity: 1.0;
-			background-color: rgba(255, 255, 255, 0.1);
-			top: 1.4em;
-			border-top: 1px solid rgba(0, 0, 0, 0.1);*/
-
-		}
-		.fc-time 
-		{
-			margin: 0 0;
-			padding: 0 0;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		}
-
-	}
-
-	&.know-cuser {
-		background-color: rgba(255, 255, 255, 1.0);
-		border-color: rgba(100, 0, 0, 0.35);
-		border-width: 3px 1px 3px 1px;
-		color: rgba(100, 80, 80, 1.0);
-
-		.fc-time 
-		{
-			border-bottom: 1px solid rgba(100, 0, 0, 0.2);
-		}
-	}
-}
-#calendar[data-fc-view="basicWeek"] .know-fcevent
-{
-	height: 8em;
-	font-size: 0.6em;
-	line-height: 1.2;
-	padding: 2px 0px;
-	padding-bottom: 1em;
-
-	.fc-content
-	{
-
-		span
-		{
-			display: block;
-		}
-		.fc-time
-		{
-			margin: 0px 2px;
-			border-bottom: 1px solid rgba(100, 0, 0, 0.1);
-
-		}
-		.fc-title
-		{
-			margin: 0 4px;
-			margin-top: 2px;
-			font-size: 1.1em;
-
-			white-space: normal;
-		}
-	}
+	height: $fc-month-row-height;
+	overflow: hidden;
 }
 
 /* --- MONTH view --- */
 #calendar[data-fc-view="month"] .know-fcevent
 {
-	font-size: 1.0em;
-	line-height: 1.0;
-	height: auto;
-	border: none;
-	margin-bottom: 1px;
+		height: auto;
+		margin-bottom: 1px;
 
-	.fc-content
-	{
-		display: inline-flex;
-		align-items: flex-end;
-		width: 100%;
-	}
-	.fc-content span
-	{
-	}
-	.fc-content span.fc-time
-	{
-		flex-basis: 3em;
-		flex-grow: 0;
-		flex-shrink: 0;
-		font-size: 0.65em;
-	}
-	.fc-content span.fc-title
-	{
-		margin-left: 3px;
-		flex-grow: 1;
-		font-size: 0.65em;
-		text-overflow: ellipsis;
-	}
-}
+		font-size: 1.0em;
+		line-height: 1.0;
 
-@include mq(0, 				nth($bps, 3)) 
-{
-
-	#calendar[data-fc-view="month"] .know-fcevent
-	{
-		
-
-
-		.fc-content 
+		.fc-content
 		{
-			display: block;
-
+			display: inline-flex;
+			align-items: flex-end;
+			width: 100%;
 		}
-		.fc-content span
+		.fc-content .fc-time
 		{
-			display: block;
+			flex-basis: 3em;
+			flex-grow: 0;
+			flex-shrink: 0;
+
 			box-sizing: border-box;
+
+			font-size: 0.65em;
+			white-space: nowrap;
 		}
-		.fc-content span.fc-time
+		.fc-content .fc-title
 		{
-			border-top-left-radius: 3px;
-			border-top-right-radius: 3px;
+			flex-grow: 1;
+
+			box-sizing: border-box;
+			margin-left: 3px;
+
+			font-size: 0.65em;
+			white-space: nowrap;
 			
-			padding: 1px 3px;
-
-			white-space: nowrap;
-		}
-		.fc-content span.fc-title
-		{
-			padding-top: 2px;
-			padding-bottom: 3px;
-
-			white-space: nowrap;
-		}
-
-		&.know-user
-		{
-			.fc-content span.fc-time {
-				/*background: rgba(100, 0, 0, 0.8);*/
-				border-bottom: 2px solid rgba(0, 0, 0, 0.8);
-			}
-		}
-		&.know-cuser
-		{
-			.fc-content span.fc-time {
-				border-bottom: 2px solid rgba(120, 0, 0, 0.6);
-			}
-		}
-	}
-}
-@include mq(nth($bps, 3), 				0) 
-{
-	#calendar[data-fc-view="month"] .know-fcevent
-	{
-		border: 1px solid rgba(100, 0, 0, 0.01);
-
-		&.know-user 
-		{
-			border-width: 0 0 1px 0;
-
-		}
-		&.know-cuser
-		{
-			border-width: 0 0 1px 0;
-		}
-	}
+			text-overflow: ellipsis;
+		}	
 }
 
-
-
-#calendar[data-fc-view="month"]	.know-fcevent.know-user
+/* ---- WITH BORDER/BACKGROUND ----- */
+/*#calendar[data-fc-view="month"] .know-fcevent
 {
-	background-color: rgba(100, 0, 0, 0.01);
-	border-color: rgba(0, 0, 0, 0.5);
+	border-style: solid;
+	border-width: 1px;
 
-	.fc-content span.fc-time
+	&.know-user
 	{
-		/*color: rgba(130, 0, 0, 1.0);*/
-		color: rgba(0, 0, 0, 1.0);
-		font-weight: medium;
-		
+		background-color: rgba(100, 0, 0, 0.5);
+		border-color: rgba(0, 0, 0, 0.0);
 
+		.fc-content .fc-time 
+		{
+			font-weight: 700;
+			color: rgba(0, 0, 0, 1.0);
+		}
+
+		.fc-content .fc-title 
+		{
+			font-weight: 500;
+			color: rgba(255, 255, 255, 1.0);
+		}
 	}
-	.fc-content span.fc-title 
+	&.know-cuser
+	{
+		background-color: rgba(0, 0, 0, 0.0);
+		border-color: rgba(80, 0, 0, 0.6);
+
+		.fc-content .fc-time 
+		{
+			font-weight: 700;
+			color: rgba(0, 0, 0, 1.0);
+		}
+
+		.fc-content .fc-title 
+		{
+			font-weight: 500;
+			color: rgba(100, 80, 80, 1.0);
+		}
+	}
+}*/
+
+/* ----- NO BORDER/BACKGROUND ----- */
+#calendar[data-fc-view="month"] .know-fcevent
+{
+	border: none;
+	background: none;
+
+	.fc-content > *
 	{
 		color: rgba(0, 0, 0, 1.0);
 	}
+	.fc-content > .fc-time
+	{
+		font-weight: 700;
+	}
+	.fc-content > .fc-title
+	{
+		font-weight: 500;
+	}
+
+	&.know-user
+	{
+		.fc-content > .fc-time 
+		{
+			border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+		}
+		.fc-content > .fc-title
+		{
+		}
+	}
+	&.know-cuser
+	{
+		.fc-content > .fc-time 
+		{
+			border-bottom: 2px solid rgba(120, 0, 0, 0.6);
+		}
+		.fc-content > .fc-title
+		{
+		}
+	}
 }
 
-#calendar[data-fc-view="month"] .know-fcevent.know-cuser
-{
-	background-color: rgba(0, 0, 0, 0.0);
-	border-color: rgba(100, 0, 0, 0.3);
-
-	.fc-content span.fc-time 
-	{
-		color: rgba(120, 0, 0, 0.7);
-		font-weight: medium;
-
-	}
-	.fc-content span.fc-title 
-	{
-		color: rgba(50, 0, 0, 0.6);
-	}
-}
-/* ----- */
+/* --- */

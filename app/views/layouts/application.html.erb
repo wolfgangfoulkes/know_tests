@@ -53,13 +53,21 @@
 			class: "svg-user"
 		%>
 	</a>
-	<div class="item"> 
-		<%= link_to "logout", destroy_user_session_path, method: :delete, 
-		class: 'h2' %>
-	</div>
+	<%= content_tag :a, 
+	href: destroy_user_session_path, 
+	data: { method: :delete },  
+	class: "item svg-link", 
+	rel: "nofollow" do %>
+		<%= inline_svg 'svg/icons/logout.svg',
+			class: "svg-logout"
+		%>
+	<% end %>
 <% else %>
 <% end %>
 </div>
+
+
+
 
 <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
@@ -67,12 +75,18 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
+<% if flash[:dbug] %>
+  <p class="alert alert-debug"><%= flash[:dbug] %></p>
+<% end %>
 
-<div class="page">
+<div class="know-page">
 	<div class="vmn"> </div>
 	<%= yield %>
 </div>
 
 </body>
 
+
+
+<footer> <%= content_for :footer %> </footer>
 </html>

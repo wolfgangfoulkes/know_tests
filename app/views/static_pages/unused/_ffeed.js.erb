@@ -1,0 +1,37 @@
+/*
+	if ya wanted to do this:
+	you could pass the collection's id's with yer request, and then figure out in backend what to remove, keep, add.
+	if there's any way to get all theez id's from JS or HTML, that's cool
+*/
+
+<% if replace %>
+	$('[data-scroll-content] .item').find("<%= j items.pluck(:id).join(', #').prepend('#') %>").show(20);
+	$('[data-scroll-content] .item').not("<%= j items.pluck(:id).join(', #').prepend('#') %>").hide(20);
+
+	<% items.each do |item| %>
+		console.log( "#<%= j item.id.to_s %>" );
+		console.log( $("#<%= j item.id.to_s %>") );
+		if ( $("#<%= j item.id.to_s %>").length() == 0 ) 
+		{
+			$('[data-scroll-content]').append("<%= j render(partial: item_partial, object: item, format: 'html', as: item.class.name.downcase.to_sym) %>");
+		}
+		else 
+		{
+
+		}
+	<% end %>
+	$(document).trigger("callbacks:reset");
+<% else %>
+	$('[data-scroll-content]').append("<%=j render(partial: item_partial, collection: items, format: 'html', as: items.first.class.name.downcase.to_sym) %>");
+<% end %>
+
+$('[data-scroll-link]').attr('data-current', '<%= items.current_page %>');
+$('[data-scroll-link]').attr('data-total', '<%= items.total_pages %>');
+//$('[data-scroll-link]').attr('data-scroll-link', "<%= (items.current_page < items.total_pages) ? '1' : '0' %>");
+
+<% if (items.current_page >= items.total_pages) %>
+	$('[data-scroll-link]').attr('data-scroll-link', "0");
+<% else %>
+	$('[data-scroll-link]').attr('data-scroll-link', "1");
+	$('[data-scroll-link] a').attr('href', '<%= url_for(page: items.current_page + 1) %>');
+<% end %>

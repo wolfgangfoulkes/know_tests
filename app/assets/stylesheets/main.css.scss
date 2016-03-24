@@ -2,8 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "base/meyer-reset-mod.css.scss";
-@import "base/utilities.css.scss";
+@import "pre/meyer-reset-mod.css.scss";
+@import "pre/utilities.css.scss";
 
 /* ----- VARS ----- */
 
@@ -62,7 +62,6 @@ $sizes_r: (
 	.465,
 	.378
 );
-
 @function _sizes_r($i_) {
 	@return nth($sizes_r, $i_);
 }
@@ -70,7 +69,6 @@ $sizes_r: (
 @function size_at($i_, $bp_) {
 	@return _sizes_r($i_) * _sizes_b($bp_);
 }
-
 /*
 	should be "font-sizes"
 */
@@ -94,7 +92,7 @@ $sizes_r: (
 	}
 }
 
-@mixin scales($max_, $p_) {
+@mixin scale_down($max_, $p_) {
 	@include mq(0, _bps(1)) {
 		#{$p_}: sizes_r(1) * $max_;
 	}
@@ -134,83 +132,12 @@ $sizes_r: (
 	}
 }
 /* --- */
-
 /* ----- */
-
-
-/* ----- GLOBAL ----- */
-.row {
-	display: inline-flex;
-	flex-direction: row;
-}
-
-.col {
-	display: inline-flex;
-	flex-direction: column;
-}
-
-.row > .br, .col > .br 
-{
-	flex-basis: 0;
-	flex-grow: 1;
-}
-
-/* --- FONTS --- */
-.h1 {
-	/* change to f1, etc. */
-	font-size: size_at(1, 4);
-
-	@include sizes(1, "font-size");
-}
-.h2 {
-	font-size: size_at(2, 4);
-
-	@include sizes(2, "font-size");
-}
-.h3 {
-	font-size: size_at(3, 4);
-
-	@include sizes(3, "font-size");
-
-}
-.h4 {
-	font-size: size_at(4, 4);
-
-	@include sizes(4, "font-size");
-}
-.h5 {
-	font-size: size_at(5, 4);
-
-	@include sizes(5, "font-size");
-}
-/* --- */
-/* ----- */
-
-/* ----- LAYOUT ----- */
-.vmn {
-	height: $vmn;
-	/* margins r-l */
-}
-
-.page {
-	width: 100vw;
-	min-height: 100vh;
-	box-sizing: border-box;
-	margin: 0 auto;
-	position: relative;
-
-	padding: $nav-bar-h $margins-rl;
-	padding-bottom: $nav-bar-h*2;
-	max-width: $max-width;
-	
-	@include mq(0, _bps(2)) {
-		padding: $nav-bar-h $margins-rl*0.25;
-	}
-}
-/* ----- */
-
 
 /***** dependent files *****/
+
+@import "toplevel.css.scss";
+
 @import "typography.css.scss";
 @import "nav.css.scss";
 @import "events-form.css.scss";

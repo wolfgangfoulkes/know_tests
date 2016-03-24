@@ -20,6 +20,8 @@ KNOW =
 {
 };
 
+//CALLBACKS = {};
+
 // var initPageAttr()
 // {
 
@@ -39,42 +41,23 @@ var onComplete = function(jqXHR, status) {
 }
 
 
-/*****
-the sel attributes should be more arbitrary
-you don't need to use the same function for both
-you can use 
-data-state
-otherwise, do 
-data-tog: snd
-data-id: 
-data-sel: snd
-data-sel-id
-data-sel-group
-*****/
-
-
 var dropToggle = function(sender_, e_)
 {
-	var id = $(sender_).data("id");
-	var $target = $("*[data-id=" + id + "]");
-	var state = $target.attr("data-state");
-	$target.attr("data-state", !parseBool(state) );
+	var id = $(sender_).data("drop-id");
+	var $target = $("*[data-drop-id=" + id + "]");
+	var state = $target.attr("data-drop-state");
+	$target.attr("data-drop-state", !parseBool(state) );
 }
 
-var sel_toggle = function(sender_, e_) 
-{
-
-}
-
-var sel_group = function(sender_, e_, callback_)
+var selGroup = function(sender_, e_, callback_)
 {
 	var $snd = $(sender_);
 	var state = $snd.attr("data-sel-state")
 	if (state == 'true') { return; }
 	
-	var index = $snd.attr("data-sel-snd");
+	var index = $snd.attr("data-sel-id");
 	var group = $snd.attr("data-sel-group");
-	var $rcv = $("[data-sel-rcv='" + index + "']");
+	var $rcv = $("[data-sel='rcv'][data-sel-id='" + index + "']");
 
 	$("[data-sel-group='" + group + "'][data-sel-state='true']").attr("data-sel-state", false)
 	$snd.attr("data-sel-state", true);
@@ -108,6 +91,24 @@ var setLinkFromCUrl = function(sel_)
 	$(sel).attr("data-current", true);
 }
 
+var resetCallbacks = function()
+{
+	$("[data-sel='snd'][data-sel-group]").off("click");
+	$("[data-sel='snd'][data-sel-group]").on("click", 
+	function(e)
+	{
+		selGroup(this, e);
+	});
+	
+	$("*[data-drop='snd']").off("click");
+	$("*[data-drop='snd']").on("click", 
+	function(e)
+	{
+		dropToggle(this, e);
+	})
+
+}
+
 $(document).on("page:change", function()
 {
 	// $("[data-lrefresh]").on("ajax:beforeSend", function(e, jqXHR, settings) {
@@ -117,15 +118,11 @@ $(document).on("page:change", function()
 
 	setLinkFromCUrl(".nav-bar > a");
 
-	$("[data-sel-snd][data-sel-group]").on("click", function(e)
-	{
-		sel_group(this, e);
-	});
-
-	$("*[data-drop='toggle']").on("click", 
+	resetCallbacks();
+	$(document).on("callbacks:reset", 
 		function(e)
 		{
-			dropToggle(this, e);
+			resetCallbacks();
 		}
 	);
 });

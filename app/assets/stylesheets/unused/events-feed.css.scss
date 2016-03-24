@@ -1,0 +1,86 @@
+/* --- RESPONSIVE SIZES --- */
+@mixin events_feed($box, $pv, $ph, $mh)
+{
+	
+		padding: $box * $pv $box * $ph;
+		> *
+		{
+			margin: 0 $box * $mh; /* 0.5em */
+			height: $box; /* 3em */
+		}
+		> .image-temp
+		{
+			width: $box; /* 3em */
+		}
+		> .col
+		{
+			padding: 2.7% 0; /* padding-top is relative to width, remember */
+		}
+
+		@content;
+
+}
+
+/* --- EVENTS FEED --- */
+.events.feed.col 
+{
+	width: 100%;
+}
+
+.events.feed.col > .item.row > .image-temp {
+	/*object-fit: cover;*/
+	background-color: red;
+	border-radius: 50%;
+}
+
+.events.feed.col > .item.row 
+{
+	justify-content: flex-start;
+	align-items: center;
+
+	border-bottom: 1px solid black;
+
+	> .col
+	{
+		justify-content: center;
+		box-sizing: border-box;
+		> .br 
+		{
+		}
+	}
+}
+/* --- */
+
+/* --- SEARCH BAR --- */
+
+/* --- */
+
+.events.feed.col > .item.row 
+{
+
+	@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+	{
+	}
+
+	@include mq(0, _bps(2))
+	{
+		@include events_feed(64px, 1.0/4, 1.0/8, 1.0/8)
+		{
+		}
+	}
+	@include mq(_bps(2), _bps(3)) 
+	{
+		@include events_feed(76px, 1.0/4, 1.0/6, 1.0/6)
+		{		
+		}
+	}
+	@include mq(_bps(3), 0) 
+	{
+		@include events_feed(96px, 1.0/4, 1.0/6, 1.0/6)
+		{	
+		}
+	}
+}
+
+
+

@@ -12,6 +12,9 @@
 	or just make all mobile sizes default to day
 */
 
+var TIME_SLOT_DURATION = "02:00:00";
+var MIN_EVENT_DURATION = "03:00:00";
+
 var linkToDay = function(moment_)
 {
 	$('#calendar').fullCalendar("gotoDate", moment_.utc() );
@@ -81,9 +84,13 @@ var onDayRender = function(date_, cell_) // only applies to month, basicWeek, an
 
 var transformData = function(event_)
 {
+	var min_duration = moment.duration(MIN_EVENT_DURATION);
+	var longer_than_min = moment(event_.end).isAfter( moment(event_.start).add(min_duration) );
 	var classes = "know-fcevent";
 	classes += " "
 	classes += (event_.is_current_user) ? 'know-cuser' : 'know-user';
+	classes += " "
+	classes += (longer_than_min) ? '' : 'know-time-min';
 	var _event = 
 	{
 		title: event_.summary,
@@ -120,6 +127,7 @@ $(document).on("page:change", function()
 			slotDuration: '02:00:00',//'12:00:00',
 			slotLabelInterval: '02:00:00',
 			allDaySlot: false,
+			eventLimitClick: "day",
 			
 
 			header: 
@@ -133,7 +141,8 @@ $(document).on("page:change", function()
 				month: 
 				{
 					titleFormat: "MM | YYYY",
-					columnFormat: "ddd"
+					columnFormat: "ddd",
+					eventLimit: true
 				},
 				week: 
 				{
@@ -143,7 +152,7 @@ $(document).on("page:change", function()
 				day: 
 				{
 					titleFormat: "MM | YYYY",//"M : D :: 'YY",
-					columnFormat: "ddd D"//"dddd"
+					columnFormat: "ddd D" //"dddd"
 				}
 			}
 			

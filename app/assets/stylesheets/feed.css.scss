@@ -44,6 +44,7 @@ $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 	/*object-fit: cover;*/
 	border-radius: 50%;
 	box-sizing: border-box;
+	flex-shrink: 0;
 }
 
 
@@ -52,7 +53,7 @@ $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 	justify-content: flex-start;
 	align-items: center;
 
-	/*height: $nav-bar-h * $gm;*/
+	/*height: $nav-bar-h * $gm_i;*/
 
 	&.past 
 	{
@@ -145,7 +146,6 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 	color: rgba(10, 0, 0, 0.8);
 }
 /* ----- */
-
 
 
 /* ----- ACTIVITY-FEED ----- */

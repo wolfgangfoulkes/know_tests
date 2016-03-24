@@ -1,0 +1,20 @@
+var $deselected = $(".activity-feed > [data-drop], [data-scroll-link]");
+var $selected = $("<%= j render partial: 'static_pages/activity_list.html.erb', locals: {event: event, activities: activities} %>");
+
+$deselected.addClass("hidden");
+$(".activity-feed").prepend($selected);
+window.location.hash = '<%= "detail" %>'; /* event.id.to_s */
+
+$(document).trigger("scroll:stop");
+$(".svg-link").on("click",
+	function()
+	{
+		$(".svg-link").off("click");
+		$selected.detach();
+		$deselected.removeClass("hidden");
+		$(document).trigger("scroll:start");
+		window.location.hash = '';
+	}
+);
+
+
