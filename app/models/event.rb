@@ -142,7 +142,6 @@ class Event < ActiveRecord::Base
 	#----- INTERFACE METHODS
 	#- for the application's specific uses of the above class methods
 	#---
-
 	def self.saved_for(user)
 		where(id: ( user.followees(Event) | user.events) ).deef
 	end
@@ -167,6 +166,9 @@ class Event < ActiveRecord::Base
 			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 		end
 		n.or(ni).or(d).or(di)
+
+		#LOOK INTO AREL JOINS FOR TAGS SEARCH, IT'S A BIT MORE COMPLICATED
+		#HOWEVER, WAIT YOU COULD DO IT THROUGH TAGS YEAH!
 	end
 
 	# order determines final order
@@ -220,6 +222,7 @@ class Event < ActiveRecord::Base
 	def self.tagged_with(name)
 		Tag.find_by_name!(name).entries
 	end
+
 
 	# def tag_list=(names)
 	# 	# could also use .delete("char")

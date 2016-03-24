@@ -13,28 +13,6 @@ class EventsController < ApplicationController
   end
 
   def search
-    # if params[:target] == "activities"
-    #   partial = "static_pages/activity_toggle"
-    #   events = Event.where(id: params[:items].split(",")).search(params[:search])
-    #   local = :event
-    # else
-    #   partial = "events/event"
-    #   events = Event.where(id: params[:items].split(",")).search(params[:search]).deef
-    #   #events = Event.find_by_sql( params[:filter] ).search( params[:search] )
-    #   local = :event
-    # end
-    # respond_to do |format|
-    #   format.js { 
-    #       render 'shared/events_search.js.erb',
-    #       locals:
-    #       { 
-    #         partial: partial,
-    #         collection: events,
-    #         local: local
-    #       }
-    #   }
-    # end
-    render text: "huh? what?"
   end
 
   def create

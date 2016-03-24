@@ -7,18 +7,6 @@ class EventPresenter
     	@event.send(method) rescue nil
   	end
 
-  	def today?
-		@event.starts_at.to_date == Date.today
-	end
-
-	def past?
-		@event.starts_at <= DateTime.now
-	end
-
-	def future?
-		@event.starts_at >= DateTime.now
-	end
-
   	def pagi(page: 1, per: 8)
     	page(page).per(per)
   	end

@@ -14,7 +14,7 @@ class StaticPagesController < ApplicationController
           {
               item_partial: "events/event",
               items: @events
-          } 
+          }
       }
     end
 
