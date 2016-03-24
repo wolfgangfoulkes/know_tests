@@ -1,9 +1,0 @@
-<%= form_tag url_for(controller: 'events', action: 'search'), remote: true, 
-	class: get_classes( 
-		locals: local_assigns, 
-		classes: ["events", "search", "row"] ) do %>
-	<%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
-	<%= hidden_field_tag :filter, params[:filter] %>
-	<%= text_field_tag :search, params[:search], placeholder: 'search' %>
-	<%= submit_tag '>>' %>
-<% end %>

@@ -61,9 +61,10 @@ class Event < ActiveRecord::Base
 #- def method_ 	(return AREL object)
 #- def method 	(just like scope, return RELATION)
 #---
-	
 
 	#----- string pattern matching -----#
+	# maybe best metaprogrammed in a module, but could be dumped in a module as well
+	# also could just be 	starts_with(param, q)	etc.
 	def self.name_starts_with_(q)
 		self.arel_table[:name].matches("#{q.downcase}%")
 	end
@@ -90,14 +91,6 @@ class Event < ActiveRecord::Base
 	end
 	def self.description_contains(q)
 		self.where( self.description_contains_(q) )
-	end
-
-	def self.match_any_(k, vs)
-		#Arel::Nodes::SqlLiteral.new()
-		self.match_any(k, vs).where_sql
-	end
-	def self.match_any(k, vs)
-		self.where( "#{k} ilike any (array[?])", vs )
 	end
 
 	#--- match first letter after word-break
@@ -145,29 +138,6 @@ class Event < ActiveRecord::Base
 	#----- INTERFACE METHODS
 	#- for the application's specific uses of the above class methods
 	#---
-
-	# prev search version using sql literals for some values
-	#
-	# def self.search_(q)
-	# 	if q.length <= 3
-	# 		n = self.arel_table[:name].matches("#{q}%")
-	# 		d = nil
-	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
-	# 		di = nil
-	# 	elsif q.length <= 5
-	# 		n = self.arel_table[:name].matches("#{q}%")
-	# 		d = self.arel_table[:description].matches("#{q}%")
-	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
-	# 		di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
-	# 	else
-	# 		n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
-	# 		d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
-	# 		ni = Arel.sql( self.in_name_starts_with("#{q}").where_values.reduce(:&) )
-	# 		di = Arel.sql( self.in_description_starts_with("#{q}").where_values.reduce(:&) )
-	# 	end
-	# 	n.or(d).or(ni).or(di) 	# ni and di must follow n or d
-	# 	#n.or(ni).or(d).or(di)
-	# end
 
 	def self.saved_for(user)
 		where(id: ( user.followees(Event) | user.events) ).deef

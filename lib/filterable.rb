@@ -76,6 +76,19 @@ module Filterable
       unscoped.where( and2or_ )
     end
 
+    #--- in: key, array of match strings
+    #-- out: query matching key with anything in array
+    def match_any_(k, vs)
+      #Arel::Nodes::SqlLiteral.new()
+      self.match_any(k, vs).where_sql
+    end
+
+    #--- in: key, array of match strings
+    #-- out: query matching key with anything in array
+    def match_any(k, vs)
+      self.where( "#{k} ilike any (array[?])", vs )
+    end
+
     #--- in: Hash of params and inputs for 'match'
     #-- out: Arel 'match' query combined with AND
     def all_match_(hash)
