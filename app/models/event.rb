@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
 	include Filterable
+	include Filterable::Time
 	include Taggable
 	include PublicActivity::Common
 	
@@ -54,73 +55,13 @@ class Event < ActiveRecord::Base
 	scope :deef, -> { order("starts_at ASC") }
 #-----#
 
+
+
 #-------- class methods --------#
 #- def method_ 	(return AREL object)
 #- def method 	(just like scope, return RELATION)
 #---
-	#----- time
-	def self.starts_after_(q)
-		self.arel_table[:starts_at].gt(q)
-	end
-	def self.starts_after(q)
-		self.where(self.starts_after_(q))
-	end
-	def starts_after?(q)
-		self.starts_at > q
-	end
-
-	def self.starts_between_(l, h)
-		tbl = self.arel_table
-		ll = tbl[:starts_at].gt(l)
-		hh = tbl[:starts_at].lt(h)
-		ss.and(hh)
-	end
-	def self.starts_between(l, h)
-		self.where( self.starts_between_(l, h) )
-	end
-
-	# def self.starts_between_(l, h)
-	# 	self.where(starts_at: l..h) #arel where values
-	# end
-
-	def self.ends_in_(l, h)
-		tbl = Event.arel_table
-		ll = tbl[:ends_at].gt(l)
-		hh = tbl[:ends_at].lt(h)
-		ss.and(hh)
-	end
-	def self.ends_in(l, h)
-		self.where( self.ends_in_(l, h) )
-	end
-
-	def self.overlaps_(l, h)
-		tbl = self.arel_table
-		si = self.starts_between_(l, h)
-		ei = self.ends_in_(l, h)
-		si.or(ei)
-	end
-	def self.overlaps(l, h)
-		self.where( self.starts_between_(l, h) )
-	end
-	def overlaps?(l, h)
-		sa = (self.starts_at > l && self.starts_at < h)
-		ea = (self.ends_at > l && self.ends_at < h)
-		sa && ea
-	end
-
-	def self.time_contains_(q)
-		tbl = self.arel_table
-		sa = tbl[:starts_at].lteq(q)
-		ea = tbl[:ends_at].gteq(q)
-		sa.and(ea)
-	end
-	def self.time_contains(q)
-		self.where( self.time_contains_(q) )
-	end
-	def time_contains?(q)
-		sa = self.starts_at >= q
-		ea = self.ends_at <= q
-	end
+	
 
 	#----- string pattern matching -----#
 	def self.name_starts_with_(q)
@@ -227,6 +168,10 @@ class Event < ActiveRecord::Base
 	# 	n.or(d).or(ni).or(di) 	# ni and di must follow n or d
 	# 	#n.or(ni).or(d).or(di)
 	# end
+
+	def self.saved_for(user)
+		where(id: ( user.followees(Event) | user.events) ).deef
+	end
 
 	# order determines final order
 	# so this is the easiest way to do relevance

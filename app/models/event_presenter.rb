@@ -18,10 +18,6 @@ class EventPresenter
 	def future?
 		@event.starts_at >= DateTime.now
 	end
-	
-  	def self.saved_for(user)
-		where(id: ( user.followees(Event) | user.events) ).deef
-	end
 
   	def pagi(page: 1, per: 8)
     	page(page).per(per)

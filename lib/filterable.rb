@@ -151,7 +151,6 @@ module Filterable
 
       where( queries.reduce( :or ) )
     end
-    
-
   end
+
 end
