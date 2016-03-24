@@ -98,19 +98,23 @@ class Event < ActiveRecord::Base
 	#- the backslash must be escaped of course
 	#--
 	#
+
+	#UNSAFE? maybe fine
 	def self.in_name_starts_with(q)
 		self.where("name ~* ?", "\\m#{q}")
 	end
 	def self.in_name_starts_with_(q)
+		# simple sql literal Filterable.s2arel("name ~* \\m#{q}") but is it unsafe?
 		# arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
-		self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+		self.in_name_starts_with(q).arel.constraints.reduce(:and)
 	end
+	#UNSAFE? maybe fine
 	def self.in_description_starts_with(q)
 		self.where("description ~* ?", "\\m#{q}")
 	end
 	def self.in_description_starts_with_(q)
 		# arel sql literal: Arel.sql(self.in_description_starts_with(q.to_s).where_values.reduce(:&))
-		self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		self.in_description_starts_with(q).arel.constraints.reduce(:and)
 	end
 	#----- metaprogramming alts
 	#		[:name, :description].each do |p|
