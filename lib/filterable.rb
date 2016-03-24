@@ -136,10 +136,12 @@ module Filterable
 
       queries.reduce( :or )
     end
-  end
 
     #--- in: variable number of hash, string, or AR inputs (idk about arel)
     #-- out: AR object combined with OR
+    #     Event.any_of({name: "Bird Party"}, {name: "Blood Orgy", description: "Blood Optional"})
+    #     Event.any_of({name: "Bird Party"}, "name = 'Blood Orgy' AND description = 'Blood Optional'")
+    #     -> "events"."name" = 'Bird Party' OR "events"."name" = 'Blood Orgy' AND "events"."description" = 'Blood Optional'
     def any_of( *queries )
       queries = queries.map do |query|
         query = where( query ) if [ String, Hash ].any? { |type| query.kind_of? type }
@@ -149,8 +151,7 @@ module Filterable
 
       where( queries.reduce( :or ) )
     end
-    # Event.any_of({name: "Bird Party"}, {name: "Blood Orgy", description: "Blood Optional"})
-    # Event.any_of({name: "Bird Party"}, "name = 'Blood Orgy' AND description = 'Blood Optional'")
-    # ->"events"."name" = 'Bird Party' OR "events"."name" = 'Blood Orgy' AND "events"."description" = 'Blood Optional'
+    
+
   end
 end
