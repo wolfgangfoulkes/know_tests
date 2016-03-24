@@ -103,11 +103,13 @@ class Event < ActiveRecord::Base
 	def self.in_name_starts_with(q)
 		self.where("name ~* ?", "\\m#{q}")
 	end
+
+	# simple sql literal Filterable.s2arel("name ~* \\m#{q}") but is it unsafe?
+	# arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
 	def self.in_name_starts_with_(q)
-		# simple sql literal Filterable.s2arel("name ~* \\m#{q}") but is it unsafe?
-		# arel sql literal: Arel.sql(self.in_name_starts_with(q.to_s).where_values.reduce(:&))
 		self.in_name_starts_with(q).arel.constraints.reduce(:and)
 	end
+	
 	#UNSAFE? maybe fine
 	def self.in_description_starts_with(q)
 		self.where("description ~* ?", "\\m#{q}")
@@ -148,6 +150,8 @@ class Event < ActiveRecord::Base
 
 	# order determines final order
 	# so this is the easiest way to do relevance
+	#LOOK INTO AREL JOINS FOR TAGS SEARCH, IT'S A BIT MORE COMPLICATED
+	#HOWEVER, WAIT YOU COULD DO IT THROUGH TAGS YEAH!
 	def self.search_(q)
 		if q.length <= 3
 			n = self.arel_table[:name].matches("#{q}%")
@@ -166,9 +170,6 @@ class Event < ActiveRecord::Base
 			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
 		end
 		n.or(ni).or(d).or(di)
-
-		#LOOK INTO AREL JOINS FOR TAGS SEARCH, IT'S A BIT MORE COMPLICATED
-		#HOWEVER, WAIT YOU COULD DO IT THROUGH TAGS YEAH!
 	end
 
 	# order determines final order
