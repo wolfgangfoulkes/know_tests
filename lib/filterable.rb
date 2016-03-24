@@ -10,7 +10,7 @@ module Filterable
   #- I haven't extensively tested them
   #---
   def self.s2arel(q)
-    Arel::Nodes::SqlLiteral.new(q)
+    Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new(q))
   end
 
   # def self.s2arel(q)
@@ -24,12 +24,20 @@ module Filterable
     wheres.map{ |v| v.class.name == "String" ? self.s2arel(v) : v }.reduce(:or)
   end
 
-  def self.rel2arel(rel)
+  def self.ar2arel(rel)
     # rel.arel.constraints[0] || false
     rel.arel.constraints.reduce(:and) || false
   end
 
   module ClassMethods
+    def tbl(param=nil)
+      if !param
+        self.arel_table
+      else
+        self.arel_table[param]
+      end
+    end
+
     #--- in: hash of Scopes and Inputs
     #-- out: AR Object combined with AND
     def filter(filtering_params)
@@ -116,6 +124,19 @@ module Filterable
       self.where(qs.reduce(:or))
     end
     # #-----#
+
+    #--- in: variable number of hash, string, or AR inputs (idk about arel)
+    #-- out: query combined with OR
+    def any_of_( *queries )
+      queries = queries.map do |query|
+        query = where( query ) if [ String, Hash ].any? { |type| query.kind_of? type }
+        query = where( *query ) if query.kind_of?( Array )
+        query.arel.constraints.reduce( :and )
+      end
+
+      queries.reduce( :or )
+    end
+  end
 
     #--- in: variable number of hash, string, or AR inputs (idk about arel)
     #-- out: AR object combined with OR
