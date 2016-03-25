@@ -56,21 +56,27 @@ end
 def commentParams(e, i, kn_sc)
 	c = {}
 	c.clear
-	c[:commentable] = c[:root] = 		e
-	c[:user] = 			 				User.where( id: User.pluck(:id)[ rand(1..User.count) - 1 ] ).first #not random, not a closure
-
 	c[:title] = 						Faker::Hacker.say_something_smart.split(",").first
 	c[:title] = 						c[:title].slice(0, kn_sc[:c_tch])
 
 	b_len = rand(kn_sc[:c_bmn]..kn_sc[:c_bmx])
 	c[:comment] = 						Array.new( b_len ) 	{ Faker::Hacker.say_something_smart.split(",").first << " " }.inject{ |sum, x| sum << x}
 	c[:comment] = 						c[:comment].slice(0, kn_sc[:c_bch])
-
-	
-	c[:role] = 							( c[:user].id == c[:commentable].user_id) ? "owner" : "default"
-	c[:public] = 						( c[:role] == "default" ) && ( rand(0..3) > 0 )	#not random, not a closure
 	c[:created_at] 	= 	Faker::Time.between( e.created_at, 	Time.now, :all)
 	c[:updated_at] 	= 	Faker::Time.between( c[:created_at], Time.now, :all)
+
+	c[:role] = 							(rand(0..2) == 2) ? "owner" : "default"
+	if c[:role] == ("owner")
+		c[:commentable] = c[:root] = 	e
+		c[:user] = 						e.user
+		c[:public] = 					true
+	end
+
+	if c[:role] == ("default")
+		c[:commentable] = c[:root] = 	e
+		c[:user] = 						User.where( id: User.pluck(:id)[ rand(1..User.count) - 1 ] ).first #not random, not a closure
+		c[:public] = 					( rand(0..3) > 0 )
+	end
 	c
 end
 
