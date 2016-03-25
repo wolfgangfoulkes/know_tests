@@ -1,3 +1,2 @@
-<% target = 1 %>
-$("[data-scroll-target=<%= target %>]").append("<%= j render content %>");
-$("[data-scroll-link=<%= target %>]").replaceWith("<%= j scroll_link(content) %>");
+$("[data-scroll-target=<%= target %>]").empty().append("<%= j render content %>");
+$("[data-pagi-link=<%= target %>]").empty().append("<%= j paginate content, remote: true %>");

@@ -13,4 +13,4 @@
 	$('[data-scroll-content]').append("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.take.class.name.downcase.to_sym) %>");
 <% end %>
 
-$('[data-scroll-link]').replaceWith("<%= j scroll_link(items: items) %>");
+$('[data-scroll-link]').replaceWith("<%= j scroll_link(items) %>");

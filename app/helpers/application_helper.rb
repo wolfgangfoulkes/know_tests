@@ -265,9 +265,9 @@ module ApplicationHelper
 		_content
 	end
 
-	def scroll_link(items:, url: nil)
+	def scroll_link(items)
 		is_max = (items.current_page >= items.total_pages)
-		url = (is_max) ? "" : url || url_for(page: items.current_page + 1)
+		url = (is_max) ? "" : url_for(page: items.current_page + 1)
 		data = {
 			scroll_link: (is_max) ? "0" : "1",
 			current: items.current_page,
@@ -278,7 +278,6 @@ module ApplicationHelper
 		end
 		_link
 	end
-
 
 	# ----- FROM SOMEWHERE ONLINE:
 	# || I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:

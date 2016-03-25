@@ -61,12 +61,6 @@ class CommentsController < ApplicationController
 		end
 	end
 
-	def scroll
-		
-		@content = CommentsHelper.pagi(Comment.where(id: params[:ids]), page: params[:page])
-		render "shared/scroll.js.erb", locals: { content: @content }
-	end
-
 	def paginate 
 		role = params[:role]
 		@comments = Comment.where(commentable_id: params[:id], role: params[:role])
