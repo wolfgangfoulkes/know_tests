@@ -24,9 +24,6 @@ module Taggable
   end
 
   module ClassMethods
-    # def tagged_with(name)
-    #   joins(:tags).where("tags.name LIKE ?", name)
-    # end
   end
 
 end
