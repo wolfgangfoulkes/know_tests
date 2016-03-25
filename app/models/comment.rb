@@ -163,7 +163,6 @@ class Comment < ActiveRecord::Base
   # scope :reply_comments, -> (commentable) { where(role: "default", root: commentable.root, root_type: "Event", commentable_type: "Comment") }
   # 
   # def public_comment?
-  #   # actually, replies are also role == "default"
   #   role == "default"             &&
   #   public == true                &&
   #   root == commentable           &&
@@ -181,28 +180,5 @@ class Comment < ActiveRecord::Base
   #   return true
   # end
   #
-  # def valid_role?
-  #   # actually, replies are also role == "default"
-  #   if role == "default"
-  #     if public == true
-  #       if public_comment?
-  #         return
-  #       end
-  #     end
-  #     elsif public == false
-  #       if private_comment?
-  #         return
-  #       end
-  #     end
-  #   end
-  #   elsif role == "owner"
-  #     if owner_comment?
-  #       return
-  #     end
-  #   end
-  # end
-  #
-  #   errors[:base] << "can't add comment to this model!"
-  # end
   # -----
 end
