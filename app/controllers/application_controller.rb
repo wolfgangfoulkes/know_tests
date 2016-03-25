@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 	 redirect_to access_error_url
   end
 
-  # delicious? 
+  # delicious?
   def fresh?(o_)
   	ApplicationHelper.fresh_for_user?(o_, current_user)
   end # ----- used here and in comment and activity view
