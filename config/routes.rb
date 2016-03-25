@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
+  end
+
+  concern :paginedible do
+    get '(page/:page)', :action => :scroll, :on => :collection, :as => ''
+  end
+
   devise_for :users, :controllers => { registrations: 'registrations', :omniauth_callbacks => "omniauth_callbacks" }
   resources :users, :only => [:show]
 
@@ -11,6 +19,7 @@ Rails.application.routes.draw do
     end
 
     member do #event/:id/ with :id passed in params[:id]
+      get 'comments/scroll/:page', controller: "comments", action: 'scroll'
     end
 
     post 'follow', to: 'socializations#follow'
@@ -18,15 +27,14 @@ Rails.application.routes.draw do
   end
 
   roles = [:default, :private, :public, :owner]
-  resources :comments, :only => [:create, :destroy, :show] do
+  resources :comments, :only => [:create, :destroy, :show], :concerns => :paginatable do
     roles.each do |role|
       patch "set_#{role}", on: :member, as: "set_#{role}"
     end
   end
 
-  get 'comments#paginate', controller: "comments", action: "paginate"
-
-  
+  get 'comments#paginate', controller: "comments", action: "paginate", :as => ''
+ # get 'events/:event_id/:controller/scroll/:page', controller: :controller, action: 'scroll'
 
   #post ':controller(/filtered)', action: 'filtered'
   

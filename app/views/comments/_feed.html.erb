@@ -1,13 +1,8 @@
 <% comments = CommentsHelper.pagi(comments, page: params[:page]) %>
-<%= render partial: "layouts/paginate", 
-	locals: {
-		items: comments, target: comments.role,
-		params: {controller: "comments", action: "paginate", role: comments.role}
-	}
-%>
+
 <%= content_tag :div, 
 	class: ["comment-list", "col"],
-	data: {refresh: comments.build.role, pagi_target: comments.build.role } do
+	data: {refresh: comments.build.role, scroll_target: "1" } do
 -%>
 	<%= render comments.deef %>
 <% end -%>
@@ -16,4 +11,16 @@
 	{
 		comment: comments.build
 	} 
+%>
+
+<% content_for :footer do %>
+	<%= javascript_include_tag "infinite_scroll" %>
+<% end %>
+
+<%= scroll_link(items: comments, url: 
+	url_for(
+		controller: "comments", 
+		action: "scroll", 
+		page: comments.current_page + 1)
+	) 
 %>
