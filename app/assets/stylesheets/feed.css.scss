@@ -114,36 +114,22 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 	height: 1.875em;
 }
 
-
-/* --- OVERRIDES FIRST --- */
 .search.row input
 {
 	font-size: inherit;
 }
 
-.search.row input[type="text"] /* --- OVERRIDES FIRST --- */
-{
-	border: none;
-}
-
 .search.row input[type="text"]
 {
 	flex-grow: 1;
-	border-bottom: 1px solid rgba(10, 0, 0, 0.08);
-}
-
-.search.row input[type="submit"] /* --- OVERRIDES FIRST --- */
-{
-	border: none;
-	cursor: pointer;
-	background: none;
+	border-bottom: 1px solid $search-border-color;
 }
 
 .search.row input[type="submit"]
 {
 	width: 5em;
-	border: 1px solid rgba(10, 0, 0, 0.08);
-	color: rgba(10, 0, 0, 0.8);
+	border: 1px solid $search-border-color;
+	color: $search-button-color;
 }
 /* ----- */
 
