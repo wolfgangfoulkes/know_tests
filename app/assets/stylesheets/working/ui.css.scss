@@ -1,4 +1,72 @@
-/***** NEW EVENT *****/
+input {
+	
+}
+
+/* ----- SEARCH ----- */
+
+/* could apply to all forms */
+$search-border-color: rgba(10, 0, 0, 0.08);
+$search-button-color: rgba(10, 0, 0, 0.8);
+
+.search.row {
+	width: 100%;
+/*	font-size: 36px;*/
+	height: 1.875em;
+}
+
+.search.row input
+{
+	font-size: inherit;
+}
+
+.search.row input[type="text"]
+{
+	flex-grow: 1;
+	border-bottom: 1px solid $search-border-color;
+}
+
+.search.row input[type="submit"]
+{
+	width: 5em;
+	border: 1px solid $search-border-color;
+	color: $search-button-color;
+}
+/* ----- */
+
+/* ----- NEW COMMENT ----- */
+form.new_comment {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+form.new_comment input {
+	border: 1px solid black;
+}
+
+form.new_comment #comment_title {
+	width: $max_width * 1.0/3;
+}
+
+form.new_comment #comment_comment {
+	margin-top: $spacer_margin;
+	width: $max_width * 0.75;
+	resize: none;
+}
+
+/* style like 2tab */
+form.new_comment .actions {
+	margin-top: $spacer_margin;
+	> input {
+		padding: 5px 8px;
+	}
+}
+/* ----- */
+
+/* ----- NEW EVENT ----- */
 $ef-wmax: 860px;
 form[data-form-for="event"] {
 	display: inline-flex;
@@ -101,4 +169,4 @@ form[data-form-for="event"] .field.dt {
 		}
 	}
 }
-/*****/
+/* ----- */

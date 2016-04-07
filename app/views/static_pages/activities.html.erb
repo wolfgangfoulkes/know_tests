@@ -5,7 +5,7 @@
   <%= submit_tag '>>' %>
 <% end %>
 
-<div class="activity-feed feed col" data-scroll-content="1" data-search-target="1">
+<div class="activities feed col" data-scroll-content="1" data-search-target="1">
 		<%= render partial: 'static_pages/activity_toggle',
 		collection: @events, as: :event %>
 </div>

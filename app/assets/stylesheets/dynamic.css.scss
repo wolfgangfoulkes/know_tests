@@ -181,7 +181,7 @@ $pagi-nav-to-page-w: 50%;
 	}
 }
 
-.activity-feed > .item[data-drop="snd"] {
+.activities.feed > .item[data-drop="snd"] {
 	.svg-link {
 		box-sizing: border-box;
 	}
@@ -237,7 +237,7 @@ $pagi-nav-to-page-w: 50%;
 }
 
 /* same as toggle=true above */
-.activity-feed .item[data-detail="true"]
+.activities.feed .item[data-detail="true"]
 {
 	.svg-link 
 	{
@@ -261,7 +261,7 @@ $pagi-nav-to-page-w: 50%;
 }
 
 
-.activity-feed .activity-list[data-drop="rcv"] {
+.activities.feed .activity-list[data-drop="rcv"] {
 	&[data-drop-state="false"]
 	{
 		display: none;

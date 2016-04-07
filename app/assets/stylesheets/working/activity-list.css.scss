@@ -1,3 +1,26 @@
+/* --- RESPONSIVE SIZES --- */
+@mixin feed($box, $pv, $ph, $mh)
+{
+	
+		padding: $box * $pv $box * $ph;
+		> *
+		{
+			margin: 0 $box * $mh; /* 0.5em */
+			height: $box; /* 3em */
+		}
+		> .image-temp
+		{
+			width: $box; /* 3em */
+		}
+		> .col
+		{
+			padding: 2.7% 0; /* vertical padding is relative to width, remember */
+		}
+
+		@content;
+
+}
+
 @mixin activity_list($box, $offs_v, $offs_h)
 {
 	
@@ -111,7 +134,7 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 /* ----- */
 
 
-/* ----- ACTIVITIES ----- */
+/* ----- activities feed ----- */
 .activities.feed.col > .item.row
 {
 	cursor: pointer;

@@ -68,7 +68,7 @@
 	class: ["col"],
 	data: sel_rcv(0, group: 0, state: true) do
 	%>
-		<%= render partial: 'comments/feed', locals: {comments: @event.owner_comments} %>
+		<%= render partial: 'comments/list', locals: {comments: @event.owner_comments} %>
 	<% end %>
 
 	<%= content_tag :div,
@@ -76,6 +76,6 @@
 	data: sel_rcv(1, group: 0, state: false) do
 	%>
 
-		<%= render partial: 'comments/feed', locals: {comments: @event.feed_comments} %>
+		<%= render partial: 'comments/list', locals: {comments: @event.list_comments} %>
 	<% end %>
 <section/>

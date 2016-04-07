@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
 		as: :root,
 		dependent: :destroy,
 		after_add: :setup_comment
-	has_many :feed_comments, -> (event) { where(role: "default", commentable: event) }, 
+	has_many :list_comments, -> (event) { where(role: "default", commentable: event) }, 
 		class_name: "Comment", 
 		as: :root,
 		dependent: :destroy
