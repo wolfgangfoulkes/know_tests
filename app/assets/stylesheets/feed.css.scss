@@ -32,7 +32,7 @@
 	@content;
 }
 
-$past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
+
 .feed.col 
 {
 	width: 100%;
@@ -54,11 +54,6 @@ $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 	align-items: center;
 
 	/*height: $nav-bar-h * $gm_i;*/
-
-	&.past 
-	{
-		color: $past-event-color;
-	}
 
 	> *
 	{
