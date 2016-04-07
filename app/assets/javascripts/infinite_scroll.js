@@ -28,15 +28,8 @@ var onLoadComplete = function(jqxhr_, textStatus_ )
   // console.log(textStatus_);
 };
 
-var nextPage = function()
+var nextPage = function(url)
 {
-	url = $(more_link).find('a').attr('href');
-
-	if ( is_loading || !url )
-  {
-    return ( is_loading || !url );
-  }
-
 	$(more_link).addClass('loading');
 	is_loading = true;
 	last_load_at = new Date();
@@ -56,10 +49,7 @@ var scrollStart = function()
   $(window).on("scroll",
     function()
     {
-      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() )
-      {
-          nextPage();
-      }
+      checkNextPage();
     }
   );
 }
@@ -67,6 +57,21 @@ var scrollStart = function()
 var scrollStop = function()
 {
   $(window).off("scroll");
+}
+
+var checkNextPage = function()
+{
+  if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() && !is_loading)
+  {
+      url = $(more_link).find('a').attr('href');
+
+      if ( !url )
+      {
+        return false;
+      }
+
+      nextPage(url);
+  }
 }
 
 

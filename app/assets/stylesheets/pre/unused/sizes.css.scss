@@ -1,0 +1,87 @@
+@mixin scale_down($max_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: sizes_r(1) * $max_;
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: sizes_r(2) * $max_;
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: sizes_r(3) * $max_;
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: sizes_r(4) * $max_;
+	}
+}
+
+@mixin scale_up($min_, $p_) {
+	@include mq(0, _bps(1)) {
+		#{$p_}: ( 1.0/sizes_r(1) ) * $min_;
+	}
+
+	@include mq(_bps(1), _bps(2)) {
+		#{$p_}: ( 1.0/sizes_r(2) ) * $min_;
+	}
+	@include mq(_bps(2), _bps(3)) {
+		#{$p_}: ( 1.0/sizes_r(3) ) * $min_;
+	}
+	@include mq(_bps(3), _bps(4)) {
+		#{$p_}: ( 1.0/sizes_r(4) ) * $min_;
+	}
+
+	@include mq(_bps(4), 0) {
+		#{$p_}: ( 1.0/sizes_r(4) ) * $min_;
+	}
+}
+
+/* standardize blank values */
+@mixin if_not_excluded($in)
+{
+	@if not ($in == "")
+	{
+		@content;
+	}
+}
+
+/* for @mixin scalez */
+@mixin _scalez_at_($i, $sel, $scales, $base: 1.0)
+{
+	$scale: nth($scales, $i);
+	@include if_not_noll($scale)
+	{
+		@include mq( _bps($i), _bps($i + 1) )
+		{
+			#{$sel}: $base * $scale;
+		}
+	}
+}
+
+@mixin scalez($sel, $scales, $base: 1.0)
+{
+	$len: min( length($bps), length($scales) );
+
+	@include mqlt( nth( $bps, 1 ) )
+	{
+		#{$sel}: $base * nth($scales, 1);
+	}
+
+	/* -1 is last index */
+	@include mqgt( nth( $bps, $len ) ) 
+	{ 			
+		#{$sel}: $base * nth($scales, $len);
+	}
+
+	@for $i from 1 to $len
+	{
+		@include _scalez_at_($i, $sel, $scales, $base);
+	}
+}
+
+@mixin sizez($sel, $sizes)
+{
+	@include scalez($sel, $sizes)
+}

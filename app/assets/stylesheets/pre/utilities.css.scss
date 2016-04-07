@@ -28,6 +28,27 @@ $gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 	}
 }
 
+
+@function nol()
+{
+	@return "nol";
+}
+/* standardize blank values */
+@mixin if_noll($in)
+{
+	@if ( $in == nol() )
+	{
+		@content;
+	}
+}
+@mixin if_not_noll($in)
+{
+	@if not ( $in == nol() )
+	{
+		@content;
+	}
+}
+
 /* 
 * generate media query
 * 0, n will give you media < n
@@ -80,7 +101,7 @@ $gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 	@return $_r;
 }
 
-@function scale_npow($base: 1, $coeff_, $n_) {
+@function scale_npow($n_, $coeff, $base: 1.0) {
 	$coeff: pow($coeff_, $n_);
 	@return $base * $coeff;
 }
