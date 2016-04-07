@@ -33,17 +33,21 @@ $gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 * 0, n will give you media < n
 * n, 0 will give you media > n
 */
-@mixin mq($min_, $max_) {
-	@if $min_ == 0 {
-		@media only screen and (max-width: "#{$max_}")
+@mixin mq($min: 0, $max: 0) {
+	@if $min == $max
+	{
+		@content;
+	}
+	@else if $min == 0 {
+		@media only screen and (max-width: "#{$max}")
 		{ @content; }
 	}
-	@else if $max_ == 0 {
-		@media only screen and (min-width: "#{$min_}")
+	@else if $max == 0 {
+		@media only screen and (min-width: "#{$min}")
 		{ @content; }
 	}
 	@else {
-		@media only screen and (min-width: "#{$min_}") and (max-width: "#{$max_}")
+		@media only screen and (min-width: "#{$min}") and (max-width: "#{$max}")
 		{ @content; }
 	}
 }
