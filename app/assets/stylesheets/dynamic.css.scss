@@ -24,11 +24,6 @@ $trcrimsrown: rgba(60, 0, 0, 0.6);
 
 $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 
-.feed.col > .item.row.past 
-{
-	color: $past-event-color;
-}
-
 .hidden 
 {
 	display: none !important;
@@ -176,6 +171,11 @@ $pagi-nav-to-page-w: 50%;
 	}
 }
 /* ---------- */
+
+.feed.col > .item.row.past 
+{
+	color: $past-event-color;
+}
 
 /* ----- ACTIVITY-LIST ----- */
 .activity-list.col .item
