@@ -1,7 +1,7 @@
 var nextPageExists = function()
 {
   //return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
-  return ( $(more_link).attr("data-scroll-link") > 0 );
+  return ( $(more_link).attr("data-scroll-link") != 0 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -28,8 +28,15 @@ var onLoadComplete = function(jqxhr_, textStatus_ )
   // console.log(textStatus_);
 };
 
-var nextPage = function(url)
+var nextPage = function()
 {
+	url = $(more_link).find('a').attr('href');
+
+	if ( is_loading || !url )
+  {
+    return ( is_loading || !url );
+  }
+
 	$(more_link).addClass('loading');
 	is_loading = true;
 	last_load_at = new Date();
@@ -49,7 +56,10 @@ var scrollStart = function()
   $(window).on("scroll",
     function()
     {
-      checkNextPage();
+      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() )
+      {
+          nextPage();
+      }
     }
   );
 }
@@ -57,21 +67,6 @@ var scrollStart = function()
 var scrollStop = function()
 {
   $(window).off("scroll");
-}
-
-var checkNextPage = function()
-{
-  if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() && !is_loading)
-  {
-      url = $(more_link).find('a').attr('href');
-
-      if ( !url )
-      {
-        return false;
-      }
-
-      nextPage(url);
-  }
 }
 
 
@@ -106,7 +101,10 @@ $(document).on("page:change", function()
       function(e)
       {
         e.preventDefault();
-        nextPage();
+        if (!is_loading)
+        {
+          nextPage();
+        }
       }
     );
 
