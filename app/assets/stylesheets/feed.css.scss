@@ -4,6 +4,7 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 $activity_list_offs_v: 3px;
 $activity_list_offs_h: -6px;
 
+/* temporary */
 $ff_l: 96px;
 $ff_m: 76px;
 $ff_s: 64px;
@@ -24,6 +25,8 @@ $ff_s: 64px;
 		}
 		> .col
 		{
+			/* HEY so this seems to be irrelevant, if you remove the .br items from the container
+			might be a relic from earlier iterations */
 			padding: 2.7% 0; /* vertical padding is relative to width, remember */
 		}
 
