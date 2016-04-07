@@ -80,9 +80,9 @@ $gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 	@return $_r;
 }
 
-@function scale($base_, $coeff_, $i_) {
-	$coeff: pow($coeff_, $i_);
-	@return $base_ * $coeff;
+@function scale_npow($base: 1, $coeff_, $n_) {
+	$coeff: pow($coeff_, $n_);
+	@return $base * $coeff;
 }
 
 @function sig_figs($base_, $n_) {
