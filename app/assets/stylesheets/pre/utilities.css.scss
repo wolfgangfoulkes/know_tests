@@ -51,6 +51,13 @@ $gmd_i: 2.0 * $gm; /* 1.23606797749971 */
 		{ @content; }
 	}
 }
+@mixin mqgt($min) {
+	@include mq($min: $min)
+}
+
+@mixin mqlt($max) {
+	@include mq($max: $max)
+}
 
 
 /** Typography ***/
