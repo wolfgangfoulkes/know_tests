@@ -83,3 +83,6 @@ gem 'faker'
 
 # ez queries
 # gem 'squeel'
+
+# admins! be careful with updates
+gem 'activeadmin', '~> 1.0.0.pre2'

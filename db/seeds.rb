@@ -102,3 +102,5 @@ puts "--------"
 Comment.find_each do |comment| 
 	comment.activity_for_create
 end
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

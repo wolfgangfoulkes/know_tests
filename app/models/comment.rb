@@ -61,8 +61,6 @@ class Comment < ActiveRecord::Base
   end
 # -----
 
-
-
 # ----- IMPORTANT ----- #
   # ----- fake OOP
 
@@ -91,7 +89,6 @@ class Comment < ActiveRecord::Base
   def collection
     self.commentable.comments.where(role: self.role)
   end
-
 
 
   def owner_id
