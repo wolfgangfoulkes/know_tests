@@ -21,12 +21,10 @@ form.new_comment #comment_title {
 	margin-bottom: $spacer_margin / 4;
 }
 */
-
-
-
 $line_height: 18px;
 $spacer_height: 36px;
 $spacer_margin: 8px;
+$max_width: 75%;
 
 .comment-list.col {
 	position: relative;
@@ -48,7 +46,7 @@ $spacer_margin: 8px;
 		}
 		.content {
 			opacity: 0.4;
-			max-width: 75%;
+			max-width: $max_width;
 		}
 		.options {
 		}
@@ -71,13 +69,29 @@ form.new_comment {
 	align-items: center;
 	margin: 0 auto;
 	box-sizing: border-box;
-}
-
-form.new_comment #comment_title {
-	margin-bottom: $spacer_margin / 4;
+	width: 100%;
 }
 
 form.new_comment input {
 	border: 1px solid black;
 }
+
+form.new_comment #comment_title {
+	width: $max_width * 1.0/3;
+}
+
+form.new_comment #comment_comment {
+	margin-top: $spacer_margin;
+	width: $max_width * 0.75;
+	resize: none;
+}
+
+/* style like 2tab */
+form.new_comment .actions {
+	margin-top: $spacer_margin;
+	> input {
+		padding: 5px 8px;
+	}
+}
+
 

@@ -1,17 +1,14 @@
 <% comment.user_id = current_user.id %>
 <% if can? :create, comment %>
   <%= form_for [comment], remote: true do |f| %>
-    <div class="field h4">
-      <%= f.text_field :title %>
-      <br/>
-    </div>
-    <div class="field h4">
-      <%= f.text_area :comment %>
-      <br/>
-    </div>
+
+    <%= f.text_field :title, class: "h4" %>
+    <%= f.text_area :comment, rows: 8, class: "h4" %>
+
     <div class="actions h3">
       <%= f.submit %>
     </div>
+    
     <%= f.hidden_field :role %>
     <%= f.hidden_field :root_id %>
     <%= f.hidden_field :root_type %>
