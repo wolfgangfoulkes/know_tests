@@ -182,6 +182,8 @@ $pagi-nav-to-page-w: 50%;
 }
 
 .activities.feed > .item[data-drop="snd"] {
+	cursor: pointer;
+
 	.svg-link {
 		box-sizing: border-box;
 	}
