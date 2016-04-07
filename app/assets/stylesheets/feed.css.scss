@@ -4,6 +4,10 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 $activity_list_offs_v: 3px;
 $activity_list_offs_h: -6px;
 
+$ff_l: 96px;
+$ff_m: 76px;
+$ff_s: 64px;
+
 /* --- RESPONSIVE SIZES --- */
 @mixin feed($box, $pad_v, $pad_h, $mar_h)
 {
@@ -64,33 +68,28 @@ $activity_list_offs_h: -6px;
 }
 /* --- */
 
-/*
-$ff_l: 96px;
-$ff_m: 76px;
-$ff_s: 64px;
-*/
 .feed.col > .item.row 
 {
 
-	@include feed(96px, 1.0/4, 1.0/6, 1.0/6)
+	@include feed($ff_l, 1.0/4, 1.0/6, 1.0/6)
 	{
 	}
 
 	@include mq(0, _bps(2))
 	{
-		@include feed(64px, 1.0/4, 1.0/8, 1.0/8)
+		@include feed($ff_s, 1.0/4, 1.0/8, 1.0/8)
 		{
 		}
 	}
 	@include mq(_bps(2), _bps(3)) 
 	{
-		@include feed(76px, 1.0/4, 1.0/6, 1.0/6)
+		@include feed($ff_m, 1.0/4, 1.0/6, 1.0/6)
 		{		
 		}
 	}
 	@include mq(_bps(3), 0) 
 	{
-		@include feed(96px, 1.0/4, 1.0/6, 1.0/6)
+		@include feed($ff_l, 1.0/4, 1.0/6, 1.0/6)
 		{	
 		}
 	}
