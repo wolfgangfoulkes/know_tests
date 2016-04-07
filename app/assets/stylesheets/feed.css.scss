@@ -137,22 +137,22 @@ $search-button-color: rgba(10, 0, 0, 0.8);
 /* ----- ACTIVITIES ----- */
 .feed.col > .activity-list
 {
-	border-left: 2px solid rgba(100, 0, 0, 0.5);
-	
-	.item {
-		display: inline-flex;
-		flex-direction: row;
-		> * {
-			white-space: nowrap;
-			overflow: hidden;
-		}
-		> .title {
-			flex-basis: 0;
-			flex-grow: 1;
-			margin-left: 2%;
-			text-overflow: ellipsis;
-		}
-	}	
+	border-left: 2px solid rgba(100, 0, 0, 0.5);	
+}
+
+.feed.col > .activity-list .item {
+	display: inline-flex;
+	flex-direction: row;
+	> * {
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	> .title {
+		flex-basis: 0;
+		flex-grow: 1;
+		margin-left: 2%;
+		text-overflow: ellipsis;
+	}
 }
 
 $list_offs_v: 3px;
