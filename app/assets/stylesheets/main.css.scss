@@ -4,6 +4,7 @@
 
 @import "pre/meyer-reset-mod.css.scss";
 @import "pre/utilities.css.scss";
+@import "pre/sass-list-maps.css.scss";
 
 /* ----- VARS ----- */
 
@@ -55,8 +56,16 @@ $sizes_b:
 	@return nth($sizes_b, $i_);
 }
 
+$m_sizes_r: 
+(
+	0		.378,
+	340 	.465,
+	480 	.571,
+	800 	.756,
+	1024 	1
+);
 $sizes_r: (
-	1,
+	0,
 	.756,
 	.571,
 	.465,
