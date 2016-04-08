@@ -11,10 +11,8 @@ class CreateComments < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :comments, :root_type
-    add_index :comments, :root_id
-    add_index :comments, :commentable_type
-    add_index :comments, :commentable_id
+    add_index :comments, [:root_id, :root_type]
+    add_index :comments, [:commentable_id, :commentable_type]
     add_index :comments, :user_id
   end
 
