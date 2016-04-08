@@ -81,10 +81,8 @@ ActiveRecord::Schema.define(version: 20160407145729) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
-  add_index "comments", ["root_id"], name: "index_comments_on_root_id", using: :btree
-  add_index "comments", ["root_type"], name: "index_comments_on_root_type", using: :btree
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["root_id", "root_type"], name: "index_comments_on_root_id_and_root_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "events", force: true do |t|
