@@ -11,22 +11,26 @@ module Paginated
   #per(nil) -> LIMIT 0
   module ClassMethods
   	def _page
-    	self.arel.offset
+    	self.arel.offset || @offset
     end
 
     def _per
-    	self.arel.limit
+    	self.arel.limit || @limit
     end
 
     def unpaginate
       unscope(:limit, :offset)
     end
 
-    def paginate
-    	page(_page).per(_per)
+    def paginate(page: nil, per: nil)
+      page = page || _page
+      per =   per || _per
+    	page(page).per(per)
     end
 
-    def collect(page: @offset, per: @limit)
+    def collect(page: nil, per: nil)
+      page = page || _page
+      per =   per || _per
       limit = (page * per) : per
       page(1).per(limit)
     end
