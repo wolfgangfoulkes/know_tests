@@ -1,3 +1,12 @@
+/*
+  prevent_default doesn't work!
+*/
+
+var nextPageUrl = function()
+{
+  return $(more_link).find('a').attr('href');
+}
+
 var nextPageExists = function()
 {
   //return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
@@ -28,15 +37,24 @@ var onLoadComplete = function(jqxhr_, textStatus_ )
   // console.log(textStatus_);
 };
 
-var nextPage = function()
+var tryNextPage = function()
 {
-	url = $(more_link).find('a').attr('href');
-
-	if ( is_loading || !url )
+  if (!nextPageExists || is_loading)
   {
-    return ( is_loading || !url );
+    return false;
   }
 
+  url = nextPageUrl();
+  if (!url)
+  {
+    return false;
+  }
+  
+  nextPage(url);
+}
+
+var nextPage = function(url)
+{
 	$(more_link).addClass('loading');
 	is_loading = true;
 	last_load_at = new Date();
@@ -56,9 +74,9 @@ var scrollStart = function()
   $(window).on("scroll",
     function()
     {
-      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() && nextPageExists() )
+      if ( approachingBottomOfPage() && waitedLongEnoughBetweenPages() )
       {
-          nextPage();
+          tryNextPage();
       }
     }
   );
@@ -101,10 +119,7 @@ $(document).on("page:change", function()
       function(e)
       {
         e.preventDefault();
-        if (!is_loading)
-        {
-          nextPage();
-        }
+        tryNextPage();
       }
     );
 

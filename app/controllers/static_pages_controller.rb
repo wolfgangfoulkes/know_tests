@@ -24,10 +24,10 @@ class StaticPagesController < ApplicationController
     @events = @events.starts_after(DateTime.now.to_date).deef
 
     respond_to do |format|
-      format.html { 
+      format.html {
           render "static_pages/feed"
       }
-      format.js { 
+      format.js {
           render "static_pages/_feed.js.erb",
           locals: 
           {
@@ -71,7 +71,7 @@ class StaticPagesController < ApplicationController
           } 
       }
       format.js { 
-          render partial: "static_pages/activity_list", 
+          render partial: "static_pages/activity_list",
           locals: 
           {
               event: event,
@@ -94,7 +94,11 @@ class StaticPagesController < ApplicationController
       end
 
       if params.include?(:page)
-        @events = EventsHelper.pagi(@events, page: params[:page])
+        if request.format.html? 
+          @events = EventsHelper.pagi(@events, page: 1, total: params[:page].to_i)
+        elsif request.format.js?
+          @events = EventsHelper.pagi(@events, page: params[:page])
+        end
       else
         @events = EventsHelper.pagi(@events, page: 1)
       end

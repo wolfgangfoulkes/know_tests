@@ -269,7 +269,7 @@ module ApplicationHelper
 		is_max = (items.current_page >= items.total_pages)
 		url = (is_max) ? nil : url_for(page: items.current_page + 1)
 		data = {
-			scroll_link: (url.nil?) ? "0" : "1",
+			scroll_link: (is_max) ? "0" : "1",
 			current: items.current_page,
 			total: items.total_pages
 		}
