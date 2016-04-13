@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	has_many :events, dependent: :destroy
+	has_many :comments
 
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
@@ -14,4 +15,12 @@ class User < ActiveRecord::Base
 	#----- socialization -----
 	acts_as_follower
 	#-----
+
+	def events_count
+		self.events.length
+	end
+
+	def comments_count
+		self.comments.length
+	end
 end

@@ -15,4 +15,8 @@ class EventsPresenter
     #self.saved_for
     by_newest_activity.pagi
   end
+
+  def by_newest_activity
+    @events.joins(:activities).group("events.id").order("max(activities.created_at) DESC")
+  end
 end
