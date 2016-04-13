@@ -139,20 +139,32 @@ $fitem_s: 64px;
 
 .feed.col > .activity-list
 {
-	border-left: 2px solid rgba(100, 0, 0, 0.5);	
+	border-left: 2px solid rgba(100, 0, 0, 0.5);
 }
 
 .feed.col > .activity-list .item {
 	display: inline-flex;
 	flex-direction: row;
+	width: 100%;
 	> * {
 		white-space: nowrap;
 		overflow: hidden;
+		flex-shrink: 1;
 	}
-	> .title {
-		flex-basis: 0;
-		flex-grow: 1;
+	> .dt {
+		width: 18%;
+		min-width: 6.5em;
+		flex-shrink: 0;
+	}
+	> .username {
+		width: 25%;
+		margin-left: 1em;
+		min-width: 3em;
+		text-overflow: ellipsis;
+	}
+	> .summary {
 		margin-left: 2%;
+		width: 50%;
 		text-overflow: ellipsis;
 	}
 }
@@ -173,10 +185,16 @@ $fitem_s: 64px;
 		{
 			.item
 			{
+				> .br {
+					display: none;
+				}
 				> .dt {
 					font-size: 0.8em;
 				}
-				> .title {
+				> .username {
+					display: none;
+				}
+				> .summary {
 					display: block;
 				}
 			}
@@ -188,7 +206,6 @@ $fitem_s: 64px;
 	{
 		@include activity_list($fitem_m, $activity_list_offs_v, $activity_list_offs_h)
 		{
-
 		}
 	}
 	 

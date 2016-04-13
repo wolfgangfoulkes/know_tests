@@ -92,13 +92,10 @@ module ApplicationHelper
 	# -----
 
 	# ----- style
-	def uniq_date(dt_, dts_) # -	-	-	-	-	-	-	-	-	- UNUSED
-		dts_.include(dt_.strftime("%m%d%y"))
-	end
 
-	def date_style(date) # -	-	-	-	-	-	-	-	-	- 	- USED
+	def date_style(date, tag: :span, classes: "") # -	-	-	-	- USED
 		_a = date.strftime("%m,%d,%y,%H,%M").split(',')
-		_output = content_tag(:span, :class => "dt") do
+		_output = content_tag(tag, :class => "dt" + " " + classes) do
 			_d = content_tag(:span, class: "d") do
 				concat content_tag(:date, _a[0])
 				concat content_tag(:b, ".")
@@ -118,6 +115,54 @@ module ApplicationHelper
 		_output
 	end
 	# -----
+
+	# --- for UNIQ DATE -	-	-	-	-	-	-	-	-	-	-	- UNUSED
+	#
+	# remember: DATETIME.to_date, DATETIME.time
+	#
+	def uniq_date(dt_, dts_)
+		dts_.include(dt_.strftime("%m%d%y"))
+	end
+
+	
+	def d_style(date, tag: :span, classes: "")
+		_a = date.strftime("%m,%d,%y").split(',')
+		_d = content_tag(tag, class: "d" + " " + classes) do
+			concat content_tag(:date, _a[0])
+			concat content_tag(:b, ".")
+			concat content_tag(:date, _a[1])
+			concat content_tag(:b, ".")
+			concat content_tag(:date, _a[2])
+		end
+		_d
+	end
+
+	def t_style(time, tag: :span, classes: "")
+		_a = time.strftime("%H, %M").split(',')
+		_t = content_tag(tag, class: "t" + " " + classes) do
+			concat content_tag(:date, _a[0])
+			concat content_tag(:b, ":")
+			concat content_tag(:date, _a[1])
+		end
+		_t
+	end
+
+	def dt_style(date = nil, time = nil, tag: :span, classes: "")
+		_classes = "dt"
+		_classes += " " + ( !date ? "no-d" : "" )
+		_classes += " " + ( !time ? "no-t" : "" )
+		_classes += classes
+		_output = content_tag(tag, :class => _classes) do
+			if date
+				concat d_style(date)
+				concat ( content_tag(:b, "\t") )
+			end
+			if time
+				concat t_style(date)
+			end
+		end
+	end
+	#---
 
 	# ----- javascript data params # - 	-	-	-	-	-	-	-	- USED
 	# - 	-	- 	-	-	-	-	-	-	-	-	-

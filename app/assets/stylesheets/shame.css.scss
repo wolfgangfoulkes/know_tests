@@ -154,10 +154,11 @@
 
 	.activity-list .dt 
 	{
+		display: inline-flex;
 		> .d 
 		{
 			font-family: "Avenir Next Condensed", "sans-serif";
-			font-size: 0.8em;
+			font-size: 0.85em;
 
 			> date
 			{
@@ -187,7 +188,6 @@
 		{
 			font-family: "Avenir Next", "sans-serif";
 			font-size: 1em;
-			margin-left: 1em;
 
 			> date
 			{
@@ -212,7 +212,8 @@
 		}
 		> b
 		{
-			margin: 0 2px;
+			width: 0.8em;
+			flex-grow: 1;
 
 			&:nth-of-type(1) {
 			}

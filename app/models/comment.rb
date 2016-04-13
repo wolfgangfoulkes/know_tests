@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
   include Filterable
   include PublicActivity::Common
+  include ActionView::Helpers::TextHelper
 
   belongs_to :root, :polymorphic => true
   belongs_to :commentable, :polymorphic => true
@@ -128,7 +129,7 @@ class Comment < ActiveRecord::Base
   # ---
 
   # --- used in ^^^
-  def can_add_comment? 
+  def can_add_comment?
     ( ["default"].include?(self.role) ) &&
     ( !self.is_nested? )
   end
@@ -151,6 +152,11 @@ class Comment < ActiveRecord::Base
     # owner.updated_at = a.updated_at
   end
 # ----- #
+
+  def summary(length: 36)
+    #truncate(self.comment, length: length, separator: /[\.\?\!\s]/)
+    truncate(self.comment, length: length, separator: " ")
+  end
 
   # ----- unused currently
   # scope :owner_comments, -> (commentable) { where(role: "owner", root: commentable, root_type: "Event", commentable: commentable, commentable_type: "Event") }
