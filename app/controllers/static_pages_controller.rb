@@ -89,15 +89,11 @@ class StaticPagesController < ApplicationController
       if params[:search]
         @events = @events.search(params[:search])
       end
+      if params[:pages]
+        @events = @events.pages(params[:pages])
+      end
       if params[:page]
         @events = @events.page(params[:page])
       end
-      if params[:pages]
-        @events = @events.page(params[:pages])
-      end
-    end
-
-    def filtering_params
-      params.permit(:search, :page, :pages, :per)
     end
 end

@@ -49,6 +49,18 @@ class EventsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html { @comments = @event.comments.page(1).per(6) }
+      format.js { 
+        @comments = @event.comments.where(role: params[:target]).page(params[:page]).per(6) 
+        render 'static_pages/feed.js.erb', 
+        locals: {
+          item_partial: "comments/comment",
+          items: @comments,
+          target: params[:target]
+        }
+      }
+    end
   end
 
   def edit

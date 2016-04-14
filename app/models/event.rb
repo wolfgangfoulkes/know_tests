@@ -70,14 +70,6 @@ class Event < ActiveRecord::Base
 		self.page(1).per(per.to_i * pages.to_i)
 	end
 
-	def self.to_append(events)
-		self.where.not(id: events.select(:id))
-	end
-
-	def self.to_remove(events)
-		events.where.not(id: self.select(:id))
-	end
-
 	def self.saved_for(user)
 		followees = Follow.where( follower: user, followable_type: "Event" ).select(:followable_id)
 		user_events = user.events.select(:id)
@@ -157,6 +149,16 @@ class Event < ActiveRecord::Base
 	# 	f.order("activities.role").group("activities.role", "activities.id")
 	# end
 #-----#
+
+#----- UNUSED -----#
+	def self.to_append(events)
+		self.where.not(id: events.select(:id))
+	end
+
+	def self.to_remove(events)
+		events.where.not(id: self.select(:id))
+	end
+# ----- #
 
 
 

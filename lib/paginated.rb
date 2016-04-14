@@ -2,45 +2,78 @@ module Paginated
   def self.included(base)
     base.extend ClassMethods #this is necc to define ClassMethods below
     base.class_eval do
-      @offset = 1
+      scope :disabled, -> { where(disabled: true) }
+      @offset = 0
       @limit = 8
+      self.ppage = self.class_ppage
+      self.pper = self.class_pper
     end
   end
 
   #page(nil) -> OFFSET 0
   #per(nil) -> LIMIT 0
   module ClassMethods
-  	def _page
-    	self.arel.offset || @offset
+    attr_accessor :ppage
+    attr_accessor :pper
+    mattr_accessor :class_ppage
+    mattr_accessor :class_pper
+    self.class_ppage = 0
+    self.class_pper = 8
+
+    # --- utility
+  	def offset
+    	self.arel.offset
     end
 
-    def _per
-    	self.arel.limit || @limit
+    def limit
+    	self.arel.limit
     end
 
     def unpaginate
       unscope(:limit, :offset)
     end
 
-    def paginate(page: nil, per: nil)
-      page = page || _page
-      per =   per || _per
-    	page(page).per(per)
-    end
-
-    def collect(page: nil, per: nil)
-      page = page || _page
-      per =   per || _per
-      limit = (page * per) : per
-      page(1).per(limit)
-    end
-
     def all_pages
       page(1).per(nil)
     end
+    # ---
+
+    def poffset
+      @offset
+    end
+
+    def plimit
+      @limit
+    end
+
+    def poffset=(offset)
+      @offset = offset
+    end
+
+    def plimit=(limit)
+      @limit = limit
+    end
+
+    def set_ppage(page: @offset, per: @limit)
+      @offset = page
+      @limit = per
+      page(page).per(per)
+    end
+
+    def set_ppages(page: @offset, per: @limit)
+      @offset = page
+      @limit = per
+      page(page).per(per)
+    end
+
+    def ppaged(page: @offset, per: @limit)
+    	page(page).per(per)
+    end
+
+    def ppagesd(page: @offset, per: @limit)
+      limit = (page * per) || per
+      page(1).per(limit)
+    end
+
   end
-
 end
-
-# Event.page(nil).per(nil)
-# Event Load (1.3ms)  SELECT  "events".* FROM "events"  LIMIT 25 OFFSET 0

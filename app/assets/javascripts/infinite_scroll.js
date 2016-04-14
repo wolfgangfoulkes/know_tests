@@ -1,7 +1,3 @@
-/*
-  prevent_default doesn't work!
-*/
-
 var nextPageUrl = function()
 {
   return $(more_link).attr("data-scroll-url");
@@ -9,8 +5,8 @@ var nextPageUrl = function()
 
 var nextPageExists = function()
 {
-  //return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
-  return ( $(more_link).attr("data-scroll-url") != 0 );
+  url = nextPageUrl();
+  return ( url != 0 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -21,20 +17,6 @@ var waitedLongEnoughBetweenPages = function()
 var approachingBottomOfPage = function()
 {
 	return ( ( $(window).height() + $(document).scrollTop() ) > ( $(document).height() - pixels ) );
-};
-
-var onLoadSuccess = function()
-{
-	$(more_link).removeClass('loading');
-  is_loading = false;
-  last_load_at = new Date();
-  $(document).trigger("callbacks:reset");
-};
-
-var onLoadComplete = function(jqxhr_, textStatus_ )
-{
-  // console.log(jqxhr_); 
-  // console.log(textStatus_);
 };
 
 var tryNextPage = function()
@@ -87,16 +69,34 @@ var scrollStop = function()
   $(window).off("scroll");
 }
 
+var onLoadComplete = function(jqxhr_, textStatus_ )
+{
+  $(more_link).removeClass('loading');
+  is_loading = false;
+  // console.log(jqxhr_); 
+  // console.log(textStatus_);
+};
+
+var onLoadSuccess = function()
+{
+  $(document).trigger("callbacks:reset");
+  last_load_at = new Date();
+};
+
 var onLinkClick = function(e) 
 {
   e.preventDefault();
   tryNextPage();
 }
 
-var initCallbacks = function()
+/* 
+  callbacks that respond to page elements that may be changed 
+*/
+var initPageCallbacks = function()
 {
   $(more_link).find('a').on("click", onLinkClick);
 }
+
 /*
   on scrolling in either direction
     if bottom of view is < pixels from bottom of page
@@ -124,7 +124,7 @@ $(document).on("page:change", function()
     $(document).on("callbacks:reset",
       function()
       {
-        initCallbacks();
+        initPageCallbacks();
       }
     );
     $(document).on("scroll:start",
@@ -148,6 +148,6 @@ $(document).on("page:change", function()
       }
     );
   
-    initCallbacks();
+    initPageCallbacks();
     $(document).trigger("scroll:start");
 });
