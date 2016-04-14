@@ -87,6 +87,16 @@ var scrollStop = function()
   $(window).off("scroll");
 }
 
+var onLinkClick = function(e) 
+{
+  e.preventDefault();
+  tryNextPage();
+}
+
+var initCallbacks = function()
+{
+  $(more_link).find('a').on("click", onLinkClick);
+}
 /*
   on scrolling in either direction
     if bottom of view is < pixels from bottom of page
@@ -110,18 +120,11 @@ $(document).on("page:change", function()
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
   	 */
-     $(more_link).find('a').on("click",
-      function(e)
-      {
-        e.preventDefault();
-        tryNextPage();
-      }
-    );
 
     $(document).on("callbacks:reset",
       function()
       {
-
+        initCallbacks();
       }
     );
     $(document).on("scroll:start",
@@ -145,6 +148,6 @@ $(document).on("page:change", function()
       }
     );
   
-    
+    initCallbacks();
     $(document).trigger("scroll:start");
 });
