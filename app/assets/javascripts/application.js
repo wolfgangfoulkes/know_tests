@@ -15,3 +15,5 @@
 //= require turbolinks
 //= require moment
 //= require fullcalendar
+//= require base/utils
+//= require main
