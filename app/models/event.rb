@@ -60,7 +60,9 @@ class Event < ActiveRecord::Base
 	#- for the application's specific uses of the above class methods
 	#---
 	def self.saved_for(user)
-		where(id: ( user.followees(Event) | user.events) ).deef
+		followees = Follow.where( follower: user, followable_type: "Event" ).select(:followable_id)
+		user_events = user.events.select(:id)
+		self.in_any("id", followees, user_events)
 	end
 
 	# order determines final order

@@ -138,6 +138,13 @@ module Filterable
     end
     # #-----#
 
+    #--- in: 
+    #-- out: 
+    def in_any(k, *vs)
+      q = ( ["( #{k} IN (?) )"] * vs.length ).join(" OR ")
+      where(q, *vs)
+    end
+
     #--- in: variable number of hash, string, or AR inputs (idk about arel)
     #-- out: query combined with OR
     def any_of_( *queries )

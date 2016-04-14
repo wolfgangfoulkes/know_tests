@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   before_action :set_events, only: [:feed, :saved, :activities]
 
   def saved
-  	@events = @events.where(id: (current_user.followees(Event) | current_user.events)).deef
+  	@events = @events.saved_for(current_user).deef
 
     respond_to do |format|
       format.html { 
