@@ -323,6 +323,16 @@ module ApplicationHelper
 		_link
 	end
 
+	def page_specific_named_javascript(controller, prepend:"", append:"", **args)
+		c_name = controller.controller_name
+		a_name = controller.action_name
+		filename_c = "#{prepend}#{c_name}#{append}"
+		filename_a = "#{prepend}#{c_name}-#{a_name}#{append}"
+		# works but being safe-not-sorry
+		# javascript_include_tag 'application', ( filename_c if javascript_exists?(filename_c) ), ( filename_a if javascript_exists?(filename_a) ), args.merge({'data-turbolinks-track' => true})
+		javascript_include_tag 'application', ( filename_c if javascript_exists?(filename_c) ), ( filename_a if javascript_exists?(filename_a) ), 'data-turbolinks-track' => true
+	end
+
 	# ----- FROM SOMEWHERE ONLINE:
 	# || I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 
