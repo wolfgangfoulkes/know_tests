@@ -17,7 +17,7 @@
         <span class="h5 username user"> <%= event.user.name %> </span>
         <span class="h4 tags"> 
 
-            <% event.tags.first(10).each do |tag| %>
+            <% event.tags.limit(10).find_each do |tag| %>
               <%= "#{tag.name}" %>
             <% end %>
         
