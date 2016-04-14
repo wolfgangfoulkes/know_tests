@@ -1,4 +1,4 @@
-var $deselected = $(".activities.feed > [data-drop], [data-scroll-link]");
+var $deselected = $(".activities.feed > [data-drop], [data-scroll-url]");
 var $selected = $("<%= j render partial: 'static_pages/activity_list.html.erb', locals: {event: event, activities: activities} %>");
 
 $deselected.addClass("hidden");

@@ -52,54 +52,17 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 #-----#
 
-#----- scopes ----- 
-	scope :deef, -> { order("starts_at ASC") }
-#-----#
-
-	#----- INTERFACE METHODS
-	#- for the application's specific uses of the above class methods
-	#---
-	def self.saved_for(user)
-		followees = Follow.where( follower: user, followable_type: "Event" ).select(:followable_id)
-		user_events = user.events.select(:id)
-		self.in_any("id", followees, user_events)
-	end
-
-	# order determines final order
-	# so this is the easiest way to do relevance
-	#LOOK INTO AREL JOINS FOR TAGS SEARCH, IT'S A BIT MORE COMPLICATED
-	#HOWEVER, WAIT YOU COULD DO IT THROUGH TAGS YEAH!
-	def self.search_(q)
-		if q.length <= 3
-			n = self.arel_table[:name].matches("#{q}%")
-			d = nil
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = nil
-		elsif q.length <= 5
-			n = self.arel_table[:name].matches("#{q}%")
-			d = self.arel_table[:description].matches("#{q}%")
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
-		else
-			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
-			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
-			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
-			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
-		end
-		n.or(ni).or(d).or(di)
-	end
-
-	# order determines final order
-	def self.search(q)
-		self.where( self.search_(q) )
-	end
-	#-----
-
-#--------#
+	# could be a presenter method
+	paginates_per 8
 
 #----- TAGS 
 	def self.tagged_with(name)
 		Tag.find_by_name!(name).entries
+	end
+
+	def self.tag_matches(name)
+		self.joins(:tags).where(Tag.arel_table[:name].matches(name))
+		# SELECT "events".* FROM "events" INNER JOIN "taggings" ON "taggings"."event_id" = "events"."id" INNER JOIN "tags" ON "tags"."id" = "taggings"."tag_id" WHERE ("tags"."name" ILIKE 'c%')
 	end
 #-----#
 
@@ -138,6 +101,67 @@ class Event < ActiveRecord::Base
 	# 	f.order("activities.role").group("activities.role", "activities.id")
 	# end
 #-----#
+
+#----- UNUSED -----#
+	def self.to_append(events)
+		self.where.not(id: events.select(:id))
+	end
+
+	def self.to_remove(events)
+		events.where.not(id: self.select(:id))
+	end
+# ----- #
+
+#----- PAGINATION
+def self.pages(pages=1, per: 8)
+	self.page(1).per(per.to_i * pages.to_i)
+end
+#-----
+
+#----- INTERFACE METHODS
+#- for the application's specific uses of the above class methods
+#---
+	def self.deef
+		self.order("starts_at ASC")
+	end
+
+	def self.saved_for(user)
+		followees = Follow.where( follower: user, followable_type: "Event" ).select(:followable_id)
+		user_events = user.events.select(:id)
+		self.in_any("id", followees, user_events)
+	end
+
+	# order determines final order
+	# so this is the easiest way to do relevance
+	#LOOK INTO AREL JOINS FOR TAGS SEARCH, IT'S A BIT MORE COMPLICATED
+	#HOWEVER, WAIT YOU COULD DO IT THROUGH TAGS YEAH!
+	def self.search_(q)
+		if q.length <= 3
+			n = self.arel_table[:name].matches("#{q}%")
+			d = nil
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = nil
+		elsif q.length <= 5
+			n = self.arel_table[:name].matches("#{q}%")
+			d = self.arel_table[:description].matches("#{q}%")
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		else
+			n = self.arel_table[:name].matches_any(["#{q}%", "%#{q}%"])
+			d = self.arel_table[:description].matches_any(["#{q}%", "%#{q}%"])
+			ni = self.in_name_starts_with("#{q}").arel.constraints.reduce(:and)
+			di = self.in_description_starts_with("#{q}").arel.constraints.reduce(:and)
+		end
+		n.or(ni).or(d).or(di)
+	end
+
+	# order determines final order
+	def self.search(q)
+		self.where( self.search_(q) )
+	end
+	#-----
+
+#--------#
 
 
 

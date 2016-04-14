@@ -1,16 +1,12 @@
-/*
-  prevent_default doesn't work!
-*/
-
 var nextPageUrl = function()
 {
-  return $(more_link).find('a').attr('href');
+  return $(more_link).attr("data-scroll-url");
 }
 
 var nextPageExists = function()
 {
-  //return ( $(more_link).attr("data-current") < $(more_link).attr("data-total") );
-  return ( $(more_link).attr("data-scroll-link") != 0 );
+  url = nextPageUrl();
+  return ( url != 0 );
 };
 
 var waitedLongEnoughBetweenPages = function()
@@ -23,23 +19,9 @@ var approachingBottomOfPage = function()
 	return ( ( $(window).height() + $(document).scrollTop() ) > ( $(document).height() - pixels ) );
 };
 
-var onLoadSuccess = function()
-{
-	$(more_link).removeClass('loading');
-  is_loading = false;
-  last_load_at = new Date();
-  $(document).trigger("callbacks:reset");
-};
-
-var onLoadComplete = function(jqxhr_, textStatus_ )
-{
-  // console.log(jqxhr_); 
-  // console.log(textStatus_);
-};
-
 var tryNextPage = function()
 {
-  if (!nextPageExists || is_loading)
+  if (!nextPageExists() || is_loading)
   {
     return false;
   }
@@ -87,10 +69,32 @@ var scrollStop = function()
   $(window).off("scroll");
 }
 
-
-var scrollSet = function(val_)
+var onLoadComplete = function(jqxhr_, textStatus_ )
 {
-  $('[data-scroll-link]').attr('data-scroll-link', val_);
+  $(more_link).removeClass('loading');
+  is_loading = false;
+  // console.log(jqxhr_); 
+  // console.log(textStatus_);
+};
+
+var onLoadSuccess = function()
+{
+  $(document).trigger("callbacks:reset");
+  last_load_at = new Date();
+};
+
+var onLinkClick = function(e) 
+{
+  e.preventDefault();
+  tryNextPage();
+}
+
+/* 
+  callbacks that respond to page elements that may be changed 
+*/
+var initPageCallbacks = function()
+{
+  $(more_link).find('a').on("click", onLinkClick);
 }
 
 /*
@@ -105,31 +109,25 @@ var scrollSet = function(val_)
 $(document).on("page:change", function()
 {
 	content = "[data-scroll-content]";          /* contains content destination (JQ obj) */
-	more_link = "[data-scroll-link]";			      /* contains link to "View More" (JQ obj)  */
+	more_link = "[data-scroll-url]";  		      /* contains link to "View More" (JQ obj)  */
   pixels = $(window).height() * 1.1;          /* pixels above the page's bottom */
 	min_ms = 500;					   			              /* milliseconds to wait between loading pages */
 
 	is_loading = false;   							        /* keep from loading two pages at once */
-  last_load_at = null;       						      /* when you loaded the last page */
-  	/* 
+  last_load_at = null;      						      /* when you loaded the last page */
+  	
+    /* 
   		failsafe in case the user gets to the bottom
   	 	without infinite scrolling taking affect.
   	 */
-     $(more_link).find('a').on("click",
-      function(e)
-      {
-        e.preventDefault();
-        tryNextPage();
-      }
-    );
 
     $(document).on("callbacks:reset",
       function()
       {
-
+        initPageCallbacks();
       }
     );
-    $(document).on("scroll:start", 
+    $(document).on("scroll:start",
       function()
       {
         if ( !nextPageExists() )
@@ -150,6 +148,6 @@ $(document).on("page:change", function()
       }
     );
   
-    
+    initPageCallbacks();
     $(document).trigger("scroll:start");
 });
