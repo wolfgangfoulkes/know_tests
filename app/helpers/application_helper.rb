@@ -312,14 +312,16 @@ module ApplicationHelper
 
 	def scroll_link(items)
 		is_max = (items.current_page >= items.total_pages)
-		url = (is_max) ? nil : url_for(page: items.current_page + 1)
+		html_url = (is_max) ? nil : url_for(pages: items.current_page + 1, per: items.arel.limit)
+		js_url = (is_max) ? nil : url_for(page: items.current_page + 1, per: items.arel.limit)
 		data = {
-			scroll_link: (is_max) ? "0" : "1",
+			scroll_url: (js_url.nil?) ? 0 : js_url,
 			current: items.current_page,
 			total: items.total_pages
 		}
+
 		_link = content_tag :div, data: data do
-			concat(link_to('...', url)) unless url.nil?
+			concat(link_to('...', html_url)) unless html_url.nil?
 		end
 		_link
 	end

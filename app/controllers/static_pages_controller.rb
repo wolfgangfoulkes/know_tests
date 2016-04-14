@@ -85,22 +85,19 @@ class StaticPagesController < ApplicationController
   private
 
     def set_events
-      @events = Event.where(nil)
-      params[:search_return] = nil
-
-      if params.include?(:search)
+      @events = Event.page(1)
+      if params[:search]
         @events = @events.search(params[:search])
-        params[:search_return] = params[:search]
       end
+      if params[:page]
+        @events = @events.page(params[:page])
+      end
+      if params[:pages]
+        @events = @events.page(params[:pages])
+      end
+    end
 
-      if params.include?(:page)
-        if request.format.html? 
-          @events = EventsHelper.pagi(@events, page: 1, total: params[:page].to_i)
-        elsif request.format.js?
-          @events = EventsHelper.pagi(@events, page: params[:page])
-        end
-      else
-        @events = EventsHelper.pagi(@events, page: 1)
-      end
+    def filtering_params
+      params.permit(:search, :page, :pages, :per)
     end
 end

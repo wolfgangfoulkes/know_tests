@@ -52,13 +52,32 @@ class Event < ActiveRecord::Base
 	after_destroy :remove_orphaned_tags
 #-----#
 
-#----- scopes ----- 
-	scope :deef, -> { order("starts_at ASC") }
-#-----#
+	# could be a presenter method
+	paginates_per 8
 
 	#----- INTERFACE METHODS
 	#- for the application's specific uses of the above class methods
 	#---
+	def self.deef
+		self.order("starts_at ASC")
+	end
+
+	def self.pagi(page: 1, per: 8, total: 1)
+		self.page(page.to_i).per(per.to_i * total.to_i)
+	end
+
+	def self.pages(pages=1, per: 8)
+		self.page(1).per(per.to_i * pages.to_i)
+	end
+
+	def self.to_append(events)
+		self.where.not(id: events.select(:id))
+	end
+
+	def self.to_remove(events)
+		events.where.not(id: self.select(:id))
+	end
+
 	def self.saved_for(user)
 		followees = Follow.where( follower: user, followable_type: "Event" ).select(:followable_id)
 		user_events = user.events.select(:id)
