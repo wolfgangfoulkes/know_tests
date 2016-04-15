@@ -283,6 +283,13 @@ module ApplicationHelper
 	end
 	# -----
 
+	# nearly identical to existing tabs with following usage:
+	# 	<%= tabbed({
+	# 		updates: { partial: "comments/list", locals: {comments: @event.owner_comments}	}, 
+	# 		questions: { partial: 'comments/list', locals: {comments: @event.list_comments} }
+	# 	}) %>
+	#
+
 	def tabbed(hash_, layout: "", classes: "")
 		tabs = capture do
 			hash_.keys.each_with_index do |key, i|
@@ -298,7 +305,7 @@ module ApplicationHelper
 				concat( 
 						content_tag :div, 
 						render(value),
-						data: sel_rcv( i, group: 0, state: (i == 0) ), 
+						data: sel_rcv( i, group: 0, state: (i == 0) ),
 						class: "col tabbed"
 					)
 			end

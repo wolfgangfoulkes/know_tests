@@ -53,29 +53,31 @@
 <div class="vmn"> </div>
 
 <section>
+
 	<div class="row tabs">
-		<%= content_tag :a, class: ["h2"], data: 
+		<%= content_tag :a, class: ["h1"], data: 
 			sel_snd(0, group: 0, state: true) do %>
-		Updates 
+		updates 
 		<% end %>
-		<%= content_tag :a, class: ["h2"], data:
+		<%= content_tag :a, class: ["h1"], data:
 			sel_snd(1, group: 0, state: false) do %>
-		Questions 
+		questions 
 		<% end %>
 	</div>
 
 	<%= content_tag :div,
-	class: ["col"],
+	class: ["col tabbed"],
 	data: sel_rcv(0, group: 0, state: true) do
 	%>
 		<%= render partial: 'comments/list', locals: {comments: @event.owner_comments} %>
 	<% end %>
 
 	<%= content_tag :div,
-	class: ["col"], 
+	class: ["col tabbed"],
 	data: sel_rcv(1, group: 0, state: false) do
 	%>
 
 		<%= render partial: 'comments/list', locals: {comments: @event.list_comments} %>
 	<% end %>
+
 <section/>

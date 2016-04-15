@@ -1,4 +1,10 @@
 <% comments = CommentsHelper.pagi(comments, page: params[:page]) %>
+<%= render partial: 'comments/form',
+	locals: 
+	{
+		comment: comments.build
+	} 
+%>
 <%= render partial: "layouts/paginate", 
 	locals: {
 		items: comments, target: comments.role,
@@ -11,9 +17,3 @@
 -%>
 	<%= render comments.deef %>
 <% end -%>
-<%= render partial: 'comments/form',
-	locals: 
-	{
-		comment: comments.build
-	} 
-%>

@@ -10,15 +10,17 @@ a function for sustaining color with changing opacity might be cool
 
 /* faded crimson, or crimson-orange, originally transparent */
 $crimsange: w_bl(rgb(100, 0, 0), 0.5);
-$trcrimsange: rgba(100, 0, 0, 0.5);
+$crimsange_a: rgba(100, 0, 0, 0.5);
 
-$softlitegrey: w_bl(rgb(25, 0, 0), 0.1);
-$trsoftlitegrey: rgba(25, 0, 0, 0.1);
+$softgrey_ll: w_bl(rgb(0, 0, 0), 0.06);
+$softgrey_ll_a: rgba(0, 0, 0, 0.06);
+
+$softgrey_ml: rgba(215, 215, 215, 1.0);
 
 /*
 ?temp? colors (for shame?)
 */
-$trcrimsrown: rgba(60, 0, 0, 0.6);
+$crimsrown_a: rgba(60, 0, 0, 0.6);
 /*
 */
 
@@ -55,10 +57,10 @@ svg[data-svgr="270"] {
 /* ----- NAV ----- */
 .nav-bar {
 	>[data-current="true"] {
-		color: $trcrimsange;
+		color: $crimsange_a;
 		
 		&.svg-link svg {
-			fill: $trcrimsange;
+			fill: $crimsange_a;
 		}
 	}
 }
@@ -126,21 +128,23 @@ $cmmt-content-opacity: 0.4;
 .tabs {
 	width: 100%;
 	justify-content: center;
+
 	> * {
-		padding: 8px 13px;
+		box-sizing: border-box;
+/*		width: 5.5em;*/
+		padding: 0.21em 0.34em;
 	}
 }
 
 .tabs >[data-sel="snd"] {
 	&[data-sel-state='true'] {
-		color: $trcrimsrown;
-		background-color: $trsoftlitegrey;
-		font-weight: normal;
+		color: $softgrey_ml; /*rgba(0, 0, 0, 0.8);*/
+		background-color: $softgrey_ll_a;
+		font-weight: 600;
 	}
 	&[data-sel-state='false'] {
-		color: $trsoftlitegrey;
-		border-right: 1px solid $trsoftlitegrey;
-		font-weight: lighter;
+		color: $softgrey_ll_a;
+		font-weight: 600;
 	}
 }
 
@@ -177,7 +181,7 @@ $pagi-nav-to-page-w: 50%;
 
 		.page.current
 		{
-			color: $trcrimsange;
+			color: $crimsange_a;
 		}
 	}
 
@@ -216,7 +220,7 @@ $pagi-nav-to-page-w: 50%;
 		.svg-link
 		{
 			border: 3px solid rgba(100, 0, 0, 0.0);
-			background: $trcrimsange;
+			background: $crimsange_a;
 			transform: rotate(180deg);
 			svg[data-svgid="arrow_3"]
 			{
@@ -240,7 +244,7 @@ $pagi-nav-to-page-w: 50%;
 	&[data-drop-state="true"] {
 		.svg-link
 		{
-			border: 3px solid $trcrimsange;
+			border: 3px solid $crimsange_a;
 			background: none;
 			transform: rotate(0deg);
 			position: relative;
@@ -267,7 +271,7 @@ $pagi-nav-to-page-w: 50%;
 {
 	.svg-link 
 	{
-		border: 3px solid $trcrimsange;
+		border: 3px solid $crimsange_a;
 		background: none;
 	}
 
@@ -298,7 +302,7 @@ $pagi-nav-to-page-w: 50%;
 /*
 .svg-link #svg-eye_1 {
 	position: relative;
-	fill: $trcrimsange;
+	fill: $crimsange_a;
 	
 	&[data-drop-state="false"] 
 	{
