@@ -20,7 +20,6 @@ class Comment < ActiveRecord::Base
   validates :user_id, presence: true
   validates :commentable_id, presence: true
   validates :role, presence: true
-  validates :title, presence: true, length: { maximum: 60 }
   validates :comment, presence: true, length: { maximum: 240 }
 
   # ----- keep this scope

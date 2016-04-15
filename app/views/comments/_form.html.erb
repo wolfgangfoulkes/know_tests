@@ -2,7 +2,6 @@
 <% if can? :create, comment %>
   <%= form_for [comment], remote: true do |f| %>
 
-    <%= f.text_field :title, class: "h4" %>
     <%= f.text_area :comment, rows: 8, class: "h4" %>
 
     <div class="actions h3">

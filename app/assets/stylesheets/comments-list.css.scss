@@ -75,10 +75,6 @@ form.new_comment input {
 	border: 1px solid black;
 }
 
-form.new_comment #comment_title {
-	width: $max_width * 1.0/3;
-}
-
 form.new_comment #comment_comment {
 	margin-top: $spacer_margin;
 	width: $max_width * 0.75;
