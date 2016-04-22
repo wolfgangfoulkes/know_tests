@@ -132,10 +132,13 @@ color ***/
 
 @function rgb2rgba($c, $a) {
 	$w: 255.0 * (1.0-$a);
+	$r: max( ( red($c) - $w  ), 0.0 );
+	$b: max( ( blue($c) - $w ), 0.0 );
+	$g: max( ( green($c) - $w), 0.0 );
 	@return rgba(
-		( red($c) - $w  ) / $a,
-		( blue($c) - $w ) / $a,
-		( green($c) - $w) / $a,
+		$r  / $a,
+		$b  / $a,
+		$g / $a,
 		$a
 	);
 }

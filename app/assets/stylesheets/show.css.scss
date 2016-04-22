@@ -1,9 +1,14 @@
-@mixin show_head($i_right, $i_top, $i_size) {
-	position: relative;
 
+
+@mixin show_head_layout($i_right, $i_top, $i_size) {
+	position: relative;
+	border-bottom: 1px solid $salmender;
 
 	> .img-main 
-	{ 
+	{
+		position: absolute;
+		z-index: -1;
+
 		right: $i_right;
 		top: $i_top;
 		width: $i_size;
@@ -31,7 +36,12 @@
 		width: 50%;
 		text-indent: 20%;
 		text-align: right;
-	}		
+		padding-left: 8px;
+		margin-right: auto;
+		margin-top: auto;
+	}
+
+	@content;
 }
 
 /***
@@ -67,28 +77,27 @@
 	border-radius: 50%;
 	object-fit: cover;
 	opacity: 0.8;
+	background: red !important;
 }
 /*
 *****/
 
 /***** HEAD  *****/
 .show.head.col {
-		border-bottom: 1px solid rgba(100, 0, 0, 0.1);
+		border-bottom: 1px solid $salmender;
 
 		position: relative;
 		width: 100%;
-		
 
+		/*
+			"top" of image is relative to the size of 
+			everything else in show.head
+			so, this size is determined inevitably
+			by the font and line spacing
+		*/
 		> .img-main { 
 			position: absolute;
 			z-index: -1;
-
-			/*
-				"top" of image is relative to the size of 
-				everything else in show.head
-				so, this size is determined inevitably
-				by the font and line spacing
-			*/
 			@include mq( 0, _bps(2)) {
 				right: 0;
 				top: 20%;
@@ -134,16 +143,18 @@
 		}
 
 		>.field.tags {
-			/*box-sizing: border-box;
-			padding-left: 8px;*/
+			box-sizing: border-box;
+			padding-left: 8px;
 			margin-right: auto;
 			margin-top: auto;
 
 			width: 50%;
 			text-indent: 20%;
 			text-align: right;
-		}		
+		}
 }
+
+
 
 
 /*-webkit-clip-path: circle($width * .75 at center);*/
