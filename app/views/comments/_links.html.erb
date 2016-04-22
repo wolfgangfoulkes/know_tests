@@ -1,0 +1,13 @@
+<% if can? :destroy, comment %>
+  <%= link_to 'delete', [comment, :refresh => comment.role ], method: :delete, remote: true, class: "h4" %>
+<% end %>
+
+<% if can?(:set_public, comment) %>
+  <% if comment.public == false %>
+    <%= link_to 'publish', set_public_comment_path(comment), method: :patch, remote: true, class: "h4" %>
+  <% elsif comment.public == true %>
+    <%= link_to 'hide', set_default_comment_path(comment), method: :patch, remote: true, class: "h4" %>
+  <% end %>
+  
+  <%= link_to 'reply', comment_path(comment),  class: "h4" %>
+<% end %>
