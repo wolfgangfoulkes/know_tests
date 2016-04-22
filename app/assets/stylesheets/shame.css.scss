@@ -61,16 +61,21 @@
 	.tabs {
 		* {
 			font-family: 'Avenir Next', sans-serif;
-			/*font-family: 'PT Sans', sans-serif;*/
-			font-weight: normal;
-			/*font-weight: bolder;*/
-			/*font-weight: lighter;*/
 		}
 	}
 
 	/* - COMMENTS - */
 	.comment-list.col {
 		font-family: 'PT Sans', sans-serif;
+	}
+
+	/* - COMMENTS FORM - */
+	form.new_comment {
+		input[type="submit"] {
+			font-family: "Avenir Next";
+			font-weight: 100;
+			color: rgba(180, 120, 120, 1.0);
+		}
 	}
 
 	/* - CALENDAR - */
