@@ -56,8 +56,6 @@ end
 def commentParams(e, i, kn_sc)
 	c = {}
 	c.clear
-	c[:title] = 						Faker::Hacker.say_something_smart.split(",").first
-	c[:title] = 						c[:title].slice(0, kn_sc[:c_tch])
 
 	b_len = rand(kn_sc[:c_bmn]..kn_sc[:c_bmx])
 	c[:comment] = 						Array.new( b_len ) 	{ Faker::Hacker.say_something_smart.split(",").first << " " }.inject{ |sum, x| sum << x}
