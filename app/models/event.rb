@@ -45,6 +45,7 @@ class Event < ActiveRecord::Base
 
 #----- could be a presenter method
 	paginates_per 8
+#-----#
 
 #----- callbacks -----
 	after_save :remove_orphaned_tags
