@@ -22,16 +22,18 @@ class Comment < ActiveRecord::Base
   validates :role, presence: true
   validates :comment, presence: true, length: { maximum: 240 }
 
-  # ----- keep this scope
+  # ----- could be class method
   scope :deef, -> { order("updated_at DESC", "created_at DESC") }
+  # ----- #
 
-  # ----- simplifies ajax
-
+  # ----- simplifies ajax? (unused?)
   scope :freshest_by_commentable, -> { order("created_at DESC", "commentable_id DESC") }
   scope :freshest_by_root, -> { order("created_at DESC", "root_id DESC") }
+  # ----- #
 
-  # ----
-  # -----
+  # ----- could be a presenter method
+    paginates_per 6
+  # ----- #
 
 # ----- life cycle
   after_create do

@@ -43,6 +43,9 @@ class Event < ActiveRecord::Base
 	validates :ends_at, date: { after: :starts_at } 
 #-----#
 
+#----- could be a presenter method
+	paginates_per 8
+
 #----- callbacks -----
 	after_save :remove_orphaned_tags
 	after_save(on: :update) do
@@ -51,9 +54,6 @@ class Event < ActiveRecord::Base
 	end
 	after_destroy :remove_orphaned_tags
 #-----#
-
-	# could be a presenter method
-	paginates_per 8
 
 #----- TAGS 
 	def self.tagged_with(name)

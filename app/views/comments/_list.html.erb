@@ -1,4 +1,4 @@
-<% comments = CommentsHelper.pagi(comments, page: params[:page]) %>
+<% comments = comments.page(params[:page]) %>
 <%= render partial: 'comments/form',
 	locals: 
 	{
