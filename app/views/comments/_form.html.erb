@@ -3,10 +3,7 @@
   <%= form_for [comment], remote: true do |f| %>
 
     <%= f.text_area :comment, rows: 8, class: "h4" %>
-
-    <div class="actions h3">
-      <%= f.submit %>
-    </div>
+    <%= f.submit(value: "add".upcase, class: "h3") %>
     
     <%= f.hidden_field :role %>
     <%= f.hidden_field :root_id %>
