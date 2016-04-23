@@ -373,6 +373,17 @@ module ApplicationHelper
 		end
 	end
 
+	def search_form(url_for, remote: true, placeholder: "search", submit_text: ">>", hidden_fields: {}, **args)
+			args[:remote] = remote
+			form_tag url_for(url_for), args do
+				hidden_fields.each do |k, v|
+					concat( hidden_field_tag(k, v) )
+				end
+				concat( text_field_tag :search, params[:search], placeholder: placeholder )
+				concat( submit_tag submit_text )
+			end
+	end
+
 
 
 	# ----- FROM SOMEWHERE ONLINE:

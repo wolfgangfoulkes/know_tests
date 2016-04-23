@@ -52,37 +52,65 @@ module Filterable
       # end
 
       def starts_after_(q)
-        self.arel_table[:starts_at].gt(q)
+        self.arel_table[:starts_at].gteq(q)
       end
       def starts_after(q)
         self.where(self.starts_after_(q))
       end
 
       def self.starts_after_(q)
-        self.arel_table[:starts_at].gt(q)
+        self.arel_table[:starts_at].gteq(q)
       end
       def self.starts_after(q)
         self.where(self.starts_after_(q))
       end
 
+      def starts_before_(q)
+        self.arel_table[:starts_at].lt(q)
+      end
+      def starts_before(q)
+        self.where(self.starts_before_(q))
+      end
+
+      def self.starts_before_(q)
+        self.arel_table[:starts_at].lt(q)
+      end
+      def self.starts_before(q)
+        self.where(self.starts_before_(q))
+      end
+
       module ClassMethods
           def starts_after_(q)
-            self.arel_table[:starts_at].gt(q)
+            self.arel_table[:starts_at].gteq(q)
           end
           def starts_after(q)
             self.where(self.starts_after_(q))
           end
 
           def self.starts_after_(q)
-            self.arel_table[:starts_at].gt(q)
+            self.arel_table[:starts_at].gteq(q)
           end
           def self.starts_after(q)
             self.where(self.starts_after_(q))
           end
+
+          def starts_before_(q)
+            self.arel_table[:starts_at].lt(q)
+          end
+          def starts_before(q)
+            self.where(self.starts_before_(q))
+          end
+
+          def self.starts_before_(q)
+            self.arel_table[:starts_at].lt(q)
+          end
+          def self.starts_before(q)
+            self.where(self.starts_before_(q))
+          end
         
           def starts_between_(l, h)
             tbl = self.arel_table
-            ll = tbl[:starts_at].gt(l)
+            ll = tbl[:starts_at].gteq(l)
             hh = tbl[:starts_at].lt(h)
             ss.and(hh)
           end
@@ -96,7 +124,7 @@ module Filterable
 
           def ends_in_(l, h)
             tbl = Event.arel_table
-            ll = tbl[:ends_at].gt(l)
+            ll = tbl[:ends_at].gteq(l)
             hh = tbl[:ends_at].lt(h)
             ss.and(hh)
           end
@@ -116,7 +144,7 @@ module Filterable
 
           def time_contains_(q)
             tbl = self.arel_table
-            sa = tbl[:starts_at].lteq(q)
+            sa = tbl[:starts_at].lt(q)
             ea = tbl[:ends_at].gteq(q)
             sa.and(ea)
           end
