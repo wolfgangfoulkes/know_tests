@@ -366,7 +366,7 @@ module ApplicationHelper
 		_path = dir + "/" + name + ".svg"
 		_class = "svg-" + name
 
-		args[:data] = data.merge( {svg_icon: name} ) #should use this for style selector
+		args[:data] = data.merge( {svg_link: name} ) #should use this for style selector
 
 		link_selpage page, args do
 			inline_svg _path, class: _class

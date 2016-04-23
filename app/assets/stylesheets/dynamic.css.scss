@@ -65,6 +65,16 @@ svg[data-svgr="270"] {
 	}
 }
 
+.nav-bar {
+	> [data-state="true"] {
+		color: $crimsange_a;
+		
+		&.svg-link svg {
+			fill: $crimsange_a;
+		}
+	}
+}
+
 /* ----- COMMENTS LIST ----- */
 /* 
 --- COLOR CODING

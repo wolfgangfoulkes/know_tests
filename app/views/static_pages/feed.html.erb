@@ -1,6 +1,11 @@
 <div id="bar-b" class="nav-bar row h2">
-	<%= link_to 'explore', feed_path, class: 'item' %> | 
-	<%= link_to 'my schedule', saved_path, class: 'item' %>
+	<%= link_selpage feed_path, class: 'item' do %> 
+		explore
+	<% end %>
+	|
+	<%= link_selpage saved_path, class: 'item' do %> 
+		my schedule
+	<% end %>
 </div>
 
 <%= render 'events/feed' %>
