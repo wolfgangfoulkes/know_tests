@@ -11,5 +11,5 @@
 <div class="vmn"> </div>
 
 <section class="col">
-	<%= render 'events/feed' %>
+	<%= render 'events/feed', locals: { events: @user.events } %>
 </section>

@@ -1,6 +1,7 @@
 
 <div class="vmn"></div>
-<%= render partial: "events/feed", locals: {events: @tag.events} %>
+<% @events = @tag.events %>
+<%= render partial: "events/feed" %>
 <div class="nav-bar row" id="bar-b" style="justify-content: flex-end; height: 1.35vh; padding-right: 1vh; background: rgba(0, 0, 0, 0.9); overflow: hidden; border: 1vh solid rgba(255, 238, 238, 1.0);">
 	<div class="br"></div>
 	<div class="h2 tags" style="font-weight: 900; color: rgba(255, 235, 235, 1.0);"> <%= "@#{@tag.name}" %> </div>

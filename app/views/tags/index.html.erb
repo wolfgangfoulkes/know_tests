@@ -1,2 +1,10 @@
-<div class="h2 tags"> @tag.name </div>
-<%= render partial: "events/event", collection: @tag.events %>
+<% @tags.each do |tag| %>
+	<div class="row" style="width: 100%;">
+		<div class="h3"> <%= tag.name %> </div>
+		<div class="br"></div>
+		<% tag.events.each do |event| %>
+			<%= link_to "[" + truncate(event.name, length: 10) + "]", event, class: "h5" %>
+		<% end %>
+	</div>
+	<br/>
+<% end %>

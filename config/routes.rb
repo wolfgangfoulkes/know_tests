@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   #post ':controller(/filtered)', action: 'filtered'
   
-  resources :tags, :only => [:show, :create, :destroy]
+  resources :tags, :only => [:show, :create, :destroy, :index]
 
   # ----- schedule
 

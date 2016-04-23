@@ -1,6 +1,16 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :destroy]
 
+  def index
+    @tags = Tag.all
+    
+    if params[:search]
+      @tags = @tags.search(params[:search])
+    end
+
+    @tags
+  end
+
   def show
   end
 
