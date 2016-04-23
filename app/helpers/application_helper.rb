@@ -340,6 +340,41 @@ module ApplicationHelper
 		javascript_include_tag 'application', ( filename_c if javascript_exists?(filename_c) ), ( filename_a if javascript_exists?(filename_a) ), 'data-turbolinks-track' => true
 	end
 
+
+	# page input will match any of
+	# => url / uri
+	# => controller
+	# => action
+	# => query params
+	# e.g. current_page?(controller: 'shop', action: 'checkout', order: 'asc')
+	#
+	# bc args catches undeclared args, then args that are listed don't need nil checks
+	def link_selpage(page, data:{}, **args, &block)
+		_data = {
+				#page: page,
+				state: current_page?(page)
+			}
+		args[:data] = _data.merge(data)
+
+		_link = link_to url_for(page), args do
+			capture(&block) if block_given?
+		end
+	end
+
+	
+	def svg_link(page, name:"", dir: "svg/icons", data: {}, **args)
+		_path = dir + "/" + name + ".svg"
+		_class = "svg-" + name
+
+		args[:data] = data.merge( {svg_icon: name} ) #should use this for style selector
+
+		link_selpage page, args do
+			inline_svg _path, class: _class
+		end
+	end
+
+
+
 	# ----- FROM SOMEWHERE ONLINE:
 	# || I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 

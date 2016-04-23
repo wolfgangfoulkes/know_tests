@@ -35,6 +35,12 @@ var selGroup = function(sender_, e_, callback_)
 }
 
 /*
+	I DON'T KNOW WHAT FOLLOWING SEZ, BUT THIS SHOULD BE DONE WITH A DATA PARAMETER
+	SET BY RUBY IN THE VIEW!
+
+	E.G. when calling the method that generates the link, set the data-state (here, data-current) param based on
+	checking url against current page. I THINK THERE IS ACTUALLY A CURRENT_PAGE? method
+
 	future, you'd do this more accurately with an arbitrary helper method
 	like current_link("url with *"), then checks against request object 
 	using arbitrary Regexp pattern

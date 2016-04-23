@@ -19,45 +19,15 @@
 <div id="bar-t" class="nav-bar row">
 <% if user_signed_in? %>
 	<div class="br"> </div>
-	<a 	href="<%= new_event_path %>"
-		class="item svg-link" >
-		<%= inline_svg 'svg/icons/plus.svg', 
-			class: "svg-plus" 
-		%>
-	</a>
-	<a 	href="<%= root_path %>"
-		class="item svg-link" >
-		<%= inline_svg 'svg/icons/home.svg',
-			class: "svg-home" 
-		%>
-	</a>
-	<a 	href="<%= schedule_path %>"
-		class="item svg-link" >
-		<%= inline_svg 'svg/icons/calendar.svg',
-			class: "svg-calendar"
-		%>
-	</a>
-	<a 	href="<%= activities_path %>"
-		class="item svg-link" >
-		<%= inline_svg 'svg/icons/alert.svg',
-			class: "svg-alert"
-		%>
-	</a>
-	<a 	href="<%= user_path(current_user.id) %>"
-		class="item svg-link" >
-		<%= inline_svg 'svg/icons/user.svg',
-			class: "svg-user"
-		%>
-	</a>
-	<%= content_tag :a, 
-	href: destroy_user_session_path, 
-	data: { method: :delete },  
-	class: "item svg-link", 
-	rel: "nofollow" do %>
-		<%= inline_svg 'svg/icons/logout.svg',
-			class: "svg-logout"
-		%>
-	<% end %>
+	<%= svg_link new_event_path, 				name: "plus", 	  dir: "svg/icons", class: "item svg-link" %>
+	<%= svg_link root_path, 	 				name: "home", 	  dir: "svg/icons", class: "item svg-link" %>
+	<%= svg_link schedule_path,  				name: "calendar", dir: "svg/icons", class: "item svg-link" %>
+	<%= svg_link activities_path, 				name: "alert", 	  dir: "svg/icons", class: "item svg-link" %>
+	<%= svg_link user_path(current_user.id), 	name: "user", 	  dir: "svg/icons", class: "item svg-link" %>
+	<%= svg_link destroy_user_session_path, 	name: "logout",   dir: "svg/icons", class: "item svg-link",
+		data: { method: :delete }, 
+		rel: "nofollow"
+	%>
 <% else %>
 <% end %>
 </div>
