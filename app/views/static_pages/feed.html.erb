@@ -8,6 +8,6 @@
 	<% end %>
 </div>
 
-<%= render 'events/feed', locals: {events: @events} %>
+<%= render 'events/feed' %>
 
-<%= render partial: "shared/scroll", locals: {items: @events} %>
+<%= render partial: 'shared/scroll', locals: {items: @events} %>

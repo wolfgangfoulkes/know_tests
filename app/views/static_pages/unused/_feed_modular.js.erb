@@ -1,0 +1,15 @@
+/*
+	if you wanted to break this into two:
+	1. separate scroll partial from js
+	2. reload entire scroll partial for search
+	3. js checks the on/off parameter set by loading the partial
+*/
+<% if params[:search] %>
+	$('[data-scroll-content]').html("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.take.class.name.downcase.to_sym) %>");
+<% elsif params[:page] %>
+	$('[data-scroll-content]').append("<%= j render(partial: item_partial, collection: items, format: 'html', as: items.take.class.name.downcase.to_sym) %>");
+<% end %>
+
+$('[data-scroll-url]').replaceWith("<%= j scroll_link(items) %>");
+
+$(document).trigger("callbacks:reset");

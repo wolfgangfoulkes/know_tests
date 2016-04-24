@@ -46,9 +46,13 @@
 /* ----- */
 
 /* ----- LAYOUT ----- */
+* {
+	box-sizing: border-box;
+}
 
 /* section should be the invisible container */
 section {
+/*	position: relative;*/
 	width: 100%;
 }
 
@@ -71,6 +75,15 @@ section {
 	
 	@include mq(0, _bps(2)) {
 		padding: $nav-bar-h $margins-rl*0.25;
+	}
+
+	.page-end {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding-bottom: inherit;
+		box-sizing: inherit;
 	}
 }
 /* ----- */

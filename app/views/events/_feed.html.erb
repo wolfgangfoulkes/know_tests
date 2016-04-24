@@ -1,6 +1,4 @@
-<%= form_tag url_for(controller: controller.controller_name, action: controller.action_name), remote: true, class: 'events search row h2' do %>
-	<%= hidden_field_tag :query, @events.to_sql %>
-	<%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
+<%= form_tag url_for(controller: controller.controller_name, action: controller.action_name), remote: true, class: 'search row h2' do %>
 	<%= text_field_tag :search, params[:search], placeholder: 'search' %>
 	<%= submit_tag '>>' %>
 <% end %>

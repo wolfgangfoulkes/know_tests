@@ -2,4 +2,6 @@
 	<%= javascript_include_tag "conditional/infinite_scroll" %>
 <% end %>
 
-<%= scroll_link(items) %>
+<% content_for :page_end do %>
+	<%= scroll_link(items) %>
+<% end %>

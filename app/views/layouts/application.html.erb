@@ -32,9 +32,6 @@
 <% end %>
 </div>
 
-
-
-
 <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
@@ -48,6 +45,9 @@
 <div class="know-page">
 	<div class="vmn"> </div>
 	<%= yield %>
+	<div class="page-end"> 
+		<%= content_for :page_end %>
+	</div>
 </div>
 
 </body>

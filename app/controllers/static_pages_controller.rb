@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
       format.html { 
           render "static_pages/feed" 
       }
-      format.js { 
+      format.js {
           render "static_pages/_feed.js.erb", 
           locals: 
           {
@@ -79,7 +79,6 @@ class StaticPagesController < ApplicationController
           }
       }
     end
-
   end
 
   private
