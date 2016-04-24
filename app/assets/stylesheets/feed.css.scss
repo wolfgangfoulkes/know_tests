@@ -41,7 +41,7 @@ $fitem_s: 64px;
 {
 	/*object-fit: cover;*/
 	border-radius: 50%;
-	box-sizing: border-box;
+	
 	flex-shrink: 0;
 }
 
@@ -60,7 +60,7 @@ $fitem_s: 64px;
 	> .col
 	{
 		justify-content: center;
-		box-sizing: border-box;
+		
 		> .br 
 		{
 		}

@@ -43,7 +43,7 @@ $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 {
 	/*object-fit: cover;*/
 	border-radius: 50%;
-	box-sizing: border-box;
+	
 	flex-shrink: 0;
 }
 
@@ -67,7 +67,7 @@ $past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
 	> .col
 	{
 		justify-content: center;
-		box-sizing: border-box;
+		
 		> .br 
 		{
 		}

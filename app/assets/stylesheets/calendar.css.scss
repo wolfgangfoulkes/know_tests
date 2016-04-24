@@ -372,7 +372,7 @@ $fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 #calendar .know-fcevent 
 {
 	overflow: hidden;
-	box-sizing: border-box;
+	
 
 	.fc-content 
 	{
@@ -436,7 +436,7 @@ $fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 /* change these colors maybe */
 #calendar[data-fc-view="agendaDay"] .know-fcevent
 {
-	box-sizing: border-box;
+	
 	height: auto;
 	font-size: 1.25em; /* THIS SHOULD BE A LOT SMALLER */
 	line-height: 1.2;
@@ -624,7 +624,7 @@ $fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 			flex-grow: 0;
 			flex-shrink: 0;
 
-			box-sizing: border-box;
+			
 
 			font-size: 0.65em;
 			white-space: nowrap;
@@ -633,7 +633,7 @@ $fc-agenda-hmin: 3.45em; /* 3em = 83.6875px */
 		{
 			flex-grow: 1;
 
-			box-sizing: border-box;
+			
 			margin-left: 3px;
 
 			font-size: 0.65em;

@@ -5,7 +5,7 @@
 */
 
 /** {
-	box-sizing: border-box;
+	
 }*/
 
 $spacer_h: 0.5em;
@@ -69,7 +69,7 @@ width: 100%;*/
 		margin-top: $spacer_h;
 	}
 	#comment_comment {
-		box-sizing: border-box;
+		
 		width: 100%;
 	}
 	input[type="submit"] {
@@ -84,13 +84,13 @@ width: 100%;*/
 /*margin: 0 0;*/
 
 	width: $max-width;
-	box-sizing: border-box; /*all?*/
+	 /*all?*/
 	margin: 0 $cmtl_ml;
 	justify-content: space-between;
 
 	> * {
 		flex-grow: 1;
-		box-sizing: border-box;
+		
 		/*padding: 0.21em 0.34em;*/
 		@include button_dim(0.6em);
 		text-align: center;
@@ -107,7 +107,7 @@ width: 100%;*/
 		align-items: flex-start;
 		align-content: center;
 
-		box-sizing: border-box;
+		
 
 		text-align: left;
 
@@ -125,7 +125,7 @@ width: 100%;*/
 form.new_comment {
 	display: inline-flex;
 	flex-direction: column;
-	box-sizing: border-box;
+	
 
 	> * {
 	}
