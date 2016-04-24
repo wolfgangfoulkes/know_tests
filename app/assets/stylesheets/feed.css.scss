@@ -1,6 +1,3 @@
-$search-border-color: rgba(10, 0, 0, 0.08);
-$search-button-color: rgba(10, 0, 0, 0.8);
-
 $activity_list_offs_v: 3px;
 $activity_list_offs_h: -6px;
 
@@ -97,33 +94,6 @@ $fitem_s: 64px;
 		}
 	}
 }
-
-/* ----- SEARCH ----- */
-.search.row {
-	width: 100%;
-/*	font-size: 36px;*/
-	height: 1.875em;
-}
-
-.search.row input
-{
-	font-size: inherit;
-}
-
-.search.row input[type="text"]
-{
-	flex-grow: 1;
-	border-bottom: 1px solid $search-border-color;
-}
-
-.search.row input[type="submit"]
-{
-	width: 5em;
-	border: 1px solid $search-border-color;
-	color: $search-button-color;
-}
-/* ----- */
-
 
 /* ----- ACTIVITIES ----- */
 @mixin activity_list($box, $offs_v, $offs_h)
