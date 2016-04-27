@@ -49,7 +49,7 @@ class StaticPagesController < ApplicationController
           render "static_pages/_feed.js.erb",  
           locals: 
           {
-              item_partial: "static_pages/activity_toggle",
+              item_partial: "activities/list_short",
               items: @events
           }
       }
@@ -57,21 +57,13 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def activity_list
+  def activity_detail
     event = Event.find(params[:id])
     activities = PublicActivity::Activity.where(owner: event ).order("created_at DESC")
 
     respond_to do |format|
-      format.html { 
-          render "static_pages/activity_list",
-          locals:
-          {
-              event: event,
-              activities: activities
-          } 
-      }
       format.js { 
-          render partial: "static_pages/activity_list",
+          render partial: "activities/detail",
           locals: 
           {
               event: event,

@@ -1,0 +1,10 @@
+<%= form_tag "", remote: true, 
+	class: 'activity search row h2' do %>
+  <%= text_field_tag :search, params[:search], placeholder: "" %>
+  <%= submit_tag '' %>
+<% end %>
+
+<div class="activities feed col" data-scroll-content="1" data-search-target="1">
+		<%= render partial: 'static_pages/list_detail',
+		object: @event, as: :event %>
+</div>

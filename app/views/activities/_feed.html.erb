@@ -1,0 +1,11 @@
+<%= form_tag url_for(controller: controller.controller_name, action: controller.action_name), remote: true, 
+	class: 'activity search row h2' do %>
+  <%= hidden_field_tag :items, @events.unscope(:limit).pluck(:id).join(',') %>
+  <%= text_field_tag :search, params[:search], placeholder: "search" %>
+  <%= submit_tag '>>' %>
+<% end %>
+
+<div class="activities feed col" data-scroll-content="1" data-search-target="1">
+		<%= render partial: 'activities/list_short',
+		collection: @events, as: :event %>
+</div>

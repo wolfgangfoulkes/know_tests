@@ -50,6 +50,19 @@ var setCallbacks = function()
 		dropToggle(this, e);
 	})
 
+	$(document).on("toggle:start",
+      function()
+      {
+        
+      }
+    );
+    $(document).on("toggle:stop", 
+      function()
+      {
+        
+      }
+    );
+
 }
 
 $(document).on("page:change", function()

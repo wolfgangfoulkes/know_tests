@@ -1,9 +1,7 @@
-<%= render_activities(activities, layout: :activity) %>
-
 <% if (activities.total_count > activities.count) %>
 <%= 	link_to "#{activities.total_count - activities.count} more...", 
 		remote: true,
 		controller: "static_pages", 
-		action: "activity_list", 
+		action: "activity_detail", 
 		id: activities.first.owner_id  	%>
 <% end %>

@@ -1,0 +1,9 @@
+<%= render partial: 'events/event', 
+	locals: 
+	{ 
+		event: event,
+		svg_thn: 'svg/test/arrow_3.svg',
+		link: false,
+		data: drop_snd(event.id).merge({id: event.id})
+	} 
+%>

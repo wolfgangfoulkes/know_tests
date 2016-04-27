@@ -385,8 +385,6 @@ module ApplicationHelper
 		end
 	end
 
-
-
 	# ----- FROM SOMEWHERE ONLINE:
 	# || I've been in this hole too. Here's my solution. Drop this code in your ApplicationHelper:
 

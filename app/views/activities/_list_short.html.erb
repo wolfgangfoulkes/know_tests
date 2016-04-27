@@ -1,0 +1,11 @@
+<%= render partial: 'activities/event_short', locals: {event: event} %>
+<%= 
+content_tag :div,
+class: "activity-list col h4", 
+data: drop_rcv(event.id) do
+%>
+	<% activities = ActivitiesHelper.pagi(event.activities) %>
+
+  	<%= render_activities(activities, layout: :activity) %>
+  	<%= render partial: "activities/more_link", locals: {activities: activities} %>
+<% end %>

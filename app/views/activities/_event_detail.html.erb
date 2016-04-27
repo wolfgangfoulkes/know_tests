@@ -7,11 +7,3 @@
 		data: { detail: true } 
 	} 
 %>
-
-<%= 
-content_tag :div,
-class: "activity-list col h4", 
-data: {} do
-%>
-  <%= render_activities(activities, layout: :activity) %>
-<% end %>

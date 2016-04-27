@@ -1,0 +1,9 @@
+<%= render partial: 'activities/event_detail', locals: {event: event} %>
+
+<%= 
+content_tag :div,
+class: "activity-list col h4", 
+data: {} do
+%>
+  <%= render_activities(activities, layout: :activity) %>
+<% end %>

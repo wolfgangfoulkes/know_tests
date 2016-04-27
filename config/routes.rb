@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   match '/feed',       controller: 'static_pages', action: 'feed',        via: [:get, :post], as: 'feed'
   match '/saved',      controller: 'static_pages', action: 'saved',       via: [:get, :post], as: 'saved'
   match '/activities', controller: 'static_pages', action: 'activities',  via: [:get, :post], as: 'activities'
-  get '/activities/event/:id', to: 'static_pages#activity_list'
+  get '/activities/event/:id', to: 'static_pages#activity_detail'
   
   root 'static_pages#feed'
   # -----
