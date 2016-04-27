@@ -239,6 +239,39 @@ module ApplicationHelper
 		return _locals
 	end
 
+	def options(locals: {}, default: {})
+		_hash = default.dup
+		_hash.each do |k, v| 
+			_hash[k] = locals[k] if (locals.has_key?(k) & !locals[k].nil?) 
+		end
+		_hash
+	end
+
+	def options2(locals: {}, default: {})
+		_hash = default.dup
+		_hash.each do |k, v| 
+			_hash[k] = combine(locals[k], _hash[k]) if (locals.has_key?(k) & !locals[k].nil? & _hash.has_key?(k)) 
+		end
+		_hash
+	end
+
+	def combine(one, two)
+		return nil if one.class != two.class
+		if one.kind_of?(Hash) 
+			one.merge(two)
+		elsif one.kind_of?(Array) 
+			one + two
+		elsif one.kind_of?(String) 
+			one + two
+		else 
+			return nil
+		end
+	end
+
+	def html_options(locals: {}, default: {})
+		_hash = {class: [], data: {}, id: ""}
+		options2(locals: locals, default: _hash)
+	end
 	
 	# - get data, classes, merge with second param if you gotta reason
 	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
