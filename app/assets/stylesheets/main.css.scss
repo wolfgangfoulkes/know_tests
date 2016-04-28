@@ -6,6 +6,10 @@
 @import "pre/utilities.css.scss";
 @import "pre/sass-list-maps.css.scss";
 
+/* -------- sass-list-maps
+https://github.com/lunelson/sass-list-maps
+----------- */
+
 /* ----- VARS ----- */
 
 /* --- COLORS --- */
@@ -19,6 +23,10 @@ $nav-icon-size: 40px;
 /* --- LAYOUT --- */
 $margins-rl: 48px;
 $vmn: 48px;
+/*
+$vmn1: $vmn * 0.88888;
+$vmn2: $vmn * $gm;
+*/
 $nav-bar-h: 80px; 	/* formerly 96, then 72. */
 					/* 72 might be the best choice */
 					/* with smallest icon 27.5 */

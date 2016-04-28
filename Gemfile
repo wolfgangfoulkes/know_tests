@@ -86,3 +86,10 @@ gem 'faker'
 
 # admins! be careful with updates
 gem 'activeadmin', '~> 1.0.0.pre2'
+
+# a lovely patch for sass map functionality. 
+# maps are ?fucked-somehow/not-implemented-yet? 
+# in rails' version of libsass, 
+# and also-fucked is updating to a newer libsass in rails.
+# O!C!D! made me type allathat ^^^
+gem 'sass-list-maps'
