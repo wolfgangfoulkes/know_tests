@@ -217,18 +217,25 @@ module ApplicationHelper
 	# - 	-	-	-	-	-	-	-	-	-	-	-	-	-	-	- USED
 	# - 	-	- 	-	-	-	-	-	-	-	-	-
 	# - 	-	- 	-	-	-
-	def get_local(locals: {}, key: "", alt: false  ) 
-		_local = alt
-		if locals.has_key?(key.to_sym)
-			_local = locals[key.to_sym]
-		elsif locals.has_key?(key.to_s)
-			_local = locals[key.to_s]
-		end
 
-		return _local 
+	def skey(hash, key)
+		hash.symbolize_keys[key.to_sym]
+		#to_options is an alias for symbolize_keys
 	end
 
-	
+	def skey?(hash, key)
+		has_skey?(hash, key)
+	end
+
+	def has_skey?(hash, key)
+		hash.symbolize_keys.key?(key.to_sym)
+	end
+
+	def get_local(locals: {}, key: "", alt: false  ) 
+		
+		_local = skey(locals, key) || alt
+		return _local 
+	end
 
 	# - params: {key1: key1deef, key2...}
 	def get_locals(locals: {}, params: {})
@@ -239,18 +246,18 @@ module ApplicationHelper
 		return _locals
 	end
 
-	def options(locals: {}, default: {})
-		_hash = default.dup
+	def options_or(locals: {}, **args)
+		_hash = args.deep_dup
 		_hash.each do |k, v| 
-			_hash[k] = locals[k] if (locals.has_key?(k) & !locals[k].nil?) 
+			_hash[k] = locals[k] if !skey(locals, k).nil? #present and non-nil! accepts false unlike: if skey...
 		end
 		_hash
 	end
 
-	def options2(locals: {}, default: {})
-		_hash = default.dup
+	def options_and(locals: {}, **args)
+		_hash = args.deep_dup
 		_hash.each do |k, v| 
-			_hash[k] = combine(locals[k], _hash[k]) if (locals.has_key?(k) & !locals[k].nil? & _hash.has_key?(k)) 
+			_hash[k] = combine(locals[k], _hash[k]) if (!skey(locals, k).nil? & has_skey?(_hash, k))
 		end
 		_hash
 	end
@@ -262,15 +269,15 @@ module ApplicationHelper
 		elsif one.kind_of?(Array) 
 			one + two
 		elsif one.kind_of?(String) 
-			one + two
+			[one, two].join(" ")
 		else 
 			return nil
 		end
 	end
 
-	def html_options(locals: {}, default: {})
-		_hash = {class: [], data: {}, id: ""}
-		options2(locals: locals, default: _hash)
+	def html_options(locals: {}, **args)
+		hash = { class: [], data: {}, id: "", href: "" }
+		options_and(locals: locals, **hash.merge(args))
 	end
 	
 	# - get data, classes, merge with second param if you gotta reason
