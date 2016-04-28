@@ -58,7 +58,7 @@ class Event < ActiveRecord::Base
 
 #----- TAGS 
 	def self.tagged_with(name)
-		Tag.find_by_name!(name).entries
+		self.where(id: Tag.where(name: name).select("event_id"))
 	end
 
 	def self.tag_matches(name)
