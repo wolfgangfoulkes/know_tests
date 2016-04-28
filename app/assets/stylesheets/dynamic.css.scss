@@ -1,31 +1,3 @@
-/* 
-don't "round" colors for no reason
-we are recording the colors so we can identify common themes and riff on them
-not reduce variations on a shade
-
-though if a color is really irrelevant, don't record it, just make a var based on the property for now.
-
-a function for sustaining color with changing opacity might be cool
-*/
-
-/* faded crimson, or crimson-orange, originally transparent */
-$crimsange: w_bl(rgb(100, 0, 0), 0.5);
-$crimsange_a: rgba(100, 0, 0, 0.5);
-
-$softgrey_ll: w_bl(rgb(0, 0, 0), 0.06);
-$softgrey_ll_a: rgba(0, 0, 0, 0.06);
-
-$softgrey_ml: rgba(215, 215, 215, 1.0);
-
-/*
-?temp? colors (for shame?)
-*/
-$crimsrown_a: rgba(60, 0, 0, 0.6);
-/*
-*/
-
-$past-event-color: rgba(100, 0, 0, 0.1); /* change this prolly */
-
 .hidden 
 {
 	display: none !important;
@@ -80,11 +52,6 @@ svg[data-svgr="270"] {
 --- COLOR CODING
 */
 
-$cmmt-dark: rgba(0, 0, 0, 1.0);
-$cmmt-lite: rgba(0, 0, 0, 0.35);
-$cmmt-mred: rgba(230, 100, 100, 0.35);
-$cmmt-content-opacity: 0.4;
-
 .comment-list.col .item 
 {
 	.username {
@@ -126,11 +93,11 @@ $cmmt-content-opacity: 0.4;
 		};
 	}
 
-	&[data-fresh=true] {
+	&[data-fresh="true"] {
 		color: $cmmt-dark;
 
 	}
-	&[data-fresh=false] {
+	&[data-fresh="false"] {
 		color: $cmmt-lite;
 	}
 
@@ -169,11 +136,9 @@ $cmmt-content-opacity: 0.4;
 }
 
 .tabs {
-	border-bottom: 2px solid $softgrey_ll_a;
 }
 
 .tabs >[data-sel="snd"] {
-	
 	&[data-sel-state='true'] {
 		/*color: $softgrey_ml;*/ /*rgba(0, 0, 0, 0.8);*/
 		color: white;
@@ -230,7 +195,7 @@ $pagi-nav-to-page-w: 50%;
 }
 /* ---------- */
 
-.feed.col > .item.row.past 
+.feed.col > .item.row[data-past="true"]
 {
 	color: $past-event-color;
 }
@@ -352,6 +317,14 @@ $pagi-nav-to-page-w: 50%;
 }
 */
 /* ---------- */
+[data-drop="rcv"][data-drop-state="false"]
+{
+	display: none;
+}
+[data-drop="rcv"][data-drop-state="true"]
+{
+}
+
 
 /* ----- INFINITE SCROLL ----- */
 [data-scroll-link="1"]

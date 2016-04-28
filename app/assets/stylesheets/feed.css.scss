@@ -9,7 +9,6 @@ $fitem_s: 64px;
 /* --- RESPONSIVE SIZES --- */
 @mixin feed($box, $pad_v, $pad_h, $mar_h)
 {
-	
 		padding: $box * $pad_v $box * $pad_h;
 		> *
 		{
@@ -22,9 +21,6 @@ $fitem_s: 64px;
 		}
 		> .col
 		{
-			/* HEY so this seems to be irrelevant, if you remove the .br items from the container
-			might be a relic from earlier iterations */
-			padding: 2.7% 0; /* vertical padding is relative to width, remember */
 		}
 
 		@content;
