@@ -26,11 +26,19 @@ module Filterable
       end
 
       def past?
-        self.starts_at < DateTime.now
+        self.ends_at < DateTime.now
+      end
+
+      def ongoing?
+        self.time_contains?(DateTime.now)
       end
 
       def upcoming?
         self.starts_at > DateTime.now
+      end
+
+      def not_past?
+        self.ends_at > DateTime.now
       end
 
       # examples
@@ -65,6 +73,20 @@ module Filterable
         self.where(self.starts_after_(q))
       end
 
+      def ends_after_(q)
+        self.arel_table[:ends_at].gteq(q)
+      end
+      def ends_after(q)
+        self.where(self.ends_after_(q))
+      end
+
+      def self.ends_after_(q)
+        self.arel_table[:ends_at].gteq(q)
+      end
+      def self.ends_after(q)
+        self.where(self.ends_after_(q))
+      end
+
       def starts_before_(q)
         self.arel_table[:starts_at].lt(q)
       end
@@ -77,6 +99,20 @@ module Filterable
       end
       def self.starts_before(q)
         self.where(self.starts_before_(q))
+      end
+
+      def ends_before_(q)
+        self.arel_table[:ends_at].lt(q)
+      end
+      def ends_before(q)
+        self.where(self.ends_before_(q))
+      end
+
+      def self.ends_before_(q)
+        self.arel_table[:ends_at].lt(q)
+      end
+      def self.ends_before(q)
+        self.where(self.ends_before_(q))
       end
 
       module ClassMethods
@@ -94,6 +130,7 @@ module Filterable
             self.where(self.starts_after_(q))
           end
 
+
           def starts_before_(q)
             self.arel_table[:starts_at].lt(q)
           end
@@ -106,6 +143,35 @@ module Filterable
           end
           def self.starts_before(q)
             self.where(self.starts_before_(q))
+          end
+
+          def ends_after_(q)
+            self.arel_table[:ends_at].gteq(q)
+          end
+          def ends_after(q)
+            self.where(self.ends_after_(q))
+          end
+
+          def self.ends_after_(q)
+            self.arel_table[:ends_at].gteq(q)
+          end
+          def self.ends_after(q)
+            self.where(self.ends_after_(q))
+          end
+          
+
+          def ends_before_(q)
+            self.arel_table[:ends_at].lt(q)
+          end
+          def ends_before(q)
+            self.where(self.ends_before_(q))
+          end
+
+          def self.ends_before_(q)
+            self.arel_table[:ends_at].lt(q)
+          end
+          def self.ends_before(q)
+            self.where(self.ends_before_(q))
           end
         
           def starts_between_(l, h)
@@ -151,6 +217,20 @@ module Filterable
           def time_contains(q)
             self.where( self.time_contains_(q) )
           end
+
+          def past
+            self.ends_before(DateTime.now)
+          end
+          def ongoing
+            self.time_contains(DateTime.now)
+          end
+          def upcoming
+            self.starts_after(DateTime.now)
+          end
+          def not_past
+            self.ends_after(DateTime.now)
+          end
+          
         
       end
   end
