@@ -1,0 +1,65 @@
+/* ----- VARS ----- */
+
+/* --- ICONS --- */
+$nav-icon-size: 40px;
+/* --- */
+
+/* --- LAYOUT --- */
+$margins-rl: 48px;
+$vmn: 48px;
+
+$nav-bar-h: 72px; 	/* formerly 96, then 72. */
+					/* 72 might be the best choice */
+					/* with smallest icon 27.5 */
+					/* codepen's is 64 */
+$max-width: 960px;
+/* --- */
+
+/* --- BPS --- */
+$bps: 
+(
+	340px,
+	480px,
+	800px,
+	1024px
+);
+@function _bps($i_) {
+	@return nth($bps, $i_);
+}
+/* --- */
+
+/* --- RESPONSIVE SIZES --- */
+/*
+	- sizes_b * sizes_r -> size_at -> sizes(bp)
+  	used in h's primarily,
+  	but elsewhere
+*/
+$sizes_b: 
+(
+	24px,
+	26px,
+	30px,
+	36px
+);
+@function _sizes_b($i_) {
+	@return nth($sizes_b, $i_);
+}
+
+/* the function that matches bps with font-sizes could be replace by dynamically generating one of these, then accessing it instead */
+/* you don't need to do that: I am just explaining bc of OCD. */
+/*$m_sizes_r: 
+(
+	0		.378,
+	340 	.465,
+	480 	.571,
+	800 	.756,
+	1024 	1
+);*/
+
+$sizes_r: (
+	1,
+	.756,
+	.571,
+	.465,
+	.378
+);

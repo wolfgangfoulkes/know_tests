@@ -1,0 +1,283 @@
+/*
+--------------------------
+---------- FEED ----------
+--------------------------
+*/
+$activity_list_offs_v: 3px;
+$activity_list_offs_h: -6px;
+
+/* temporary */
+$fitem_l: 150px;
+$fitem_m: 130px;
+$fitem_s: 120px;
+
+/* --- RESPONSIVE SIZES --- */
+/* 	content-size is determined by image + padding*image	*/
+@mixin feed($box, $content_h, $rpad_v, $rpad_h, $rmar_h)
+{
+		$pad_v: $rpad_v * $box;
+		$pad_h: $rpad_h * $box;
+		$mar_h: $rmar_h * $box;
+
+		box-sizing: content-box;
+
+		/* 
+			ought the image be relative to this?
+			reason-not: image is a good visual touchpoint for size
+			reasons-to: difficult to work out good sizing for the text, or to work out ratios for anything
+						can't do anything relative to full size of container
+		*/
+
+		height: $content_h * $box;
+
+		/* does this need to be a relative size? is it better fixed?*/
+		/* 
+			reasons: 
+				- less to think about
+				- easier to size other stuff
+				- technically could leave it a var and adjust somewhere if need-be
+				- obv it ought be a ratio but relative to just one property
+		*/
+		padding: 20px 20px;
+		> *
+		{
+			margin: 0 $mar_h; /* 0.5em */
+		}
+		> .image-temp
+		{
+			height: $content_h * $box;
+			width: $content_h * $box; /* 3em */
+		}
+		> .col
+		{
+			height: 100%;
+			> .tags
+			{
+				margin-top: 0.2em;
+			}
+		}
+
+		@content;
+
+}
+
+/* temporary */
+$fitem_l: 120px;
+$fitem_m: 100px;
+$fitem_s: 90px;
+
+/* --- RESPONSIVE SIZES --- */
+/* 	content-size is determined by image + padding*image	*/
+@mixin feed($box, $content_h, $rpad_v, $rpad_h, $rmar_h)
+{
+		$pad_v: $rpad_v * $box;
+		$pad_h: $rpad_h * $box;
+		$mar_h: $rmar_h * $box;
+
+		box-sizing: content-box;
+
+		height: $content_h * $box;
+
+		padding: $pad_v $pad_h;
+		> *
+		{
+			margin: 0 $mar_h; /* 0.5em */
+		}
+		> .image-temp
+		{
+			height: $box;
+			width: $box; /* 3em */
+		}
+		> .col
+		{
+			height: 100%;
+			> .tags
+			{
+				margin-top: 0.2em;
+			}
+		}
+
+		@content;
+
+}
+
+.feed.col 
+{
+	width: 100%;
+}
+
+/* --- EVENTS FEED --- */
+.feed.col > .item.row > .image-temp
+{
+	/*object-fit: cover;*/
+	border-radius: 50%;
+	
+	flex-shrink: 0;
+}
+
+
+.feed.col > .item.row
+{
+	justify-content: flex-start;
+	align-items: center;
+
+	/*height: $nav-bar-h * $gm_i;*/
+
+	> *
+	{
+	}
+
+	> .col
+	{
+		justify-content: center;
+		
+		> .br 
+		{
+		}
+	}
+}
+/* --- */
+
+.feed.col > .item.row 
+{
+	@include feed($fitem_l, 1.25, 1.0/6, 1.0/8, 1.0/8)
+	{
+	}
+
+	@include mq(0, _bps(2))
+	{
+		@include feed($fitem_s, 1.25, 1.0/6, 1.0/10, 1.0/10)
+		{
+		}
+	}
+	@include mq(_bps(2), _bps(3)) 
+	{
+		@include feed($fitem_m, 1.25, 1.0/6, 1.0/10, 1.0/10)
+		{		
+		}
+	}
+	@include mq(_bps(3), 0) 
+	{
+		@include feed($fitem_l, 1.25, 1.0/6, 1.0/10, 1.5/10.0)
+		{	
+		}
+	}
+
+	/*@include feed($fitem_l, 0.8, 1.0/3, 1.0/6, 1.0/6)
+	{
+	}
+
+	@include mq(0, _bps(2))
+	{
+		@include feed($fitem_l, 0.5, 1.0/3, 1.0/8, 1.0/8)
+		{
+		}
+	}
+	@include mq(_bps(2), _bps(3)) 
+	{
+		@include feed($fitem_l, 0.75, 1.0/3, 1.0/6, 1.0/6)
+		{		
+		}
+	}
+	@include mq(_bps(3), 0) 
+	{
+		@include feed($fitem_l, 0.8, 1.0/3, 1.0/6, 1.0/6)
+		{	
+		}
+	}*/
+
+
+}
+
+/* ----- ACTIVITIES ----- */
+@mixin activity_list($box, $offs_v, $offs_h)
+{
+	
+	margin-top: 0.25 * -1.0 * $box + $offs_v;
+	margin-left: ($box * 0.5) + ($box * 1.0/3) + $offs_h;
+	padding-left: $box * 0.15;
+
+
+	@content;
+}
+
+.feed.col > .activity-list
+{
+	border-left: 2px solid rgba(100, 0, 0, 0.5);
+}
+
+.feed.col > .activity-list .item {
+	display: inline-flex;
+	flex-direction: row;
+	width: 100%;
+	> * {
+		white-space: nowrap;
+		overflow: hidden;
+		flex-shrink: 1;
+	}
+	> .dt {
+		width: 18%;
+		min-width: 6.5em;
+		flex-shrink: 0;
+	}
+	> .username {
+		width: 25%;
+		margin-left: 1em;
+		min-width: 3em;
+		text-overflow: ellipsis;
+	}
+	> .summary {
+		margin-left: 2%;
+		width: 50%;
+		text-overflow: ellipsis;
+	}
+}
+
+.feed.col > .activity-list
+{ 
+
+	@include activity_list($fitem_l, $activity_list_offs_v, $activity_list_offs_h)
+	{
+			
+	}
+
+	
+	@include mq(0, _bps(2))
+	{
+
+		@include activity_list($fitem_s, $activity_list_offs_v, $activity_list_offs_h)
+		{
+			.item
+			{
+				> .br {
+					display: none;
+				}
+				> .dt {
+					font-size: 0.8em;
+				}
+				> .username {
+					display: none;
+				}
+				> .summary {
+					display: block;
+				}
+			}
+		}
+		
+	}
+	 
+	@include mq(_bps(2), _bps(3))
+	{
+		@include activity_list($fitem_m, $activity_list_offs_v, $activity_list_offs_h)
+		{
+		}
+	}
+	 
+	@include mq(_bps(3), 0)
+	{
+		@include activity_list($fitem_l, $activity_list_offs_v, $activity_list_offs_h)
+		{
+			
+		}
+	}
+}
